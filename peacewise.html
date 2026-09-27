@@ -5,60 +5,244 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
         <style>
-            * {
+     * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    /* border: red 1px solid; */
 }
 
-.card{
-    padding: 15px;
-    background-color: antiquewhite;
+:root {
+    --maroon: #54141d;
+    --maroon-hover: #6b1a25;
+    --text: #1d1d1f;
+    --secondary: #6e6e73;
+    --border: #d2d2d7;
+    --background: #f5f5f7;
+    --white: #ffffff;
+    --success: #26734d;
 }
-#stats{
-    display: flex;
-    justify-content: space-between;
-}
-.section{
-    height: 100vh;
-    width: 100vw;
-    padding: 2rem 10em;
-    background-color: red
 
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+        "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    color: var(--text);
+    background: var(--background);
+
+    line-height: 1.5;
 }
-#piecewise-card {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 40px;
-}
-#answer-container {
-    display: grid;
-    /* place-items: center; */
-    gap: 10px;
-}
-#answer{
-     display: grid;
-    /* place-items: center; */
-    gap: 10px;
-}
-#student-information.section {
-    
+
+/* =========================
+   GENERAL SECTION
+========================= */
+
+.section {
     min-height: 100vh;
-
-    position: absolute;
-    top: 0;
-    left: 0;
-    
+    width: 100%;
+    padding: 60px 8%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #ffffff;
-    padding: 2rem;
+}
 
-    /* background-color: transparent; */
-    
-.container {
+/* =========================
+   PIECEWISE / QUESTION
+========================= */
+
+#piecewise-information {
+    background: var(--background);
+}
+
+#piecewise-card {
+    width: 100%;
+    max-width: 1000px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 24px;
+
+    padding: 35px;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+    border-radius: 24px;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.04),
+        0 15px 40px rgba(0, 0, 0, 0.06);
+}
+
+/* Statistics */
+
+#stats {
+    grid-column: 1 / -1;
+
+    display: flex;
+    justify-content: space-between;
+
+    padding-bottom: 18px;
+
+    border-bottom: 1px solid var(--border);
+
+    color: var(--secondary);
+    font-size: 14px;
+}
+
+/* Main heading */
+
+#piecewise-card > h1 {
+    grid-column: 1 / -1;
+
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+/* Question */
+
+#display-text {
+    grid-column: 1 / -1;
+
+    padding: 22px;
+
+    background: #f8f8fa;
+
+    border: 1px solid #e5e5e7;
+    border-radius: 14px;
+
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+/* =========================
+   ANSWER CONTAINERS
+========================= */
+
+#answer-input-container,
+#answer-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    padding: 22px;
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+
+    background: var(--white);
+}
+
+#answer-input-container label,
+#answer-container h2 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--secondary);
+}
+
+#answer-container {
+    min-height: 120px;
+}
+
+#answer {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--maroon);
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+input,
+select {
+    width: 100%;
+    height: 48px;
+
+    padding: 0 14px;
+
+    font-family: inherit;
+    font-size: 16px;
+
+    color: var(--text);
+    background: var(--white);
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+input::placeholder {
+    color: #8e8e93;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--maroon);
+
+    box-shadow:
+        0 0 0 3px rgba(84, 20, 29, 0.12);
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+button {
+    height: 48px;
+
+    padding: 0 20px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: var(--maroon);
+    color: white;
+
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.1s ease;
+}
+
+button:hover {
+    background: var(--maroon-hover);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* =========================
+   STUDENT INFORMATION
+========================= */
+
+#student-information {
+    position: fixed;
+
+    inset: 0;
+
+    min-height: 100vh;
+
+    padding: 24px;
+
+    background: rgba(245, 245, 247, 0.96);
+
+    z-index: 10;
+}
+
+#student-information .container {
     width: 100%;
     max-width: 500px;
 
@@ -68,19 +252,27 @@
 
     padding: 35px;
 
-    background: navajowhite;
-    border: 1px solid #e5e5e7;
-    border-radius: 18px;
+    background: var(--white);
 
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.06),
+        0 30px 70px rgba(0, 0, 0, 0.08);
 }
 
-.container h1 {
-    font-size: 28px;
+#student-information h1 {
+    font-size: 30px;
     font-weight: 700;
-    color: #1d1d1f;
+    letter-spacing: -0.5px;
+
     margin-bottom: 5px;
 }
+
+/* =========================
+   FORM GROUP
+========================= */
 
 .form-group {
     display: flex;
@@ -94,75 +286,71 @@
     color: #3a3a3c;
 }
 
-.form-group input,
-.form-group select {
-    width: 100%;
-    height: 48px;
-
-    padding: 0 14px;
-
-    font-size: 16px;
-    color: #1d1d1f;
-
-    background: #ffffff;
-    border: 1px solid #c7c7cc;
-    border-radius: 10px;
-
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.form-group input::placeholder {
-    color: #8e8e93;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-    border-color: #54141d;
-    box-shadow: 0 0 0 3px rgba(84, 20, 29, 0.12);
-}
+/* Continue button */
 
 #continue {
     width: 100%;
-    height: 48px;
 
     margin-top: 5px;
-
-    border: none;
-    border-radius: 0.2em;
-
-    background: #54141d;
-    color: #ffffff;
-
-    font-size: 16px;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition: background 0.2s, transform 0.1s;
 }
 
-#create-section:hover {
-    background: #6b1a25;
-}
+/* =========================
+   RESPONSIVE
+========================= */
 
-#create-section:active {
-    transform: scale(0.98);
-}
-}
+@media (max-width: 700px) {
 
-
-@media (max-width: 600px) {
     .section {
-        padding: 1rem;
+        padding: 30px 16px;
     }
 
-    .container {
+    #piecewise-card {
+        grid-template-columns: 1fr;
+
+        padding: 24px;
+
+        border-radius: 18px;
+    }
+
+    #stats,
+    #display-text,
+    #piecewise-card > h1 {
+        grid-column: auto;
+    }
+
+    #piecewise-card > h1 {
+        font-size: 25px;
+    }
+
+    #display-text {
+        font-size: 16px;
+    }
+
+    #student-information .container {
         padding: 25px;
     }
 
-    .container h1 {
-        font-size: 24px;
+    #student-information h1 {
+        font-size: 25px;
+    }
+}
+
+@media (max-width: 450px) {
+
+    #piecewise-card {
+        padding: 18px;
+    }
+
+    #student-information {
+        padding: 15px;
+    }
+
+    #student-information .container {
+        padding: 22px;
+    }
+
+    #stats {
+        font-size: 12px;
     }
 }
 </style>

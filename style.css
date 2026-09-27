@@ -1,66 +1,23 @@
-/* 
-  :root {
-    --green: #3B7D30;
-
-    --green-dark: color-mix(in srgb, var(--green), black 60%);
-    --green-deep: color-mix(in srgb, var(--green), black 30%);
-    --green-light: color-mix(in srgb, var(--green), white 20%);
-    --green-bright: color-mix(in srgb, var(--green), white 40%);
-
-
-    --surface: color-mix(in srgb, var(--green), white 70%);
-    --surface-muted: color-mix(in srgb, var(--green), white 85%);
-}
-
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-.section{
-    width: 100vw; min-height: 100vh;
-    display: grid;
-    padding: 0 5em;
-    align-content: center;
-    background-color: var(--green-dark);
-    color: var(--surface);
-}
-.container{
-     background-color: var(--green-deep);
-    margin: auto;
-
-}
-.wapper{
-    width: min-content;
-
-}
-#quiz{
-    .container{
-        padding: 4rem 2rem;
-        overflow-wrap: break-word;
-    }
-    #question{
-        font-size: 2.3rem;
-    }
-    #question-wrapper.wapper{
-        
-    }
-} */
-
 
 :root {
-    --green: #3B7D30;
+    /* =========================
+       MATHEMATICS THEME
+    ========================= */
 
-    --green-dark: color-mix(in srgb, var(--green), black 60%);
-    --green-deep: color-mix(in srgb, var(--green), black 30%);
-    --green-light: color-mix(in srgb, var(--green), white 20%);
-    --green-bright: color-mix(in srgb, var(--green), white 40%);
+    --math-blue: #2457a6;
+    --math-blue-dark: #163b73;
+    --math-blue-deep: #1d477f;
+    --math-blue-light: #dce9f8;
+    --math-blue-bright: #bcd4f2;
 
-    --surface: color-mix(in srgb, var(--green), white 70%);
-    --surface-muted: color-mix(in srgb, var(--green), white 85%);
+    --paper: #ffffff;
+    --paper-muted: #f4f7fb;
+    --text: #1d2733;
+    --text-muted: #607080;
 
-    --white: #ffffff;
-    --border: color-mix(in srgb, var(--green), white 45%);
+    --border: #c8d4e3;
+    --success: #2e7d32;
+    --danger: #c62828;
 }
 
 * {
@@ -71,8 +28,10 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: var(--green-dark);
+    background-color: var(--paper-muted);
+    color: var(--text);
 }
+
 
 /* =========================
    SECTION
@@ -88,9 +47,9 @@ body {
 
     padding: 4rem 1.5rem;
 
-    background-color: var(--green-dark);
-    color: var(--surface);
+    background-color: var(--paper-muted);
 }
+
 
 /* =========================
    CONTAINER
@@ -101,6 +60,7 @@ body {
     margin: auto;
 }
 
+
 /* =========================
    WRAPPER
 ========================= */
@@ -108,6 +68,7 @@ body {
 .wrapper {
     width: 100%;
 }
+
 
 /* =========================
    INITIALIZE
@@ -124,9 +85,30 @@ body {
 
     padding: 3rem;
 
-    background-color: var(--green-deep);
-    border-radius: 18px;
+    background-color: var(--paper);
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.06);
 }
+
+
+/* =========================
+   FORM HEADER
+========================= */
+
+#initialize .wrapper::before {
+    content: "MATHEMATICS";
+    
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+
+    color: var(--math-blue);
+}
+
 
 /* =========================
    FORM
@@ -141,9 +123,8 @@ body {
 .field-group label {
     font-size: 0.9rem;
     font-weight: 600;
-    text-transform: capitalize;
 
-    color: var(--surface);
+    color: var(--text);
 }
 
 .field-group input,
@@ -153,39 +134,87 @@ body {
     padding: 0.9rem 1rem;
 
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 6px;
 
-    background-color: var(--surface-muted);
-    color: var(--green-dark);
+    background-color: var(--paper);
+    color: var(--text);
 
     font-size: 1rem;
 
     outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .field-group input:focus,
 .field-group select:focus {
-    border-color: var(--green-bright);
+    border-color: var(--math-blue);
+
+    box-shadow:
+        0 0 0 3px var(--math-blue-light);
 }
+
 
 /* =========================
    QUIZ
 ========================= */
 
-#quiz .container {
-    width: min(100%, 1000px);
+#quiz {
+    padding: 2rem 1.5rem;
+
+    display: block;
+
+    /*
+       Subtle mathematical grid
+    */
+    background-color: var(--paper-muted);
+
+    background-image:
+        linear-gradient(
+            rgba(36, 87, 166, 0.05) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(36, 87, 166, 0.05) 1px,
+            transparent 1px
+        );
+
+    background-size: 25px 25px;
 }
+
+#quiz .container {
+    width: min(100%, 1100px);
+    margin: auto;
+}
+
+
+/* =========================
+   QUESTION WRAPPER
+========================= */
 
 #question-wrapper {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
     gap: 1.5rem;
 
-    padding: 3rem;
+    width: 100%;
 
-    background-color: var(--green-deep);
-    border-radius: 18px;
+    padding: 1.5rem;
+
+    background-color: var(--paper);
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.06);
 }
+
 
 /* =========================
    QUESTION
@@ -194,19 +223,51 @@ body {
 #question-wrapper > .wrapper:first-child {
     display: flex;
     flex-direction: column;
+
     gap: 1.5rem;
+
+    min-width: 0;
 }
 
 #question {
     display: block;
 
-    font-size: clamp(1.5rem, 3vw, 2.3rem);
+    max-width: 100%;
+
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+
     font-weight: 600;
 
-    line-height: 1.4;
+    line-height: 1.6;
+
+    color: var(--text);
 
     overflow-wrap: break-word;
 }
+
+
+/* =========================
+   QUESTION NUMBER / LABEL
+========================= */
+
+#question::before {
+    content: "Problem";
+
+    display: block;
+
+    margin-bottom: 0.5rem;
+
+    font-size: 0.75rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.1em;
+
+    text-transform: uppercase;
+
+    color: var(--math-blue);
+}
+
 
 /* =========================
    DATASET
@@ -215,19 +276,28 @@ body {
 #dataset {
     display: block;
 
-    padding: 1rem;
+    padding: 1.25rem;
 
-    background-color: var(--surface-muted);
-    color: var(--green-dark);
+    background-color: var(--paper-muted);
 
-    border-radius: 8px;
+    color: var(--text);
 
-    font-family: monospace;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--math-blue);
+
+    border-radius: 6px;
+
+    font-family: "Courier New", monospace;
+
     font-size: 1rem;
 
+    line-height: 1.6;
+
     overflow-x: auto;
+
     overflow-wrap: break-word;
 }
+
 
 /* =========================
    STUDENT ANSWER
@@ -236,20 +306,22 @@ body {
 #studentAnswer {
     display: flex;
     flex-direction: column;
+
     gap: 1rem;
 
     padding: 1.5rem;
 
-    background-color: color-mix(
-        in srgb,
-        var(--green-deep),
-        white 8%
-    );
+    background-color: var(--paper-muted);
 
-    border-radius: 12px;
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
 }
 
-/* Inputs generated by JavaScript */
+
+/* =========================
+   ANSWER INPUT
+========================= */
 
 #studentAnswer input {
     width: 100%;
@@ -257,19 +329,37 @@ body {
     padding: 0.9rem 1rem;
 
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 6px;
 
-    background-color: var(--surface-muted);
-    color: var(--green-dark);
+    background-color: var(--paper);
+
+    color: var(--text);
 
     font-size: 1rem;
 
     outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 #studentAnswer input:focus {
-    border-color: var(--green-bright);
+    border-color: var(--math-blue);
+
+    box-shadow:
+        0 0 0 3px var(--math-blue-light);
 }
+
+
+/* =========================
+   MATHEMATICAL INPUT
+========================= */
+
+#studentAnswer input[type="number"] {
+    font-family: "Courier New", monospace;
+}
+
 
 /* =========================
    ANSWER / RESULT
@@ -278,12 +368,16 @@ body {
 #answer {
     display: flex;
     flex-direction: column;
+
     gap: 1rem;
+
+    padding-top: 1rem;
 
     line-height: 1.6;
 
     overflow-wrap: break-word;
 }
+
 
 /* =========================
    BUTTON
@@ -293,24 +387,31 @@ button {
     padding: 0.8rem 1.5rem;
 
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
 
-    background-color: var(--green-light);
-    color: var(--green-dark);
+    background-color: var(--math-blue);
+
+    color: white;
 
     font-size: 1rem;
+
     font-weight: 600;
 
     cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.1s ease;
 }
 
 button:hover {
-    background-color: var(--green-bright);
+    background-color: var(--math-blue-dark);
 }
 
 button:active {
     transform: translateY(1px);
 }
+
 
 /* =========================
    QUIZ END
@@ -319,34 +420,52 @@ button:active {
 .quiz-end {
     display: flex;
     flex-direction: column;
+
     gap: 2rem;
 
     padding: 4rem 3rem;
 
     text-align: center;
 
-    background-color: var(--green-deep);
-    border-radius: 18px;
+    background-color: var(--paper);
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.06);
 }
 
 .quiz-end-header {
     display: flex;
     flex-direction: column;
+
     gap: 0.5rem;
 }
 
 .quiz-end-title {
     font-size: clamp(2rem, 5vw, 3rem);
+
     font-weight: 700;
+
+    color: var(--math-blue-dark);
 }
 
 .quiz-end-message {
-    color: var(--surface-muted);
+    color: var(--text-muted);
 }
+
+
+/* =========================
+   RESULT
+========================= */
 
 .quiz-result {
     display: flex;
+
     justify-content: center;
+
     gap: 1rem;
 
     flex-wrap: wrap;
@@ -357,36 +476,52 @@ button:active {
 
     display: flex;
     flex-direction: column;
+
     gap: 0.5rem;
 
     padding: 1.5rem;
 
-    border-radius: 12px;
+    background-color: var(--paper-muted);
 
-    background-color: color-mix(
-        in srgb,
-        var(--green-deep),
-        white 8%
-    );
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
 }
 
 .result-label {
-    font-size: 0.9rem;
-    opacity: 0.7;
+    font-size: 0.85rem;
+
+    font-weight: 600;
+
+    color: var(--text-muted);
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.05em;
 }
 
 .result-value {
     font-size: 1.8rem;
+
     font-weight: 700;
+
+    color: var(--math-blue-dark);
 }
+
+
+/* =========================
+   QUIZ END ACTIONS
+========================= */
 
 .quiz-end-actions {
     display: flex;
+
     justify-content: center;
 }
 
+
 /* =========================
-   MOBILE
+   RESPONSIVE
 ========================= */
 
 @media (max-width: 700px) {
@@ -395,13 +530,26 @@ button:active {
         padding: 2rem 1rem;
     }
 
-    #initialize .wrapper,
-    #question-wrapper {
+    #initialize .wrapper {
         padding: 2rem 1.25rem;
     }
 
+    #question-wrapper {
+        grid-template-columns: 1fr;
+
+        padding: 1.25rem;
+    }
+
     #question {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
+    }
+
+    #quiz {
+        padding: 1rem;
+    }
+
+    .quiz-end {
+        padding: 3rem 1.5rem;
     }
 
     .quiz-result {
@@ -412,3 +560,4 @@ button:active {
         width: 100%;
     }
 }
+

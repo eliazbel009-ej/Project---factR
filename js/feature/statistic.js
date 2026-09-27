@@ -721,7 +721,7 @@ function resetQuiz() {
     currQuizNum = 1;
 
     // Start a new quiz using the currently selected topic
-    startQuiz();
+    startQuiz($topic.value);
 }
 // startQuiz()
 $topic.addEventListener("change", ()=>{
@@ -783,3 +783,72 @@ function constraint(c1, c2) {
 
     return Math.floor(Math.random() * (Math.floor(c2) - Math.ceil(c1) + 1)) + Math.ceil(c1)
 }
+
+/**
+    case 1
+        Given the following dataset, find the measures of central tendency.
+
+        find:
+            mean 
+            median
+            mode
+    case 2
+        question compute the standard deveition
+        Given the following dataset, calculate the standard deviation. Determine whether the dataset should be treated as a population or a sample based on the given situation.
+        find:
+            standard deviation:
+                population or sample: base on the question and what data
+    case 3:
+        Given the following dataset, find the measures of central tendency and calculate the standard deviation. Determine whether the dataset represents a population or a sample.
+        find:
+            mean,median,mode
+            standard population, sample
+    requirements
+        real world application context based - base the situation and the dataset form a real world situation   
+        generate a random data set - 
+        solve:
+            mean:_x = [x/n
+                _x = mean 
+                [x = sum of all values
+                n = number of values    
+            median: 
+                if isOdd
+                    median = X (n+1/2)
+                else 
+                    median = (xn/2 + xn/2+1) / 2
+            mode: 
+                mode:
+                    k = current most frequent number
+                    n =  current number of frequency
+                    
+                    for d in data 
+                        if n == 0
+                            k = d
+                            n = 1
+                        elif
+                            k == d
+                            n++
+                        else
+                            n--
+            Population Variance:
+                q2 = [(x-u)**2/n
+                Where:
+
+                q2 \(\sigma^2\) = population variance
+                x \(x\) = each data value
+                u \(\mu\) = population mean
+                n \(N\) = total number of values
+            Sample Standard Deviation:
+                s = sqrt([(x-_x)**2/n-1)
+
+                s = sample standard deviation
+                \(x\) = each value
+                \(\bar{x}\) = sample mean
+                \(n\) = number of values
+
+
+
+
+
+
+*/
