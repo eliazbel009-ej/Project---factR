@@ -1,8 +1,11 @@
-import { Plane } from "./js/engine/plane.js";
+import { Linear, Plane, Quiz } from "./js/engine/plane.js";
 
 let plane;
 let ctx;
 let randomPoints = []
+let m
+
+
 const $question = document.getElementById("question");
 window.setup = function () {
 
@@ -17,10 +20,16 @@ window.setup = function () {
 
     ctx.id("canvas");
     ctx.parent("canvas-container");
+    m = new Quiz()
+    // plane = m.instance();
+    setupQuizControls();
 
-    plane = new Plane();
+    // 2. Start the first question cycle
+    startNewGameRound();
+    // createQuestion();
+    // plane.renderQuestion()
+    // plane.generateLinearPoints()
 
-    createQuestion();
 };
     // plane = new Plane();
     // const p = []
@@ -28,13 +37,38 @@ window.setup = function () {
     //     p.push(plane.randomPoint())
     // }
     // $question.innerHTML= p
+function startNewGameRound() {
+    // True Option 2 Reset: Re-instantiate the session via the manager
+    // This cleanly completely resets zoom, offsets, and points state
+    m.startNewQuiz()
+    plane = m.instance(); 
+    
+    // Generate data and build the HTML inside $question
+    // plane.createQuestion(); 
+}
+function setupQuizControls() {
+    // Listen to the permanent parent container. It catches button clicks even when 
+    // the inner HTML is completely blown away and rebuilt!
+    $question.addEventListener("click", (event) => {
+        
+        // Match the "Check Points" Button click
+        if (event.target.id === "check-answer") {
+            plane.checkPoint();
+        }
+
+        // Match the "Next Question" Button click
+        if (event.target.id === "next-question") {
+            startNewGameRound(); // discard old plane and boot new plane instance
+        }
+    });
+}
 window.draw = function () {
     background(255);
 
-    // 1. Center the viewport origin 0,0 in the middle of the screen
+    // Center the viewport origin 0,0 in the middle of the screen
     translate(width / 2, height / 2);
 
-    // 2. LAYER IN DRAG OFFSETS: Shift your grid system space by mouse drag values
+    //  LAYER IN DRAG OFFSETS: Shift your grid system space by mouse drag values
     // translate(plane.xOffset, plane.yOffset);
 
     // Render the grid background
@@ -49,12 +83,7 @@ window.draw = function () {
     fill(0);
     noStroke();
     textSize(14);
-    // text(
-    //     `x: ${coordinate.x}, y: ${coordinate.y}`,
-    //     coordinate.x * plane.scale + 10,
-    //     -coordinate.y * plane.scale - 10
-    // );
-
+    
     // Draw interactive tracking guide mouse dot
     push();
     strokeWeight(10);
@@ -67,6 +96,9 @@ window.draw = function () {
 
     // Draw permanent dots array onto the screen
     plane.plotPoints();
+    
+    console.log(plane.points[0].y);
+    
 };
 
 window.mouseClicked = function () {
@@ -84,7 +116,7 @@ window.mouseClicked = function () {
 
 function createQuestion() {
     randomPoints = [];
-    plane = new Plane
+    plane = new Linear
 
     for (let i = 0; i < 5; i++) {
         randomPoints.push(plane.randomPoint());
@@ -96,7 +128,7 @@ function createQuestion() {
 
     const pointsHTML = randomPoints
         .map(point => `(${point.x}, ${point.y})`)
-        .join(", ");
+        .join(", <br>");
 
     $question.innerHTML = `
         <div class="quiz-header">
@@ -185,49 +217,3 @@ function checkPoint() {
             : "feedback error";
 }
 
-function checkAnswer(event) {
-    event.preventDefault();
-
-    const $answer = document.getElementById("answer");
-    const $feedback = document.getElementById("feedback");
-
-    const enteredLines = $answer.value.trim().split(/\n+/);
-
-    if (enteredLines.length !== randomPoints.length) {
-        $feedback.textContent =
-            "Please enter all five coordinate pairs.";
-        $feedback.className = "feedback error";
-        return;
-    }
-
-    const parsedAnswers = enteredLines.map(line => {
-        const match = line.match(
-            /^\s*[A-E]\s*:\s*\(?\s*(-?\d+)\s*,\s*(-?\d+)\s*\)?\s*$/i
-        );
-
-        return match
-            ? { x: Number(match[1]), y: Number(match[2]) }
-            : null;
-    });
-
-    if (parsedAnswers.some(answer => answer === null)) {
-        $feedback.textContent =
-            "Use the format A: (x, y), one point per line.";
-        $feedback.className = "feedback error";
-        return;
-    }
-
-    const correct = parsedAnswers.every((answer, index) => {
-        const point = randomPoints[index];
-        return answer.x === point.x && answer.y === point.y;
-    });
-
-    if (correct) {
-        $feedback.textContent = "Correct! All coordinates match.";
-        $feedback.className = "feedback success";
-    } else {
-        $feedback.textContent =
-            "Some coordinates are incorrect. Check the graph and try again.";
-        $feedback.className = "feedback error";
-    }
-}
