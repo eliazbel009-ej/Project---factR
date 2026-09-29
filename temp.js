@@ -1,4 +1,4 @@
-export class Plane {
+class Plane {
     constructor() {
         this.dimension = {
             x: 10,
@@ -7,6 +7,7 @@ export class Plane {
         this.points = []
         this.zoom = 0.7;
         this.defaultZoom()
+
         this.xOffset = 0;
         this.yOffset = 0;
         this.zoomScalar = 0.05
@@ -21,22 +22,7 @@ export class Plane {
 defaultZoom(){
     this.zoom = 1
 }
-pan() {
-    // 1. Calculate how far the mouse has dragged since the previous frame
-    let targetX = this.xOffset + (mouseX - pmouseX);
-    let targetY = this.yOffset + (mouseY - pmouseY);
 
-    // 2. Calculate the maximum distance the center point can slide
-    // before the outer boundaries of your grid hit the edges of the canvas screen.
-    const maxPanX = (this.dimension.x * this.scale) - (width / 2);
-    const maxPanY = (this.dimension.y * this.scale) - (height / 2);
-
-    // 3. Keep the plane locked inside boundaries relative to center (0,0)
-    // If zoomed out far (maxPan is negative), lock it perfectly at 0 (center)
-    this.xOffset = maxPanX > 0 ? constrain(targetX, -maxPanX, maxPanX) : 0;
-    this.yOffset = maxPanY > 0 ? constrain(targetY, -maxPanY, maxPanY) : 0;
-    this.pointsToPlot = []
-}
     zoomOut(){
         this.zoom += this.zoomScalar
         this.zoom = Math.min(this.zoom, 3.0); 
@@ -50,76 +36,90 @@ pan() {
     updateZoom(){
             this.minZoom = 0.5; 
 
-    // 2. Ensure your zoom value never drops below this dynamic boundary constraint
-    this.zoom = Math.max(this.zoom, this.minZoom);
-
-
+        //  zoom value never drops below this dynamic boundary constraint
+        this.zoom = Math.max(this.zoom, this.minZoom);
         this.scale = (width / (this.dimension.x * 2)) * this.zoom;
         
     }
     axis() {
-        // Vertical grid lines
-        for (let x = -this.dimension.x; x <= this.dimension.x; x++) {
-             
-            textSize(6)
-            //  text( x ,  5+x * this.dimension.x * this.scale/ 10, 5+  0);
-            
-            // text(x, x * this.scale + 5, 5);
-            const currX = x * this.scale;
+    
+    ctx.save(); // Equivalent to push()
+    
+    // --- Vertical Grid Lines & X-Labels ---
+    for (let x = -this.dimension.x; x <= this.dimension.x; x++) {
+        const currX = x * this.scale;
 
-    if (x === -this.dimension.x) {
-        textAlign(LEFT, TOP);
-        text(x, currX + 5, 5);
-    } 
-    else if (x === this.dimension.x) {
-        textAlign(RIGHT, TOP);
-        text(x, currX - 5, 5);
-    } 
-    else {
-        textAlign(CENTER, TOP);
-        text(x, currX, 5);
-    }
-    push()
-    stroke(200);
-            line(
-                x * this.scale,
-                -this.dimension.y * this.scale,
-                x * this.scale,
-                this.dimension.y * this.scale
-            );
+        // Font and text alignment mapping
+        ctx.font = "6px sans-serif"; // Equivalent to textSize(6)
+        ctx.fillStyle = "#000000";   // Default text color
+
+        // Handle textAlign equivalents
+        if (x === -this.dimension.x) {
+            ctx.textAlign = "left";
+            ctx.textBaseline = "top";
+            ctx.fillText(x, currX + 5, 5);
+        } 
+        else if (x === this.dimension.x) {
+            ctx.textAlign = "right";
+            ctx.textBaseline = "top";
+            ctx.fillText(x, currX - 5, 5);
+        } 
+        else {
+            ctx.textAlign = "center";
+            ctx.textBaseline = "top";
+            ctx.fillText(x, currX, 5);
         }
-        pop()
-     for (let y = -this.dimension.y; y <= this.dimension.y; y++) {
 
-    const currY = y * this.scale;
-
-    // Draw horizontal grid line
-    line(
-        -this.dimension.x * this.scale,
-        currY,
-        this.dimension.x * this.scale,
-        currY
-    );
-
-    // Don't draw Y label for 0
-    if (y === 0) {
-        continue;
+        // Draw vertical line with stroke(200) equivalent (rgb(200, 200, 200))
+        ctx.strokeStyle = "rgb(200, 200, 200)";
+        ctx.lineWidth = 1;
+        
+        ctx.beginPath();
+        ctx.moveTo(x * this.scale, -this.dimension.y * this.scale);
+        ctx.lineTo(x * this.scale, this.dimension.y * this.scale);
+        ctx.stroke();
     }
 
-    if (y === -this.dimension.y) {
-        textAlign(RIGHT, BOTTOM);
-        text(y, -5, -currY - 5);
+    // --- Horizontal Grid Lines & Y-Labels ---
+    for (let y = -this.dimension.y; y <= this.dimension.y; y++) {
+        const currY = y * this.scale;
 
-    } else if (y === this.dimension.y) {
-        textAlign(RIGHT, TOP);
-        text(y, -5, -currY + 5);
+        // Draw horizontal grid line
+        ctx.strokeStyle = "rgb(200, 200, 200)";
+        ctx.lineWidth = 1;
+        
+        ctx.beginPath();
+        ctx.moveTo(-this.dimension.x * this.scale, currY);
+        ctx.lineTo(this.dimension.x * this.scale, currY);
+        ctx.stroke();
 
-    } else {
-        textAlign(RIGHT, CENTER);
-        text(y, -5, -currY);
+        // Don't draw Y label for 0
+        if (y === 0) {
+            continue;
+        }
+
+        ctx.font = "6px sans-serif";
+        ctx.fillStyle = "#000000";
+
+        if (y === -this.dimension.y) {
+            ctx.textAlign = "right";
+            ctx.textBaseline = "bottom";
+            ctx.fillText(y, -5, -currY - 5);
+        } 
+        else if (y === this.dimension.y) {
+            ctx.textAlign = "right";
+            ctx.textBaseline = "top";
+            ctx.fillText(y, -5, -currY + 5);
+        } 
+        else {
+            ctx.textAlign = "right";
+            ctx.textBaseline = "middle";
+            ctx.fillText(y, -5, -currY);
+        }
     }
+
+    ctx.restore(); // Equivalent to pop()
 }
-}     
         
     
    plot(mx, my) {
@@ -159,6 +159,7 @@ pan() {
         circle(x, y, 12);
     });
 }
+
 
 // plotPoints() {
 
@@ -220,3 +221,14 @@ addPoint(x, y) {
         const translatedMY = mouseY - (height / 2) - this.yOffset;
         return this.plot(translatedMX, translatedMY);
     }}
+
+class Linear extends Plane{
+    constructor(){
+        
+    }
+    generateRandomLine(){
+        for(let x = -this.dimension.x; x<this.dimension.x;x++){
+           
+        }   
+    }
+}

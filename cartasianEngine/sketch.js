@@ -49,11 +49,11 @@ window.draw = function () {
     fill(0);
     noStroke();
     textSize(14);
-    text(
-        `x: ${coordinate.x}, y: ${coordinate.y}`,
-        coordinate.x * plane.scale + 10,
-        -coordinate.y * plane.scale - 10
-    );
+    // text(
+    //     `x: ${coordinate.x}, y: ${coordinate.y}`,
+    //     coordinate.x * plane.scale + 10,
+    //     -coordinate.y * plane.scale - 10
+    // );
 
     // Draw interactive tracking guide mouse dot
     push();
