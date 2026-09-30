@@ -227,8 +227,8 @@ class Linear extends Plane{
         
     }
     generateRandomLine(){
-        for(let x = -this.dimension.x; x<this.dimension.x;x++){
-           
-        }   
+        for(let x = -2; x < 2;x++){
+           this.addPoint(x, x + 2)
+        }   const y = x + constrain(-this.dimension.x, this.dimension.x)
     }
 }
