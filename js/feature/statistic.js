@@ -11,6 +11,19 @@ const $topic = document.getElementById("topic");
 let currQuizNum = 1
 let questionAmount = 5
 
+
+const $initialize = document.getElementById("initialize");
+const $quiz = document.getElementById("quiz");
+const $startQuizBtn = document.getElementById("startQuizBtn");
+
+$startQuizBtn.addEventListener("click", () => {
+    if($topic.value){
+        $initialize.hidden = true;
+    $quiz.hidden = false;
+
+    startQuiz($topic.value);
+    }
+});
 // const standardDeviationSituations = [
 //     {
 //         sample : {
@@ -289,15 +302,21 @@ class statistic {
     isRangeCorrect(r) {
         return this._standardDev.range() == r
     }
+    /**
+     * check and display answer
+     */
     _() {
         // state of what is correct and wrong
         const state = []
         const $ = this.isMeanCorrect(document.getElementById("mean").value)
+        const $$$ = this.isModeCorrect(document.getElementById("mode").value)
+        const $$ = this.isMedianCorrect(document.getElementById("median").value)
         // if(!this.isMedianCorrect(document.getElementById("median").value) || !$ || !this.isModeCorrect(document.getElementById("mode").value) ) $answer.innerHTML += `<h1>Some of your answers are incorrect. Please review your answers.</h1>`
         $answer.innerHTML += `
-            <h1>mean: ${roundDecimals(this._dataset.mean(), 2)}</h1>
-            <h1>median: ${this._dataset.median()}</h1>
-            <h1>mode: ${this._dataset.mode()}</h1>
+            <h3></h3>
+            <h3>${$?"correct": "incorrect"} mean: ${roundDecimals(this._dataset.mean(), 2)}</h3>
+            <h3>${$$?"correct": "incorrect"} median: ${this._dataset.median()}</h3>
+            <h3>${$$$?"correct": "incorrect"} mode: ${this._dataset.mode()}</h3>
 
         `
     }
@@ -307,7 +326,7 @@ class statistic {
     $$$() {
         
         $answer.innerHTML += `
-            <h3>range: ${this._standardDev.range()}</h3>
+            <h3>${this.isRangeCorrect(document.getElementById("range").value) ? "correct": "incorrect" } range: ${this._standardDev.range()}</h3>
         `
     }
     /**
@@ -316,8 +335,8 @@ class statistic {
     $__() {
         const $ = this.isPopulationStandardDeviationCorrect(document.getElementById("standard").value)
         $answer.innerHTML += `
-            
-            <h3>Population: ${roundDecimals(this._standardDev.population(), 2)}</h3>
+        
+            <h3>${$?"correct": "incorrect"} Population: ${roundDecimals(this._standardDev.population(), 2)}</h3>
 
         `
     }
@@ -325,10 +344,10 @@ class statistic {
      * check if sample standard deviation correct
      */
     _$_() {
-            this.isSampleStandardDeviationCorrect(document.getElementById("standard").value)
+           const x =  this.isSampleStandardDeviationCorrect(document.getElementById("standard").value)
 
         $answer.innerHTML += `
-            <h1>sample: ${roundDecimals(this._standardDev.sample(), 2)}</h1>
+            <h3> ${x? "correct": "incorrect"}sample: ${roundDecimals(this._standardDev.sample(), 2)}</h3>
 
         `
     }
@@ -586,11 +605,15 @@ function getSession() {
     return localStorage.getItem(sessionKey)
 }
 function updateQuiz() {
-    if (currQuizNum + 1 > questionAmount) endQuiz()
-        document.getElementById("confirm").disabled = true
-    currQuizNum++
-    console.log(currQuizNum);
 
+    if (currQuizNum + 1 > questionAmount) {
+        endQuiz();
+        return;
+    }
+
+    document.getElementById("confirm").disabled = true;
+
+    currQuizNum++;
 }
 function startQuiz(val) {
     switch (val) {
@@ -633,7 +656,7 @@ function endQuiz() {
                     <div class="result-item">
                         <span class="result-label">Score</span>
                         <span class="result-value" id="finalScore">
-                            0 / 20
+                            0 / ${questionAmount}
                         </span>
                     </div>
 
@@ -645,38 +668,47 @@ function endQuiz() {
                     </div>
 
                 </div>
-                <div class="field-group">
-                    <label for="topic">topic</label>
-                    <select name="" id="newTopic">
-                        <option value="1">
-                             Measures of Central Tendency 
-                        </option>
-                        <option value="2">
-                              Measures of Variability  
-                        </option>
-                        <option value="3">
-                              Measures of Central Tendency and Measures of Variability   
-                        </option>
-                    </select>
-                </div>
+            
                 <div class="quiz-end-actions">
 
-                    <button 
+                    <button
                         type="button"
-                        id="restartQuizBtn"
-                        onclick="">
-                        Restart Quiz
+                        id="backMenuBtn">
+                        Back to Menu
                     </button>
 
                 </div>
 
+
             </div>
         </div>
     `;
+
+        // <div class="field-group">
+                //     <label for="topic">topic</label>
+                //     <select name="" id="newTopic">
+                //         <option value="1">
+                //              Measures of Central Tendency 
+                //         </option>
+                //         <option value="2">
+                //               Measures of Variability  
+                //         </option>
+                //         <option value="3">
+                //               Measures of Central Tendency and Measures of Variability   
+                //         </option>
+                //     </select>
+                // </div>
 //     document.getElementById("newTopic").addEventListener("change", ()=>{
 //     startQuiz(document.getElementById("newTopic").value)
 // })
-    document.getElementById("restartQuizBtn").addEventListener("click", resetQuiz);
+    document.getElementById("backMenuBtn").addEventListener("click", backToMenu);
+}
+function backToMenu() {
+
+    $quiz.hidden = true;
+    $initialize.hidden = false;
+
+    resetQuiz();
 }
 function resetQuiz() {
 
@@ -721,12 +753,12 @@ function resetQuiz() {
     currQuizNum = 1;
 
     // Start a new quiz using the currently selected topic
-    startQuiz($topic.value);
+    // startQuiz($topic.value);
 }
 // startQuiz()
-$topic.addEventListener("change", ()=>{
-    startQuiz($topic.value)
-})
+// $topic.addEventListener("change", ()=>{
+//     startQuiz($topic.value)
+// })
 
 
 
@@ -765,7 +797,7 @@ function generateQuestionForStandardDeviation() {
 
 // */
 
-startQuiz($topic.value)
+// startQuiz($topic.value)
 function generateSampleSize(populationSize) {
     const min = 5;
     const max = Math.min(15, populationSize - 1);

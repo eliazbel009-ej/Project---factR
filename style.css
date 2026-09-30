@@ -561,3 +561,6 @@ button:active {
     }
 }
 
+[hidden] {
+    display: none !important;
+}

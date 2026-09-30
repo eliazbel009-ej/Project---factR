@@ -231,6 +231,13 @@ addPoint(x, y) {
             <p class="description">
                 Plot all the given points on the coordinate plane.
             </p>
+            <select name="" id="menu-option">
+                <option value="">select mode</option>
+                <option value="random">random points</option>
+                <option value="linear">linear</option>
+                <option value="linearAbsolute">linear absolute</option>
+                <option value="quadratic">quadratic</option>
+            </select>
         </div>
 
         <div class="target-point">
@@ -312,135 +319,157 @@ addPoint(x, y) {
   
     
 }
-export class RandomizedPoint extends Plane{
+export class RandomizedPoint extends Session{
     constructor(){
        super()
-       this.randomPoints = []
-       this.$question = document.getElementById("question");
-       this.plane = null
+      this.generateRandomPoints()
+    }
+    generateRandomPoints(){
+        for (let i = 1 ; i <= 5; i++) {
+            const r = createVector(
+                constraint(-( this.dimension.x - 1), this.dimension.x - 1),
+                constraint(-( this.dimension.y - 1), this.dimension.y- 1)
+            )
+        
+            this.randomPoints.push(r) ;
+            this.addPoint(r.x, r.y)
+        }
     }
     createQuestion(){
-        randomPoints = [];
-        this.plane = new RandomizedPoint
-    
-        for (let i = 0; i < 5; i++) {
-            randomPoints.push(this.randomPoint());
-        }
-    
+        this.generateRandomPoints()
         this.renderQuestion();
     }
-    renderQuestion(){
-        const pointsHTML = randomPoints
-        .map(point => `(${point.x}, ${point.y})`)
-        .join(", <br>");
 
-    $question.innerHTML = `
-        <div class="quiz-header">
-            <p class="eyebrow">CARTESIAN PLANE</p>
-
-            <h1>Coordinate Challenge</h1>
-
-            <p class="description">
-                Plot all the given points on the coordinate plane.
-            </p>
-        </div>
-
-        <div class="target-point">
-            <span class="point-label">POINTS</span>
-
-            <span class="coordinate">
-                ${pointsHTML}
-            </span>
-        </div>
-
-        <p id="feedback"></p>
-
-        <div class="button-group">
-            <button
-                type="button"
-                id="check-answer"
-                class="submit-button"
-            >
-                Check Points
-            </button>
-
-            <button
-                type="button"
-                id="next-question"
-                class="next-button"
-            >
-                Next Question
-            </button>
-        </div>
-    `;
-
-    document
-        .getElementById("check-answer")
-        .addEventListener("click", this.checkPoint);
-
-    document
-        .getElementById("next-question")
-        .addEventListener("click", this.createQuestion);
-
-    }
-    checkPoint(){
-        const $feedback = document.getElementById("feedback");
-
-    if (this.points.length === 0) {
-        $feedback.textContent = "Plot a point first.";
-        $feedback.className = "feedback error";
-        return;
-    }
-
-    let correctCount = 0;
-
-    this.points.forEach(point => {
-
-        // Check if this plotted point exists
-        // anywhere in the random target points
-        const matchingTarget = randomPoints.find(target =>
-            point.x === target.x &&
-            point.y === target.y
-        );
-
-        point.correct = matchingTarget !== undefined;
-
-        if (point.correct) {
-            correctCount++;
-        }
-    });
-
-    const wrongCount =
-        this.points.length - correctCount;
-
-    $feedback.textContent =
-        `${correctCount} correct, ${wrongCount} incorrect.`;
-
-    $feedback.className =
-        wrongCount === 0
-            ? "feedback success"
-            : "feedback error";
-
-
-    }
+  
   
 }
-export class Quadratic extends Session{}
+export class Quadratic extends Session{
+    constructor(){
+        super()
+        this.generateQuadraticPoints()
+        this.v = 4
+    }
+    generateQuadraticPoints(){
+        let unary = constraint(-1,1)
+        unary = unary == 0 ? 1 : unary
+        let k, h;
+        if(unary == 1){
+            k = constraint(-9,5)
+            h = constraint(-7,7)
+        }else{
+            h = constraint(-7,7)
+            k = constraint(-5, 9)
+        }
 
+        let y = (x)=> x*x 
+        for(let x = -2; x <= 2; x++){
+            let hx = x + h
+            this.addPoint(hx, unary * y(x) + k )
+            this.randomPoints.push(createVector(hx, unary*y(x) + k))
+        }
+
+        
+    }
+    createQuestion(){
+        this.generateQuadraticPoints()
+        this.renderQuestion()
+    }
+}
+
+
+
+export class LinearAbsolute extends Session{
+    constructor(){
+
+        super()
+        this.randomAbsoluteLinearPoints = []
+        this.v = 4
+        this.generateAbsoluteLinearPoints()
+    }
+    generateAbsoluteLinearPoints(){
+        /**
+         * The slope value constrained within the plane's
+         * minimum and maximum coordinate range.
+         */
+        let s = constraint(-this.v, this.v) 
+        // make h 1 if 0, 
+        s = s == 0 ? 1 : s
+
+        /**
+         * The maximum vertical intercept range based on
+         * the plane dimensions and the selected slope.
+         */
+        const c = this.dimension.y - (s*s) - 2
+
+        /**
+         * The maximum vertical intercept range based on
+         * the plane dimensions and the selected slope.
+         */
+        const n =  constraint(-c , c) 
+        // console.log(h, n );
+        /**
+         * Represents the linear function using the
+         * selected slope and vertical intercept.
+         *
+         * @param {number} x - The x-coordinate.
+         * @returns {number} The corresponding y-coordinate.
+         */
+        const y  = (x) => Math.abs(x *  s) + n
+        let k;
+        let h = constraint(-7, 7);
+        let unary = constraint(-1, 1)
+        unary = unary == 0 ? 1: unary
+        for(let x = -2; x <= 2;x++){
+            this.randomAbsoluteLinearPoints.push(createVector(x,y(x)))
+            this.addPoint(x+h,   unary * y(x))
+            this.randomPoints.push(createVector(x, unary * y(x)))
+            console.log("x: " + x,"y: "+ y(x));
+            
+        }
+       
+    }
+    createQuestion(){
+        this.generateAbsoluteLinearPoints()
+        this.renderQuestion()
+    }
+
+    
+}
 export class Linear extends Session{
     constructor(){
         super()
         this.randomLinearPoints= []
         this.generateLinearPoints()
+        this.v = 4
     }
     generateLinearPoints(){
-        let h = constraint(-3, 3) 
+        /**
+         * The slope value constrained within the plane's
+         * minimum and maximum coordinate range.
+         */
+        let h = constraint(-4, 4) 
+        // make h 1 if 0, 
         h = h == 0 ? 1 : h
+
+        /**
+         * The maximum vertical intercept range based on
+         * the plane dimensions and the selected slope.
+         */
         const c = this.dimension.y - (h*h) - 1
+
+        /**
+         * The maximum vertical intercept range based on
+         * the plane dimensions and the selected slope.
+         */
         const n =  constraint(-c , c) 
-        console.log(h, n );
-        
-        
+        // console.log(h, n );
+        /**
+         * Represents the linear function using the
+         * selected slope and vertical intercept.
+         *
+         * @param {number} x - The x-coordinate.
+         * @returns {number} The corresponding y-coordinate.
+         */
         const y  = (x) => x *  h + n
         for(let x = -2; x <= 2;x++){
             this.randomLinearPoints.push(createVector(x,y(x)))
@@ -479,7 +508,8 @@ function constraint(c1, c2){
 export class Quiz{
     constructor(){
         this.activeInstance = null
-        this.currentMode = "linear"
+        this.currentMode = "random" 
+       
         // this.setupListener()
         this.startNewQuiz()
     }
@@ -494,7 +524,12 @@ export class Quiz{
             this.activeInstance = new RandomizedPoint();
         } else if (this.currentMode === 'linear') {
             this.activeInstance = new Linear();
-        } else if(this.currentMode === 'quadratic') {
+        } else if(this.currentMode === "linearAbsolute"){
+            this.activeInstance = new LinearAbsolute();
+            
+        } 
+        
+        else if(this.currentMode === 'quadratic') {
             this.activeInstance = new Quadratic();
         }
         this.activeInstance.renderQuestion()

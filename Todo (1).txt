@@ -19,3 +19,103 @@ expected answer is 15 x 15,
                 category: bills 
             }
 
+
+
+
+
+
+    checkPoint(){
+        const $feedback = document.getElementById("feedback");
+
+    if (this.points.length === 0) {
+        $feedback.textContent = "Plot a point first.";
+        $feedback.className = "feedback error";
+        return;
+    }
+
+    let correctCount = 0;
+
+    this.points.forEach(point => {
+
+        // Check if this plotted point exists
+        // anywhere in the random target points
+        const matchingTarget = this.randomPoints.find(target =>
+            point.x === target.x &&
+            point.y === target.y
+        );
+
+        point.correct = matchingTarget !== undefined;
+
+        if (point.correct) {
+            correctCount++;
+        }
+    });
+
+    const wrongCount =
+        this.points.length - correctCount;
+
+    $feedback.textContent =
+        `${correctCount} correct, ${wrongCount} incorrect.`;
+
+    $feedback.className =
+        wrongCount === 0
+            ? "feedback success"
+            : "feedback error";
+
+
+    }
+              renderQuestion(){
+        const pointsHTML = randomPoints
+        .map(point => `(${point.x}, ${point.y})`)
+        .join(", ");
+
+    $question.innerHTML = `
+        <div class="quiz-header">
+            <p class="eyebrow">CARTESIAN PLANE</p>
+
+            <h1>Coordinate Challenge</h1>
+
+            <p class="description">
+                Plot all the given points on the coordinate plane.
+            </p>
+        </div>
+
+        <div class="target-point">
+            <span class="point-label">POINTS</span>
+
+            <span class="coordinate">
+                ${pointsHTML}
+            </span>
+        </div>
+
+        <p id="feedback"></p>
+
+        <div class="button-group">
+            <button
+                type="button"
+                id="check-answer"
+                class="submit-button"
+            >
+                Check Points
+            </button>
+
+            <button
+                type="button"
+                id="next-question"
+                class="next-button"
+            >
+                Next Question
+            </button>
+        </div>
+    `;
+
+    document
+        .getElementById("check-answer")
+        .addEventListener("click", this.checkPoint);
+
+    document
+        .getElementById("next-question")
+        .addEventListener("click", this.createQuestion);
+
+    }
+

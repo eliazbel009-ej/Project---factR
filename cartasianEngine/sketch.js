@@ -4,8 +4,7 @@ let plane;
 let ctx;
 let randomPoints = []
 let m
-
-
+let currMode
 const $question = document.getElementById("question");
 window.setup = function () {
 
@@ -26,6 +25,7 @@ window.setup = function () {
 
     // 2. Start the first question cycle
     startNewGameRound();
+    currMode = document.getElementById("menu-option").value
     // createQuestion();
     // plane.renderQuestion()
     // plane.generateLinearPoints()
@@ -46,6 +46,7 @@ function startNewGameRound() {
     // Generate data and build the HTML inside $question
     // plane.createQuestion(); 
 }
+
 function setupQuizControls() {
     // Listen to the permanent parent container. It catches button clicks even when 
     // the inner HTML is completely blown away and rebuilt!
@@ -60,10 +61,31 @@ function setupQuizControls() {
         if (event.target.id === "next-question") {
             startNewGameRound(); // discard old plane and boot new plane instance
         }
+    //     if(event.target.id === "menu-option"){
+    //        if(event.target.value){
+    //          m.currentMode = event.target.value
+    //           let t = event.target.value
+    //         startNewGameRound()
+    //         document.getElementById(event.target.id).value = t
+    //        }
+    //     }
+
+        if (event.target.id === "menu-option") {
+    const mode = event.target.value;
+
+    if (!mode) return;
+
+    m.currentMode = mode;
+
+    startNewGameRound();
+}
     });
+    
+
 }
 window.draw = function () {
     background(255);
+    // const mouse = getCanvasMouse(window.event);
 
     // Center the viewport origin 0,0 in the middle of the screen
     translate(width / 2, height / 2);
@@ -97,7 +119,7 @@ window.draw = function () {
     // Draw permanent dots array onto the screen
     plane.plotPoints();
     
-    console.log(plane.points[0].y);
+    // console.log(plane.points[0].y);
     
 };
 
@@ -108,8 +130,22 @@ window.mouseClicked = function () {
     const coordinate = plane.plot(translatedMX, translatedMY);
 
     // Prevent saving out of bounds context if desired
-    if(Math.abs(coordinate.x) <= plane.dimension.x && Math.abs(coordinate.y) <= plane.dimension.y) {
-        plane.addPoint(coordinate.x, coordinate.y);
+     if (
+        Math.abs(coordinate.x) <= plane.dimension.x &&
+        Math.abs(coordinate.y) <= plane.dimension.y
+    ) {
+        const index = plane.points.findIndex(
+            p => p.x === coordinate.x &&
+                 p.y === coordinate.y
+        );
+
+        if (index !== -1) {
+            // Point already exists → remove it
+            plane.points.splice(index, 1);
+        } else {
+            // Point does not exist → add it
+            plane.addPoint(coordinate.x, coordinate.y);
+        }
     }
 };
 
