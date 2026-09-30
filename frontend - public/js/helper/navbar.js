@@ -90,7 +90,7 @@ function createNavbarHTML() {
 
                         <li>
                             <a
-                                href="${getNavPath("grade7/grade7L2.html")}#lesson2"
+                                href="${getNavPath("grade7/Grade7L2.html")}#lesson2"
                                 class="dropdown-item"
                             >
                                 Square & Cube Roots
@@ -99,7 +99,7 @@ function createNavbarHTML() {
 
                         <li>
                             <a
-                                href="${getNavPath("grade7/grade7L3.html")}#lesson3"
+                                href="${getNavPath("grade7/Grade7L3.html")}#lesson3"
                                 class="dropdown-item"
                             >
                                 Comparing Irrationals
@@ -108,7 +108,7 @@ function createNavbarHTML() {
 
                         <li>
                             <a
-                                href="${getNavPath("grade7/grade7L3.html")}#lesson4"
+                                href="${getNavPath("grade7/Grade7L3.html")}#lesson4"
                                 class="dropdown-item"
                             >
                                 Arranging Irrationals
@@ -117,7 +117,7 @@ function createNavbarHTML() {
 
                         <li>
                             <a
-                                href="${getNavPath("grade7/grade7L5.html")}#lesson5"
+                                href="${getNavPath("grade7/Grade7L5.html")}#lesson5"
                                 class="dropdown-item"
                             >
                                 Operations on Fractions
@@ -126,7 +126,7 @@ function createNavbarHTML() {
 
                         <li>
                             <a
-                                href="${getNavPath("grade7/grade7L6.html")}#lesson6"
+                                href="${getNavPath("grade7/Grade7L6.html")}#lesson6"
                                 class="dropdown-item"
                             >
                                 Unit Conversion
