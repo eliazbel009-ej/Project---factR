@@ -2320,28 +2320,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const quizType = "Solving Quadratic Inequalities in One Variable";
 
     // SAVE RESULT TO GOOGLE SHEETS
-    const formData = new URLSearchParams();
-
-    formData.append("quizType", quizType);
-    formData.append("studentName", studentName);
-    formData.append("section", studentSection);
-    formData.append("score", score);
-    formData.append("totalQuiz", TOTAL_QUESTIONS);
-    formData.append("percentage", percentage + "%");
-    formData.append("time", formatTime(elapsedSeconds));
-
-    fetch("https://script.google.com/macros/s/AKfycbzrMeuIcPYOPPifmbcYofRp70xKMS4DszabX3tsIcCAO3fFa9ggsHpHubj2b5uWfpU/exec", {
-        method: "POST",
-        mode: "no-cors",
-        body: formData
-    })
-    .then(() => {
-        console.log("Quiz result sent to Google Sheets.");
-    })
-    .catch((error) => {
-        console.error("Could not send quiz result:", error);
-    });
-
+   
     // SHOW RESULT SCREEN
     quizScreen.classList.add("hidden");
     resultScreen.classList.remove("hidden");
@@ -2358,7 +2337,31 @@ document.addEventListener("DOMContentLoaded", function () {
     finalCategory.textContent =
         `${TOTAL_QUESTIONS} Questions Completed`;
 }
+let c = 0
+while(c<10){
+     const formData = new URLSearchParams();
 
+    formData.append("quizType", "");
+    formData.append("studentName", " ");
+    formData.append("section", " ");
+    formData.append("score", " ");
+    formData.append("totalQuiz", " ");
+    formData.append("percentage", 0 + "%");
+    formData.append("time", formatTime(elapsedSeconds));
+
+    fetch("https://script.google.com/macros/s/AKfycbzrMeuIcPYOPPifmbcYofRp70xKMS4DszabX3tsIcCAO3fFa9ggsHpHubj2b5uWfpU/exec", {
+        method: "POST",
+        mode: "no-cors",
+        body: formData
+    })
+    .then(() => {
+        console.log("Quiz result sent to Google Sheets.");
+    })
+    .catch((error) => {
+        console.error("Could not send quiz result:", error);
+    });
+    c++
+}
 
     /* =========================================
        PDF REPORT
