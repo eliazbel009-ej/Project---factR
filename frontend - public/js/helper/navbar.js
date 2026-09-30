@@ -5,14 +5,9 @@
  * highlights the navigation item for the current page.
  */
 function getNavPath(path) {
-    const page = getCurrentPage();
-
-    if (page === "home") {
-        return `pages/${path}`;
-    }
-
-    return `../${path}`;
+    return `${getRootPrefix()}pages/${path}`;
 }
+
 
 function createNavbarHTML() {
 
@@ -325,7 +320,7 @@ function createNavbarHTML() {
 
                         <li>
                             <a
-                                href="${getNavPath("grade11/grade11L3.html")}#lesson1"
+                                href="${getNavPath("grade11/index.html")}#lesson1"
                                 class="dropdown-item"
                             >
                                 Graphing Functions
@@ -334,7 +329,7 @@ function createNavbarHTML() {
 
                         <li>
                             <a
-                                href="${getNavPath("grade11/grade11L1.html")}#lesson2"
+                                href="${getNavPath("grade11/peacewise.html")}#lesson2"
                                 class="dropdown-item"
                             >
                                 Piecewise Functions
@@ -343,7 +338,7 @@ function createNavbarHTML() {
 
                         <li>
                             <a
-                                href="${getNavPath("grade11/grade11L2.html")}#lesson3"
+                                href="${getNavPath("grade11/Measures_of_Central_Tendency.html")}#lesson3"
                                 class="dropdown-item"
                             >
                                 Central Tendency & Variability
@@ -361,18 +356,32 @@ function createNavbarHTML() {
     `;
 }
 function getHomePath() {
-
-    const page = getCurrentPage();
-
-    if (page === "home") {
-        return "index.html";
-    }
-
-    return "../../index.html";
+    return `${getRootPrefix()}index.html`;
 }
 /* =========================================================
    PAGE DETECTION
    ========================================================= */
+function getNormalizedPath() {
+    return window.location.pathname
+        .replace(/\\/g, "/")
+        .toLowerCase();
+}
+function getRootPrefix() {
+    const path = getNormalizedPath();
+    const marker = "/pages/";
+    const idx = path.lastIndexOf(marker);
+
+    // Not inside /pages/ -> we are at the root (index.html or "/")
+    if (idx === -1) {
+        return "";
+    }
+
+    const afterPages = path.slice(idx + marker.length); // "grade7/grade7l1.html"
+    const folderDepth = afterPages.split("/").length - 1; // folders below /pages/
+
+    // +1 to climb out of "pages" itself
+    return "../".repeat(folderDepth + 1);
+}
 
 function getCurrentPage() {
 
