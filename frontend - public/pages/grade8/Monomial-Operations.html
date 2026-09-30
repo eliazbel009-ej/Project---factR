@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>G8 SIMPLE MONOMIALS</title>
+    <style>
+:root {
+    --page: #101827;
+    --surface: #f7f9fc;
+    --surface-muted: #edf2f7;
+    --border: #d5dde8;
+    --text: #172033;
+    --muted: #64748b;
+    --accent: #2563eb;
+    --accent-dark: #1d4ed8;
+}
+
+@property --outline-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background: radial-gradient(circle at top, #263957 0, var(--page) 42%);
+    font-family: "Trebuchet MS", Verdana, sans-serif;
+    padding: 40px 20px;
+    color: var(--text);
+    text-align: center;
+}
+
+.title {
+    width: 100%;
+    font-size: 2.2rem;
+    margin-bottom: 28px;
+    text-align: center;
+    font-family: Georgia, "Times New Roman", serif;
+    letter-spacing: 3px;
+    color: #f8fafc;
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.25);
+    white-space: normal;
+}
+
+.box {
+    width: min(600px, 100%);
+    position: relative;
+    isolation: isolate;
+    margin-left: auto;
+    margin-right: auto;
+    background: var(--surface);
+    border: 5px solid #123b8f;
+    border-radius: 18px;
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    padding: 32px;
+    text-align: center;
+}
+
+#studentInfo {
+    background: var(--surface-muted);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+}
+
+#studentInfo h2 {
+    margin-top: 0;
+    color: var(--text);
+}
+
+.studentInput {
+    width: 100%;
+    padding: 12px;
+    margin: 6px 0;
+    border-radius: 8px;
+    border: 1px solid #c3cedc;
+    background: #ffffff;
+    color: var(--text);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.studentInput:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+#startQuiz {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(90deg, var(--accent-dark), #ffffff 50%, var(--accent));
+    background-size: 200% 100%;
+    color: #12326f;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--accent);
+    cursor: pointer;
+    transition: background-position 0.3s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+#startQuiz:hover {
+    background-position: 100% 50%;
+    transform: translateY(-3px);
+    box-shadow:
+        0 0 0 2px #ffffff,
+        0 0 0 4px var(--accent),
+        0 8px 18px rgba(37, 99, 235, 0.35);
+}
+
+#quizArea {
+    display: none;
+}
+
+.paragraph {
+    font-size: 1.2rem;
+    margin: 0 0 15px;
+    font-weight: bold;
+    padding: 15px 18px;
+    background: var(--surface-muted);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-align: center;
+    color: var(--text);
+    letter-spacing: 0.3px;
+}
+
+.question-number,
+#questionNumber {
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: var(--muted);
+    margin-bottom: 8px;
+}
+
+.factoring-question {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 136px;
+    margin: 0 0 24px;
+    padding: 24px 22px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #ffffff;
+    text-align: center;
+}
+
+.question-expression {
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.question-fraction {
+    display: inline-grid;
+    grid-template-rows: auto 2px auto;
+    align-items: center;
+    min-width: min-content;
+    line-height: 1.2;
+}
+
+.question-fraction-numerator,
+.question-fraction-denominator {
+    padding: 0.1em 0.35em;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.question-fraction-bar {
+    width: 100%;
+    height: 2px;
+    background: currentColor;
+}
+
+.points {
+    font-size: 1.4rem;
+    margin: 0;
+    font-weight: bold;
+    text-align: center;
+    background: #ffffff;
+    color: var(--text);
+    border-radius: 12px;
+    padding: 20px 15px;
+    line-height: 2;
+    border: 1px solid var(--border);
+}
+
+.point {
+    margin: 3px 0;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 22px;
+    flex-wrap: wrap;
+}
+
+#answerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 200px;
+}
+
+#answerContainer .sqrt-sign {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--text);
+}
+
+.answerInput,
+input[type="text"] {
+    flex: 1;
+    min-width: 150px;
+    padding: 12px 15px;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: 1px solid #c3cedc;
+    background: #ffffff;
+    color: var(--text);
+    outline: none;
+    transition: 0.25s ease;
+}
+
+.answerInput::placeholder,
+input[type="text"]::placeholder {
+    color: #7b8798;
+}
+
+.answerInput:focus,
+input[type="text"]:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+input[type="button"] {
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(90deg, var(--accent-dark), #ffffff 50%, var(--accent));
+    background-size: 200% 100%;
+    color: #12326f;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--accent);
+    cursor: pointer;
+    transition: background-position 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="button"]:hover {
+    background-position: 100% 50%;
+    transform: translateY(-3px);
+    box-shadow:
+        0 0 0 2px #ffffff,
+        0 0 0 4px var(--accent),
+        0 8px 18px rgba(37, 99, 235, 0.35);
+}
+
+input[type="button"]:active {
+    transform: translateY(1px) scale(0.97);
+    box-shadow: 0 3px 8px rgba(37, 99, 235, 0.25);
+}
+
+#feedback {
+    margin-top: 18px;
+    border-radius: 10px;
+    padding: 12px 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    min-height: 20px;
+}
+
+#feedback.correct {
+    color: #166534;
+    background: #dcfce7;
+}
+
+#feedback.incorrect {
+    color: #b91c1c;
+    background: #fee2e2;
+}
+
+#score {
+    margin-top: 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #475569;
+}
+
+#finalScore {
+    display: none;
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 25px;
+    margin-top: 10px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #1e293b;
+    text-align: center;
+    white-space: pre-line;
+}
+
+#downloadRecord {
+    display: none;
+    width: 100%;
+    margin-top: 15px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+#downloadRecord:hover {
+    background: #3b82f6;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+}
+
+#restartQuiz {
+    display: none;
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px 20px;
+    border: 2px solid var(--accent);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--accent-dark);
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#restartQuiz:hover {
+    background: var(--accent-dark);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(37, 99, 235, 0.25);
+}
+
+#restartQuiz:focus-visible {
+    outline: 3px solid rgba(37, 99, 235, 0.35);
+    outline-offset: 2px;
+}
+
+#restartQuiz:active {
+    transform: translateY(0);
+}
+
+a {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 10px 18px;
+    text-decoration: none;
+    color: #93c5fd;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: 0.25s ease;
+}
+
+a:hover {
+    color: white;
+    background: #1e293b;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 560px) {
+    body {
+        padding: 30px 15px;
+    }
+
+    .title {
+        font-size: 1.8rem;
+    }
+
+    .box {
+        padding: 22px;
+        border-radius: 18px;
+    }
+
+    .controls {
+        flex-direction: column;
+    }
+
+    .answerInput,
+    input[type="text"],
+    input[type="button"] {
+        width: 100%;
+    }
+
+    .points {
+        font-size: 1.05rem;
+    }
+}
+    </style>
+    <link rel="icon" type="image/png" href="logo.jpg" />
+    <style>
+        .top-row,
+        .answer-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .top-row {
+            margin-bottom: 22px;
+        }
+
+        #case,
+        #answer {
+            min-width: 0;
+            height: 50px;
+            padding: 0 14px;
+            border: 1px solid #c3cedc;
+            border-radius: 10px;
+            background: #ffffff;
+            color: var(--text);
+            font: inherit;
+            outline: none;
+        }
+
+        #case {
+            flex: 1;
+        }
+
+        #startButton {
+            flex: 0 0 auto;
+            min-width: 140px;
+            height: 50px;
+            padding: 0 20px;
+            border: 0;
+            border-radius: 10px;
+            background: var(--accent);
+            color: #ffffff;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        #startButton:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+        }
+
+        #startButton:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #loginButton {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(90deg, var(--accent-dark), #ffffff 50%, var(--accent));
+            background-size: 200% 100%;
+            color: #12326f;
+            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--accent);
+            cursor: pointer;
+            transition: background-position 0.3s ease, transform 0.15s ease, box-shadow 0.2s ease;
+        }
+
+        #loginButton:hover {
+            background-position: 100% 50%;
+            transform: translateY(-3px);
+            box-shadow:
+                0 0 0 2px #ffffff,
+                0 0 0 4px var(--accent),
+                0 8px 18px rgba(37, 99, 235, 0.35);
+        }
+
+        #loginButton:active {
+            transform: translateY(1px) scale(0.97);
+        }
+
+        #answer {
+            flex: 1;
+        }
+
+        .exponent-controls {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 10px 0 0;
+        }
+
+        .exponent-label {
+            margin: 12px 0 0;
+            color: var(--muted);
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .exponent-button {
+            width: 44px;
+            height: 40px;
+            border: 1px solid #c3cedc;
+            border-radius: 8px;
+            background: #ffffff;
+            color: var(--text);
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .exponent-button:hover,
+        .exponent-button:focus-visible {
+            border-color: var(--accent);
+            background: #eff6ff;
+        }
+
+        #case:focus,
+        #answer:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        #question {
+            min-height: 136px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 0 0 24px;
+            padding: 24px 22px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: #ffffff;
+            color: var(--text);
+            text-align: center;
+        }
+
+        .submit-btn {
+            flex: 0 0 auto;
+            min-width: 130px;
+            height: 50px;
+            padding: 0 20px;
+            border: 0;
+            border-radius: 10px;
+            background: var(--accent);
+            color: #ffffff;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 560px) {
+            .top-row,
+            .answer-row {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            #case,
+            #answer,
+            #startButton,
+            .submit-btn {
+                width: 100%;
+                flex-basis: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+      <!-- TITLE -->
+    <div class="title" id="title">
+        Simple Monomials
+    </div>
+
+    <!-- QUIZ BOX -->
+    <div class="box">
+
+        <div id="studentInfo">
+            <h2>Student Information</h2>
+            <input
+                type="text"
+                id="firstName"
+                class="studentInput"
+                placeholder="First Name"
+            >
+            <input
+                type="text"
+                id="lastName"
+                class="studentInput"
+                placeholder="Last Name"
+            >
+            <input
+                type="text"
+                id="section"
+                class="studentInput"
+                placeholder="Section"
+            >
+            <button id="loginButton" onclick="beginQuiz()">
+                START QUIZ
+            </button>
+        </div>
+
+        <div id="quizArea">
+
+        <!-- TYPE SELECTION -->
+        <div class="top-row">
+
+            <select id="case">
+                <option value="0">Select Type</option>
+                <option value="1">ADDITION & SUBTRACTION</option>
+                <option value="2">MULTIPLICATION</option>
+                <option value="3">DIVISION</option>
+                <option value="4">RANDOM (15 QUESTIONS)</option>
+            </select>
+
+            <button id="startButton" onclick="startSelectedQuiz()">
+                Start Quiz
+            </button>
+
+        </div>
+
+        <!-- QUESTION -->
+        <div id="question">
+            <div id="questionNumber" class="question-number"></div>
+            <div id="questionText" class="question-expression"></div>
+        </div>
+
+        <!-- ANSWER SECTION -->
+        <div class="answer-row">
+
+            <input
+                id="answer"
+                type="text"
+                placeholder="Enter your answer"
+            >
+
+            <button
+                id="submitButton"
+                class="submit-btn"
+                onclick="checkAnswer()"
+            >
+                Submit
+            </button>
+
+        </div>
+
+        <p class="exponent-label">Click for exponent</p>
+        <div class="exponent-controls" aria-label="Insert an exponent">
+            <button class="exponent-button" type="button" aria-label="Exponent 2" title="Exponent 2" onclick="insertExponent('²')">²</button>
+            <button class="exponent-button" type="button" aria-label="Exponent 3" title="Exponent 3" onclick="insertExponent('³')">³</button>
+            <button class="exponent-button" type="button" aria-label="Exponent 4" title="Exponent 4" onclick="insertExponent('⁴')">⁴</button>
+            <button class="exponent-button" type="button" aria-label="Exponent 5" title="Exponent 5" onclick="insertExponent('⁵')">⁵</button>
+            <button class="exponent-button" type="button" aria-label="Exponent 6" title="Exponent 6" onclick="insertExponent('⁶')">⁶</button>
+            <button class="exponent-button" type="button" aria-label="Exponent 7" title="Exponent 7" onclick="insertExponent('⁷')">⁷</button>
+            <button class="exponent-button" type="button" aria-label="Exponent 8" title="Exponent 8" onclick="insertExponent('⁸')">⁸</button>
+        </div>
+
+        <!-- FEEDBACK -->
+        <div id="feedback"></div>
+
+        <!-- SCORE -->
+        <div id="score">
+            Correct Answers: 0
+        </div>
+        </div>
+
+        <div id="finalScore"></div>
+        <button id="downloadRecord" onclick="downloadRecord()">
+            DOWNLOAD RECORD
+        </button>
+        <button id="restartQuiz" onclick="window.location.reload()" style="display: none;">
+            RESTART QUIZ
+        </button>
+    </div>
+    <script>
+let TOTAL_QUESTIONS = 10;
+const MAX_VALUE = 50;
+const PERFECT_SQUARE_MAX_NUMBER = 10;
+const MAX_EXPONENT = 8;
+
+let questionNumber = 1;
+let correctAnswer = "";
+let selectedType = 0;
+let score = 0;
+let studentFirstName = "";
+let studentLastName = "";
+let studentSection = "";
+let records = [];
+let currentQuestionExpression = "";
+let currentQuestionType = "";
+let randomQuestionTypes = [];
+
+// Keep track of questions that were already used.
+// Store generated questions so they do not repeat.
+let usedQuestions = new Set();
+
+
+// Remove spaces and normalize symbols before checking an answer.
+function normalizeAnswer(answer) {
+
+    return answer
+        .replace(/\s/g, "")
+        .replace(/−/g, "-")
+        .replace(/×/g, "*")
+        .replace(/⁰/g, "^0")
+        .replace(/¹/g, "^1")
+        .replace(/²/g, "^2")
+        .replace(/³/g, "^3")
+        .replace(/⁴/g, "^4")
+        .replace(/⁵/g, "^5")
+        .replace(/⁶/g, "^6")
+        .replace(/⁷/g, "^7")
+        .replace(/⁸/g, "^8")
+        .replace(/⁹/g, "^9")
+        .replace(/([a-z])\^1(?!\d)/g, "$1")
+        .toLowerCase();
+}
+
+
+// Insert a superscript exponent at the answer field's current cursor position.
+function insertExponent(exponent) {
+
+    const answerInput =
+        document.getElementById("answer");
+
+    if (answerInput.disabled) {
+        return;
+    }
+
+    const start = answerInput.selectionStart;
+    const end = answerInput.selectionEnd;
+
+    answerInput.setRangeText(
+        exponent,
+        start,
+        end,
+        "end"
+    );
+    answerInput.focus();
+}
+
+
+// Do not allow answer notation to express powers above the quiz limit.
+function hasExponentOverLimit(answer) {
+
+    return Array.from(answer.matchAll(/\^(\d+)/g))
+        .some(match => Number(match[1]) > MAX_EXPONENT);
+}
+
+
+// Build a term from its coefficient and variables.
+function formatPolynomialTerm(
+    coefficient,
+    variableParts
+) {
+
+    if (coefficient === 0) {
+        return "0";
+    }
+
+
+    let coefficientText = "";
+
+
+    if (coefficient === 1) {
+        coefficientText = "";
+    }
+
+    else if (coefficient === -1) {
+        coefficientText = "-";
+    }
+
+    else {
+        coefficientText = coefficient;
+    }
+
+
+    let variableText = "";
+
+
+    for (const part of variableParts) {
+
+        if (part.exponent === 0) {
+            continue;
+        }
+
+        if (part.exponent === 1) {
+
+            variableText += part.letter;
+
+        }
+
+        else {
+
+            const exponentText =
+                String(part.exponent)
+                    .split("")
+                    .map(digit => "⁰¹²³⁴⁵⁶⁷⁸⁹"[Number(digit)])
+                    .join("");
+
+            variableText += `${part.letter}${exponentText}`;
+        }
+    }
+
+
+    return `${coefficientText}${variableText}`;
+}
+
+
+// Show feedback with the matching visual state.
+function setFeedback(
+    message,
+    type = ""
+) {
+
+    const feedback =
+        document.getElementById("feedback");
+
+
+    feedback.textContent =
+        message;
+
+
+    feedback.classList.remove(
+        "correct",
+        "incorrect"
+    );
+
+
+    if (type === "correct") {
+
+        feedback.classList.add(
+            "correct"
+        );
+    }
+
+
+    if (type === "incorrect") {
+
+        feedback.classList.add(
+            "incorrect"
+        );
+    }
+}
+
+
+// Generate a whole number in the requested range.
+function randomInt(min, max) {
+
+    return Math.floor(
+        Math.random() *
+        (max - min + 1)
+    ) + min;
+}
+
+
+// Choose 1 to 3 variables and give each a power from 1 to 3.
+function randomVariableParts() {
+
+    const letters = [
+        "x",
+        "y",
+        "z",
+        "a",
+        "b",
+        "c"
+    ];
+
+
+    const numberOfVariables =
+        randomInt(1, 3);
+
+
+    const shuffled =
+        [...letters].sort(
+            () => Math.random() - 0.5
+        );
+
+
+    const selected =
+        shuffled.slice(
+            0,
+            numberOfVariables
+        );
+
+
+    return selected.sort().map(letter => ({
+
+        letter: letter,
+
+        exponent:
+            randomInt(1, 3)
+
+    }));
+}
+
+
+// Generate a question that has not been used yet.
+function getUniqueQuestion(
+    generateQuestion
+) {
+
+    let questionData;
+    let attempts = 0;
+
+
+    do {
+
+        questionData =
+            generateQuestion();
+
+        attempts++;
+
+
+        if (attempts > 1000) {
+
+            usedQuestions.clear();
+
+            break;
+        }
+
+
+    } while (
+        usedQuestions.has(
+            questionData.key
+        )
+    );
+
+
+    usedQuestions.add(
+        questionData.key
+    );
+
+
+    return questionData;
+}
+
+
+// Validate student details and open the quiz area.
+function beginQuiz() {
+
+    studentFirstName =
+        document.getElementById("firstName").value.trim();
+    studentLastName =
+        document.getElementById("lastName").value.trim();
+    studentSection =
+        document.getElementById("section").value.trim();
+
+    if (
+        studentFirstName === "" ||
+        studentLastName === "" ||
+        studentSection === ""
+    ) {
+        alert("Please enter your First Name, Last Name, and Section.");
+        return;
+    }
+
+    records = [];
+    document.getElementById("studentInfo").style.display = "none";
+    document.getElementById("quizArea").style.display = "block";
+}
+
+
+// Reset the quiz and start the selected question type.
+function startSelectedQuiz() {
+
+    selectedType =
+        Number(
+            document.getElementById("case").value
+        );
+
+
+    if (selectedType === 0) {
+        return;
+    }
+
+
+    questionNumber = 1;
+    score = 0;
+    records = [];
+    TOTAL_QUESTIONS = selectedType === 4 ? 15 : 10;
+    randomQuestionTypes = [];
+
+    if (selectedType === 4) {
+        randomQuestionTypes = Array.from(
+            { length: TOTAL_QUESTIONS },
+            (_, questionIndex) => questionIndex % 4 + 1
+        );
+
+        for (let index = randomQuestionTypes.length - 1; index > 0; index--) {
+            const swapIndex = randomInt(0, index);
+            [randomQuestionTypes[index], randomQuestionTypes[swapIndex]] =
+                [randomQuestionTypes[swapIndex], randomQuestionTypes[index]];
+        }
+    }
+
+
+    usedQuestions.clear();
+
+
+    document
+        .querySelector(".box")
+        .classList
+        .remove("quiz-complete");
+
+
+    document
+        .getElementById("question")
+        .classList
+        .remove("quiz-complete");
+
+
+    document
+        .getElementById("case")
+        .disabled = true;
+
+
+    document
+        .getElementById("startButton")
+        .disabled = true;
+
+
+    document
+        .getElementById("answer")
+        .disabled = false;
+
+
+    document
+        .getElementById("score")
+        .textContent =
+        "Correct Answers: 0";
+
+
+    document
+        .getElementById("startButton")
+        .textContent =
+        "Start Quiz";
+
+    document.getElementById("finalScore").style.display = "none";
+    document.getElementById("downloadRecord").style.display = "none";
+    document.getElementById("quizArea").style.display = "block";
+
+
+    startQuiz(selectedType);
+}
+
+
+// Generate and display the next question.
+function startQuiz(quizMode) {
+
+    let data;
+
+    let questionType;
+
+    if (quizMode === 1) {
+        questionType = questionNumber <= 5 ? 1 : 2;
+    } else if (quizMode === 2) {
+        questionType = 3;
+    } else if (quizMode === 3) {
+        questionType = 4;
+    } else {
+        questionType = randomQuestionTypes[questionNumber - 1];
+    }
+
+
+    if (questionType === 1 || questionType === 2) {
+
+        data = getUniqueQuestion(() => {
+
+
+            // Generate the two coefficients and shared variables.
+            const firstCoefficient =
+                randomInt(
+                    1,
+                    MAX_VALUE
+                );
+
+
+            const isAddition =
+                questionType === 1;
+
+
+            const secondCoefficient =
+                isAddition
+
+                    ? randomInt(
+                        1,
+                        MAX_VALUE
+                    )
+
+                    : randomInt(
+                        1,
+                        firstCoefficient
+                    );
+
+
+            const variableParts =
+                randomVariableParts();
+
+
+            const firstTermText =
+                formatPolynomialTerm(
+                    firstCoefficient,
+                    variableParts
+                );
+
+
+            const secondTermText =
+                formatPolynomialTerm(
+                    secondCoefficient,
+                    variableParts
+                );
+
+
+            // Apply the correct sign for addition or subtraction.
+            const secondSignedCoefficient =
+                isAddition
+
+                    ? secondCoefficient
+
+                    : -secondCoefficient;
+
+
+            const operator =
+                isAddition
+                    ? "+"
+                    : "-";
+
+
+            const expression =
+                `${firstTermText} ${operator} ${secondTermText}`;
+
+
+            // Combine the coefficients to calculate the answer.
+            const answerCoefficient =
+                firstCoefficient +
+                secondSignedCoefficient;
+
+
+            const answer =
+                formatPolynomialTerm(
+                    answerCoefficient,
+                    variableParts
+                );
+
+
+            return {
+
+                key:
+                    `${isAddition ? "sum" : "difference"}-${firstCoefficient}-${secondCoefficient}-${JSON.stringify(variableParts)}`,
+
+                expression:
+                    expression,
+
+                type:
+                    isAddition ? "Addition" : "Subtraction",
+
+                answer:
+                    answer
+            };
+
+        });
+    }
+
+
+    else if (questionType === 3 || questionType === 4) {
+
+        data = getUniqueQuestion(() => {
+
+
+            const isMultiplication =
+                questionType === 3;
+
+
+            let firstCoefficient;
+            let secondCoefficient;
+
+            let firstParts;
+            let secondParts;
+
+
+            if (isMultiplication) {
+
+
+                // Keep the absolute coefficient product at 10 or less.
+                firstCoefficient =
+                    randomInt(1, 10);
+
+
+                secondCoefficient =
+                    randomInt(
+                        1,
+                        Math.floor(10 / firstCoefficient)
+                    );
+
+
+                // Randomize each sign independently: +,+ +,- -,+ or -,-.
+                if (randomInt(0, 1) === 1) {
+                    firstCoefficient =
+                        -firstCoefficient;
+                }
+
+                if (randomInt(0, 1) === 1) {
+                    secondCoefficient =
+                        -secondCoefficient;
+                }
+
+
+                const answerExponentMin =
+                    questionNumber <= 5 ? 2 : 5;
+
+                const answerExponentMax =
+                    questionNumber <= 5 ? 5 : MAX_EXPONENT;
+
+                const targetExponents = [];
+
+                firstParts =
+                    randomVariableParts().map(part => {
+
+                        const targetExponent =
+                            randomInt(
+                                answerExponentMin,
+                                answerExponentMax
+                            );
+
+                        targetExponents.push(targetExponent);
+
+                        return {
+
+                            letter:
+                                part.letter,
+
+                            exponent:
+                                randomInt(1, targetExponent - 1)
+
+                        };
+                    });
+
+
+                secondParts =
+                    firstParts.map((part, index) => ({
+
+                        letter:
+                            part.letter,
+
+                        exponent:
+                            targetExponents[index] - part.exponent
+
+                    }));
+
+            }
+
+
+            else {
+
+
+                // Build the numerator from an integer quotient and denominator.
+                secondCoefficient =
+                    randomInt(1, 12);
+
+                const quotientCoefficient =
+                    randomInt(1, 12);
+
+                firstCoefficient =
+                    secondCoefficient * quotientCoefficient;
+
+
+                secondParts =
+                    randomVariableParts().map(part => ({
+
+                        letter:
+                            part.letter,
+
+                        exponent:
+                            randomInt(1, 2)
+
+                    }));
+
+
+                firstParts =
+                    secondParts.map(part => ({
+
+                        letter:
+                            part.letter,
+
+                        exponent:
+                            randomInt(
+                                part.exponent + 1,
+                                part.exponent + 2
+                            )
+
+                    }));
+
+            }
+
+
+            // Format both sides of the multiplication or division.
+            const firstTermText =
+                formatPolynomialTerm(
+                    firstCoefficient,
+                    firstParts
+                );
+
+
+            const secondTermText =
+                formatPolynomialTerm(
+                    secondCoefficient,
+                    secondParts
+                );
+
+
+            // Add or subtract powers for the result.
+            let answerParts;
+
+
+            if (isMultiplication) {
+
+
+                answerParts =
+                    firstParts.map(
+                        (part, index) => ({
+
+                            letter:
+                                part.letter,
+
+                            exponent:
+                                part.exponent +
+                                secondParts[index]
+                                    .exponent
+
+                        })
+                    );
+
+            }
+
+
+            else {
+
+
+                answerParts =
+                    firstParts.map(
+                        (part, index) => ({
+
+                            letter:
+                                part.letter,
+
+                            exponent:
+                                part.exponent -
+                                secondParts[index]
+                                    .exponent
+
+                        })
+                    );
+
+            }
+
+
+            // Multiply or divide the coefficients.
+            const resultCoefficient =
+                isMultiplication
+
+                    ? firstCoefficient *
+                      secondCoefficient
+
+                    : firstCoefficient /
+                      secondCoefficient;
+
+            // Format the calculated answer.
+            const answer =
+                formatPolynomialTerm(
+                    resultCoefficient,
+                    answerParts
+                );
+
+
+            // Show division as a numerator over a denominator.
+            const expression =
+                isMultiplication
+
+                    ? `${firstTermText} * ${secondTermText}`
+
+                    : `${firstTermText} / ${secondTermText}`;
+
+
+            return {
+
+                key:
+                    `${isMultiplication ? "multiplication" : "division"}-${firstCoefficient}-${secondCoefficient}-${JSON.stringify(firstParts)}-${JSON.stringify(secondParts)}`,
+
+                expression:
+                    expression,
+
+                type:
+                    isMultiplication ? "Multiplication" : "Division",
+
+                isFraction:
+                    !isMultiplication,
+
+                numerator:
+                    firstTermText,
+
+                denominator:
+                    secondTermText,
+
+                answer:
+                    answer
+            };
+
+        });
+    }
+
+
+    // Save the answer and display the generated question.
+    correctAnswer =
+        data.answer;
+    currentQuestionExpression =
+        data.expression;
+    currentQuestionType =
+        data.type;
+
+
+    const questionLabel =
+        `Question ${questionNumber} of ${TOTAL_QUESTIONS}`;
+
+    document.getElementById("questionNumber").textContent =
+        questionLabel;
+
+    const questionText =
+        document.getElementById("questionText");
+
+    if (data.isFraction) {
+        const fraction = document.createElement("span");
+        fraction.className = "question-fraction";
+        fraction.setAttribute("role", "img");
+        fraction.setAttribute(
+            "aria-label",
+            `${data.numerator} over ${data.denominator}`
+        );
+
+        const numerator = document.createElement("span");
+        numerator.className = "question-fraction-numerator";
+        numerator.textContent = data.numerator;
+
+        const bar = document.createElement("span");
+        bar.className = "question-fraction-bar";
+        bar.setAttribute("aria-hidden", "true");
+
+        const denominator = document.createElement("span");
+        denominator.className = "question-fraction-denominator";
+        denominator.textContent = data.denominator;
+
+        fraction.append(numerator, bar, denominator);
+        questionText.replaceChildren(fraction);
+    } else {
+        questionText.textContent = data.expression;
+    }
+
+
+    document
+        .getElementById("answer")
+        .value = "";
+
+
+    setFeedback("");
+}
+
+
+// Check the submitted answer and update the quiz state.
+function checkAnswer() {
+
+    const answerInput =
+        document.getElementById(
+            "answer"
+        );
+
+
+    const userAnswer =
+        answerInput.value.trim();
+
+
+    // Do not score an empty response.
+    if (userAnswer === "") {
+
+        setFeedback(
+            "Please enter an answer.",
+            "incorrect"
+        );
+
+        return;
+    }
+
+
+    // Normalize both answers before comparing them.
+    const normalizedUserAnswer =
+        normalizeAnswer(
+            userAnswer
+        );
+
+    if (hasExponentOverLimit(normalizedUserAnswer)) {
+
+        setFeedback(
+            `Exponents must be ${MAX_EXPONENT} or lower.`,
+            "incorrect"
+        );
+
+        return;
+    }
+
+
+    const normalizedCorrectAnswer =
+        normalizeAnswer(
+            correctAnswer
+        );
+
+
+    const answerMatches =
+        normalizedUserAnswer ===
+        normalizedCorrectAnswer;
+
+    records.push({
+        question: questionNumber,
+        type: currentQuestionType,
+        expression: currentQuestionExpression,
+        studentAnswer: userAnswer,
+        correctAnswer: correctAnswer,
+        result: answerMatches ? "Correct" : "Incorrect"
+    });
+
+
+    // Show whether the answer is correct and update the score.
+    if (answerMatches) {
+
+        score++;
+
+
+        setFeedback(
+            `Correct! Answer: ${correctAnswer}`,
+            "correct"
+        );
+    }
+
+
+    else {
+
+        setFeedback(
+            `Incorrect! Correct answer: ${correctAnswer}`,
+            "incorrect"
+        );
+    }
+
+
+    document
+        .getElementById("score")
+        .textContent =
+        `Correct Answers: ${score}`;
+
+
+    answerInput.disabled = true;
+
+
+    // Replace Submit with Next Question until the quiz is complete.
+    if (
+        questionNumber <
+        TOTAL_QUESTIONS
+    ) {
+
+
+        const nextButton =
+            document.getElementById(
+                "submitButton"
+            );
+
+
+        nextButton.id =
+            "nextQuestion";
+
+
+        nextButton.textContent =
+            "Next Question";
+
+
+        nextButton.onclick =
+            function () {
+
+
+                questionNumber++;
+
+
+                nextButton.id =
+                    "submitButton";
+
+
+                nextButton.className =
+                    "submit-btn";
+
+
+                nextButton.textContent =
+                    "Submit";
+
+
+                nextButton.onclick =
+                    checkAnswer;
+
+
+                answerInput.disabled =
+                    false;
+
+
+                startQuiz(
+                    selectedType
+                );
+            };
+    }
+
+
+    // Show the final score and unlock the quiz controls.
+    else {
+
+
+        const question =
+            document.getElementById(
+                "question"
+            );
+
+
+        const quizBox =
+            document.querySelector(
+                ".box"
+            );
+
+
+        document.getElementById("questionNumber").textContent = "";
+        document.getElementById("questionText").textContent =
+            "Quiz Complete!";
+
+
+        question.classList.add(
+            "quiz-complete"
+        );
+
+
+        quizBox.classList.add(
+            "quiz-complete"
+        );
+
+
+        setFeedback(
+            `Final Score: ${score}/${TOTAL_QUESTIONS}`,
+            "correct"
+        );
+
+
+        document
+            .getElementById(
+                "startButton"
+            )
+            .disabled = false;
+
+
+        document
+            .getElementById(
+                "startButton"
+            )
+            .textContent =
+            "Start New Quiz";
+
+
+        document
+            .getElementById(
+                "case"
+            )
+            .disabled = false;
+
+        document.getElementById("quizArea").style.display = "none";
+
+        const finalScore =
+            document.getElementById("finalScore");
+
+        finalScore.style.display = "block";
+        finalScore.textContent =
+            `QUIZ COMPLETE!\n\n${studentFirstName} ${studentLastName}` +
+            `\nSection: ${studentSection}\n\nScore: ${score} / ${TOTAL_QUESTIONS}`;
+
+        document.getElementById("downloadRecord").style.display = "block";
+        document.getElementById("restartQuiz").style.display = "block";
+    }
+}
+
+
+// Download the student details, score, and question results.
+function downloadRecord() {
+
+    let text = "";
+    text += "G8 SIMPLE MONOMIALS\n\n";
+    text += "STUDENT INFORMATION\n";
+    text += `First Name: ${studentFirstName}\n`;
+    text += `Last Name: ${studentLastName}\n`;
+    text += `Section: ${studentSection}\n\n`;
+    text += "FINAL SCORE\n";
+    text += `${score} / ${TOTAL_QUESTIONS}\n\n`;
+    text += "QUESTION RECORD\n";
+
+    records.forEach(record => {
+        text += `\nQuestion ${record.question}\n`;
+        text += `Type: ${record.type}\n`;
+        text += `Expression: ${record.expression}\n`;
+        text += `Student Answer: ${record.studentAnswer}\n`;
+        text += `Correct Answer: ${record.correctAnswer}\n`;
+        text += `Result: ${record.result}\n`;
+    });
+
+    const blob = new Blob([text], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download =
+        `${studentFirstName}_${studentLastName}_Simple_Monomials_Record.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+}
+    </script>
+</body>
+</html>

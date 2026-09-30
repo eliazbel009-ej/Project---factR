@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>G8 Cartesian Plane</title>
+    <link rel="icon" type="image/png" href="logo.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+:root {
+    --primary-dark: #073827;
+    --primary-forest: #16623d;
+    --primary-accent: #339763;
+    --tint-light: #f0f7f3;
+    --card-bg: #ffffff;
+    --text-body: #334d42;
+    --text-muted: #628273;
+    --border-color: #e2ede6;
+    --correct-bg: #e7f7ee;
+    --wrong-bg: #fde8e8;
+    --wrong-text: #9b1c1c;
+    --warn-bg: #fff4e0;
+    --warn-text: #8a5200;
+    --font-brand: "Montserrat", Arial, sans-serif;
+    --font-body: "Inter", Arial, sans-serif;
+    --shadow-sm: 0 2px 4px rgba(7, 56, 39, 0.03);
+    --shadow-md: 0 10px 25px -5px rgba(7, 56, 39, 0.08);
+    --shadow-lg: 0 20px 40px -10px rgba(7, 56, 39, 0.12);
+    --radius: 16px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100vh;
+    background: #f7faf8;
+    font-family: var(--font-body);
+    color: var(--text-body);
+    overflow-x: hidden;
+}
+
+.title {
+    width: 92%;
+    max-width: 600px;
+    margin: 30px auto 15px;
+    font-family: var(--font-brand);
+    color: var(--primary-dark);
+    font-size: 26px;
+    font-weight: 800;
+    text-align: center;
+}
+
+/* ---------- CARDS ---------- */
+#studentInfo,
+#quizArea,
+#finishMessage {
+    width: 92%;
+    max-width: 580px;
+    margin-left: auto;
+    margin-right: auto;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+}
+
+#studentInfo {
+    max-width: 440px;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    padding: 35px;
+}
+
+#studentInfo h2 {
+    margin-bottom: 20px;
+    font-family: var(--font-brand);
+    color: var(--primary-dark);
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.studentInput {
+    display: block;
+    width: 100%;
+    height: 48px;
+    margin-bottom: 16px;
+    padding: 10px 16px;
+    background: var(--tint-light);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    font: inherit;
+    font-size: 15px;
+    color: var(--primary-dark);
+    outline: none;
+}
+
+.studentInput:focus {
+    background: #ffffff;
+    border-color: var(--primary-accent);
+}
+
+/* ---------- BUTTONS ---------- */
+.btn-primary {
+    display: block;
+    width: 100%;
+    min-height: 48px;
+    margin-top: 16px;
+    padding: 10px 15px;
+    background: var(--primary-forest);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-family: var(--font-brand);
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-primary:focus-visible {
+    outline: 3px solid rgba(51, 151, 99, 0.4);
+    outline-offset: 2px;
+}
+
+.btn-outline {
+    background: #ffffff;
+    color: var(--primary-forest);
+    border: 2px solid var(--primary-forest);
+}
+
+.btn-outline:hover {
+    background: var(--primary-forest);
+    color: #ffffff;
+}
+
+/* ---------- QUIZ INFO BAR ---------- */
+#quizInfo {
+    width: 92%;
+    max-width: 580px;
+    margin: 0 auto 16px;
+    padding: 18px 20px;
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    display: none;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+#quizInfo p {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+#showName,
+#showSection {
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+
+#score,
+#questionNumber {
+    padding: 8px 12px;
+    background: var(--tint-light);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--primary-forest);
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* ---------- QUIZ AREA ---------- */
+#quizArea {
+    display: none;
+    margin-bottom: 40px;
+    padding: 35px;
+}
+
+.paragraph {
+    margin-bottom: 16px;
+    font-family: var(--font-brand);
+    color: var(--primary-dark);
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.points {
+    width: 100%;
+    min-height: 100px;
+    margin-bottom: 20px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--tint-light);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--primary-dark);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+.point {
+    margin: 3px 0;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+#answerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+}
+
+#answerContainer .sqrt-sign {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--primary-dark);
+}
+
+.answerInput {
+    flex: 1;
+    min-width: 0;
+    height: 50px;
+    padding: 0 16px;
+    background: var(--tint-light);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    font: inherit;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--primary-dark);
+    text-align: center;
+    outline: none;
+}
+
+.answerInput::placeholder {
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.answerInput:focus {
+    background: #ffffff;
+    border-color: var(--primary-accent);
+}
+
+#feedback {
+    margin-top: 16px;
+    padding: 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.5;
+    text-align: center;
+}
+
+#feedback:empty {
+    display: none;
+}
+
+/* ---------- FINISH ---------- */
+#finishMessage {
+    display: none;
+    margin-bottom: 40px;
+    padding: 35px;
+    text-align: center;
+}
+
+#finishMessage h2 {
+    margin-bottom: 20px;
+    font-family: var(--font-brand);
+    color: var(--primary-dark);
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.summary-item {
+    margin: 10px 0;
+    padding: 12px;
+    background: var(--tint-light);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.summary-item strong {
+    color: var(--primary-dark);
+}
+
+.final-score {
+    margin: 20px 0;
+    color: var(--primary-forest);
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.final-score small {
+    font-size: 18px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.site-footer {
+    padding: 20px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+    .title {
+        font-size: 22px;
+        margin-top: 24px;
+    }
+
+    #studentInfo,
+    #quizArea {
+        padding: 25px 20px;
+    }
+
+    #quizInfo {
+        grid-template-columns: 1fr;
+    }
+
+    .points {
+        font-size: 17px;
+    }
+
+    #finishMessage {
+        padding: 24px;
+    }
+
+    .final-score {
+        font-size: 38px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+    }
+}
+    </style>
+    <link rel="stylesheet" href="../../assets/style/style.css">
+</head>
+<body>
+  <header class="top-nav-bar" id="navbar">
+   
+  </header>
+
+    <!-- TITLE -->
+    <main>
+      
+   <section class="cover-section" id="cover">
+      <div class="cover-wrapper">
+        <img 
+          src="../../assets/img/background/7-Irrationals.jpeg" 
+          alt="ProjectFactr Mathematics Remedial Learning Platform Banner" 
+          class="cover-image"
+          id="main-cover-image"
+        >
+      </div>
+    </section>
+
+      <h1 class="title" id="title">DISTANCE</h1>
+
+    <!-- STUDENT INFORMATION -->
+    <div id="studentInfo">
+
+        <h2>Student Information</h2>
+
+        <input
+            type="text"
+            id="firstName"
+            class="studentInput"
+            placeholder="First Name"
+        >
+
+        <input
+            type="text"
+            id="lastName"
+            class="studentInput"
+            placeholder="Last Name"
+        >
+
+        <input
+            type="text"
+            id="section"
+            class="studentInput"
+            placeholder="Section"
+        >
+
+        <button id="startQuiz" class="btn-primary" onclick="startQuiz()">
+            START QUIZ
+        </button>
+
+    </div>
+
+    <!-- QUIZ INFO BAR -->
+    <div id="quizInfo">
+        <p>Name: <span id="showName"></span></p>
+        <p>Section: <span id="showSection"></span></p>
+        <div id="questionNumber">
+            Question 1 of 10
+        </div>
+        <div id="score">
+            Correct Answers: 0
+        </div>
+    </div>
+
+    <!-- QUIZ AREA -->
+    <div id="quizArea">
+
+        <p class="paragraph" id="question">
+            Solve the DISTANCE between the two points
+        </p>
+
+        <div class="points">
+            <div class="point" id="pointA"></div>
+            <div class="point" id="pointB"></div>
+        </div>
+
+        <div class="controls">
+
+            <div id="answerContainer">
+                <input
+                    type="text"
+                    id="pointBInput"
+                    class="answerInput"
+                    placeholder="Enter your answer"
+                >
+            </div>
+
+            <input
+                type="button"
+                class="btn-primary"
+                value="SUBMIT"
+                onclick="checkAnswer()"
+            >
+
+        </div>
+
+        <div id="feedback"></div>
+
+    </div>
+
+    <!-- FINAL SCORE -->
+    <div id="finishMessage">
+        <h2>Quiz Complete! 🎉</h2>
+        <div class="summary-item">Name: <strong id="summaryName"></strong></div>
+        <div class="summary-item">Section: <strong id="summarySection"></strong></div>
+        <div class="final-score">
+            <span id="finalScore">0</span><small> / <span id="finalTotal">10</span></small>
+        </div>
+
+        <!-- DOWNLOAD -->
+        <button class="btn-primary" onclick="downloadRecord()">
+            DOWNLOAD RECORD
+        </button>
+        <button class="btn-primary btn-outline" onclick="window.location.reload()">
+            RESTART QUIZ
+        </button>
+    </div>
+    </main>
+
+    <footer class="site-footer">
+        <div>&copy; 2026 ProjectFactr. All rights reserved.</div>
+        <div>Mathematics Learning &amp; Curriculum Platform</div>
+    </footer>
+
+    <script>
+// ==========================================
+// QUIZ SETTINGS
+// ==========================================
+const TOTAL_QUESTIONS = 10;
+
+// ==========================================
+// STUDENT INFORMATION
+// ==========================================
+let studentFirstName = "";
+let studentLastName = "";
+let studentSection = "";
+
+// ==========================================
+// QUIZ VARIABLES
+// ==========================================
+let questionNumber = 1;
+let correctAnswers = 0;
+let records = [];
+let currentMode = "whole";
+let answerSubmitted = false;
+
+// ==========================================
+// FEEDBACK COLORS
+// ==========================================
+function showFeedback(message, type) {
+    const feedback = document.getElementById("feedback");
+    feedback.textContent = message;
+
+    if (type === "correct") {
+        feedback.style.backgroundColor = "var(--correct-bg)";
+        feedback.style.color = "var(--primary-dark)";
+    } else if (type === "wrong") {
+        feedback.style.backgroundColor = "var(--wrong-bg)";
+        feedback.style.color = "var(--wrong-text)";
+    } else {
+        feedback.style.backgroundColor = "var(--warn-bg)";
+        feedback.style.color = "var(--warn-text)";
+    }
+}
+
+// ==========================================
+// START QUIZ
+// ==========================================
+function startQuiz() {
+    studentFirstName = document.getElementById("firstName").value.trim();
+    studentLastName = document.getElementById("lastName").value.trim();
+    studentSection = document.getElementById("section").value.trim();
+
+    if (
+        studentFirstName === "" ||
+        studentLastName === "" ||
+        studentSection === ""
+    ) {
+        alert("Please enter your First Name, Last Name, and Section.");
+        return;
+    }
+
+    document.getElementById("showName").textContent =
+        studentFirstName + " " + studentLastName;
+    document.getElementById("showSection").textContent = studentSection;
+
+    document.getElementById("studentInfo").style.display = "none";
+    document.getElementById("quizInfo").style.display = "grid";
+    document.getElementById("quizArea").style.display = "block";
+    generateQuestion();
+}
+
+// ==========================================
+// RANDOM COORDINATE
+// ==========================================
+const rand = (min, max) =>
+    Math.floor(Math.random() * (max - min + 1)) + min;
+
+const coordinateValues = [
+    -10, -9, -8, -7, -6, -5, -4, -3, -2, -1,
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+];
+
+function renderAnswerInputs() {
+    const container = document.getElementById("answerContainer");
+
+    if (currentMode === "whole") {
+        container.innerHTML =
+            '<input type="text" id="pointBInput" class="answerInput" placeholder="Enter your answer">';
+        return;
+    }
+
+    container.innerHTML =
+        '<input type="text" id="outsideRoot" class="answerInput" placeholder="Outside">' +
+        '<span class="sqrt-sign">√</span>' +
+        '<input type="text" id="insideRoot" class="answerInput" placeholder="Inside">';
+}
+
+function simplifySquareRoot(value) {
+    let remaining = value;
+    let outside = 1;
+
+    for (let i = 2; i * i <= remaining; i++) {
+        while (remaining % (i * i) === 0) {
+            remaining /= i * i;
+            outside *= i;
+        }
+    }
+
+    return {
+        outside,
+        inside: remaining,
+        text: remaining === 1 ? String(outside) : outside + "√" + remaining,
+    };
+}
+
+// ==========================================
+// GENERATE QUESTION
+// ==========================================
+function generateQuestion() {
+    const wantsWholeNumber = questionNumber <= 5;
+    let pointA;
+    let pointB;
+    let distanceSquared;
+    let distanceRoot;
+    let simplifiedDistance;
+
+    do {
+        pointA = {
+            x: coordinateValues[rand(0, coordinateValues.length - 1)],
+            y: coordinateValues[rand(0, coordinateValues.length - 1)],
+        };
+        pointB = {
+            x: coordinateValues[rand(0, coordinateValues.length - 1)],
+            y: coordinateValues[rand(0, coordinateValues.length - 1)],
+        };
+
+        const changeX = pointB.x - pointA.x;
+        const changeY = pointB.y - pointA.y;
+        distanceSquared = changeX * changeX + changeY * changeY;
+        distanceRoot = Math.sqrt(distanceSquared);
+        simplifiedDistance = simplifySquareRoot(distanceSquared);
+    } while (
+        distanceSquared === 0 ||
+        (wantsWholeNumber && !Number.isInteger(distanceRoot)) ||
+        (!wantsWholeNumber && (
+            Number.isInteger(distanceRoot) ||
+            simplifiedDistance.outside === 1 ||
+            simplifiedDistance.inside > 30
+        ))
+    );
+
+    window.pointA = pointA;
+    window.pointB = pointB;
+    currentMode = wantsWholeNumber ? "whole" : "radical";
+    renderAnswerInputs();
+
+    document.getElementById("pointA").textContent =
+        "Point A (x₁, y₁) = (" + pointA.x + ", " + pointA.y + ")";
+    document.getElementById("pointB").textContent =
+        "Point B (x₂, y₂) = (" + pointB.x + ", " + pointB.y + ")";
+
+    if (currentMode === "whole") {
+        window.expected = String(distanceRoot);
+        document.getElementById("pointBInput").placeholder = "Enter the distance";
+    } else {
+        window.expected = simplifiedDistance.text;
+        window.expectedOutside = simplifiedDistance.outside;
+        window.expectedInside = simplifiedDistance.inside;
+        document.getElementById("outsideRoot").placeholder = "Outside";
+        document.getElementById("insideRoot").placeholder = "Inside";
+    }
+
+    document.getElementById("questionNumber").textContent =
+        "Question " + questionNumber + " of " + TOTAL_QUESTIONS;
+
+    document.getElementById("score").textContent =
+        "Correct Answers: " + correctAnswers;
+
+    const answerInput = document.getElementById(currentMode === "whole" ? "pointBInput" : "outsideRoot");
+    if (answerInput) answerInput.value = "";
+    if (document.getElementById("insideRoot")) document.getElementById("insideRoot").value = "";
+
+    document.getElementById("feedback").textContent = "";
+    document.getElementById("feedback").style.backgroundColor = "transparent";
+    document.querySelector('.controls input[type="button"]').value = "SUBMIT";
+    answerSubmitted = false;
+}
+
+// ==========================================
+// CHECK ANSWER
+// ==========================================
+function checkAnswer() {
+    const submitButton = document.querySelector('.controls input[type="button"]');
+
+    if (answerSubmitted) {
+        if (questionNumber >= TOTAL_QUESTIONS) {
+            finishQuiz();
+        } else {
+            questionNumber++;
+            generateQuestion();
+        }
+        return;
+    }
+
+    let isCorrect = false;
+    let studentAnswer = "";
+
+    if (currentMode === "whole") {
+        const input = document.getElementById("pointBInput").value.trim();
+
+        if (input === "") {
+            showFeedback("Please enter an answer.", "warn");
+            return;
+        }
+
+        const userAnswer = Number(input);
+
+        if (!Number.isInteger(userAnswer)) {
+            showFeedback("Please enter a whole number.", "warn");
+            return;
+        }
+
+        studentAnswer = input;
+        isCorrect = userAnswer === Number(expected);
+    } else {
+        const outside = document.getElementById("outsideRoot").value.trim();
+        const inside = document.getElementById("insideRoot").value.trim();
+
+        if (outside === "" || inside === "") {
+            showFeedback("Please enter both values.", "warn");
+            return;
+        }
+
+        const outsideValue = Number(outside);
+        const insideValue = Number(inside);
+
+        if (!Number.isInteger(outsideValue) || !Number.isInteger(insideValue)) {
+            showFeedback("Please enter whole numbers for both boxes.", "warn");
+            return;
+        }
+
+        studentAnswer = outside + "√" + inside;
+        isCorrect = outsideValue === Number(expectedOutside) && insideValue === Number(expectedInside);
+    }
+
+    records.push({
+        question: questionNumber,
+        questionType: currentMode,
+        studentAnswer: studentAnswer,
+        correctAnswer: expected,
+        result: isCorrect ? "Correct" : "Incorrect",
+    });
+
+    if (isCorrect) {
+        correctAnswers++;
+        showFeedback("Correct! ✓", "correct");
+        document.getElementById("score").textContent =
+            "Correct Answers: " + correctAnswers;
+    } else {
+        showFeedback("Incorrect. The correct answer is " + expected, "wrong");
+    }
+
+    answerSubmitted = true;
+    submitButton.value = questionNumber >= TOTAL_QUESTIONS
+        ? "FINISH QUIZ"
+        : "NEXT QUESTION";
+}
+
+// ==========================================
+// FINISH QUIZ
+// ==========================================
+function finishQuiz() {
+    document.getElementById("quizArea").style.display = "none";
+    document.getElementById("quizInfo").style.display = "none";
+
+    document.getElementById("summaryName").textContent =
+        studentFirstName + " " + studentLastName;
+    document.getElementById("summarySection").textContent = studentSection;
+    document.getElementById("finalScore").textContent = correctAnswers;
+    document.getElementById("finalTotal").textContent = TOTAL_QUESTIONS;
+
+    document.getElementById("finishMessage").style.display = "block";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ==========================================
+// DOWNLOAD TEXT RECORD
+// ==========================================
+function downloadRecord() {
+    let text = "";
+
+    text += "========================================\n";
+    text += "          G8 CARTESIAN PLANE\n";
+    text += "========================================\n\n";
+
+    text += "STUDENT INFORMATION\n";
+    text += "----------------------------------------\n";
+    text += "First Name: " + studentFirstName + "\n";
+    text += "Last Name: " + studentLastName + "\n";
+    text += "Section: " + studentSection + "\n";
+    text += "\n";
+
+    text += "FINAL SCORE\n";
+    text += "----------------------------------------\n";
+    text += correctAnswers + " / " + TOTAL_QUESTIONS + "\n\n";
+
+    text += "QUESTION RECORD\n";
+    text += "========================================\n";
+
+    records.forEach(function(record) {
+        text += "\nQuestion " + record.question + "\n";
+        text += "Type: " + record.questionType + "\n";
+        text += "Student Answer: " + record.studentAnswer + "\n";
+        text += "Correct Answer: " + record.correctAnswer + "\n";
+        text += "Result: " + record.result + "\n";
+        text += "----------------------------------------\n";
+    });
+
+    text += "\n";
+    text += "End of Record\n";
+
+    const blob = new Blob([text], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = studentFirstName + "_" + studentLastName + "_Cartesian_Plane_Record.txt";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+}
+    </script>
+<script src="../../js/helper/navbar.js"></script>
+</body>
+</html>

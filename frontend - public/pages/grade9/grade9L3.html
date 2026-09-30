@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Project Linear Function Quiz</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Google Web Fonts (Montserrat & Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+    --bg-1: #f7f2e8;
+    --bg-2: #dce9e5;
+    --primary: #164e63;
+    --primary-dark: #102a43;
+    --accent: #e07a5f;
+    --text: #17202a;
+    --muted: #5b6870;
+    --card: #fffdf7;
+    --line: #c7d6d2;
+    --success: #16a34a;
+    --danger: #dc2626;
+    --warning: #f59e0b;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    background-color: var(--bg-1);
+    background-image:
+        linear-gradient(rgba(22, 78, 99, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(22, 78, 99, 0.08) 1px, transparent 1px),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2));
+    background-size: 28px 28px, 28px 28px, 100% 100%;
+    color: var(--text);
+}
+
+.quiz-shell {
+    width: min(92vw, 900px);
+    padding: 24px;
+}
+
+.quiz-card {
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 253, 247, 0.97);
+    border: 1px solid rgba(16, 42, 67, 0.16);
+    border-radius: 14px;
+    box-shadow: 10px 10px 0 rgba(16, 42, 67, 0.1), 0 20px 40px rgba(16, 42, 67, 0.12);
+    padding: 28px 22px;
+}
+
+.quiz-card::before {
+    content: "∠  △  π  =";
+    display: block;
+    padding: 10px 14px;
+    margin: -28px -22px 24px;
+    background: var(--primary-dark);
+    color: #f4c95d;
+    font-family: Georgia, serif;
+    font-size: 0.92rem;
+    letter-spacing: 0.32em;
+    text-align: right;
+}
+
+.header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.badge {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    box-shadow: 4px 4px 0 rgba(16, 42, 67, 0.18);
+}
+
+.timer {
+    border: 1px solid var(--line);
+    background: #f4c95d;
+    color: var(--primary-dark);
+    border-radius: 4px;
+    padding: 8px 14px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.quiz-title {
+    margin: 0 0 8px;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    color: var(--primary-dark);
+    font-family: Georgia, "Times New Roman", serif;
+    letter-spacing: 0;
+}
+
+.subtitle {
+    margin: 0 0 22px;
+    color: var(--muted);
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.quiz-content {
+    padding: 0;
+}
+
+.quiz-content h2 {
+    margin: 0 0 8px;
+    font-size: 1.6rem;
+    color: var(--primary-dark);
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.question-count {
+    color: var(--muted);
+    font-weight: 700;
+}
+
+.question-box {
+    background-color: #f4f0e5;
+    background-image:
+        linear-gradient(rgba(22, 78, 99, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(22, 78, 99, 0.07) 1px, transparent 1px);
+    background-size: 20px 20px;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.answer-section {
+    display: grid;
+    gap: 8px;
+    margin: 18px 0;
+}
+
+.answer-section label {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    letter-spacing: 0.02em;
+}
+
+input, select {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 6px;
+    border: 2px solid var(--line);
+    background: white;
+    font-size: 1rem;
+    color: var(--text);
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(224, 122, 95, 0.16);
+}
+
+button {
+    border: none;
+    border-radius: 6px;
+    background: var(--primary);
+    color: white;
+    padding: 14px 22px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    box-shadow: 4px 4px 0 rgba(16, 42, 67, 0.18);
+}
+
+button.secondary {
+    background: var(--accent);
+}
+
+button:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.feedback {
+    min-height: 30px;
+    margin-top: 18px;
+    font-size: 1.06rem;
+    line-height: 1.5;
+    color: var(--text);
+}
+
+.summary-box {
+    background: #f5f0e5;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px;
+    line-height: 1.8;
+    margin-top: 16px;
+}
+
+#resultScreen {
+    text-align: center;
+}
+
+.score-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--success), #15803d);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-weight: 700;
+    margin-top: 8px;
+}
+
+.hidden {
+    display: none;
+}
+
+@media print {
+    body {
+        display: block;
+        padding: 0;
+        background: white;
+        color: #17202a;
+    }
+
+    .quiz-shell {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .quiz-card {
+        border: 0;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .quiz-card::before {
+        display: none;
+    }
+
+    button {
+        display: none !important;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    .quiz-shell {
+        width: min(94vw, 820px);
+        padding: 20px;
+    }
+
+    .quiz-card {
+        padding: 28px 24px;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        display: block;
+        padding: 10px 0;
+    }
+
+    .quiz-shell {
+        width: 100%;
+        margin: 0 auto;
+        padding: 10px;
+    }
+
+    .quiz-card {
+        padding: 22px 16px;
+        border-radius: 20px;
+    }
+
+    .header-row {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .quiz-title {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 0.98rem;
+    }
+
+    .question-box {
+        padding: 14px;
+        margin-top: 16px;
+    }
+
+    .actions {
+        display: grid;
+    }
+
+    button, input, select {
+        width: 100%;
+    }
+
+    .summary-box {
+        padding: 14px;
+        font-size: 0.98rem;
+    }
+}
+</style>
+<link rel="stylesheet" href="../../assets/style/style.css">
+</head>
+<body>
+
+    <header class="top-nav-bar" id="navbar">
+
+  </header>
+  <section class="cover-section" id="cover">
+      <div class="cover-wrapper">
+        <img 
+          src="../../assets/img/background/" 
+          alt="ProjectFactr Mathematics Remedial Learning Platform Banner" 
+          class="cover-image"
+          id="main-cover-image"
+        >
+      </div>
+    </section>
+<main class="quiz-shell">
+<div class="quiz-card">
+<header class="header-row">
+    <span class="badge">PROJECT FACTR</span>
+    <span class="timer hidden" id="timer">00:00</span>
+</header>
+
+<section class="quiz-content" id="studentScreen">
+    <h2>Student Information</h2>
+    <p class="subtitle">Enter your details before starting the quiz.</p>
+
+    <div class="answer-section">
+        <label for="studentFirstName">First Name:</label>
+        <input type="text" id="studentFirstName" placeholder="Enter first name">
+    </div>
+
+    <div class="answer-section">
+        <label for="studentLastName">Last Name:</label>
+        <input type="text" id="studentLastName" placeholder="Enter last name">
+    </div>
+
+    <div class="answer-section">
+        <label for="studentSection">Section:</label>
+        <input type="text" id="studentSection" placeholder="Enter section">
+    </div>
+
+    <button id="confirmStudentBtn">Confirm Information</button>
+</section>
+
+<section class="quiz-content hidden" id="confirmScreen">
+    <h2>Please Confirm Your Details</h2>
+    <div class="summary-box">
+    <p><strong>First Name:</strong> <span id="confirmFirstName"></span></p>
+    <p><strong>Last Name:</strong> <span id="confirmLastName"></span></p>
+    <p><strong>Section:</strong> <span id="confirmSection"></span></p>
+    </div>
+    <div class="actions">
+        <button id="startQuizBtn" class="secondary">Start Quiz</button>
+        <button id="editStudentBtn">Edit Details</button>
+    </div>
+</section>
+
+<section class="quiz-content hidden" id="quizScreen">
+    <div class="question-count" id="progressLabel">Question 1 of 10</div>
+    <div class="question-box">
+        <span id="displayGiven"></span>
+    </div>
+
+    <div class="answer-section" id="functionSection">
+        <label for="functionAns">Enter the linear function:</label>
+        <input type="text" id="functionAns" placeholder="Example: y = mx + b or f(x) = mx + b">
+    </div>
+
+    <div class="answer-section" id="valueSection">
+        <label for="valueAns">Enter the answer:</label>
+        <input type="number" id="valueAns" placeholder="">
+    </div>
+
+    <div class="actions">
+        <button id="submitBtn" onclick="checkAns()">Submit Answer</button>
+        <button id="nextBtn" onclick="nextQuestion()" hidden>Next Question</button>
+    </div>
+    <div class="feedback" id="outAns"></div>
+</section>
+
+<section class="quiz-content hidden" id="resultScreen">
+    <h2>Quiz Complete</h2>
+    <p><strong>Student:</strong> <span id="resultStudent"></span></p>
+    <p><strong>Section:</strong> <span id="resultSection"></span></p>
+    <div class="score-badge" id="resultScore">0 / 10</div>
+    <p id="resultPercent">0%</p>
+    <p>Time: <strong id="resultTime">00:00</strong></p>
+    <button class="secondary" onclick="location.reload()">Try Again</button>
+</section>
+</div>
+</main>
+<footer class="site-footer">
+    <div class="footer-bottom">
+      <div>&copy; 2026 ProjectFactr. All rights reserved.</div>
+      <div>Mathematics Learning &amp; Curriculum Platform</div>
+    </div>
+  </footer>
+<script src="../../js/helper/navbar.js"></script>
+<script>
+    // RANDOM NUMBER FUNCTION
+
+function randomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function randomTens(min, max) {
+    return randomNumber(min / 10, max / 10) * 10;
+}
+
+function randomHundreds(min, max) {
+    return randomNumber(min / 100, max / 100) * 100;
+}
+
+function addThousandsSeparators(text) {
+    return text.replace(/\b\d{4,}\b/g, (number) => Number(number).toLocaleString('en-US'));
+}
+
+
+// RANDOM LINEAR FUNCTION QUESTION
+
+function buildQuestion() {
+    let ansr = {
+        slope: 0,
+        intercept: 0,
+        value: null,
+        requiresFunction: false,
+        requiresValue: false,
+        firstVal: 0,
+        secondVal: 0
+    };
+
+    const questionTypes = [
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+        0, 2, 4, 6, 7, 8, 9, 12, 14,
+        4, 7, 9, 11, 13, 14
+    ];
+    let oper = questionTypes[randomNumber(0, questionTypes.length - 1)];
+
+    switch (oper) {
+
+    // Allowance and monthly earnings (Variable/slope stated first)
+    case 0: {
+        let allowance = randomHundreds(500, 1000);
+        let monthlyEarning = randomHundreds(100, 300);
+        let months = randomNumber(2, 10);
+        let totalMoney = allowance + monthlyEarning * months;
+
+        document.getElementById('displayGiven').innerHTML =
+            'Each month, a student receives an additional ₱' + monthlyEarning +
+            ', and the student also starts with ₱' + allowance +
+            '. What linear function shows the student\'s total money, and how much will the student have after month ' +
+            months + '?';
+
+        ansr = {
+            slope: monthlyEarning,
+            intercept: allowance,
+            value: totalMoney,
+            requiresFunction: true,
+            requiresValue: false,
+            firstVal: monthlyEarning,
+            secondVal: allowance
+        };
+
+        break;
+    }
+
+
+    // Worker savings withdrawal: find the slope from two points.
+    case 1: {
+        let x1 = randomNumber(1, 8);
+        let x2 = x1 + randomNumber(2, 6);
+        let slope = -randomHundreds(200, 400);
+        let intercept = Math.abs(slope) * x2 + randomHundreds(200, 500);
+
+        let y1 = slope * x1 + intercept;
+        let y2 = y1 + slope * (x2 - x1);
+
+        document.getElementById('displayGiven').innerHTML =
+            'A worker has ₱' + y1 + ' in savings after ' + x1 +
+            ' months and ₱' + y2 + ' after ' + x2 +
+            ' months because of regular withdrawals. What is the worker\'s monthly '
+            + 'decrease in savings each month?';
+
+        ansr = {
+            slope: slope,
+            intercept: intercept,
+            value: Math.abs(slope),
+            requiresFunction: false,
+            requiresValue: true,
+            firstVal: y1,
+            secondVal: y2
+        };
+
+        break;
+    }
+
+
+    // Savings (Already has variable/slope first)
+    case 2: {
+        let weeklySavings = randomHundreds(200, 500);
+        let startingAmount = randomHundreds(200, 1000);
+        let weeks = randomNumber(2, 10);
+        let totalSavings = startingAmount + weeklySavings * weeks;
+
+        document.getElementById('displayGiven').innerHTML =
+            'A student saves ' + weeklySavings +
+            ' each week and already has ₱' + startingAmount +
+            '. What linear function represents the student\'s savings?';
+
+        ansr = {
+            slope: weeklySavings,
+            intercept: startingAmount,
+            value: totalSavings,
+            requiresFunction: true,
+            requiresValue: false,
+            firstVal: weeklySavings,
+            secondVal: startingAmount
+        };
+
+        break;
+    }
+
+
+    // Clearance sale price
+    case 3: {
+        let weeklyDiscount = randomTens(50, 150);
+        let weeks = randomNumber(2, 5);
+        let startingPrice = weeklyDiscount * weeks + randomHundreds(200, 500);
+        let totalPrice = startingPrice - weeklyDiscount * weeks;
+
+        document.getElementById('displayGiven').innerHTML =
+            'A product costs ' + startingPrice +
+            ' and its price decreases by ₱' + weeklyDiscount +
+            ' each week during a clearance sale. Find the price after ' +
+            weeks + ' weeks.';
+
+        ansr = {
+            slope: -weeklyDiscount,
+            intercept: startingPrice,
+            value: totalPrice,
+            requiresFunction: false,
+            requiresValue: true,
+            firstVal: startingPrice,
+            secondVal: weeklyDiscount
+        };
+
+        break;
+    }
+
+
+    // Electricity bill (Variable/slope stated first)
+    case 4: {
+        let serviceFee = randomHundreds(200, 500);
+        let costPerKilowattHour = randomTens(10, 20);
+        let kilowattHours = randomNumber(20, 100);
+        let totalBill = serviceFee + costPerKilowattHour * kilowattHours;
+
+        document.getElementById('displayGiven').innerHTML =
+            'An electricity company charges ' +
+            costPerKilowattHour +
+            ' per kilowatt-hour and a service fee of ₱' + serviceFee +
+            '. What linear function represents the electricity bill?';
+
+        ansr = {
+            slope: costPerKilowattHour,
+            intercept: serviceFee,
+            value: totalBill,
+            requiresFunction: true,
+            requiresValue: false,
+            firstVal: costPerKilowattHour,
+            secondVal: serviceFee
+        };
+
+        break;
+    }
+
+
+    // Mobile data remaining
+    case 5: {
+        let dailyUsage = randomTens(10, 30);
+        let days = randomNumber(2, 7);
+        let startingData = dailyUsage * days + randomTens(10, 30);
+        let remainingData = startingData - dailyUsage * days;
+
+        document.getElementById('displayGiven').innerHTML =
+            'A phone has ' + startingData +
+            ' gigabytes of data and uses ' + dailyUsage +
+            ' gigabytes each day. Find the data remaining after ' +
+            days + ' days.';
+
+        ansr = {
+            slope: -dailyUsage,
+            intercept: startingData,
+            value: remainingData,
+            requiresFunction: false,
+            requiresValue: true,
+            firstVal: startingData,
+            secondVal: dailyUsage
+        };
+
+        break;
+    }
+
+
+    // Bakery order (Variable/slope stated first)
+    case 6: {
+        let deliveryFee = randomHundreds(20, 100);
+        let pricePerItem = randomTens(100, 300);
+        let items = randomNumber(3, 20);
+        let totalCost = deliveryFee + pricePerItem * items;
+
+        document.getElementById('displayGiven').innerHTML =
+            'A bakery charges ₱' + pricePerItem +
+            ' for each item and a delivery fee of ' + deliveryFee +
+            '. What linear function represents the bakery order cost?';
+
+        ansr = {
+            slope: pricePerItem,
+            intercept: deliveryFee,
+            value: totalCost,
+            requiresFunction: true,
+            requiresValue: false,
+            firstVal: pricePerItem,
+            secondVal: deliveryFee
+        };
+
+        break;
+    }
+
+
+    // Water tank
+    case 7: {
+        let dailyUsage = randomTens(40, 100);
+        let days = randomNumber(2, 10);
+        let startingWater = dailyUsage * days + randomHundreds(100, 500);
+        let remainingWater = startingWater - dailyUsage * days;
+
+        document.getElementById('displayGiven').innerHTML =
+            'A water tank contains ' + startingWater +
+            ' liters and loses ' + dailyUsage +
+            ' liters each day. Find the water remaining after ' +
+            days + ' days.';
+
+        ansr = {
+            slope: -dailyUsage,
+            intercept: startingWater,
+            value: remainingWater,
+            requiresFunction: false,
+            requiresValue: true,
+            firstVal: startingWater,
+            secondVal: dailyUsage
+        };
+
+        break;
+    }
+
+
+    // Gym membership (Variable/slope stated first)
+    case 8: {
+        let registrationFee = randomHundreds(30, 100);
+        let monthlyFee = randomHundreds(300, 500);
+        let months = randomNumber(2, 12);
+        let totalCost = registrationFee + monthlyFee * months;
+
+        document.getElementById('displayGiven').innerHTML =
+            'A gym charges a monthly fee of ₱' +
+            monthlyFee +
+            ' and a registration fee of ' +
+            registrationFee +
+            '. What linear function represents the gym membership cost?';
+
+        ansr = {
+            slope: monthlyFee,
+            intercept: registrationFee,
+            value: totalCost,
+            requiresFunction: true,
+            requiresValue: false,
+            firstVal: monthlyFee,
+            secondVal: registrationFee
+        };
+
+        break;
+    }
+
+
+    // Inventory
+    case 9: {
+        let itemsSoldPerDay = randomTens(10, 40);
+        let days = randomNumber(2, 8);
+        let startingStock =
+            itemsSoldPerDay * days + randomHundreds(100, 500);
+
+        let remainingStock =
+            startingStock - itemsSoldPerDay * days;
+
+        document.getElementById('displayGiven').innerHTML =
+            'A store has ' + startingStock +
+            ' items in stock and sells ' +
+            itemsSoldPerDay +
+            ' items each day. Find the stock remaining after ' +
+            days + ' days.';
+
+        ansr = {
+            slope: -itemsSoldPerDay,
+            intercept: startingStock,
+            value: remainingStock,
+            requiresFunction: false,
+            requiresValue: true,
+            firstVal: startingStock,
+            secondVal: itemsSoldPerDay
+        };
+
+        break;
+    }
+
+
+    // Phone battery
+    case 10: {
+        let drainPerHour = randomTens(10, 20);
+        let hours = randomNumber(2, 5);
+        let startingCharge = drainPerHour * hours + randomTens(20, 40);
+        let remainingCharge =
+            startingCharge - drainPerHour * hours;
+
+        document.getElementById('displayGiven').innerHTML =
+            'A phone starts with ' + startingCharge +
+            '% battery and loses ' +
+            drainPerHour +
+            '% each hour. Find the remaining battery after ' +
+            hours + ' hours.';
+
+        ansr = {
+            slope: -drainPerHour,
+            intercept: startingCharge,
+            value: remainingCharge,
+            requiresFunction: false,
+            requiresValue: true,
+            firstVal: startingCharge,
+            secondVal: drainPerHour
+        };
+
+        break;
+    }
+
+
+    // Temperature
+    case 11: {
+        let startingTemperature = randomTens(20, 40);
+        let coolingRate = randomNumber(1, 4);
+        let hours = randomNumber(1, 4);
+        let temperature =
+            startingTemperature - coolingRate * hours;
+
+        document.getElementById('displayGiven').innerHTML =
+            'A room starts at ' + startingTemperature +
+            ' degrees Celsius and cools by ' +
+            coolingRate +
+            ' degrees each hour. What is the temperature after ' +
+            hours + ' hours?';
+
+        ansr = {
+            slope: -coolingRate,
+            intercept: startingTemperature,
+            value: temperature,
+            requiresFunction: false,
+            requiresValue: true,
+            firstVal: startingTemperature,
+            secondVal: coolingRate
+        };
+
+        break;
+    }
+
+
+    // Fruit purchase - FUNCTION ONLY (Variable/slope stated first)
+    case 12: {
+        let fixedPrice = randomHundreds(100, 300);
+        let pricePerKilo = randomTens(50, 100);
+
+        document.getElementById('displayGiven').innerHTML =
+            'A fruit stand charges ₱' + pricePerKilo +
+            ' for every kilogram of fruit and a fixed ₱' + fixedPrice +
+            ' packaging fee. What linear function represents the total cost?';
+
+        ansr = {
+            slope: pricePerKilo,
+            intercept: fixedPrice,
+            value: null,
+            requiresFunction: true,
+            requiresValue: false,
+            firstVal: pricePerKilo,
+            secondVal: fixedPrice
+        };
+
+        break;
+    }
+
+
+    // Grocery expenses - ANSWER ONLY
+    case 13: {
+        let weeklyExpense = randomHundreds(200, 500);
+        let weeks = randomNumber(2, 5);
+        let startingBudget = weeklyExpense * weeks + randomHundreds(200, 500);
+        let remainingBudget = startingBudget - weeklyExpense * weeks;
+
+        document.getElementById('displayGiven').innerHTML =
+            'A family has a grocery budget of ₱' + startingBudget +
+            ' and spends ₱' + weeklyExpense +
+            ' each week. How much of the budget remains after ' + weeks + ' weeks?';
+
+        ansr = {
+            slope: -weeklyExpense,
+            intercept: startingBudget,
+            value: remainingBudget,
+            requiresFunction: false,
+            requiresValue: true,
+            firstVal: startingBudget,
+            secondVal: weeklyExpense
+        };
+
+        break;
+    }
+
+
+    // Food delivery - FUNCTION ONLY (Variable/slope stated first)
+    case 14: {
+        let deliveryFee = randomHundreds(100, 300);
+        let mealPrice = randomHundreds(200, 500);
+
+        document.getElementById('displayGiven').innerHTML =
+            'A food delivery service charges ₱' + mealPrice +
+            ' for each meal and ₱' + deliveryFee +
+            ' as a delivery fee. What linear function represents the total order cost?';
+
+        ansr = {
+            slope: mealPrice,
+            intercept: deliveryFee,
+            value: null,
+            requiresFunction: true,
+            requiresValue: false,
+            firstVal: mealPrice,
+            secondVal: deliveryFee
+        };
+
+        break;
+    }
+    }
+
+    const question = document.getElementById('displayGiven');
+    question.innerHTML = addThousandsSeparators(question.innerHTML);
+
+    return ansr;
+}
+
+
+// FORMAT EQUATION
+
+function formatEquation(slope, intercept) {
+    if (intercept === 0) {
+        return `${slope}x`;
+    }
+
+    return intercept > 0
+        ? `${slope}x+${intercept}`
+        : `${slope}x${intercept}`;
+}
+
+
+// FORMAT EQUATION WITH y =
+
+function formatEquationForms(slope, intercept) {
+    const rightSide = formatEquation(slope, intercept);
+    return `y = ${rightSide} or f(x) = ${rightSide}`;
+}
+
+
+// GET EQUATION RIGHT SIDE FROM USER INPUT
+
+function getEquationRightSide(value) {
+    const cleanedValue = value
+        .toLowerCase()
+        .replace(/\s+/g, '')
+        .replace(/\*/g, '');
+
+    const equationParts = cleanedValue.split('=');
+
+    if (
+        equationParts.length !== 2 ||
+        !/^[a-z](?:\([a-z]\))?$/.test(equationParts[0])
+    ) {
+        return null;
+    }
+
+    const rightSide = equationParts[1];
+    
+    let slope = 0;
+    let intercept = 0;
+    let hasX = false;
+
+    const terms = rightSide.match(/([+-]?[0-9]*[a-z]|[+-]?[0-9]+)/g);
+    if (!terms) {
+        return null;
+    }
+
+    for (const term of terms) {
+        if (/[a-z]/.test(term)) {
+            hasX = true;
+            const coeffStr = term.replace(/[a-z]/g, '');
+            if (coeffStr === '' || coeffStr === '+') {
+                slope = 1;
+            } else if (coeffStr === '-') {
+                slope = -1;
+            } else {
+                slope = Number(coeffStr);
+            }
+        } else {
+            intercept = Number(term);
+        }
+    }
+
+    if (!hasX) {
+        return null;
+    }
+
+    return { slope, intercept };
+}
+
+
+const TOTAL_QUESTIONS = 10;
+let currentQuestionIndex = 0;
+let correctAnswers = 0;
+let elapsedSeconds = 0;
+let timerId = null;
+let ansr = null;
+
+function getStudentInfo() {
+    const firstName = document.getElementById('studentFirstName').value.trim();
+    const lastName = document.getElementById('studentLastName').value.trim();
+    const section = document.getElementById('studentSection').value.trim();
+
+    return {
+        firstName,
+        lastName,
+        fullName: `${firstName} ${lastName}`.trim(),
+        section
+    };
+}
+
+function confirmStudentInfo() {
+    const info = getStudentInfo();
+
+    if (!info.firstName || !info.lastName || !info.section) {
+        alert('Please complete all student details before continuing.');
+        return;
+    }
+
+    document.getElementById('confirmFirstName').textContent = info.firstName;
+    document.getElementById('confirmLastName').textContent = info.lastName;
+    document.getElementById('confirmSection').textContent = info.section;
+    document.getElementById('studentScreen').classList.add('hidden');
+    document.getElementById('confirmScreen').classList.remove('hidden');
+}
+
+function formatTime(totalSeconds) {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+}
+
+function updateTimer() {
+    document.getElementById('timer').textContent = formatTime(elapsedSeconds);
+}
+
+function loadQuestion() {
+    ansr = buildQuestion();
+    const functionRequired = ansr.requiresFunction === true;
+    const valueRequired = ansr.requiresValue === true;
+
+    document.getElementById('functionSection').style.display = functionRequired ? 'block' : 'none';
+    document.getElementById('valueSection').style.display = valueRequired ? 'block' : 'none';
+    document.getElementById('functionAns').value = '';
+    document.getElementById('valueAns').value = '';
+    document.getElementById('functionAns').disabled = false;
+    document.getElementById('valueAns').disabled = false;
+    document.getElementById('submitBtn').disabled = false;
+    document.getElementById('nextBtn').hidden = true;
+    document.getElementById('outAns').innerHTML = '';
+    document.getElementById('progressLabel').textContent = `Question ${currentQuestionIndex + 1} of ${TOTAL_QUESTIONS}`;
+}
+
+function checkAns() {
+    const functionInput = document.getElementById('functionAns').value.trim();
+    const valueInput = document.getElementById('valueAns').value.trim();
+    const parsedFunction = getEquationRightSide(functionInput);
+    const valueAnswer = Number(valueInput);
+    
+    const functionRequired = ansr.requiresFunction === true;
+    const valueRequired = ansr.requiresValue === true;
+    
+    let functionIsCorrect = true;
+    if (functionRequired) {
+        if (!parsedFunction) {
+            functionIsCorrect = false;
+        } else {
+            const matchNormal = (parsedFunction.slope === ansr.slope && parsedFunction.intercept === ansr.intercept);
+            const matchSwapped = (parsedFunction.slope === ansr.intercept && parsedFunction.intercept === ansr.slope);
+            const matchFirstTextOrder = (Math.abs(parsedFunction.slope) === Math.abs(ansr.firstVal) && Math.abs(parsedFunction.intercept) === Math.abs(ansr.secondVal));
+            
+            functionIsCorrect = (matchNormal || matchSwapped || matchFirstTextOrder);
+        }
+    }
+
+    const valueIsCorrect = !valueRequired || (valueInput !== '' && !Number.isNaN(valueAnswer) && valueAnswer === ansr.value);
+
+    document.getElementById('functionAns').disabled = true;
+    document.getElementById('valueAns').disabled = true;
+    document.getElementById('submitBtn').disabled = true;
+
+    if (functionIsCorrect && valueIsCorrect) {
+        correctAnswers += 1;
+        document.getElementById('outAns').innerHTML = '<b>Correct!</b>';
+    } else if (functionRequired) {
+        document.getElementById('outAns').innerHTML = '<b>Incorrect.</b> Correct function: <b>' + formatEquationForms(ansr.slope, ansr.intercept) + '</b>.';
+    } else {
+        document.getElementById('outAns').innerHTML = '<b>Incorrect.</b> Correct answer: <b>' + ansr.value + '</b>.';
+    }
+
+    document.getElementById('nextBtn').hidden = false;
+}
+
+function nextQuestion() {
+    currentQuestionIndex += 1;
+
+    if (currentQuestionIndex < TOTAL_QUESTIONS) {
+        loadQuestion();
+        return;
+    }
+
+    finishQuiz();
+}
+
+function finishQuiz() {
+    clearInterval(timerId);
+    const percent = Math.round((correctAnswers / TOTAL_QUESTIONS) * 100);
+    const info = getStudentInfo();
+    document.getElementById('quizScreen').classList.add('hidden');
+    document.getElementById('resultScreen').classList.remove('hidden');
+    document.getElementById('resultStudent').textContent = info.fullName;
+    document.getElementById('resultSection').textContent = info.section;
+    document.getElementById('resultScore').textContent = `${correctAnswers} / ${TOTAL_QUESTIONS}`;
+    document.getElementById('resultPercent').textContent = `${percent}%`;
+    document.getElementById('resultTime').textContent = formatTime(elapsedSeconds);
+}
+
+function startQuiz() {
+    document.getElementById('timer').classList.remove('hidden');
+    document.getElementById('confirmScreen').classList.add('hidden');
+    document.getElementById('quizScreen').classList.remove('hidden');
+    elapsedSeconds = 0;
+    updateTimer();
+    loadQuestion();
+    timerId = setInterval(() => {
+        elapsedSeconds += 1;
+        updateTimer();
+    }, 1000);
+}
+
+document.getElementById('confirmStudentBtn').addEventListener('click', confirmStudentInfo);
+document.getElementById('startQuizBtn').addEventListener('click', startQuiz);
+document.getElementById('editStudentBtn').addEventListener('click', () => {
+    document.getElementById('confirmScreen').classList.add('hidden');
+    document.getElementById('studentScreen').classList.remove('hidden');
+});
+</script>
+</body>
+</html>

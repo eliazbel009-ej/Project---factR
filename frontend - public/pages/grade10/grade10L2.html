@@ -8,6 +8,8 @@
 
 <!-- html2pdf Library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<link rel="stylesheet" href="../../assets/style/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
     * {
@@ -340,6 +342,9 @@ button:disabled {
     border: 1px solid #ffcc80;
 }
 
+.top-bar{
+    width: 100%;
+}
 /* RESULT */
 
 #finalScore {
@@ -414,6 +419,19 @@ button:disabled {
      START SCREEN
 ========================================= -->
 
+<header class="top-nav-bar" id="navbar">
+   
+  </header>
+ <section class="cover-section" id="cover">
+      <div class="cover-wrapper">
+        <img 
+          src="../../assets/img/background/7-Unit.jpg" 
+          alt="ProjectFactr Mathematics Remedial Learning Platform Banner" 
+          class="cover-image"
+          id="main-cover-image"
+        >
+      </div>
+    </section>
 <section id="startScreen" class="screen">
 
     <div class="card">
@@ -732,6 +750,12 @@ button:disabled {
     </div>
 
 </section>
+  <footer class="site-footer">
+    <div class="footer-bottom">
+      <div>&copy; 2026 ProjectFactr. All rights reserved.</div>
+      <div>Mathematics Learning &amp; Curriculum Platform</div>
+    </div>
+  </footer>
 
 
 <script>
@@ -2320,7 +2344,28 @@ document.addEventListener("DOMContentLoaded", function () {
     const quizType = "Solving Quadratic Inequalities in One Variable";
 
     // SAVE RESULT TO GOOGLE SHEETS
-   
+    const formData = new URLSearchParams();
+
+    formData.append("quizType", quizType);
+    formData.append("studentName", studentName);
+    formData.append("section", studentSection);
+    formData.append("score", score);
+    formData.append("totalQuiz", TOTAL_QUESTIONS);
+    formData.append("percentage", percentage + "%");
+    formData.append("time", formatTime(elapsedSeconds));
+
+    fetch("https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js", {
+        method: "POST",
+        mode: "no-cors",
+        body: formData
+    })
+    .then(() => {
+        console.log("Quiz result sent to Google Sheets.");
+    })
+    .catch((error) => {
+        console.error("Could not send quiz result:", error);
+    });
+
     // SHOW RESULT SCREEN
     quizScreen.classList.add("hidden");
     resultScreen.classList.remove("hidden");
@@ -2335,34 +2380,9 @@ document.addEventListener("DOMContentLoaded", function () {
         `Time: ${formatTime(elapsedSeconds)}`;
 
     finalCategory.textContent =
-        `${TOTAL_QUESTIONS} Questions Completed`;
-}
-let c = 0
-while(c<1000){
-     const formData = new URLSearchParams();
+        `${TOTAL_QUESTIONS} Questions Completed`;}
 
-    formData.append("quizType", "");
-    formData.append("studentName", "titi");
-    formData.append("section", "pipi ");
-    formData.append("score", " 6969");
-    formData.append("totalQuiz", " 9696");
-    formData.append("percentage", 0 + "%");
-    formData.append("time", formatTime(elapsedSeconds));
 
-     fetch("https://script.google.com/macros/s/AKfycbzrMeuIcPYOPPifmbcYofRp70xKMS4DszabX3tsIcCAO3fFa9ggsHpHubj2b5uWfpU/exec", {
-        method: "POST",
-        mode: "no-cors",
-        body: formData
-    })
-    .then(() => {
-        console.log("Quiz result sent to Google Sheets.");
-    })
-    .catch((error) => {
-        console.error("Could not send quiz result:", error);
-    });
-    c++
-    
-}
 
     /* =========================================
        PDF REPORT
@@ -2717,6 +2737,6 @@ while(c<1000){
 
 });
 </script>
-
+<script src="../../js/helper/navbar.js"></script>
 </body>
 </html>

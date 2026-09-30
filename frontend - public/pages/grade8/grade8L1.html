@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PROJECTFACTR — Simple Monomials Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--primary-dark:#073827;--primary-forest:#16623d;--primary-accent:#339763;--tint-light:#f0f7f3;--card-bg:#fff;--text-body:#334d42;--text-muted:#628273;--border-color:#e2ede6;--correct-bg:#e7f7ee;--wrong-bg:#fde8e8;--wrong-text:#9b1c1c;--font-brand:"Montserrat",Arial,sans-serif;--font-body:"Inter",Arial,sans-serif;--shadow-sm:0 2px 4px rgba(7,56,39,.03);--shadow-md:0 10px 25px -5px rgba(7,56,39,.08);--shadow-lg:0 20px 40px -10px rgba(7,56,39,.12);--radius:16px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;min-height:100vh;background:#f7faf8;font-family:var(--font-body);color:var(--text-body);overflow-x:hidden}
+.page-title{width:92%;max-width:600px;margin:30px auto 15px;font-family:var(--font-brand);color:var(--primary-dark);font-size:26px;font-weight:800;text-align:center}
+#studentStart,#modeSelect,#quizArea,#finishMessage{width:92%;max-width:580px;margin-left:auto;margin-right:auto;background:var(--card-bg);border:1px solid var(--border-color);border-radius:var(--radius);box-shadow:var(--shadow-md)}
+#studentStart,#modeSelect{max-width:440px;margin-top:10px;margin-bottom:40px;padding:35px}
+#modeSelect{display:none}
+h2{margin-bottom:20px;font-family:var(--font-brand);color:var(--primary-dark);font-size:20px;font-weight:700;text-align:center}
+#studentStart input{display:block;width:100%;height:48px;margin-bottom:16px;padding:10px 16px;background:var(--tint-light);border:1px solid var(--border-color);border-radius:10px;font:inherit;font-size:15px;outline:none}
+#studentStart input:focus{background:#fff;border-color:var(--primary-accent)}
+.btn-primary{display:block;width:100%;min-height:48px;margin-top:16px;padding:10px 15px;background:var(--primary-forest);color:#fff;border:none;border-radius:10px;font-family:var(--font-brand);font-size:15px;font-weight:700;cursor:pointer;transition:.2s ease}
+.btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px)}
+.btn-primary:focus-visible,.mode-btn:focus-visible,.exp-btn:focus-visible{outline:3px solid rgba(51,151,99,.4);outline-offset:2px}
+.btn-outline{background:#fff;color:var(--primary-forest);border:2px solid var(--primary-forest)}
+.btn-outline:hover{background:var(--primary-forest);color:#fff}
+.mode-btn-group{display:flex;flex-direction:column;gap:12px}
+.mode-btn{padding:15px;background:var(--tint-light);border:2px solid var(--border-color);border-radius:10px;color:var(--primary-dark);font-family:var(--font-brand);font-size:14px;font-weight:700;cursor:pointer;transition:.2s ease}
+.mode-btn:hover{background:#fff;border-color:var(--primary-accent);transform:translateY(-1px)}
+#countdownOverlay{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(7,56,39,.76);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:.25s ease}
+#countdownOverlay.active{opacity:1;pointer-events:auto}
+.countdown-card{padding:40px 60px;background:#fff;border-radius:20px;text-align:center;box-shadow:var(--shadow-lg)}
+.countdown-card h3{margin-bottom:8px;font-family:var(--font-brand);color:var(--text-muted);font-size:14px}
+#countdownNumber{font-family:var(--font-brand);font-size:80px;font-weight:800;color:var(--primary-forest)}
+#studentInfo{width:92%;max-width:580px;margin:0 auto 16px;padding:18px 20px;background:#fff;border:1px solid var(--border-color);border-radius:var(--radius);box-shadow:var(--shadow-sm);display:none;grid-template-columns:1fr 1fr;gap:12px}
+#studentInfo p{font-size:13px;font-weight:500}
+#showName,#showSection{color:var(--primary-dark);font-weight:700}
+#score,#quizCount{padding:8px 12px;background:var(--tint-light);border:1px solid var(--border-color);border-radius:8px;color:var(--primary-forest);text-align:center;font-size:13px;font-weight:600}
+#timerDisplay{grid-column:span 2;padding:8px 12px;background:var(--primary-dark);border-radius:8px;color:#fff;text-align:center;font-size:13px;font-weight:600}
+#quizArea{display:none;margin-bottom:40px;padding:35px}
+#category{margin-bottom:16px;font-family:var(--font-brand);color:var(--primary-dark);font-size:18px;font-weight:700;text-align:center}
+#displayGiven{width:100%;min-height:110px;margin-bottom:20px;padding:16px;display:flex;align-items:center;justify-content:center;background:var(--tint-light);border:1px solid var(--border-color);border-radius:12px;color:var(--primary-dark);font-size:24px;font-weight:700;line-height:1.4;text-align:center;overflow-wrap:anywhere}
+.frac{display:inline-grid;grid-template-rows:auto 2px auto;line-height:1.2}
+.frac span{padding:.1em .35em;white-space:nowrap}
+.frac .bar{width:100%;height:2px;padding:0;background:currentColor}
+.answer-wrap{display:flex;flex-direction:column;align-items:center;gap:10px}
+#answer{width:100%;height:50px;padding:0 16px;background:var(--tint-light);border:1px solid var(--border-color);border-radius:10px;font:inherit;font-size:18px;font-weight:600;color:var(--primary-dark);text-align:center;outline:none}
+#answer:focus{background:#fff;border-color:var(--primary-accent)}
+#answer:disabled{opacity:.7}
+.exp-label{margin-top:14px;color:var(--text-muted);font-size:12px;font-weight:700;text-align:center}
+.exp-row{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:8px}
+.exp-btn{width:44px;height:40px;background:#fff;border:1px solid var(--border-color);border-radius:8px;color:var(--primary-dark);font:inherit;font-weight:700;cursor:pointer;transition:.2s ease}
+.exp-btn:hover{background:var(--tint-light);border-color:var(--primary-accent)}
+#outAns{width:100%;margin:16px 0 0;padding:16px;border:1px solid var(--border-color);border-radius:10px;color:var(--primary-dark);font-size:14px;line-height:1.5;text-align:center;display:none}
+.correct-box{margin-top:10px;padding:10px;background:#fff;border:1px solid var(--border-color);border-radius:8px}
+.correct-label{display:block;margin-bottom:4px;color:var(--text-muted);font-size:11px;font-weight:700;text-transform:uppercase}
+.correct-value{color:var(--primary-dark);font-size:18px;font-weight:800}
+#finishMessage{display:none;margin-bottom:40px;padding:35px;text-align:center}
+#finishMessage h2{font-size:22px;font-weight:800}
+.summary-item{margin:10px 0;padding:12px;background:var(--tint-light);border:1px solid var(--border-color);border-radius:10px;font-size:14px}
+.summary-item strong{color:var(--primary-dark)}
+.final-score{margin:20px 0;color:var(--primary-forest);font-size:42px;font-weight:800;line-height:1}
+.final-score small{font-size:18px;color:var(--text-muted);font-weight:600}
+.site-footer{padding:20px;text-align:center;color:var(--text-muted);font-size:12px;line-height:1.6}
+@media(max-width:600px){.page-title{font-size:22px;margin-top:24px}#studentStart,#modeSelect,#quizArea{padding:25px 20px}#studentInfo{grid-template-columns:1fr}#timerDisplay{grid-column:span 1}#displayGiven{font-size:20px}#finishMessage{padding:24px}.final-score{font-size:38px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+  <link rel="stylesheet" href="../../assets/style/style.css">
+
+</head>
+<body>
+
+    <header class="top-nav-bar" id="navbar">
+   
+  </header>
+<main>
+
+  <section class="cover-section" id="cover">
+      <div class="cover-wrapper">
+        <img 
+          src="../../assets/img/background/7-Irrationals.jpeg" 
+          alt="ProjectFactr Mathematics Remedial Learning Platform Banner" 
+          class="cover-image"
+          id="main-cover-image"
+        >
+      </div>
+    </section>
+<h1 class="page-title">Simple Monomials Quiz</h1>
+
+<div id="studentStart">
+  <h2>Enter Student Details</h2>
+  <input type="text" id="firstName" placeholder="First Name">
+  <input type="text" id="lastName" placeholder="Last Name">
+  <input type="text" id="section" placeholder="Grade & Section">
+  <button class="btn-primary" onclick="proceedToModeSelect()">Next: Choose Quiz Type</button>
+</div>
+
+<div id="modeSelect">
+  <h2>Select Quiz Type</h2>
+  <div class="mode-btn-group">
+    <button class="mode-btn" onclick="startQuizWithCountdown(1)">Addition &amp; Subtraction</button>
+    <button class="mode-btn" onclick="startQuizWithCountdown(2)">Multiplication</button>
+    <button class="mode-btn" onclick="startQuizWithCountdown(3)">Division</button>
+    <button class="mode-btn" onclick="startQuizWithCountdown(4)">Random (15 Questions)</button>
+  </div>
+</div>
+
+<div id="countdownOverlay">
+  <div class="countdown-card"><h3>GET READY</h3><div id="countdownNumber">3</div></div>
+</div>
+
+<div id="studentInfo">
+  <p>Name: <span id="showName"></span></p>
+  <p>Section: <span id="showSection"></span></p>
+  <div id="score">Score: 0 / 10</div>
+  <div id="quizCount">Question: 1 / 10</div>
+  <div id="timerDisplay">Time Elapsed: 0:00</div>
+</div>
+
+<div id="quizArea">
+  <div id="category">Topic</div>
+  <div id="displayGiven"></div>
+  <div class="answer-wrap">
+    <input id="answer" type="text" placeholder="Enter your answer" autocomplete="off">
+  </div>
+  <p class="exp-label">Click for exponent</p>
+  <div class="exp-row" id="expRow"></div>
+  <div id="outAns"></div>
+  <button class="btn-primary" id="submitBtn" onclick="submitAnswer()">Submit Answer</button>
+  <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" style="display:none;background:var(--primary-accent)">Next Question</button>
+  <button class="btn-primary" id="showSummaryBtn" onclick="finishQuiz()" style="display:none;background:var(--primary-accent)">Show Summary</button>
+</div>
+
+<div id="finishMessage">
+  <h2>Quiz Finished!</h2>
+  <div class="summary-item">Name: <strong id="summaryName"></strong></div>
+  <div class="summary-item">Section: <strong id="summarySection"></strong></div>
+  <div class="summary-item">Quiz Type: <strong id="summaryType"></strong></div>
+  <div class="final-score"><span id="finalScore">0</span>/<span id="finalTotal">10</span></div>
+  <div class="summary-item">Time: <strong id="finalTime">00:00</strong></div>
+  <button class="btn-primary" onclick="downloadRecord()">Download Record</button>
+  <button class="btn-primary btn-outline" onclick="backToQuizTypes()">Back to Quiz Types</button>
+</div>
+</main>
+
+<footer class="site-footer">
+    <div class="footer-bottom">
+      <div>&copy; 2026 ProjectFactr. All rights reserved.</div>
+      <div>Mathematics Learning &amp; Curriculum Platform</div>
+    </div>
+  </footer>
+
+<script>
+const MAX_VALUE = 50, MAX_EXPONENT = 8, SUP = "⁰¹²³⁴⁵⁶⁷⁸⁹";
+const MODE_NAMES = {1:"Addition & Subtraction",2:"Multiplication",3:"Division",4:"Random (15 Questions)"};
+let TOTAL = 10, qNum = 1, correctAnswer = "", selectedMode = 0, score = 0;
+let first = "", last = "", section = "";
+let records = [], curExpr = "", curType = "", randomTypes = [];
+let used = new Set(), timerInterval = null, timeElapsed = 0;
+const $ = id => document.getElementById(id);
+
+/* exponent buttons */
+$("expRow").innerHTML = [2,3,4,5,6,7,8].map(n =>
+  `<button class="exp-btn" type="button" aria-label="Exponent ${n}" onclick="insertExponent('${SUP[n]}')">${SUP[n]}</button>`).join("");
+
+function insertExponent(ch){
+  const a = $("answer");
+  if (a.disabled) return;
+  a.setRangeText(ch, a.selectionStart, a.selectionEnd, "end");
+  a.focus();
+}
+
+function normalizeAnswer(s){
+  let r = s.replace(/\s/g,"").replace(/−/g,"-").replace(/×/g,"*");
+  for (let i = 0; i < 10; i++) r = r.split(SUP[i]).join("^" + i);
+  return r.replace(/([a-z])\^1(?!\d)/gi,"$1").toLowerCase();
+}
+const overLimit = a => [...a.matchAll(/\^(\d+)/g)].some(m => Number(m[1]) > MAX_EXPONENT);
+
+function term(c, parts){
+  if (c === 0) return "0";
+  const coef = c === 1 ? "" : c === -1 ? "-" : c;
+  let v = "";
+  for (const p of parts){
+    if (p.exponent === 0) continue;
+    v += p.letter + (p.exponent === 1 ? "" : String(p.exponent).split("").map(d => SUP[d]).join(""));
+  }
+  return coef + v;
+}
+
+const randomInt = (a,b) => Math.floor(Math.random()*(b-a+1)) + a;
+
+function randomVariableParts(){
+  const letters = ["x","y","z","a","b","c"].sort(() => Math.random()-.5).slice(0, randomInt(1,3));
+  return letters.sort().map(l => ({letter:l, exponent:randomInt(1,3)}));
+}
+
+function uniqueQuestion(gen){
+  let q, n = 0;
+  do { q = gen(); if (++n > 1000){ used.clear(); break; } } while (used.has(q.key));
+  used.add(q.key);
+  return q;
+}
+
+/* ---------- question generators ---------- */
+function makeAddSub(isAdd){
+  const c1 = randomInt(1, MAX_VALUE);
+  const c2 = isAdd ? randomInt(1, MAX_VALUE) : randomInt(1, c1);
+  const parts = randomVariableParts();
+  return {
+    key: `${isAdd?"s":"d"}-${c1}-${c2}-${JSON.stringify(parts)}`,
+    expression: `${term(c1,parts)} ${isAdd?"+":"-"} ${term(c2,parts)}`,
+    type: isAdd ? "Addition" : "Subtraction",
+    answer: term(isAdd ? c1+c2 : c1-c2, parts)
+  };
+}
+
+function makeMultiply(){
+  let c1 = randomInt(1,10), c2 = randomInt(1, Math.floor(10/c1));
+  if (randomInt(0,1)) c1 = -c1;
+  if (randomInt(0,1)) c2 = -c2;
+  const lo = qNum <= 5 ? 2 : 5, hi = qNum <= 5 ? 5 : MAX_EXPONENT;
+  const targets = [];
+  const p1 = randomVariableParts().map(p => {
+    const t = randomInt(lo, hi); targets.push(t);
+    return {letter:p.letter, exponent:randomInt(1, t-1)};
+  });
+  const p2 = p1.map((p,i) => ({letter:p.letter, exponent:targets[i]-p.exponent}));
+  const ans = p1.map((p,i) => ({letter:p.letter, exponent:p.exponent+p2[i].exponent}));
+  return {
+    key: `m-${c1}-${c2}-${JSON.stringify(p1)}-${JSON.stringify(p2)}`,
+    expression: `${term(c1,p1)} * ${term(c2,p2)}`,
+    type: "Multiplication",
+    answer: term(c1*c2, ans)
+  };
+}
+
+function makeDivide(){
+  const c2 = randomInt(1,12), q = randomInt(1,12), c1 = c2*q;
+  const p2 = randomVariableParts().map(p => ({letter:p.letter, exponent:randomInt(1,2)}));
+  const p1 = p2.map(p => ({letter:p.letter, exponent:randomInt(p.exponent+1, p.exponent+2)}));
+  const ans = p1.map((p,i) => ({letter:p.letter, exponent:p.exponent-p2[i].exponent}));
+  const n = term(c1,p1), d = term(c2,p2);
+  return {
+    key: `v-${c1}-${c2}-${JSON.stringify(p1)}-${JSON.stringify(p2)}`,
+    expression: `${n} / ${d}`, type: "Division", isFraction: true, num: n, den: d,
+    answer: term(q, ans)
+  };
+}
+
+/* ---------- flow ---------- */
+function proceedToModeSelect(){
+  first = $("firstName").value.trim();
+  last = $("lastName").value.trim();
+  section = $("section").value.trim();
+  if (!first || !last || !section){
+    alert("Please enter your first name, last name, and section before starting.");
+    return;
+  }
+  $("studentStart").style.display = "none";
+  $("modeSelect").style.display = "block";
+}
+
+function startQuizWithCountdown(mode){
+  selectedMode = mode;
+  TOTAL = mode === 4 ? 15 : 10;
+  qNum = 1; score = 0; timeElapsed = 0; records = []; used.clear();
+  randomTypes = [];
+  if (mode === 4){
+    randomTypes = Array.from({length:TOTAL}, (_,i) => i % 4 + 1);
+    for (let i = randomTypes.length-1; i > 0; i--){
+      const j = randomInt(0,i);
+      [randomTypes[i], randomTypes[j]] = [randomTypes[j], randomTypes[i]];
+    }
+  }
+  $("showName").textContent = `${first} ${last}`;
+  $("showSection").textContent = section;
+  $("modeSelect").style.display = "none";
+  $("finishMessage").style.display = "none";
+  $("score").textContent = `Score: 0 / ${TOTAL}`;
+  $("quizCount").textContent = `Question: 1 / ${TOTAL}`;
+  $("timerDisplay").textContent = "Time Elapsed: 0:00";
+
+  const overlay = $("countdownOverlay"), num = $("countdownNumber");
+  overlay.classList.add("active");
+  let count = 3;
+  num.textContent = count;
+  const cd = setInterval(() => {
+    count--;
+    if (count > 0) num.textContent = count;
+    else if (count === 0) num.textContent = "GO!";
+    else {
+      clearInterval(cd);
+      overlay.classList.remove("active");
+      $("quizArea").style.display = "block";
+      $("studentInfo").style.display = "grid";
+      loadQuestion();
+      startTimer();
+    }
+  }, 1000);
+}
+
+function startTimer(){
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timeElapsed++;
+    const m = Math.floor(timeElapsed/60), s = timeElapsed % 60;
+    $("timerDisplay").textContent = `Time Elapsed: ${m}:${s < 10 ? "0" : ""}${s}`;
+  }, 1000);
+}
+
+function loadQuestion(){
+  let type;
+  if (selectedMode === 1) type = qNum <= 5 ? 1 : 2;
+  else if (selectedMode === 2) type = 3;
+  else if (selectedMode === 3) type = 4;
+  else type = randomTypes[qNum-1];
+
+  const data = uniqueQuestion(
+    type <= 2 ? () => makeAddSub(type === 1) : type === 3 ? makeMultiply : makeDivide
+  );
+  correctAnswer = data.answer; curExpr = data.expression; curType = data.type;
+
+  $("category").textContent = data.type;
+  $("quizCount").textContent = `Question: ${qNum} / ${TOTAL}`;
+  $("score").textContent = `Score: ${score} / ${TOTAL}`;
+
+  const box = $("displayGiven");
+  if (data.isFraction){
+    const f = document.createElement("span");
+    f.className = "frac";
+    f.setAttribute("role","img");
+    f.setAttribute("aria-label", `${data.num} over ${data.den}`);
+    const n = document.createElement("span"), b = document.createElement("span"), d = document.createElement("span");
+    n.textContent = data.num; b.className = "bar"; d.textContent = data.den;
+    f.append(n, b, d);
+    box.replaceChildren(f);
+  } else box.textContent = data.expression;
+
+  const a = $("answer");
+  a.value = ""; a.disabled = false; a.focus();
+  $("outAns").style.display = "none";
+  $("submitBtn").style.display = "block";
+  $("nextBtn").style.display = "none";
+  $("showSummaryBtn").style.display = "none";
+}
+
+function submitAnswer(){
+  const a = $("answer"), user = a.value.trim(), out = $("outAns");
+  if (!user){ alert("Please enter an answer."); return; }
+  const nu = normalizeAnswer(user);
+  if (overLimit(nu)){ alert(`Exponents must be ${MAX_EXPONENT} or lower.`); return; }
+
+  const ok = nu === normalizeAnswer(correctAnswer);
+  records.push({question:qNum, type:curType, expression:curExpr, studentAnswer:user, correctAnswer, result: ok ? "Correct" : "Incorrect"});
+  if (ok) score++;
+  $("score").textContent = `Score: ${score} / ${TOTAL}`;
+
+  out.style.display = "block";
+  out.style.background = ok ? "var(--correct-bg)" : "var(--wrong-bg)";
+  out.style.color = ok ? "var(--primary-dark)" : "var(--wrong-text)";
+  out.innerHTML = `<strong>${ok ? "Correct! 🎉" : "Incorrect."}</strong>
+    <div class="correct-box"><span class="correct-label">Correct Answer</span><span class="correct-value"></span></div>`;
+  out.querySelector(".correct-value").textContent = correctAnswer;
+
+  a.disabled = true;
+  $("submitBtn").style.display = "none";
+  if (qNum < TOTAL) $("nextBtn").style.display = "block";
+  else $("showSummaryBtn").style.display = "block";
+}
+
+function nextQuestion(){ qNum++; loadQuestion(); }
+
+function finishQuiz(){
+  clearInterval(timerInterval); timerInterval = null;
+  const m = String(Math.floor(timeElapsed/60)).padStart(2,"0"), s = String(timeElapsed % 60).padStart(2,"0");
+  $("summaryName").textContent = `${first} ${last}`;
+  $("summarySection").textContent = section;
+  $("summaryType").textContent = MODE_NAMES[selectedMode];
+  $("finalScore").textContent = score;
+  $("finalTotal").textContent = TOTAL;
+  $("finalTime").textContent = `${m}:${s}`;
+  $("studentInfo").style.display = "none";
+  $("quizArea").style.display = "none";
+  $("finishMessage").style.display = "block";
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function backToQuizTypes(){
+  clearInterval(timerInterval); timerInterval = null;
+  $("quizArea").style.display = "none";
+  $("studentInfo").style.display = "none";
+  $("finishMessage").style.display = "none";
+  $("modeSelect").style.display = "block";
+  $("modeSelect").scrollIntoView({behavior:"smooth"});
+}
+
+function downloadRecord(){
+  let t = `G8 SIMPLE MONOMIALS\n\nSTUDENT INFORMATION\nFirst Name: ${first}\nLast Name: ${last}\nSection: ${section}\n\n`;
+  t += `QUIZ TYPE\n${MODE_NAMES[selectedMode]}\n\nFINAL SCORE\n${score} / ${TOTAL}\n\nTIME\n${$("finalTime").textContent}\n\nQUESTION RECORD\n`;
+  records.forEach(r => {
+    t += `\nQuestion ${r.question}\nType: ${r.type}\nExpression: ${r.expression}\nStudent Answer: ${r.studentAnswer}\nCorrect Answer: ${r.correctAnswer}\nResult: ${r.result}\n`;
+  });
+  const url = URL.createObjectURL(new Blob([t], {type:"text/plain"}));
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `${first}_${last}_Simple_Monomials_Record.txt`;
+  document.body.appendChild(link); link.click(); document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+/* Enter key submits / advances */
+$("answer").addEventListener("keydown", e => {
+  if (e.key !== "Enter") return;
+  if ($("submitBtn").style.display !== "none") submitAnswer();
+});
+</script>
+  
+    <script  src="../../js/helper/navbar.js"></script>
+
+</body>
+</html>

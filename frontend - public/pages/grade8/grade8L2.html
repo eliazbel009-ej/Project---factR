@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PROJECTFACTR — Midpoint Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../../assets/style/style.css">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--primary-dark:#073827;--primary-forest:#16623d;--primary-accent:#339763;--tint-light:#f0f7f3;--card-bg:#fff;--text-body:#334d42;--text-muted:#628273;--border-color:#e2ede6;--correct-bg:#e7f7ee;--wrong-bg:#fde8e8;--wrong-text:#9b1c1c;--warn-bg:#fff4e0;--warn-text:#8a5200;--font-brand:"Montserrat",Arial,sans-serif;--font-body:"Inter",Arial,sans-serif;--shadow-sm:0 2px 4px rgba(7,56,39,.03);--shadow-md:0 10px 25px -5px rgba(7,56,39,.08);--shadow-lg:0 20px 40px -10px rgba(7,56,39,.12);--radius:16px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;min-height:100vh;background:#f7faf8;font-family:var(--font-body);color:var(--text-body);overflow-x:hidden}
+.page-title{width:92%;max-width:600px;margin:30px auto 15px;font-family:var(--font-brand);color:var(--primary-dark);font-size:26px;font-weight:800;text-align:center}
+#studentStart,#quizArea,#finishMessage{width:92%;max-width:580px;margin-left:auto;margin-right:auto;background:var(--card-bg);border:1px solid var(--border-color);border-radius:var(--radius);box-shadow:var(--shadow-md)}
+#studentStart{max-width:440px;margin-top:10px;margin-bottom:40px;padding:35px}
+h2{margin-bottom:20px;font-family:var(--font-brand);color:var(--primary-dark);font-size:20px;font-weight:700;text-align:center}
+#studentStart input{display:block;width:100%;height:48px;margin-bottom:16px;padding:10px 16px;background:var(--tint-light);border:1px solid var(--border-color);border-radius:10px;font:inherit;font-size:15px;outline:none}
+#studentStart input:focus{background:#fff;border-color:var(--primary-accent)}
+.btn-primary{display:block;width:100%;min-height:48px;margin-top:16px;padding:10px 15px;background:var(--primary-forest);color:#fff;border:none;border-radius:10px;font-family:var(--font-brand);font-size:15px;font-weight:700;cursor:pointer;transition:.2s ease}
+.btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px)}
+.btn-primary:focus-visible{outline:3px solid rgba(51,151,99,.4);outline-offset:2px}
+.btn-outline{background:#fff;color:var(--primary-forest);border:2px solid var(--primary-forest)}
+.btn-outline:hover{background:var(--primary-forest);color:#fff}
+#countdownOverlay{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(7,56,39,.76);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:.25s ease}
+#countdownOverlay.active{opacity:1;pointer-events:auto}
+.countdown-card{padding:40px 60px;background:#fff;border-radius:20px;text-align:center;box-shadow:var(--shadow-lg)}
+.countdown-card h3{margin-bottom:8px;font-family:var(--font-brand);color:var(--text-muted);font-size:14px}
+#countdownNumber{font-family:var(--font-brand);font-size:80px;font-weight:800;color:var(--primary-forest)}
+#studentInfo{width:92%;max-width:580px;margin:0 auto 16px;padding:18px 20px;background:#fff;border:1px solid var(--border-color);border-radius:var(--radius);box-shadow:var(--shadow-sm);display:none;grid-template-columns:1fr 1fr;gap:12px}
+#studentInfo p{font-size:13px;font-weight:500}
+#showName,#showSection{color:var(--primary-dark);font-weight:700}
+#score,#quizCount{padding:8px 12px;background:var(--tint-light);border:1px solid var(--border-color);border-radius:8px;color:var(--primary-forest);text-align:center;font-size:13px;font-weight:600}
+#timerDisplay{grid-column:span 2;padding:8px 12px;background:var(--primary-dark);border-radius:8px;color:#fff;text-align:center;font-size:13px;font-weight:600}
+#quizArea{display:none;margin-bottom:40px;padding:35px}
+#category{margin-bottom:16px;font-family:var(--font-brand);color:var(--primary-dark);font-size:18px;font-weight:700;text-align:center}
+#displayGiven{width:100%;margin-bottom:20px;padding:16px;background:var(--tint-light);border:1px solid var(--border-color);border-radius:12px;color:var(--primary-dark);font-size:15px;font-weight:600;line-height:1.4;text-align:center}
+.point-box{margin-top:12px;padding:14px;background:#fff;border:1px solid var(--border-color);border-radius:10px;font-size:22px;font-weight:700;line-height:1.6}
+.point-box small{display:block;color:var(--text-muted);font-size:11px;font-weight:700;text-transform:uppercase}
+#answer{width:100%;height:50px;padding:0 16px;background:var(--tint-light);border:1px solid var(--border-color);border-radius:10px;font:inherit;font-size:18px;font-weight:600;color:var(--primary-dark);text-align:center;outline:none}
+#answer:focus{background:#fff;border-color:var(--primary-accent)}
+#answer:disabled{opacity:.7}
+#outAns{width:100%;margin:16px 0 0;padding:16px;border:1px solid var(--border-color);border-radius:10px;color:var(--primary-dark);font-size:14px;line-height:1.5;text-align:center;display:none}
+.correct-box{margin-top:10px;padding:10px;background:#fff;border:1px solid var(--border-color);border-radius:8px}
+.correct-label{display:block;margin-bottom:4px;color:var(--text-muted);font-size:11px;font-weight:700;text-transform:uppercase}
+.correct-value{color:var(--primary-dark);font-size:18px;font-weight:800}
+#finishMessage{display:none;margin-bottom:40px;padding:35px;text-align:center}
+#finishMessage h2{font-size:22px;font-weight:800}
+.summary-item{margin:10px 0;padding:12px;background:var(--tint-light);border:1px solid var(--border-color);border-radius:10px;font-size:14px}
+.summary-item strong{color:var(--primary-dark)}
+.final-score{margin:20px 0;color:var(--primary-forest);font-size:42px;font-weight:800;line-height:1}
+.final-score small{font-size:18px;color:var(--text-muted);font-weight:600}
+.site-footer{padding:20px;text-align:center;color:var(--text-muted);font-size:12px;line-height:1.6}
+@media(max-width:600px){.page-title{font-size:22px;margin-top:24px}#studentStart,#quizArea{padding:25px 20px}#studentInfo{grid-template-columns:1fr}#timerDisplay{grid-column:span 1}#finishMessage{padding:24px}.final-score{font-size:38px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+  <header class="top-nav-bar" id="navbar">
+   
+  </header>
+<main>
+
+   <section class="cover-section" id="cover">
+      <div class="cover-wrapper">
+        <img 
+          src="../../assets/img/background/7-Irrationals.jpeg" 
+          alt="ProjectFactr Mathematics Remedial Learning Platform Banner" 
+          class="cover-image"
+          id="main-cover-image"
+        >
+      </div>
+    </section>
+<h1 class="page-title">Cartesian Plane: Midpoint Quiz</h1>
+
+<div id="studentStart">
+  <h2>Enter Student Details</h2>
+  <input type="text" id="firstName" placeholder="First Name">
+  <input type="text" id="lastName" placeholder="Last Name">
+  <input type="text" id="section" placeholder="Grade & Section">
+  <button class="btn-primary" onclick="beginQuiz()">Start Quiz</button>
+</div>
+
+<div id="countdownOverlay">
+  <div class="countdown-card"><h3>GET READY</h3><div id="countdownNumber">3</div></div>
+</div>
+
+<div id="studentInfo">
+  <p>Name: <span id="showName"></span></p>
+  <p>Section: <span id="showSection"></span></p>
+  <div id="score">Score: 0 / 10</div>
+  <div id="quizCount">Question: 1 / 10</div>
+  <div id="timerDisplay">Time Elapsed: 0:00</div>
+</div>
+
+<div id="quizArea">
+  <div id="category">Midpoint</div>
+  <div id="displayGiven">
+    Solve the midpoint between the two points.
+    <div class="point-box"><small>Point A (x₁, y₁)</small><span id="pointA"></span></div>
+    <div class="point-box"><small>Point B (x₂, y₂)</small><span id="pointB"></span></div>
+  </div>
+  <input id="answer" type="text" placeholder="Format: (x, y)" autocomplete="off" aria-label="Enter midpoint coordinates as (x, y)">
+  <div id="outAns"></div>
+  <button class="btn-primary" id="submitBtn" onclick="submitAnswer()">Submit Answer</button>
+  <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" style="display:none;background:var(--primary-accent)">Next Question</button>
+  <button class="btn-primary" id="showSummaryBtn" onclick="finishQuiz()" style="display:none;background:var(--primary-accent)">Show Summary</button>
+</div>
+
+<div id="finishMessage">
+  <h2>Quiz Finished!</h2>
+  <div class="summary-item">Name: <strong id="summaryName"></strong></div>
+  <div class="summary-item">Section: <strong id="summarySection"></strong></div>
+  <div class="final-score"><span id="finalScore">0</span>/10</div>
+  <div class="summary-item">Time: <strong id="finalTime">00:00</strong></div>
+  <button class="btn-primary" onclick="downloadRecord()">Download Record</button>
+  <button class="btn-primary btn-outline" onclick="startWithCountdown()">Try Again</button>
+</div>
+</main>
+
+<footer class="site-footer">
+  <div>&copy; 2026 ProjectFactr. All rights reserved.</div>
+  <div>Mathematics Learning &amp; Curriculum Platform</div>
+</footer>
+
+<script>
+const TOTAL = 10;
+let first = "", last = "", section = "";
+let qNum = 1, score = 0, records = [], answered = false;
+let A, B, ansX, ansY, timerInterval = null, timeElapsed = 0;
+const $ = id => document.getElementById(id);
+const rnd = () => Math.floor(Math.random() * 21) - 10;
+
+function beginQuiz(){
+  first = $("firstName").value.trim();
+  last = $("lastName").value.trim();
+  section = $("section").value.trim();
+  if (!first || !last || !section){
+    alert("Please enter your first name, last name, and section before starting.");
+    return;
+  }
+  $("studentStart").style.display = "none";
+  $("showName").textContent = first + " " + last;
+  $("showSection").textContent = section;
+  startWithCountdown();
+}
+
+function startWithCountdown(){
+  qNum = 1; score = 0; records = []; timeElapsed = 0;
+  clearInterval(timerInterval);
+  $("finishMessage").style.display = "none";
+  $("quizArea").style.display = "none";
+  $("studentInfo").style.display = "none";
+  $("score").textContent = "Score: 0 / " + TOTAL;
+  $("timerDisplay").textContent = "Time Elapsed: 0:00";
+
+  const overlay = $("countdownOverlay"), num = $("countdownNumber");
+  overlay.classList.add("active");
+  let count = 3;
+  num.textContent = count;
+  const cd = setInterval(() => {
+    count--;
+    if (count > 0) num.textContent = count;
+    else if (count === 0) num.textContent = "GO!";
+    else {
+      clearInterval(cd);
+      overlay.classList.remove("active");
+      $("quizArea").style.display = "block";
+      $("studentInfo").style.display = "grid";
+      loadQuestion();
+      timerInterval = setInterval(() => {
+        timeElapsed++;
+        const m = Math.floor(timeElapsed / 60), s = timeElapsed % 60;
+        $("timerDisplay").textContent = "Time Elapsed: " + m + ":" + (s < 10 ? "0" : "") + s;
+      }, 1000);
+    }
+  }, 1000);
+}
+
+function loadQuestion(){
+  let x1 = rnd(), y1 = rnd(), x2 = rnd(), y2 = rnd();
+  while (Math.abs(x1 - x2) % 2 !== 0) x2 = rnd();   // keep midpoint whole
+  while (Math.abs(y1 - y2) % 2 !== 0) y2 = rnd();
+  A = {x:x1, y:y1}; B = {x:x2, y:y2};
+  ansX = (x1 + x2) / 2; ansY = (y1 + y2) / 2;
+
+  $("pointA").textContent = "(" + x1 + ", " + y1 + ")";
+  $("pointB").textContent = "(" + x2 + ", " + y2 + ")";
+  $("quizCount").textContent = "Question: " + qNum + " / " + TOTAL;
+  $("score").textContent = "Score: " + score + " / " + TOTAL;
+
+  const a = $("answer");
+  a.value = ""; a.disabled = false; a.focus();
+  answered = false;
+  $("outAns").style.display = "none";
+  $("submitBtn").style.display = "block";
+  $("nextBtn").style.display = "none";
+  $("showSummaryBtn").style.display = "none";
+}
+
+function showMessage(html, bg, color){
+  const out = $("outAns");
+  out.style.display = "block";
+  out.style.background = bg;
+  out.style.color = color;
+  out.innerHTML = html;
+}
+
+function submitAnswer(){
+  const input = $("answer").value.trim();
+  const m = input.match(/^\(\s*([+-]?(?:\d+(?:\.\d*)?|\.\d+))\s*,\s*([+-]?(?:\d+(?:\.\d*)?|\.\d+))\s*\)$/);
+  if (!m){
+    showMessage("<strong>Incorrect format.</strong> Please type your answer like (2, -3).", "var(--warn-bg)", "var(--warn-text)");
+    return;
+  }
+  const sx = Number(m[1]), sy = Number(m[2]);
+  const ok = sx === ansX && sy === ansY;
+  const correct = "(" + ansX + ", " + ansY + ")";
+
+  records.push({
+    question: qNum,
+    pointA: "(" + A.x + ", " + A.y + ")",
+    pointB: "(" + B.x + ", " + B.y + ")",
+    studentAnswer: "(" + sx + ", " + sy + ")",
+    correctAnswer: correct,
+    result: ok ? "Correct" : "Incorrect"
+  });
+
+  if (ok) score++;
+  $("score").textContent = "Score: " + score + " / " + TOTAL;
+  showMessage(
+    "<strong>" + (ok ? "Correct! 🎉" : "Incorrect.") + "</strong>" +
+    '<div class="correct-box"><span class="correct-label">Correct Answer</span><span class="correct-value">' + correct + "</span></div>",
+    ok ? "var(--correct-bg)" : "var(--wrong-bg)",
+    ok ? "var(--primary-dark)" : "var(--wrong-text)"
+  );
+
+  answered = true;
+  $("answer").disabled = true;
+  $("submitBtn").style.display = "none";
+  if (qNum < TOTAL) $("nextBtn").style.display = "block";
+  else $("showSummaryBtn").style.display = "block";
+}
+
+function nextQuestion(){ qNum++; loadQuestion(); }
+
+function finishQuiz(){
+  clearInterval(timerInterval); timerInterval = null;
+  const m = String(Math.floor(timeElapsed / 60)).padStart(2, "0");
+  const s = String(timeElapsed % 60).padStart(2, "0");
+  $("summaryName").textContent = first + " " + last;
+  $("summarySection").textContent = section;
+  $("finalScore").textContent = score;
+  $("finalTime").textContent = m + ":" + s;
+  $("studentInfo").style.display = "none";
+  $("quizArea").style.display = "none";
+  $("finishMessage").style.display = "block";
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function downloadRecord(){
+  let t = "G8 CARTESIAN PLANE - MIDPOINT QUIZ\n\nSTUDENT INFORMATION\n";
+  t += "First Name: " + first + "\nLast Name: " + last + "\nSection: " + section + "\n\n";
+  t += "FINAL SCORE\n" + score + " / " + TOTAL + "\n\nTIME\n" + $("finalTime").textContent + "\n\nQUESTION RECORD\n";
+  records.forEach(r => {
+    t += "\nQuestion " + r.question + "\nPoint A: " + r.pointA + "\nPoint B: " + r.pointB +
+         "\nStudent Answer: " + r.studentAnswer + "\nCorrect Answer: " + r.correctAnswer + "\nResult: " + r.result + "\n";
+  });
+  const url = URL.createObjectURL(new Blob([t], {type:"text/plain"}));
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = first + "_" + last + "_Midpoint_Record.txt";
+  document.body.appendChild(link); link.click(); document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+// Enter submits, or moves on after an answer
+document.addEventListener("keydown", e => {
+  if (e.key !== "Enter" || e.repeat) return;
+  if ($("quizArea").style.display !== "block") return;   // ignore during countdown/summary
+  e.preventDefault();
+  if (!answered) submitAnswer();
+  else if ($("nextBtn").style.display !== "none") nextQuestion();
+  else finishQuiz();
+});
+</script>
+<script src="../../js/helper/navbar.js"></script>
+</body>
+</html>

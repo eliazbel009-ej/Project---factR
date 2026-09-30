@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PROJECTFACTR — Factoring Quadratic Expressions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--primary-dark:#073827;--primary-forest:#16623d;--primary-accent:#339763;--tint-light:#f0f7f3;--card-bg:#fff;--text-body:#334d42;--text-muted:#628273;--border-color:#e2ede6;--correct-bg:#e7f7ee;--wrong-bg:#fde8e8;--wrong-text:#9b1c1c;--warn-bg:#fff4e0;--warn-text:#8a5200;--font-brand:"Montserrat",Arial,sans-serif;--font-body:"Inter",Arial,sans-serif;--shadow-sm:0 2px 4px rgba(7,56,39,.03);--shadow-md:0 10px 25px -5px rgba(7,56,39,.08);--shadow-lg:0 20px 40px -10px rgba(7,56,39,.12);--radius:16px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;min-height:100vh;background:#f7faf8;font-family:var(--font-body);color:var(--text-body);overflow-x:hidden}
+.page-title{width:92%;max-width:600px;margin:30px auto 15px;font-family:var(--font-brand);color:var(--primary-dark);font-size:26px;font-weight:800;text-align:center}
+#studentStart,#modeSelect,#quizArea,#finishMessage{width:92%;max-width:580px;margin-left:auto;margin-right:auto;background:var(--card-bg);border:1px solid var(--border-color);border-radius:var(--radius);box-shadow:var(--shadow-md)}
+#studentStart,#modeSelect{max-width:440px;margin-top:10px;margin-bottom:40px;padding:35px}
+#modeSelect{display:none}
+h2{margin-bottom:20px;font-family:var(--font-brand);color:var(--primary-dark);font-size:20px;font-weight:700;text-align:center}
+#studentStart input{display:block;width:100%;height:48px;margin-bottom:16px;padding:10px 16px;background:var(--tint-light);border:1px solid var(--border-color);border-radius:10px;font:inherit;font-size:15px;outline:none}
+#studentStart input:focus{background:#fff;border-color:var(--primary-accent)}
+.btn-primary{display:block;width:100%;min-height:48px;margin-top:16px;padding:10px 15px;background:var(--primary-forest);color:#fff;border:none;border-radius:10px;font-family:var(--font-brand);font-size:15px;font-weight:700;cursor:pointer;transition:.2s ease}
+.btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px)}
+.btn-primary:focus-visible,.mode-btn:focus-visible,.exp-btn:focus-visible{outline:3px solid rgba(51,151,99,.4);outline-offset:2px}
+.btn-outline{background:#fff;color:var(--primary-forest);border:2px solid var(--primary-forest)}
+.btn-outline:hover{background:var(--primary-forest);color:#fff}
+.mode-btn-group{display:flex;flex-direction:column;gap:12px}
+.mode-btn{padding:15px;background:var(--tint-light);border:2px solid var(--border-color);border-radius:10px;color:var(--primary-dark);font-family:var(--font-brand);font-size:14px;font-weight:700;cursor:pointer;transition:.2s ease}
+.mode-btn:hover{background:#fff;border-color:var(--primary-accent);transform:translateY(-1px)}
+#countdownOverlay{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(7,56,39,.76);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:.25s ease}
+#countdownOverlay.active{opacity:1;pointer-events:auto}
+.countdown-card{padding:40px 60px;background:#fff;border-radius:20px;text-align:center;box-shadow:var(--shadow-lg)}
+.countdown-card h3{margin-bottom:8px;font-family:var(--font-brand);color:var(--text-muted);font-size:14px}
+#countdownNumber{font-family:var(--font-brand);font-size:80px;font-weight:800;color:var(--primary-forest)}
+#studentInfo{width:92%;max-width:580px;margin:0 auto 16px;padding:18px 20px;background:#fff;border:1px solid var(--border-color);border-radius:var(--radius);box-shadow:var(--shadow-sm);display:none;grid-template-columns:1fr 1fr;gap:12px}
+#studentInfo p{font-size:13px;font-weight:500}
+#showName,#showSection{color:var(--primary-dark);font-weight:700}
+#score,#quizCount{padding:8px 12px;background:var(--tint-light);border:1px solid var(--border-color);border-radius:8px;color:var(--primary-forest);text-align:center;font-size:13px;font-weight:600}
+#timerDisplay{grid-column:span 2;padding:8px 12px;background:var(--primary-dark);border-radius:8px;color:#fff;text-align:center;font-size:13px;font-weight:600}
+#quizArea{display:none;margin-bottom:40px;padding:35px}
+#category{margin-bottom:16px;font-family:var(--font-brand);color:var(--primary-dark);font-size:18px;font-weight:700;text-align:center}
+#displayGiven{width:100%;min-height:100px;margin-bottom:20px;padding:16px;display:flex;align-items:center;justify-content:center;background:var(--tint-light);border:1px solid var(--border-color);border-radius:12px;color:var(--primary-dark);font-size:24px;font-weight:700;line-height:1.4;text-align:center;overflow-wrap:anywhere}
+#answer{width:100%;height:50px;padding:0 16px;background:var(--tint-light);border:1px solid var(--border-color);border-radius:10px;font:inherit;font-size:18px;font-weight:600;color:var(--primary-dark);text-align:center;outline:none}
+#answer:focus{background:#fff;border-color:var(--primary-accent)}
+#answer:disabled{opacity:.7}
+.exp-wrap{display:none;text-align:center}
+.exp-label{margin-top:14px;color:var(--text-muted);font-size:12px;font-weight:700}
+.exp-btn{width:44px;height:40px;margin-top:8px;background:#fff;border:1px solid var(--border-color);border-radius:8px;color:var(--primary-dark);font:inherit;font-weight:700;cursor:pointer;transition:.2s ease}
+.exp-btn:hover{background:var(--tint-light);border-color:var(--primary-accent)}
+#outAns{width:100%;margin:16px 0 0;padding:16px;border:1px solid var(--border-color);border-radius:10px;color:var(--primary-dark);font-size:14px;line-height:1.5;text-align:center;display:none}
+.correct-box{margin-top:10px;padding:10px;background:#fff;border:1px solid var(--border-color);border-radius:8px}
+.correct-label{display:block;margin-bottom:4px;color:var(--text-muted);font-size:11px;font-weight:700;text-transform:uppercase}
+.correct-value{color:var(--primary-dark);font-size:18px;font-weight:800}
+#finishMessage{display:none;margin-bottom:40px;padding:35px;text-align:center}
+#finishMessage h2{font-size:22px;font-weight:800}
+.summary-item{margin:10px 0;padding:12px;background:var(--tint-light);border:1px solid var(--border-color);border-radius:10px;font-size:14px}
+.summary-item strong{color:var(--primary-dark)}
+.final-score{margin:20px 0;color:var(--primary-forest);font-size:42px;font-weight:800;line-height:1}
+.final-score small{font-size:18px;color:var(--text-muted);font-weight:600}
+.site-footer{padding:20px;text-align:center;color:var(--text-muted);font-size:12px;line-height:1.6}
+@media(max-width:600px){.page-title{font-size:22px;margin-top:24px}#studentStart,#modeSelect,#quizArea{padding:25px 20px}#studentInfo{grid-template-columns:1fr}#timerDisplay{grid-column:span 1}#displayGiven{font-size:20px}#finishMessage{padding:24px}.final-score{font-size:38px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<link rel="stylesheet" href="../../assets/style/style.css">
+</head>
+<body>
+
+  
+    <header class="top-nav-bar" id="navbar">
+   
+  </header>
+<main>
+
+   <section class="cover-section" id="cover">
+      <div class="cover-wrapper">
+        <img 
+          src="../../assets/img/background/7-Irrationals.jpeg" 
+          alt="ProjectFactr Mathematics Remedial Learning Platform Banner" 
+          class="cover-image"
+          id="main-cover-image"
+        >
+      </div>
+    </section>
+<h1 class="page-title">Factoring Quadratic Expressions</h1>
+
+<div id="studentStart">
+  <h2>Enter Student Details</h2>
+  <input type="text" id="firstName" placeholder="First Name">
+  <input type="text" id="lastName" placeholder="Last Name">
+  <input type="text" id="section" placeholder="Grade & Section">
+  <button class="btn-primary" onclick="proceedToModeSelect()">Next: Choose Quiz Type</button>
+</div>
+
+<div id="modeSelect">
+  <h2>Select Quiz Type</h2>
+  <div class="mode-btn-group">
+    <button class="mode-btn" onclick="startQuizWithCountdown(1)">Common Monomial</button>
+    <button class="mode-btn" onclick="startQuizWithCountdown(2)">Square Pattern: Add</button>
+    <button class="mode-btn" onclick="startQuizWithCountdown(3)">Square Pattern: Subtract</button>
+    <button class="mode-btn" onclick="startQuizWithCountdown(4)">Quadratic Trinomial</button>
+  </div>
+</div>
+
+<div id="countdownOverlay">
+  <div class="countdown-card"><h3>GET READY</h3><div id="countdownNumber">3</div></div>
+</div>
+
+<div id="studentInfo">
+  <p>Name: <span id="showName"></span></p>
+  <p>Section: <span id="showSection"></span></p>
+  <div id="score">Score: 0 / 10</div>
+  <div id="quizCount">Question: 1 / 10</div>
+  <div id="timerDisplay">Time Elapsed: 0:00</div>
+</div>
+
+<div id="quizArea">
+  <div id="category">Topic</div>
+  <div id="displayGiven"></div>
+  <input id="answer" type="text" placeholder="Enter your answer" autocomplete="off">
+  <div class="exp-wrap" id="expWrap">
+    <p class="exp-label">Click for exponent</p>
+    <button class="exp-btn" type="button" aria-label="Squared" onclick="insertSquare()">²</button>
+  </div>
+  <div id="outAns"></div>
+  <button class="btn-primary" id="submitBtn" onclick="submitAnswer()">Submit Answer</button>
+  <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" style="display:none;background:var(--primary-accent)">Next Question</button>
+  <button class="btn-primary" id="showSummaryBtn" onclick="finishQuiz()" style="display:none;background:var(--primary-accent)">Show Summary</button>
+</div>
+
+<div id="finishMessage">
+  <h2>Quiz Finished!</h2>
+  <div class="summary-item">Name: <strong id="summaryName"></strong></div>
+  <div class="summary-item">Section: <strong id="summarySection"></strong></div>
+  <div class="summary-item">Quiz Type: <strong id="summaryType"></strong></div>
+  <div class="final-score"><span id="finalScore">0</span>/10</div>
+  <div class="summary-item">Time: <strong id="finalTime">00:00</strong></div>
+  <button class="btn-primary" onclick="downloadRecord()">Download Record</button>
+  <button class="btn-primary btn-outline" onclick="backToQuizTypes()">Back to Quiz Types</button>
+</div>
+</main>
+
+<footer class="site-footer">
+  <div>&copy; 2026 ProjectFactr. All rights reserved.</div>
+  <div>Mathematics Learning &amp; Curriculum Platform</div>
+</footer>
+<script src="../../js/helper/navbar.js"></script>
+<script>
+const TOTAL = 10, MAX_VALUE = 15;
+const MODE_NAMES = {1:"Common Monomial", 2:"Square Pattern: Add", 3:"Square Pattern: Subtract", 4:"Quadratic Trinomial"};
+let first = "", last = "", section = "";
+let qNum = 1, score = 0, mode = 0, records = [], answered = false;
+let correctAnswer = "", curExpr = "", used = new Set();
+let timerInterval = null, timeElapsed = 0;
+const $ = id => document.getElementById(id);
+const randomInt = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+const xTerm = c => c === 1 ? "x" : c === -1 ? "-x" : c + "x";
+
+function insertSquare(){
+  const a = $("answer");
+  if (a.disabled) return;
+  a.setRangeText("²", a.selectionStart, a.selectionEnd, "end");
+  a.focus();
+}
+
+function normalize(s){
+  return s.replace(/\s/g, "").replace(/−/g, "-").replace(/\^2/g, "²").toLowerCase();
+}
+
+// Trinomial factors can be typed in either order
+function factorKey(s){
+  const n = normalize(s).replace(/[()]/g, " ").replace(/[×*·,;]/g, " ");
+  const m = n.match(/x[+-]\d+/g);
+  return m && m.length === 2 ? m.sort().join("|") : null;
+}
+
+function uniqueQuestion(gen){
+  let q, n = 0;
+  do { q = gen(); if (++n > 1000){ used.clear(); break; } } while (used.has(q.key));
+  used.add(q.key);
+  return q;
+}
+
+/* ---------- generators ---------- */
+function genMonomial(){
+  const c1 = randomInt(1, MAX_VALUE), c2 = randomInt(1, MAX_VALUE);
+  const g = gcd(c1, c2), a = c1 / g, b = c2 / g;
+  return {
+    key: `gcf-${c1}-${c2}`,
+    expression: `${c1 === 1 ? "" : c1}x² + ${c2 === 1 ? "" : c2}x`,
+    answer: `${xTerm(g)}(${xTerm(a)} + ${b})`
+  };
+}
+
+function genSquare(plusOnly){
+  const a = randomInt(1, 9), b = randomInt(1, 9);
+  const plus = plusOnly ? true : Math.random() < 0.5;
+  const sign = plus ? "+" : "-";
+  const lead = a * a === 1 ? "x²" : (a * a) + "x²";
+  return {
+    key: `sq-${a}-${b}-${plus}`,
+    expression: `${lead} ${sign} ${2 * a * b}x + ${b * b}`,
+    answer: `(${xTerm(a)} ${sign} ${b})²`
+  };
+}
+
+function genTrinomial(){
+  let p, q;
+  do {
+    p = randomInt(1, MAX_VALUE); q = randomInt(1, MAX_VALUE);
+    if (Math.random() < 0.5) p = -p;
+    if (Math.random() < 0.5) q = -q;
+  } while (p + q === 0);            // avoid a "0x" middle term
+  const mid = p + q, con = p * q;
+  const f = v => `(x ${v >= 0 ? "+" : "-"} ${Math.abs(v)})`;
+  const pair = [p, q].sort((x, y) => x - y);
+  return {
+    key: `tri-${pair[0]}-${pair[1]}`,
+    expression: `x² ${mid >= 0 ? "+" : "-"} ${xTerm(Math.abs(mid))} ${con >= 0 ? "+" : "-"} ${Math.abs(con)}`,
+    answer: f(p) + f(q)
+  };
+}
+
+/* ---------- flow ---------- */
+function proceedToModeSelect(){
+  first = $("firstName").value.trim();
+  last = $("lastName").value.trim();
+  section = $("section").value.trim();
+  if (!first || !last || !section){
+    alert("Please enter your first name, last name, and section before starting.");
+    return;
+  }
+  $("studentStart").style.display = "none";
+  $("modeSelect").style.display = "block";
+}
+
+function startQuizWithCountdown(m){
+  mode = m; qNum = 1; score = 0; records = []; timeElapsed = 0; used.clear();
+  clearInterval(timerInterval);
+  $("showName").textContent = first + " " + last;
+  $("showSection").textContent = section;
+  $("modeSelect").style.display = "none";
+  $("finishMessage").style.display = "none";
+  $("score").textContent = "Score: 0 / " + TOTAL;
+  $("quizCount").textContent = "Question: 1 / " + TOTAL;
+  $("timerDisplay").textContent = "Time Elapsed: 0:00";
+  $("expWrap").style.display = (m === 2 || m === 3) ? "block" : "none";
+
+  const overlay = $("countdownOverlay"), num = $("countdownNumber");
+  overlay.classList.add("active");
+  let count = 3;
+  num.textContent = count;
+  const cd = setInterval(() => {
+    count--;
+    if (count > 0) num.textContent = count;
+    else if (count === 0) num.textContent = "GO!";
+    else {
+      clearInterval(cd);
+      overlay.classList.remove("active");
+      $("quizArea").style.display = "block";
+      $("studentInfo").style.display = "grid";
+      loadQuestion();
+      timerInterval = setInterval(() => {
+        timeElapsed++;
+        const mm = Math.floor(timeElapsed / 60), ss = timeElapsed % 60;
+        $("timerDisplay").textContent = "Time Elapsed: " + mm + ":" + (ss < 10 ? "0" : "") + ss;
+      }, 1000);
+    }
+  }, 1000);
+}
+
+function loadQuestion(){
+  const gen = mode === 1 ? genMonomial : mode === 2 ? () => genSquare(true) : mode === 3 ? () => genSquare(false) : genTrinomial;
+  const q = uniqueQuestion(gen);
+  correctAnswer = q.answer; curExpr = q.expression;
+
+  $("category").textContent = MODE_NAMES[mode];
+  $("displayGiven").textContent = q.expression;
+  $("quizCount").textContent = "Question: " + qNum + " / " + TOTAL;
+  $("score").textContent = "Score: " + score + " / " + TOTAL;
+
+  const a = $("answer");
+  a.value = ""; a.disabled = false; a.focus();
+  answered = false;
+  $("outAns").style.display = "none";
+  $("submitBtn").style.display = "block";
+  $("nextBtn").style.display = "none";
+  $("showSummaryBtn").style.display = "none";
+}
+
+function showMessage(html, bg, color){
+  const out = $("outAns");
+  out.style.display = "block";
+  out.style.background = bg;
+  out.style.color = color;
+  out.innerHTML = html;
+}
+
+function submitAnswer(){
+  const user = $("answer").value.trim();
+  if (!user){
+    showMessage("<strong>Please enter an answer.</strong>", "var(--warn-bg)", "var(--warn-text)");
+    return;
+  }
+  let ok;
+  if (mode === 4){
+    const u = factorKey(user), c = factorKey(correctAnswer);
+    ok = u !== null && u === c;
+  } else ok = normalize(user) === normalize(correctAnswer);
+
+  records.push({question:qNum, type:MODE_NAMES[mode], expression:curExpr, studentAnswer:user, correctAnswer, result: ok ? "Correct" : "Incorrect"});
+  if (ok) score++;
+  $("score").textContent = "Score: " + score + " / " + TOTAL;
+
+  showMessage(
+    "<strong>" + (ok ? "Correct! 🎉" : "Incorrect.") + "</strong>" +
+    '<div class="correct-box"><span class="correct-label">Correct Answer</span><span class="correct-value" id="cv"></span></div>',
+    ok ? "var(--correct-bg)" : "var(--wrong-bg)",
+    ok ? "var(--primary-dark)" : "var(--wrong-text)"
+  );
+  $("cv").textContent = correctAnswer;
+
+  answered = true;
+  $("answer").disabled = true;
+  $("submitBtn").style.display = "none";
+  if (qNum < TOTAL) $("nextBtn").style.display = "block";
+  else $("showSummaryBtn").style.display = "block";
+}
+
+function nextQuestion(){ qNum++; loadQuestion(); }
+
+function finishQuiz(){
+  clearInterval(timerInterval); timerInterval = null;
+  const m = String(Math.floor(timeElapsed / 60)).padStart(2, "0");
+  const s = String(timeElapsed % 60).padStart(2, "0");
+  $("summaryName").textContent = first + " " + last;
+  $("summarySection").textContent = section;
+  $("summaryType").textContent = MODE_NAMES[mode];
+  $("finalScore").textContent = score;
+  $("finalTime").textContent = m + ":" + s;
+  $("studentInfo").style.display = "none";
+  $("quizArea").style.display = "none";
+  $("finishMessage").style.display = "block";
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function backToQuizTypes(){
+  clearInterval(timerInterval); timerInterval = null;
+  $("quizArea").style.display = "none";
+  $("studentInfo").style.display = "none";
+  $("finishMessage").style.display = "none";
+  $("modeSelect").style.display = "block";
+  $("modeSelect").scrollIntoView({behavior:"smooth"});
+}
+
+function downloadRecord(){
+  let t = "G8 FACTORING QUADRATIC EXPRESSIONS\n\nSTUDENT INFORMATION\n";
+  t += "First Name: " + first + "\nLast Name: " + last + "\nSection: " + section + "\n\n";
+  t += "QUIZ TYPE\n" + MODE_NAMES[mode] + "\n\nFINAL SCORE\n" + score + " / " + TOTAL + "\n\nTIME\n" + $("finalTime").textContent + "\n\nQUESTION RECORD\n";
+  records.forEach(r => {
+    t += "\nQuestion " + r.question + "\nType: " + r.type + "\nExpression: " + r.expression +
+         "\nStudent Answer: " + r.studentAnswer + "\nCorrect Answer: " + r.correctAnswer + "\nResult: " + r.result + "\n";
+  });
+  const url = URL.createObjectURL(new Blob([t], {type:"text/plain"}));
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = first + "_" + last + "_Factoring_Record.txt";
+  document.body.appendChild(link); link.click(); document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+// One Enter handler: submit, then next, then summary
+document.addEventListener("keydown", e => {
+  if (e.key !== "Enter" || e.repeat) return;
+  if ($("quizArea").style.display !== "block") return;
+  e.preventDefault();
+  if (!answered) submitAnswer();
+  else if ($("nextBtn").style.display !== "none") nextQuestion();
+  else finishQuiz();
+});
+</script>
+</body>
+</html>

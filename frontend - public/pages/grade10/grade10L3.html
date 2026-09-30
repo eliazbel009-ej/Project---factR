@@ -1,0 +1,2693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Grade 10 - Quartiles, Deciles, Percentiles</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #e8f5e9;
+    color: #1b5e20;
+}
+
+.screen {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.card {
+    width: 100%;
+    max-width: 850px;
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.15);
+    border: 1px solid #c8e6c9;
+}
+
+#startScreen,
+#resultScreen {
+    text-align: center;
+}
+
+#startScreen h1 {
+    font-size: 34px;
+    margin-bottom: 10px;
+    color: #2e7d32;
+}
+
+#startScreen h2 {
+    font-size: 22px;
+    color: #388e3c;
+    margin-bottom: 25px;
+}
+
+.student-info-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.student-info-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #2e7d32;
+}
+
+.student-info-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #a5d6a7;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+}
+
+.student-info-group input:focus {
+    border-color: #2e7d32;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 9px;
+    background: #2e7d32;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background: #1b5e20;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.countdown-card {
+    text-align: center;
+}
+
+#countdownNumber {
+    font-size: 110px;
+    font-weight: bold;
+    color: #2e7d32;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #2e7d32;
+}
+
+#timer {
+    font-size: 20px;
+}
+
+.dataset-box {
+    background: #f1f8e9;
+    padding: 18px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    border: 1px solid #dedede;
+}
+
+#datasetDescription {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.5;
+    margin-bottom: 10px;
+    color: #1b5e20;
+}
+
+#datasetDisplay {
+    line-height: 1.8;
+    word-break: break-word;
+    font-size: 18px;
+    color: #2e7d32;
+}
+
+.question-box {
+    margin-bottom: 20px;
+}
+
+.question-type {
+    font-size: 14px;
+    font-weight: bold;
+    color: #388e3c;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+#questionLimit {
+    width: 100%;
+    height: 44px;
+    padding: 0 12px;
+    border: 1px solid #81c784;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #555;
+    font-size: 16px;
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+}
+
+#questionLimit:focus {
+    border-color: #2e7d32;
+    box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.08);
+}
+
+#studentName,
+#studentSection,
+#questionLimit {
+    width: 100%;
+    height: 44px;
+    box-sizing: border-box;
+}
+
+#questionLimit {
+    margin-top: 5px;
+}
+
+.answer-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 10px;
+}
+
+.answer-box {
+    padding: 16px;
+    border: 1px solid #c8e6c9;
+    border-radius: 10px;
+    background: #f1f8e9;
+}
+
+.answer-box p {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #1b5e20;
+}
+
+.large-subscript {
+    font-size: 14px !important;
+    vertical-align: -3px;
+    line-height: 0;
+    margin-left: 0;
+}
+
+.answer-box input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #a5d6a7;
+    border-radius: 8px;
+    font-size: 18px;
+    outline: none;
+}
+
+.answer-box input:focus {
+    border-color: #2e7d32;
+}
+
+#feedback {
+    margin-top: 15px;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: bold;
+    line-height: 1.6;
+}
+
+.correct {
+    background: #e8f5e9;
+    color: #1b5e20;
+    border: 1px solid #a5d6a7;
+}
+
+.wrong {
+    background: #ffebee;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+}
+
+/* =========================================
+   CORRECT ANSWER ANIMATION
+   ========================================= */
+
+#successAnimation {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+.success-text {
+    font-size: clamp(55px, 10vw, 130px);
+    font-weight: 900;
+    text-align: center;
+    color: #2e7d32;
+    text-shadow:
+        0 5px 0 #a5d6a7,
+        0 10px 25px rgba(46, 125, 50, 0.35);
+
+    animation:
+        successPop 0.7s ease-out,
+        successFloat 1.2s ease-in-out 0.7s;
+}
+
+@keyframes successPop {
+
+    0% {
+        transform: scale(0.2) rotate(-8deg);
+        opacity: 0;
+    }
+
+    60% {
+        transform: scale(1.15) rotate(3deg);
+        opacity: 1;
+    }
+
+    80% {
+        transform: scale(0.95) rotate(-1deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
+}
+
+@keyframes successFloat {
+
+    0% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-15px) scale(1.04);
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+#finalScore {
+    font-size: 32px;
+    font-weight: bold;
+    margin: 20px 0;
+    color: #2e7d32;
+}
+
+#studentSummary,
+#finalTime,
+#finalCategory {
+    background: #f1f8e9;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 10px 0;
+    color: #1b5e20;
+}
+
+#newQuizButton {
+    background: #558b2f;
+}
+
+#newQuizButton:hover {
+    background: #33691e;
+}
+
+@media (max-width: 600px) {
+
+    .card {
+        padding: 20px;
+    }
+
+    #startScreen h1 {
+        font-size: 27px;
+    }
+
+    #startScreen h2 {
+        font-size: 18px;
+    }
+
+    .top-bar {
+        font-size: 14px;
+    }
+
+    #timer {
+        font-size: 17px;
+    }
+
+    #countdownNumber {
+        font-size: 80px;
+    }
+
+    .answer-row {
+        grid-template-columns: 1fr;
+    }
+    
+.top-bar{
+    width: 100%;
+}
+}
+</style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../../assets/style/style.css">
+
+</head>
+
+<body>
+
+<!-- START SCREEN -->
+ <header class="top-nav-bar" id="navbar">
+
+  </header>
+<main>
+    
+<section class="cover-section" id="cover">
+      <div class="cover-wrapper">
+        <img 
+          src="../../assets/img/background/7-Integers.jpeg" 
+          alt="ProjectFactr Mathematics Remedial Learning Platform Banner" 
+          class="cover-image"
+          id="main-cover-image"
+        >
+      </div>
+    </section>
+    <section id="startScreen" class="screen">
+
+    <div class="card">
+
+        <h1>GRADE 10</h1>
+
+        <h2>QUARTILES, DECILES, PERCENTILES</h2>
+
+        <div class="student-info-group">
+
+            <label for="studentName">
+                Student Name
+            </label>
+
+            <input
+                type="text"
+                id="studentName"
+                placeholder="e.g. Juan Dela Cruz"
+                required
+            >
+
+        </div>
+
+        <div class="student-info-group">
+
+            <label for="studentSection">
+                Section:
+            </label>
+
+            <input
+                type="text"
+                id="studentSection"
+                placeholder="e.g. Grade 10 - Emerald"
+                required
+            >
+
+        </div>
+
+        <div class="student-info-group">
+
+            <label for="questionLimit">
+                Number of Questions:
+            </label>
+
+            <select id="questionLimit">
+
+                <option value="5">
+                    1 to 5
+                </option>
+
+                <option value="10" selected>
+                    1 to 10
+                </option>
+
+                <option value="15">
+                    1 to 15
+                </option>
+
+                <option value="20">
+                    1 to 20
+                </option>
+
+                <option value="25">
+                    1 to 25
+                </option>
+
+                <option value="30">
+                    1 to 30
+                </option>
+
+                <option value="35">
+                    1 to 35
+                </option>
+
+                <option value="40">
+                    1 to 40
+                </option>
+
+                <option value="45">
+                    1 to 45
+                </option>
+
+                <option value="50">
+                    1 to 50
+                </option>
+
+            </select>
+
+        </div>
+
+        <button id="startButton">
+            START QUIZ
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- COUNTDOWN SCREEN -->
+<section
+    id="countdownScreen"
+    class="screen hidden"
+>
+
+    <div class="card countdown-card">
+
+        <div id="countdownNumber">
+            3
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- QUIZ SCREEN -->
+<section
+    id="quizScreen"
+    class="screen hidden"
+>
+
+    <div class="card">
+
+        <div class="top-bar">
+
+            <span id="questionCount">
+                Question 1 of 10
+            </span>
+
+            <span id="timer">
+                Time: 00:00
+            </span>
+
+        </div>
+
+
+        <div class="dataset-box">
+
+            <div id="datasetDescription">
+            </div>
+
+            <div id="datasetDisplay">
+            </div>
+
+        </div>
+
+
+        <div class="question-box">
+
+            <div
+                class="question-type"
+                id="questionType"
+            >
+            </div>
+
+
+            <div class="answer-row">
+
+                <div
+                    id="positionStage"
+                    class="answer-box"
+                >
+
+                    <p>
+                        <strong>
+                            1. Position
+                        </strong>
+                    </p>
+
+                    <input
+                        type="number"
+                        id="positionInput"
+                        placeholder="Enter position"
+                        step="0.01"
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <div
+                    id="answerStage"
+                    class="answer-box"
+                >
+
+                    <p>
+                        <strong>
+                            2. Answer
+                        </strong>
+                    </p>
+
+                    <input
+                        type="number"
+                        id="answerInput"
+                        placeholder="Enter answer"
+                        step="0.01"
+                        autocomplete="off"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button id="submitButton">
+            SUBMIT ANSWER
+        </button>
+
+
+        <div
+            id="feedback"
+            class="hidden"
+        >
+        </div>
+
+
+        <button
+            id="nextButton"
+            class="hidden"
+        >
+            NEXT QUESTION
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- SUCCESS ANIMATION -->
+<div
+    id="successAnimation"
+    class="hidden"
+>
+    <div
+        id="successText"
+        class="success-text"
+    >
+        GOOD JOB!
+    </div>
+</div>
+
+
+<!-- RESULT SCREEN -->
+<section
+    id="resultScreen"
+    class="screen hidden"
+>
+
+    <div class="card">
+
+        <h1>
+            QUIZ COMPLETE
+        </h1>
+
+
+        <div id="studentSummary">
+            Name: - | Section: -
+        </div>
+
+
+        <div id="finalScore">
+            Score: 0 / 10
+        </div>
+
+
+        <div id="finalTime">
+            Time: 00:00
+        </div>
+
+
+        <div id="finalCategory">
+            10 Questions Completed
+        </div>
+
+
+        <button id="downloadPdfButton">
+            SAVE RESULTS TO PDF
+        </button>
+
+
+        <button id="newQuizButton">
+            NEW QUIZ
+        </button>
+
+    </div>
+
+</section>
+</main>
+  <script src="../../js/helper/navbar.js"></script>
+
+<script>
+
+
+
+/* =====================================================
+   1. RESTRICT NAME INPUT
+   ===================================================== */
+
+const studentNameInput =
+    document.getElementById("studentName");
+
+studentNameInput.addEventListener(
+    "input",
+    function() {
+
+        this.value =
+            this.value.replace(
+                /[^a-zA-Z\s.-]/g,
+                ""
+            );
+
+    }
+);
+
+
+/* =====================================================
+   2. QUIZ CONFIGURATION
+   ===================================================== */
+
+let TOTAL_QUESTIONS = 10;
+
+const QUARTILE_DATASET_SIZE = 15;
+const DECILE_PERCENTILE_DATASET_SIZE = 19;
+
+
+/* =====================================================
+   3. QUESTION TEMPLATES
+   ===================================================== */
+
+const questionTemplates = [
+
+    {
+        category: "Quiz Scores",
+        context: "Quiz scores of students (scores range from 1–20).",
+        min: 1,
+        max: 20,
+        type: "Q",
+        item: 1
+    },
+
+    {
+        category: "Quiz Scores",
+        context: "Quiz scores of students (scores range from 1–20).",
+        min: 1,
+        max: 20,
+        type: "Q",
+        item: 2
+    },
+
+    {
+        category: "Quiz Scores",
+        context: "Quiz scores of students (scores range from 1–20).",
+        min: 1,
+        max: 20,
+        type: "Q",
+        item: 3
+    },
+
+    {
+        category: "Quiz Scores",
+        context: "Quiz scores of students (scores range from 1–20).",
+        min: 1,
+        max: 20,
+        type: "D",
+        item: 2
+    },
+
+    {
+        category: "Quiz Scores",
+        context: "Quiz scores of students (scores range from 1–20).",
+        min: 1,
+        max: 20,
+        type: "D",
+        item: 4
+    },
+
+    {
+        category: "Quiz Scores",
+        context: "Quiz scores of students (scores range from 1–20).",
+        min: 1,
+        max: 20,
+        type: "D",
+        item: 6
+    },
+
+    {
+        category: "Quiz Scores",
+        context: "Quiz scores of students (scores range from 1–20).",
+        min: 1,
+        max: 20,
+        type: "D",
+        item: 8
+    },
+
+
+    /* SUMMATIVE EXAM SCORES */
+
+    {
+        category: "Summative Exam Scores",
+        context: "Summative test scores of students (scores range from 10–50).",
+        min: 10,
+        max: 50,
+        type: "Q",
+        item: 1
+    },
+
+    {
+        category: "Summative Exam Scores",
+        context: "Summative test scores of students (scores range from 10–50).",
+        min: 10,
+        max: 50,
+        type: "Q",
+        item: 2
+    },
+
+    {
+        category: "Summative Exam Scores",
+        context: "Summative test scores of students (scores range from 10–50).",
+        min: 10,
+        max: 50,
+        type: "D",
+        item: 3
+    },
+
+    {
+        category: "Summative Exam Scores",
+        context: "Summative test scores of students (scores range from 10–50).",
+        min: 10,
+        max: 50,
+        type: "D",
+        item: 5
+    },
+
+    {
+        category: "Summative Exam Scores",
+        context: "Summative test scores of students (scores range from 10–50).",
+        min: 10,
+        max: 50,
+        type: "D",
+        item: 7
+    },
+
+    {
+        category: "Summative Exam Scores",
+        context: "Summative test scores of students (scores range from 10–50).",
+        min: 10,
+        max: 50,
+        type: "P",
+        item: 60
+    },
+
+    {
+        category: "Summative Exam Scores",
+        context: "Summative test scores of students (scores range from 10–50).",
+        min: 10,
+        max: 50,
+        type: "P",
+        item: 80
+    },
+
+
+    /* FINAL GRADES */
+
+    {
+        category: "Final Grades",
+        context: "Final grades of students (grades range from 70–100).",
+        min: 70,
+        max: 100,
+        type: "Q",
+        item: 1
+    },
+
+    {
+        category: "Final Grades",
+        context: "Final grades of students (grades range from 70–100).",
+        min: 70,
+        max: 100,
+        type: "Q",
+        item: 3
+    },
+
+    {
+        category: "Final Grades",
+        context: "Final grades of students (grades range from 70–100).",
+        min: 70,
+        max: 100,
+        type: "D",
+        item: 5
+    },
+
+    {
+        category: "Final Grades",
+        context: "Final grades of students (grades range from 70–100).",
+        min: 70,
+        max: 100,
+        type: "P",
+        item: 40
+    },
+
+    {
+        category: "Final Grades",
+        context: "Final grades of students (grades range from 70–100).",
+        min: 70,
+        max: 100,
+        type: "P",
+        item: 70
+    },
+
+    {
+        category: "Final Grades",
+        context: "Final grades of students (grades range from 70–100).",
+        min: 70,
+        max: 100,
+        type: "P",
+        item: 90
+    }
+
+];
+
+
+/* =====================================================
+   4. APP STATE
+   ===================================================== */
+
+let questions = [];
+let currentQuestion = 0;
+let score = 0;
+let quizResults = [];
+
+let studentName = "";
+let studentSection = "";
+
+let timerInterval = null;
+let startTime = null;
+let elapsedSeconds = 0;
+
+let consecutiveCorrect = 0;
+
+
+/* =====================================================
+   5. DOM ELEMENTS
+   ===================================================== */
+
+const startScreen =
+    document.getElementById("startScreen");
+
+const countdownScreen =
+    document.getElementById("countdownScreen");
+
+const quizScreen =
+    document.getElementById("quizScreen");
+
+const resultScreen =
+    document.getElementById("resultScreen");
+
+const startButton =
+    document.getElementById("startButton");
+
+const countdownNumber =
+    document.getElementById("countdownNumber");
+
+const questionCount =
+    document.getElementById("questionCount");
+
+const timer =
+    document.getElementById("timer");
+
+const datasetDisplay =
+    document.getElementById("datasetDisplay");
+
+const datasetDescription =
+    document.getElementById("datasetDescription");
+
+const questionType =
+    document.getElementById("questionType");
+
+const positionInput =
+    document.getElementById("positionInput");
+
+const answerInput =
+    document.getElementById("answerInput");
+
+const positionStage =
+    document.getElementById("positionStage");
+
+const answerStage =
+    document.getElementById("answerStage");
+
+const submitButton =
+    document.getElementById("submitButton");
+
+const nextButton =
+    document.getElementById("nextButton");
+
+const feedback =
+    document.getElementById("feedback");
+
+const studentSummary =
+    document.getElementById("studentSummary");
+
+const finalScore =
+    document.getElementById("finalScore");
+
+const finalTime =
+    document.getElementById("finalTime");
+
+const finalCategory =
+    document.getElementById("finalCategory");
+
+const downloadPdfButton =
+    document.getElementById("downloadPdfButton");
+
+const newQuizButton =
+    document.getElementById("newQuizButton");
+
+const questionLimit =
+    document.getElementById("questionLimit");
+
+const successAnimation =
+    document.getElementById("successAnimation");
+
+const successText =
+    document.getElementById("successText");
+
+
+/* =====================================================
+   6. HELPER FUNCTIONS
+   ===================================================== */
+
+function shuffle(array) {
+
+    let arr = [...array];
+
+    for (
+        let i = arr.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+        [arr[i], arr[j]] =
+            [arr[j], arr[i]];
+    }
+
+    return arr;
+}
+
+
+/* =====================================================
+   RANDOM DATASET
+   ===================================================== */
+
+function generateRandomSortedDataset(
+    count,
+    min,
+    max
+) {
+
+    let data = [];
+
+    for (let i = 0; i < count; i++) {
+
+        let val =
+            Math.floor(
+                Math.random() *
+                (max - min + 1)
+            ) + min;
+
+        data.push(val);
+    }
+
+    return data.sort(
+        (a, b) => a - b
+    );
+}
+
+
+function toSubscript(number) {
+
+    return `<sub class="large-subscript">${number}</sub>`;
+
+}
+
+
+function ordinalnumber(n) {
+
+    const j = n % 10;
+    const k = n % 100;
+
+    if (
+        j === 1 &&
+        k !== 11
+    ) {
+        return n + "st";
+    }
+
+    if (
+        j === 2 &&
+        k !== 12
+    ) {
+        return n + "nd";
+    }
+
+    if (
+        j === 3 &&
+        k !== 13
+    ) {
+        return n + "rd";
+    }
+
+    return n + "th";
+}
+
+
+/* =====================================================
+   POSITION
+   ===================================================== */
+
+function calculatePosition(
+    type,
+    item,
+    n
+) {
+
+    if (type === "Q") {
+
+        return (
+            item / 4
+        ) * (n + 1);
+
+    }
+
+    if (type === "D") {
+
+        return (
+            item / 10
+        ) * (n + 1);
+
+    }
+
+    return (
+        item / 100
+    ) * (n + 1);
+
+}
+
+
+/* =====================================================
+   ANSWER
+   ===================================================== */
+
+function calculateAnswer(
+    data,
+    type,
+    item
+) {
+
+    const sortedData =
+        [...data].sort(
+            (a, b) => a - b
+        );
+
+    const position =
+        calculatePosition(
+            type,
+            item,
+            sortedData.length
+        );
+
+
+    if (position <= 1) {
+
+        return sortedData[0];
+
+    }
+
+
+    if (
+        position >=
+        sortedData.length
+    ) {
+
+        return sortedData[
+            sortedData.length - 1
+        ];
+
+    }
+
+
+    const lowerIndex =
+        Math.floor(position) - 1;
+
+    const fraction =
+        position -
+        Math.floor(position);
+
+    const lowerValue =
+        sortedData[lowerIndex];
+
+    const upperValue =
+        sortedData[
+            lowerIndex + 1
+        ];
+
+
+    return (
+        lowerValue +
+        fraction *
+        (upperValue - lowerValue)
+    );
+}
+
+
+/* =====================================================
+   FORMAT ANSWER
+   ===================================================== */
+
+function formatAnswer(value) {
+
+    if (
+        Number.isInteger(value)
+    ) {
+
+        return String(value);
+
+    }
+
+    return value
+        .toFixed(2)
+        .replace(/\.00$/, "");
+}
+
+
+/* =====================================================
+   MEASURE NAME
+   ===================================================== */
+
+function getMeasureName(
+    type,
+    item
+) {
+
+    if (type === "Q") {
+
+        if (item === 1) {
+            return "lower quartile";
+        }
+
+        if (item === 2) {
+            return "median";
+        }
+
+        return "upper quartile";
+    }
+
+
+    if (type === "D") {
+
+        return (
+            `${ordinalnumber(item)} decile`
+        );
+
+    }
+
+
+    return (
+        `${ordinalnumber(item)} percentile`
+    );
+}
+
+
+/* =====================================================
+   QUESTION TEXT
+   ===================================================== */
+
+function createQuestionText(
+    question
+) {
+
+    const measure =
+        getMeasureName(
+            question.type,
+            question.item
+        );
+
+    const label =
+        question.type +
+        toSubscript(
+            question.item
+        );
+
+    return (
+        `What is the ${measure} (${label})?`
+    );
+}
+
+
+/* =====================================================
+   GENERATE ONE QUESTION
+   ===================================================== */
+
+function generateQuestion(template) {
+
+    const studentCount =
+        template.type === "Q"
+            ? QUARTILE_DATASET_SIZE
+            : DECILE_PERCENTILE_DATASET_SIZE;
+
+
+    const data =
+        generateRandomSortedDataset(
+            studentCount,
+            template.min,
+            template.max
+        );
+
+
+    const position =
+        calculatePosition(
+            template.type,
+            template.item,
+            studentCount
+        );
+
+
+    const answer =
+        calculateAnswer(
+            data,
+            template.type,
+            template.item
+        );
+
+
+    return {
+
+        category:
+            template.category,
+
+        context:
+            template.context,
+
+        data:
+            data,
+
+        type:
+            template.type,
+
+        item:
+            template.item,
+
+        studentCount:
+            studentCount,
+
+        position:
+            position,
+
+        answer:
+            answer
+
+    };
+}
+
+
+/* =====================================================
+   GENERATE QUESTIONS
+   ===================================================== */
+
+function generateQuestions() {
+
+    let generated = [];
+
+    let usedQuestions =
+        new Set();
+
+    let attempts = 0;
+
+    const maxAttempts = 5000;
+
+
+    while (
+        generated.length <
+            TOTAL_QUESTIONS &&
+        attempts <
+            maxAttempts
+    ) {
+
+        attempts++;
+
+
+        const template =
+            questionTemplates[
+                Math.floor(
+                    Math.random() *
+                    questionTemplates.length
+                )
+            ];
+
+
+        const question =
+            generateQuestion(
+                template
+            );
+
+
+        const uniqueKey =
+            [
+                question.category,
+                question.type,
+                question.item,
+                question.data.join(",")
+            ].join("|");
+
+
+        if (
+            !usedQuestions.has(
+                uniqueKey
+            )
+        ) {
+
+            usedQuestions.add(
+                uniqueKey
+            );
+
+            generated.push(
+                question
+            );
+        }
+    }
+
+
+    return shuffle(
+        generated
+    );
+}
+
+
+/* =====================================================
+   CORRECT ANSWER ANIMATION
+   ===================================================== */
+
+function showSuccessAnimation() {
+
+    const messages = [
+        "GOOD JOB!",
+        "EXCELLENT!",
+        "GREAT WORK!",
+        "AWESOME!",
+        "AMAZING!",
+        "WELL DONE!",
+        "KEEP IT UP!",
+        "FANTASTIC!",
+        "OUTSTANDING!",
+        "YOU'RE DOING GREAT!",
+        "BRILLIANT!",
+        "SUPERB!",
+        "IMPRESSIVE!",
+        "NICE WORK!",
+        "YOU GOT THIS!"
+    ];
+
+    let message;
+
+    /*
+       Piliin ang message base sa consecutive correct.
+       Pag 4 pataas, random na para hindi puro PERFECT.
+    */
+
+    if (consecutiveCorrect === 1) {
+        message = "GOOD JOB!";
+    }
+
+    else if (consecutiveCorrect === 2) {
+        message = "EXCELLENT!";
+    }
+
+    else if (consecutiveCorrect === 3) {
+        message = "GREAT WORK!";
+    }
+
+    else {
+        /*
+           4 pataas:
+           Random message mula sa listahan.
+        */
+
+        message = 
+            messages[
+                Math.floor(
+                    Math.random() * messages.length
+                )
+            ];
+
+        /*
+           Siguraduhin na hindi laging
+           PERFECT ang lumalabas.
+        */
+        if (message === "PERFECT!") {
+            message = "AWESOME!";
+        }
+    }
+
+    successText.textContent = message;
+
+    successAnimation.classList.remove("hidden");
+
+    successText.style.animation = "none";
+
+    void successText.offsetWidth;
+
+    successText.style.animation =
+        "successPop 0.7s ease-out, successFloat 1.2s ease-in-out 0.7s";
+
+    setTimeout(
+        function() {
+
+            successAnimation.classList.add(
+                "hidden"
+            );
+
+        },
+        1900
+    );
+}
+
+
+/* =====================================================
+   7. START QUIZ
+   ===================================================== */
+
+startButton.addEventListener(
+    "click",
+    function() {
+
+        studentName =
+            document
+                .getElementById(
+                    "studentName"
+                )
+                .value
+                .trim();
+
+
+        studentSection =
+            document
+                .getElementById(
+                    "studentSection"
+                )
+                .value
+                .trim();
+
+
+        if (
+            !studentName ||
+            !studentSection
+        ) {
+
+            alert(
+                "Please enter both your Name and Section to start the quiz."
+            );
+
+            return;
+        }
+
+
+        TOTAL_QUESTIONS =
+            Number(
+                questionLimit.value
+            );
+
+
+        if (
+            TOTAL_QUESTIONS < 5
+        ) {
+
+            TOTAL_QUESTIONS = 5;
+
+        }
+
+
+        if (
+            TOTAL_QUESTIONS > 50
+        ) {
+
+            TOTAL_QUESTIONS = 50;
+
+        }
+
+
+        startScreen.classList.add(
+            "hidden"
+        );
+
+        countdownScreen.classList.remove(
+            "hidden"
+        );
+
+        startCountdown();
+    }
+);
+
+
+/* =====================================================
+   8. COUNTDOWN
+   ===================================================== */
+
+function startCountdown() {
+
+    let count = 3;
+
+    countdownNumber.textContent =
+        count;
+
+
+    const countdown =
+        setInterval(
+            function() {
+
+                count--;
+
+
+                if (count > 0) {
+
+                    countdownNumber.textContent =
+                        count;
+
+                }
+
+                else {
+
+                    clearInterval(
+                        countdown
+                    );
+
+                    countdownScreen.classList.add(
+                        "hidden"
+                    );
+
+                    quizScreen.classList.remove(
+                        "hidden"
+                    );
+
+                    beginQuiz();
+                }
+
+            },
+            1000
+        );
+}
+
+
+/* =====================================================
+   9. BEGIN QUIZ
+   ===================================================== */
+
+function beginQuiz() {
+
+    questions =
+        generateQuestions();
+
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    quizResults = [];
+
+    consecutiveCorrect = 0;
+
+
+    startTimer();
+
+    showQuestion();
+}
+
+
+/* =====================================================
+   10. TIMER
+   ===================================================== */
+
+function startTimer() {
+
+    clearInterval(
+        timerInterval
+    );
+
+
+    startTime =
+        Date.now();
+
+    elapsedSeconds = 0;
+
+
+    timer.textContent =
+        "Time: 00:00";
+
+
+    timerInterval =
+        setInterval(
+            function() {
+
+                elapsedSeconds =
+                    Math.floor(
+                        (
+                            Date.now() -
+                            startTime
+                        ) / 1000
+                    );
+
+
+                timer.textContent =
+                    "Time: " +
+                    formatTime(
+                        elapsedSeconds
+                    );
+
+            },
+            1000
+        );
+}
+
+
+function formatTime(seconds) {
+
+    const minutes =
+        Math.floor(
+            seconds / 60
+        );
+
+
+    const remainingSeconds =
+        seconds % 60;
+
+
+    return (
+        String(minutes)
+            .padStart(2, "0") +
+        ":" +
+        String(
+            remainingSeconds
+        ).padStart(2, "0")
+    );
+}
+
+
+/* =====================================================
+   11. SHOW QUESTION
+   ===================================================== */
+
+function showQuestion() {
+
+    const question =
+        questions[
+            currentQuestion
+        ];
+
+
+    questionCount.textContent =
+        `Question ${
+            currentQuestion + 1
+        } of ${TOTAL_QUESTIONS}`;
+
+
+    datasetDescription.textContent =
+        `The dataset shows the ${
+            question.category.toLowerCase()
+        } of ${
+            question.studentCount
+        } students.`;
+
+
+    datasetDisplay.textContent =
+        question.data.join(", ");
+
+
+    questionType.textContent =
+        question.category;
+
+
+    positionInput.value = "";
+
+    answerInput.value = "";
+
+
+    positionStage
+        .querySelector("p")
+        .innerHTML =
+        `<strong>
+            1. Find the
+            ${question.type}${toSubscript(question.item)}
+            Position
+        </strong>`;
+
+
+    answerStage
+        .querySelector("p")
+        .innerHTML =
+        `<strong>
+            2. ${createQuestionText(question)}
+        </strong>`;
+
+
+    positionInput.disabled =
+        false;
+
+    answerInput.disabled =
+        false;
+
+
+    submitButton.textContent =
+        "SUBMIT ANSWER";
+
+    submitButton.disabled =
+        false;
+
+    submitButton.classList.remove(
+        "hidden"
+    );
+
+
+    nextButton.classList.add(
+        "hidden"
+    );
+
+
+    feedback.textContent =
+        "";
+
+    feedback.className =
+        "hidden";
+
+
+    setTimeout(
+        () =>
+            positionInput.focus(),
+        50
+    );
+}
+
+
+/* =====================================================
+   12. SUBMIT ANSWER
+   ===================================================== */
+
+submitButton.addEventListener(
+    "click",
+    submitAnswer
+);
+
+
+function submitAnswer() {
+
+    const question =
+        questions[
+            currentQuestion
+        ];
+
+
+    if (
+        positionInput.value.trim() ===
+            "" ||
+        answerInput.value.trim() ===
+            ""
+    ) {
+
+        feedback.textContent =
+            "Please enter both the position and the answer.";
+
+        feedback.className =
+            "wrong";
+
+        feedback.classList.remove(
+            "hidden"
+        );
+
+        return;
+    }
+
+
+    const enteredPosition =
+        Number(
+            positionInput.value
+        );
+
+
+    const userAnswer =
+        Number(
+            answerInput.value
+        );
+
+
+    const expectedPosition =
+        Number(
+            question.position.toFixed(2)
+        );
+
+
+    const expectedAnswer =
+        Number(
+            formatAnswer(
+                question.answer
+            )
+        );
+
+
+    const positionCorrect =
+        Number.isFinite(
+            enteredPosition
+        ) &&
+        Math.abs(
+            enteredPosition -
+            expectedPosition
+        ) < 0.01;
+
+
+    const answerCorrect =
+        Number.isFinite(
+            userAnswer
+        ) &&
+        Math.abs(
+            userAnswer -
+            expectedAnswer
+        ) < 0.01;
+
+
+    const isCorrect =
+        positionCorrect &&
+        answerCorrect;
+
+
+    if (isCorrect) {
+
+        score++;
+
+        consecutiveCorrect++;
+
+        showSuccessAnimation();
+
+    }
+
+    else {
+
+        consecutiveCorrect = 0;
+
+    }
+
+
+    /*
+       NO FRACTION.
+       NO SOLUTION EXPLANATION.
+       ONLY CORRECT POSITION AND CORRECT ANSWER.
+    */
+
+    feedback.innerHTML =
+
+        `${isCorrect
+            ? "✓ Correct!"
+            : "✗ Check your answers."
+        }<br><br>` +
+
+        `Position:
+        <strong>
+            ${
+                positionCorrect
+                    ? "Correct"
+                    : "Incorrect"
+            }
+        </strong>
+        <br>
+        Correct Position:
+        <strong>
+            ${formatAnswer(
+                question.position
+            )}
+        </strong>
+        <br><br>` +
+
+        `Answer:
+        <strong>
+            ${
+                answerCorrect
+                    ? "Correct"
+                    : "Incorrect"
+            }
+        </strong>
+        <br>
+        Correct Answer:
+        <strong>
+            ${formatAnswer(
+                question.answer
+            )}
+        </strong>`;
+
+
+    feedback.className =
+        isCorrect
+            ? "correct"
+            : "wrong";
+
+
+    feedback.classList.remove(
+        "hidden"
+    );
+
+
+    quizResults.push({
+
+        category:
+            question.category,
+
+        dataset:
+            question.data.join(", "),
+
+        question:
+            createQuestionText(
+                question
+            ),
+
+        measure:
+            question.type +
+            toSubscript(
+                question.item
+            ),
+
+        positionAnswer:
+            enteredPosition,
+
+        correctPosition:
+            formatAnswer(
+                question.position
+            ),
+
+        studentAnswer:
+            userAnswer,
+
+        correctAnswer:
+            formatAnswer(
+                question.answer
+            ),
+
+        result:
+            isCorrect
+                ? "CORRECT"
+                : "INCORRECT"
+
+    });
+
+
+    positionInput.disabled =
+        true;
+
+    answerInput.disabled =
+        true;
+
+
+    submitButton.disabled =
+        true;
+
+    submitButton.classList.add(
+        "hidden"
+    );
+
+
+    if (
+        currentQuestion ===
+        TOTAL_QUESTIONS - 1
+    ) {
+
+        nextButton.textContent =
+            "SHOW SUMMARY";
+
+    }
+
+    else {
+
+        nextButton.textContent =
+            "NEXT QUESTION";
+
+    }
+
+
+    nextButton.classList.remove(
+        "hidden"
+    );
+}
+
+
+/* =====================================================
+   13. NEXT QUESTION / SHOW SUMMARY
+   ===================================================== */
+
+nextButton.addEventListener(
+    "click",
+    function() {
+
+        if (
+            currentQuestion ===
+            TOTAL_QUESTIONS - 1
+        ) {
+
+            finishQuiz();
+
+            return;
+        }
+
+
+        currentQuestion++;
+
+        showQuestion();
+
+    }
+);
+
+
+/* =====================================================
+   14. ENTER KEY
+   ===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key !== "Enter"
+        ) {
+            return;
+        }
+
+
+        if (
+            quizScreen.classList.contains(
+                "hidden"
+            )
+        ) {
+            return;
+        }
+
+
+        event.preventDefault();
+
+
+        if (
+            submitButton.disabled
+        ) {
+
+            nextButton.click();
+
+        }
+
+        else {
+
+            submitAnswer();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   15. FINISH QUIZ
+   ===================================================== */
+
+function finishQuiz() {
+    clearInterval(timerInterval);
+
+    const percentage = Math.round((score / TOTAL_QUESTIONS) * 100);
+    const quizType = "QUARTILES, DECILES, PERCENTILES";
+
+    // SAVE RESULT TO GOOGLE SHEETS
+    const formData = new URLSearchParams();
+
+    formData.append("quizType", quizType);
+    formData.append("studentName", studentName);
+    formData.append("section", studentSection);
+    formData.append("score", score);
+    formData.append("totalQuiz", TOTAL_QUESTIONS);
+    formData.append("percentage", percentage + "%");
+    formData.append("time", formatTime(elapsedSeconds));
+
+    fetch("https://script.google.com/macros/s/AKfycbzrMeuIcPYOPPifmbcYofRp70xKMS4DszabX3tsIcCAO3fFa9ggsHpHubj2b5uWfpU/exec", {
+        method: "POST",
+        mode: "no-cors",
+        body: formData
+    })
+    .then(() => {
+        console.log("Quiz result sent to Google Sheets.");
+    })
+    .catch((error) => {
+        console.error("Could not send quiz result:", error);
+    });
+
+    // SHOW RESULT SCREEN
+    quizScreen.classList.add("hidden");
+    resultScreen.classList.remove("hidden");
+
+    studentSummary.textContent =
+        `Name: ${studentName} | Section: ${studentSection}`;
+
+    finalScore.textContent =
+        `Score: ${score} / ${TOTAL_QUESTIONS}`;
+
+    finalTime.textContent =
+        `Time: ${formatTime(elapsedSeconds)}`;
+
+    finalCategory.textContent =
+        `${TOTAL_QUESTIONS} Questions Completed`;}
+
+
+
+/* =====================================================
+   16. PDF EXPORT
+   ===================================================== */
+
+downloadPdfButton.addEventListener(
+    "click",
+    function() {
+
+        const pdfContainer =
+            document.createElement(
+                "div"
+            );
+
+
+        pdfContainer.style.padding =
+            "25px";
+
+        pdfContainer.style.fontFamily =
+            "Arial, sans-serif";
+
+        pdfContainer.style.color =
+            "#1b5e20";
+
+
+        const percentage =
+            Math.round(
+                (
+                    score /
+                    TOTAL_QUESTIONS
+                ) * 100
+            );
+
+
+        let rowsHtml = "";
+
+
+        quizResults.forEach(
+            (res, idx) => {
+
+                const isCorrect =
+                    res.result ===
+                    "CORRECT";
+
+
+                const resultColor =
+                    isCorrect
+                        ? "#2e7d32"
+                        : "#c62828";
+
+
+                const rowBg =
+                    idx % 2 === 0
+                        ? "#f9fbf9"
+                        : "#ffffff";
+
+
+                rowsHtml += `
+
+                    <tr
+                        style="
+                            background-color:${rowBg};
+                            border-bottom:1px solid #e0e0e0;
+                            font-size:11px;
+                        "
+                    >
+
+                        <td
+                            style="
+                                padding:8px;
+                                text-align:center;
+                                font-weight:bold;
+                            "
+                        >
+                            ${idx + 1}
+                        </td>
+
+
+                        <td
+                            style="
+                                padding:8px;
+                            "
+                        >
+                            ${res.category}
+                        </td>
+
+
+                        <td
+                            style="
+                                padding:8px;
+                                font-family:monospace;
+                            "
+                        >
+                            [${res.dataset}]
+                        </td>
+
+
+                        <td
+                            style="
+                                padding:8px;
+                                text-align:center;
+                                font-weight:bold;
+                            "
+                        >
+                            ${res.measure}
+                        </td>
+
+
+                        <td
+                            style="
+                                padding:8px;
+                            "
+                        >
+
+                            Pos:
+                            <strong>
+                                ${res.positionAnswer}
+                            </strong>
+
+                            (Correct:
+                            ${res.correctPosition})
+
+                            <br>
+
+                            Val:
+                            <strong>
+                                ${res.studentAnswer}
+                            </strong>
+
+                            (Correct:
+                            ${res.correctAnswer})
+
+                        </td>
+
+
+                        <td
+                            style="
+                                padding:8px;
+                                text-align:center;
+                                font-weight:bold;
+                                color:${resultColor};
+                            "
+                        >
+                            ${res.result}
+                        </td>
+
+                    </tr>
+
+                `;
+            }
+        );
+
+
+        pdfContainer.innerHTML = `
+
+            <div
+                style="
+                    text-align:center;
+                    border-bottom:3px solid #2e7d32;
+                    padding-bottom:12px;
+                    margin-bottom:20px;
+                "
+            >
+
+                <h1
+                    style="
+                        margin:0;
+                        color:#2e7d32;
+                        font-size:22px;
+                    "
+                >
+                    GRADE 10 MATHEMATICS QUIZ REPORT
+                </h1>
+
+
+                <h3
+                    style="
+                        margin:5px 0 0 0;
+                        color:#388e3c;
+                        font-size:14px;
+                        font-weight:normal;
+                    "
+                >
+                    Quartiles, Deciles, and Percentiles
+                </h3>
+
+            </div>
+
+
+            <table
+                style="
+                    width:100%;
+                    border-collapse:collapse;
+                    margin-bottom:20px;
+                    font-size:13px;
+                    background:#f1f8e9;
+                    border:1px solid #c8e6c9;
+                "
+            >
+
+                <tr>
+
+                    <td
+                        style="
+                            padding:10px;
+                            width:50%;
+                        "
+                    >
+
+                        <strong>
+                            Student Name:
+                        </strong>
+
+                        ${studentName}
+
+                    </td>
+
+
+                    <td
+                        style="
+                            padding:10px;
+                            width:50%;
+                        "
+                    >
+
+                        <strong>
+                            Section:
+                        </strong>
+
+                        ${studentSection}
+
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td
+                        style="
+                            padding:10px;
+                        "
+                    >
+
+                        <strong>
+                            Final Score:
+                        </strong>
+
+                        ${score}
+                        /
+                        ${TOTAL_QUESTIONS}
+
+                        (${percentage}%)
+
+                    </td>
+
+
+                    <td
+                        style="
+                            padding:10px;
+                        "
+                    >
+
+                        <strong>
+                            Total Time:
+                        </strong>
+
+                        ${formatTime(
+                            elapsedSeconds
+                        )}
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+
+            <h3
+                style="
+                    color:#2e7d32;
+                    font-size:14px;
+                    margin-bottom:10px;
+                "
+            >
+                Detailed Question Summary
+            </h3>
+
+
+            <table
+                style="
+                    width:100%;
+                    border-collapse:collapse;
+                    border:1px solid #c8e6c9;
+                "
+            >
+
+                <thead>
+
+                    <tr
+                        style="
+                            background-color:#2e7d32;
+                            color:white;
+                            font-size:11px;
+                        "
+                    >
+
+                        <th
+                            style="
+                                padding:8px;
+                                text-align:center;
+                                width:5%;
+                            "
+                        >
+                            #
+                        </th>
+
+
+                        <th
+                            style="
+                                padding:8px;
+                                text-align:left;
+                                width:18%;
+                            "
+                        >
+                            Topic
+                        </th>
+
+
+                        <th
+                            style="
+                                padding:8px;
+                                text-align:left;
+                                width:32%;
+                            "
+                        >
+                            Dataset
+                        </th>
+
+
+                        <th
+                            style="
+                                padding:8px;
+                                text-align:center;
+                                width:10%;
+                            "
+                        >
+                            Measure
+                        </th>
+
+
+                        <th
+                            style="
+                                padding:8px;
+                                text-align:left;
+                                width:23%;
+                            "
+                        >
+                            Student vs Correct
+                        </th>
+
+
+                        <th
+                            style="
+                                padding:8px;
+                                text-align:center;
+                                width:12%;
+                            "
+                        >
+                            Status
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    ${rowsHtml}
+
+                </tbody>
+
+            </table>
+
+        `;
+
+
+        const opt = {
+
+            margin: 0.4,
+
+            filename:
+                `${studentName.replace(
+                    /\s+/g,
+                    "_"
+                )}_Grade10_Quiz_Results.pdf`,
+
+            image: {
+                type: "jpeg",
+                quality: 0.98
+            },
+
+            html2canvas: {
+                scale: 2
+            },
+
+            jsPDF: {
+                unit: "in",
+                format: "letter",
+                orientation: "portrait"
+            }
+
+        };
+
+
+        html2pdf()
+            .set(opt)
+            .from(pdfContainer)
+            .save();
+
+    }
+);
+
+
+/* =====================================================
+   17. RESET QUIZ
+   ===================================================== */
+
+newQuizButton.addEventListener(
+    "click",
+    function() {
+
+        clearInterval(
+            timerInterval
+        );
+
+
+        questions = [];
+
+        currentQuestion = 0;
+
+        score = 0;
+
+        quizResults = [];
+
+        elapsedSeconds = 0;
+
+        consecutiveCorrect = 0;
+
+
+        resultScreen.classList.add(
+            "hidden"
+        );
+
+        startScreen.classList.remove(
+            "hidden"
+        );
+
+
+        timer.textContent =
+            "Time: 00:00";
+
+    }
+);
+
+</script>
+<script src="../../js/helper/navbar.js"></script>
+</body>
+</html>

@@ -1,0 +1,2558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PROJECTFACTR — Mathematics Remedial Learning Platform</title>
+  <meta name="description" content="ProjectFactr — Mathematics Remedial Learning Platform for Grade 7 to 11.">
+  
+  <!-- FontAwesome Icons for Dropdown & Hamburger -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Stylesheet link -->
+  <link rel="stylesheet" href="../../assets/style/style.css">
+
+  <!-- Google Web Fonts (Montserrat & Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+
+   <style>
+
+        :root {
+            --primary-dark: #073827;
+            --primary-forest: #16623d;
+            --primary-accent: #339763;
+
+            --tint-light: #f0f7f3;
+            --card-bg: #fff;
+
+            --text-main: #073827;
+            --text-body: #334d42;
+            --text-muted: #628273;
+
+            --border-color: #e2ede6;
+
+            --correct-bg: #e7f7ee;
+            --correct-border: #339763;
+            --correct-text: #073827;
+
+            --wrong-bg: #fde8e8;
+            --wrong-border: #e02424;
+            --wrong-text: #9b1c1c;
+
+            --font-brand: "Montserrat", Arial, sans-serif;
+            --font-body: Arial, sans-serif;
+
+            --shadow-sm: 0 2px 4px rgba(7, 56, 39, .03);
+            --shadow-md: 0 10px 25px -5px rgba(7, 56, 39, .08);
+            --shadow-lg: 0 20px 40px -10px rgba(7, 56, 39, .12);
+
+            --radius: 16px;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100vh;
+            background: #f7faf8;
+            font-family: var(--font-body);
+            color: var(--text-body);
+            overflow-x: hidden;
+        }
+
+        .page-title {
+            width: 92%;
+            max-width: 600px;
+            margin: 30px auto 15px;
+            font-family: var(--font-brand);
+            color: var(--primary-dark);
+            font-size: 26px;
+            font-weight: 800;
+            text-align: center;
+        }
+
+        #studentStart,
+        #modeSelect,
+        #quizArea,
+        #finishMessage {
+            width: 92%;
+            max-width: 580px;
+            margin-left: auto;
+            margin-right: auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+        }
+
+        #studentStart {
+            max-width: 440px;
+            margin-top: 10px;
+            margin-bottom: 40px;
+            padding: 35px;
+        }
+
+        #studentStart h2,
+        #modeSelect h2 {
+            margin-bottom: 20px;
+            font-family: var(--font-brand);
+            color: var(--primary-dark);
+            font-size: 20px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        #studentStart input {
+            display: block;
+            width: 100%;
+            height: 48px;
+            margin-bottom: 16px;
+            padding: 10px 16px;
+            background: var(--tint-light);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        #studentStart input:focus {
+            background: white;
+            border-color: var(--primary-accent);
+        }
+
+        .btn-primary {
+            display: block;
+            width: 100%;
+            min-height: 48px;
+            margin-top: 16px;
+            padding: 10px 15px;
+            background: var(--primary-forest);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-family: var(--font-brand);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        #modeSelect {
+            max-width: 440px;
+            margin-top: 10px;
+            margin-bottom: 40px;
+            padding: 35px;
+        }
+
+        .mode-btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .mode-btn {
+            padding: 15px;
+            background: var(--tint-light);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--primary-dark);
+            font-family: var(--font-brand);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+        .mode-btn:hover {
+            background: white;
+            border-color: var(--primary-accent);
+            transform: translateY(-1px);
+        }
+
+        #countdownOverlay {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(7, 56, 39, .76);
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            pointer-events: none;
+            transition: .25s ease;
+        }
+
+        #countdownOverlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .countdown-card {
+            padding: 40px 60px;
+            background: white;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .countdown-card h3 {
+            margin-bottom: 8px;
+            font-family: var(--font-brand);
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        #countdownNumber {
+            font-family: var(--font-brand);
+            font-size: 80px;
+            font-weight: 800;
+            color: var(--primary-forest);
+        }
+
+        #studentInfo {
+            width: 92%;
+            max-width: 580px;
+            margin: 0 auto 16px;
+            padding: 18px 20px;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        #studentInfo p {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        #showName,
+        #showSection {
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+
+        #score,
+        #quizCount {
+            padding: 8px 12px;
+            background: var(--tint-light);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--primary-forest);
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        #timerDisplay {
+            grid-column: span 2;
+            padding: 8px 12px;
+            background: var(--primary-dark);
+            border-radius: 8px;
+            color: white;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        #quizArea {
+            display: none;
+            margin-bottom: 40px;
+            padding: 35px;
+        }
+
+        #category {
+            margin-bottom: 16px;
+            font-family: var(--font-brand);
+            color: var(--primary-dark);
+            font-size: 18px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        #displayGiven {
+            width: 100%;
+            min-height: 70px;
+            margin-bottom: 20px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--tint-light);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--primary-dark);
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.4;
+            text-align: center;
+        }
+
+        .compare-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .compare-box {
+            min-width: 80px;
+            padding: 12px 20px;
+            background: var(--tint-light);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--primary-dark);
+            font-size: 22px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        #compareSelect {
+            width: 80px;
+            height: 48px;
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--primary-dark);
+            font-size: 20px;
+            font-weight: 700;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .drag-drop-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .sortable-container {
+            width: 100%;
+            min-height: 75px;
+            padding: 12px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            overflow-x: auto;
+            background: var(--tint-light);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+        }
+
+        .sort-chip {
+            flex-shrink: 0;
+            padding: 12px 16px;
+            background: white;
+            border: 2px solid var(--primary-accent);
+            border-radius: 10px;
+            color: var(--primary-dark);
+            font-size: 16px;
+            font-weight: 700;
+            white-space: nowrap;
+            cursor: grab;
+            user-select: none;
+            box-shadow: var(--shadow-sm);
+            transition:
+                transform .15s ease,
+                background .15s ease,
+                border-color .15s ease,
+                color .15s ease;
+        }
+
+        .sort-chip:active {
+            cursor: grabbing;
+        }
+
+        .sort-chip.dragging {
+            opacity: .4;
+        }
+
+        .sort-chip.drag-over {
+            background: #e2ede6;
+            border-color: var(--primary-dark);
+            transform: scale(1.04);
+        }
+
+        .chip-controls {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .chip-btn {
+            padding: 8px 14px;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--primary-dark);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+        .chip-btn:hover {
+            background: var(--tint-light);
+            border-color: var(--primary-accent);
+        }
+
+        #outAns {
+            width: 100%;
+            margin: 16px 0;
+            padding: 16px;
+            background: var(--tint-light);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--primary-dark);
+            font-size: 13px;
+            line-height: 1.5;
+            text-align: center;
+            display: none;
+        }
+
+        .correct-order-box {
+            margin-top: 10px;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        .correct-order-label {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .correct-order-value {
+            color: var(--primary-dark);
+            font-size: 15px;
+            font-weight: 800;
+            line-height: 1.5;
+        }
+
+        .explanation-box {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .explanation-title {
+            margin-bottom: 7px;
+            color: var(--primary-dark);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .math-step {
+            margin: 5px 0;
+            padding: 7px 9px;
+            background: white;
+            border-left: 3px solid var(--primary-accent);
+            border-radius: 5px;
+            color: var(--text-body);
+            font-size: 12px;
+            line-height: 1.55;
+        }
+
+        /* SHOW SUMMARY BUTTON */
+
+        #showSummaryBtn {
+            display: none;
+        }
+
+        /* FINISH SCREEN */
+
+        #finishMessage {
+            width: 92%;
+            max-width: 580px;
+            margin: 0 auto 40px;
+            padding: 35px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            display: none;
+            text-align: center;
+        }
+
+        #finishMessage h2 {
+            margin: 0 0 20px;
+            color: var(--primary-dark);
+            font-family: var(--font-brand);
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .summary-item {
+            margin: 10px 0;
+            padding: 12px;
+            background: var(--tint-light);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-body);
+            font-size: 14px;
+        }
+
+        .summary-item strong {
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+
+        .final-score {
+            margin: 20px 0;
+            color: var(--primary-forest);
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .final-score small {
+            font-size: 18px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        @media(max-width:600px) {
+
+            .top-nav-bar {
+                padding: 14px 18px;
+            }
+
+            .nav-tagline {
+                font-size: 10px;
+            }
+
+            .page-title {
+                font-size: 22px;
+                margin-top: 24px;
+            }
+
+            #studentStart,
+            #modeSelect,
+            #quizArea {
+                padding: 25px 20px;
+            }
+
+            #studentInfo {
+                grid-template-columns: 1fr;
+            }
+
+            #timerDisplay {
+                grid-column: span 1;
+            }
+
+            .compare-row {
+                gap: 8px;
+            }
+
+            .compare-box {
+                min-width: 65px;
+                padding: 10px 12px;
+                font-size: 18px;
+            }
+
+            #compareSelect {
+                width: 65px;
+            }
+
+            .sort-chip {
+                padding: 10px 13px;
+                font-size: 15px;
+            }
+
+            .chip-controls {
+                flex-wrap: wrap;
+            }
+
+            .chip-btn {
+                flex: 1;
+                min-width: 120px;
+            }
+
+            #finishMessage {
+                width: 94%;
+                padding: 24px;
+            }
+
+            #finishMessage h2 {
+                font-size: 20px;
+            }
+
+            .summary-item {
+                font-size: 13px;
+                padding: 11px;
+            }
+
+            .final-score {
+                font-size: 38px;
+            }
+        }
+
+        @media(max-width:400px) {
+
+            #finishMessage {
+                padding: 20px;
+            }
+
+            .final-score {
+                font-size: 34px;
+            }
+        }
+
+    </style>
+</head>
+</head>
+<body>
+
+  <!-- ========================================================================
+       TOP NAVIGATION BAR
+       ======================================================================== -->
+  <header class="top-nav-bar" id="navbar">
+   
+  </header>
+
+  <main>
+    <section class="cover-section" id="cover">
+      <div class="cover-wrapper">
+        <img 
+          src="../../assets/img/background/7-Irrationals.jpeg" 
+          alt="ProjectFactr Mathematics Remedial Learning Platform Banner" 
+          class="cover-image"
+          id="main-cover-image"
+        >
+      </div>
+    </section>
+
+     <h1 class="page-title">
+        Irrational Numbers Quiz
+    </h1>
+
+
+    <!-- STUDENT DETAILS -->
+
+    <div id="studentStart">
+
+        <h2>
+            Enter Student Details
+        </h2>
+
+        <input
+            type="text"
+            id="fullName"
+            placeholder="Full Name"
+        >
+
+        <input
+            type="text"
+            id="section"
+            placeholder="Grade & Section"
+        >
+
+        <button
+            class="btn-primary"
+            onclick="proceedToModeSelect()"
+        >
+            Next: Choose Quiz Type
+        </button>
+
+    </div>
+
+
+    <!-- QUIZ TYPE -->
+
+    <div
+        id="modeSelect"
+        style="display:none;"
+    >
+
+        <h2>
+            Select Quiz Type
+        </h2>
+
+        <div class="mode-btn-group">
+
+            <button
+                class="mode-btn"
+                onclick="startQuizWithCountdown('compare')"
+            >
+                Comparing Irrational Numbers
+            </button>
+
+            <button
+                class="mode-btn"
+                onclick="startQuizWithCountdown('sort')"
+            >
+                Least to Greatest
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- COUNTDOWN -->
+
+    <div id="countdownOverlay">
+
+        <div class="countdown-card">
+
+            <h3>
+                GET READY
+            </h3>
+
+            <div id="countdownNumber">
+                3
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- STUDENT INFO -->
+
+    <div id="studentInfo">
+
+        <p>
+            Name:
+            <span id="showName"></span>
+        </p>
+
+        <p>
+            Section:
+            <span id="showSection"></span>
+        </p>
+
+        <div id="score">
+            Score: 0 / 10
+        </div>
+
+        <div id="quizCount">
+            Question: 1 / 10
+        </div>
+
+        <div id="timerDisplay">
+            Time Elapsed: 0:00
+        </div>
+
+    </div>
+
+
+    <!-- QUIZ -->
+
+    <div id="quizArea">
+
+        <div id="category">
+            Topic
+        </div>
+
+        <div id="displayGiven">
+            Question prompt goes here
+        </div>
+
+        <div id="answerBox"></div>
+
+        <div id="outAns"></div>
+
+
+        <!-- SUBMIT -->
+
+        <button
+            class="btn-primary"
+            id="submitBtn"
+            onclick="submitAnswer()"
+        >
+            Submit Answer
+        </button>
+
+
+        <!-- NEXT QUESTION -->
+
+        <button
+            class="btn-primary"
+            id="nextBtn"
+            onclick="nextQuestion()"
+            style="display:none;background:var(--primary-accent);"
+        >
+            Next Question
+        </button>
+
+
+        <!-- SHOW SUMMARY -->
+
+        <button
+            class="btn-primary"
+            id="showSummaryBtn"
+            onclick="finishQuiz()"
+            style="display:none;background:var(--primary-accent);"
+        >
+            Show Summary
+        </button>
+
+    </div>
+
+
+    <!-- FINISH SCREEN -->
+
+    <div id="finishMessage">
+
+        <h2>
+            Quiz Finished!
+        </h2>
+
+        <div class="summary-item">
+            Name:
+            <strong id="summaryName"></strong>
+        </div>
+
+        <div class="summary-item">
+            Section:
+            <strong id="summarySection"></strong>
+        </div>
+
+        <div class="summary-item">
+            Quiz Type:
+            <strong id="summaryType"></strong>
+        </div>
+
+        <div class="final-score">
+
+            <span id="finalScore">
+                0
+            </span>/10
+
+        </div>
+
+        <div class="summary-item">
+            Time:
+            <strong id="finalTime">
+                00:00
+            </strong>
+        </div>
+
+        <button
+            class="btn-primary"
+            onclick="backToQuizTypes()"
+        >
+            Back to Quiz Types
+        </button>
+
+    </div>
+
+
+    <script>
+
+        let studentName = "";
+        let studentSection = "";
+
+        let selectedMode = "";
+
+        let questions = [];
+
+        let currentIdx = 0;
+
+        let score = 0;
+
+        let timerInterval = null;
+
+        let timeElapsed = 0;
+
+        let quizTakenCount = 0;
+
+        let activeSelectedChip = null;
+
+        let draggedElement = null;
+
+
+        const availableTerms = [
+
+            "√2",
+            "√3",
+            "√5",
+            "√6",
+            "√7",
+            "√8",
+            "√10",
+            "√11",
+            "√12",
+            "√13",
+            "√14",
+            "√15",
+            "√18",
+            "√20",
+            "√24",
+
+            "2√2",
+            "2√3",
+            "2√5",
+            "3√2",
+            "3√3",
+            "4√2"
+
+        ];
+
+
+        const wholeNumbers = [
+
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+
+        ];
+
+
+        /* =====================================================
+           CONVERT RADICAL EXPRESSION TO A NUMERICAL VALUE
+           ===================================================== */
+
+        function evaluateValue(expression) {
+
+            expression = expression.trim();
+
+
+            if (expression.includes("√")) {
+
+                let parts =
+                    expression.split("√");
+
+
+                let coefficient =
+                    parts[0] === ""
+                        ? 1
+                        : parseFloat(parts[0]);
+
+
+                let radicand =
+                    parseFloat(parts[1]);
+
+
+                return coefficient *
+                    Math.sqrt(radicand);
+
+            }
+
+
+            return parseFloat(expression);
+
+        }
+
+
+        /* =====================================================
+           GET RANDOM TERM
+           ===================================================== */
+
+        function getRandomTerm(excludeList = []) {
+
+            let available =
+                availableTerms.filter(
+                    term =>
+                        !excludeList.includes(term)
+                );
+
+
+            return available[
+                Math.floor(
+                    Math.random() *
+                    available.length
+                )
+            ];
+
+        }
+
+
+        /* =====================================================
+           CREATE QUESTIONS
+           ===================================================== */
+
+        function generateQuestionsForMode(mode) {
+
+            let generated = [];
+
+
+            for (
+                let i = 0;
+                i < 10;
+                i++
+            ) {
+
+
+                /* =================================================
+                   COMPARING
+                   ================================================= */
+
+                if (mode === "compare") {
+
+                    let first =
+                        getRandomTerm();
+
+
+                    let second =
+                        getRandomTerm([first]);
+
+
+                    while (
+                        Math.abs(
+                            evaluateValue(first) -
+                            evaluateValue(second)
+                        ) < 0.001
+                    ) {
+
+                        second =
+                            getRandomTerm([first]);
+
+                    }
+
+
+                    let firstValue =
+                        evaluateValue(first);
+
+
+                    let secondValue =
+                        evaluateValue(second);
+
+
+                    let correctAnswer =
+                        firstValue > secondValue
+                            ? ">"
+                            : "<";
+
+
+                    generated.push({
+
+                        type: "compare",
+
+                        category:
+                            "Comparing Irrational Numbers",
+
+                        given:
+                            "Compare the two irrational numbers and choose the correct symbol, > or <, to make the statement true.",
+
+                        val1: first,
+
+                        val2: second,
+
+                        answer: correctAnswer
+
+                    });
+
+                }
+
+
+                /* =================================================
+                   LEAST TO GREATEST
+                   ================================================= */
+
+                else {
+
+                    let terms = [];
+
+
+                    let whole =
+                        wholeNumbers[
+                            Math.floor(
+                                Math.random() *
+                                wholeNumbers.length
+                            )
+                        ];
+
+
+                    terms.push(whole);
+
+
+                    while (
+                        terms.length < 4
+                    ) {
+
+                        let term =
+                            getRandomTerm(terms);
+
+
+                        let termValue =
+                            evaluateValue(term);
+
+
+                        let duplicate =
+                            terms.some(
+                                existing =>
+                                    Math.abs(
+                                        evaluateValue(existing) -
+                                        termValue
+                                    ) < 0.001
+                            );
+
+
+                        if (!duplicate) {
+
+                            terms.push(term);
+
+                        }
+
+                    }
+
+
+                    generated.push({
+
+                        type: "sort",
+
+                        category:
+                            "Least to Greatest — Order Numbers",
+
+                        given:
+                            "Arrange the given numbers from least to greatest.",
+
+                        items: terms
+
+                    });
+
+                }
+
+            }
+
+
+            return generated;
+
+        }
+
+
+        /* =====================================================
+           STUDENT DETAILS
+           ===================================================== */
+
+        function proceedToModeSelect() {
+
+            studentName =
+                document
+                    .getElementById("fullName")
+                    .value
+                    .trim();
+
+
+            studentSection =
+                document
+                    .getElementById("section")
+                    .value
+                    .trim();
+
+
+            if (
+                !studentName ||
+                !studentSection
+            ) {
+
+                alert(
+                    "Please enter your name and section before starting."
+                );
+
+                return;
+
+            }
+
+
+            document
+                .getElementById("studentStart")
+                .style.display = "none";
+
+
+            document
+                .getElementById("modeSelect")
+                .style.display = "block";
+
+        }
+
+
+        /* =====================================================
+           START QUIZ
+           ===================================================== */
+
+        function startQuizWithCountdown(mode) {
+
+            selectedMode = mode;
+
+
+            questions =
+                generateQuestionsForMode(mode);
+
+
+            currentIdx = 0;
+
+            score = 0;
+
+            timeElapsed = 0;
+
+
+            document
+                .getElementById("showName")
+                .textContent = studentName;
+
+
+            document
+                .getElementById("showSection")
+                .textContent = studentSection;
+
+
+            document
+                .getElementById("modeSelect")
+                .style.display = "none";
+
+
+            document
+                .getElementById("score")
+                .textContent =
+                "Score: 0 / 10";
+
+
+            document
+                .getElementById("quizCount")
+                .textContent =
+                "Question: 1 / 10";
+
+
+            document
+                .getElementById("finishMessage")
+                .style.display = "none";
+
+
+            document
+                .getElementById("showSummaryBtn")
+                .style.display = "none";
+
+
+            document
+                .getElementById("nextBtn")
+                .style.display = "none";
+
+
+            const overlay =
+                document.getElementById(
+                    "countdownOverlay"
+                );
+
+
+            const number =
+                document.getElementById(
+                    "countdownNumber"
+                );
+
+
+            overlay.classList.add("active");
+
+
+            let count = 3;
+
+
+            number.textContent = count;
+
+
+            let countdown =
+                setInterval(() => {
+
+                    count--;
+
+
+                    if (count > 0) {
+
+                        number.textContent =
+                            count;
+
+                    }
+
+                    else if (count === 0) {
+
+                        number.textContent =
+                            "GO!";
+
+                    }
+
+                    else {
+
+                        clearInterval(countdown);
+
+
+                        overlay.classList.remove(
+                            "active"
+                        );
+
+
+                        document
+                            .getElementById("quizArea")
+                            .style.display =
+                            "block";
+
+
+                        document
+                            .getElementById("studentInfo")
+                            .style.display =
+                            "grid";
+
+
+                        loadQuestion();
+
+
+                        startTimer();
+
+                    }
+
+                }, 1000);
+
+        }
+
+
+        /* =====================================================
+           TIMER
+           ===================================================== */
+
+        function startTimer() {
+
+            if (timerInterval) {
+
+                clearInterval(
+                    timerInterval
+                );
+
+            }
+
+
+            timerInterval =
+                setInterval(() => {
+
+                    timeElapsed++;
+
+
+                    let minutes =
+                        Math.floor(
+                            timeElapsed / 60
+                        );
+
+
+                    let seconds =
+                        timeElapsed % 60;
+
+
+                    document
+                        .getElementById(
+                            "timerDisplay"
+                        )
+                        .textContent =
+                        `Time Elapsed: ${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+
+                }, 1000);
+
+        }
+
+
+        /* =====================================================
+           LOAD QUESTION
+           ===================================================== */
+
+        function loadQuestion() {
+
+            const question =
+                questions[currentIdx];
+
+
+            document
+                .getElementById("category")
+                .textContent =
+                question.category;
+
+
+            document
+                .getElementById("displayGiven")
+                .textContent =
+                question.given;
+
+
+            document
+                .getElementById("quizCount")
+                .textContent =
+                `Question: ${currentIdx + 1} / ${questions.length}`;
+
+
+            document
+                .getElementById("score")
+                .textContent =
+                `Score: ${score} / ${questions.length}`;
+
+
+            const answerBox =
+                document.getElementById(
+                    "answerBox"
+                );
+
+
+            answerBox.innerHTML = "";
+
+
+            document
+                .getElementById("outAns")
+                .style.display = "none";
+
+
+            document
+                .getElementById("submitBtn")
+                .style.display = "block";
+
+
+            document
+                .getElementById("nextBtn")
+                .style.display = "none";
+
+
+            document
+                .getElementById("showSummaryBtn")
+                .style.display = "none";
+
+
+            activeSelectedChip = null;
+
+
+            /* =================================================
+               COMPARISON QUESTION
+               ================================================= */
+
+            if (question.type === "compare") {
+
+                answerBox.innerHTML = `
+
+                    <div class="compare-row">
+
+                        <div class="compare-box">
+                            ${question.val1}
+                        </div>
+
+                        <select id="compareSelect">
+
+                            <option value="">
+                                --
+                            </option>
+
+                            <option value=">">
+                                &gt;
+                            </option>
+
+                            <option value="<">
+                                &lt;
+                            </option>
+
+                        </select>
+
+                        <div class="compare-box">
+                            ${question.val2}
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+
+
+            /* =================================================
+               LEAST TO GREATEST
+               ================================================= */
+
+            else {
+
+                let shuffled =
+                    [...question.items]
+                        .sort(
+                            () =>
+                                Math.random() - .5
+                        );
+
+
+                let html = `
+
+                    <div class="drag-drop-wrapper">
+
+                        <div
+                            class="sortable-container"
+                            id="chipContainer"
+                        >
+
+                `;
+
+
+                shuffled.forEach(item => {
+
+                    html += `
+
+                        <div
+                            class="sort-chip"
+                            draggable="true"
+                            data-value="${item}"
+                            tabindex="0"
+                        >
+                            ${item}
+                        </div>
+
+                    `;
+
+                });
+
+
+                html += `
+
+                        </div>
+
+                        <div class="chip-controls">
+
+                            <button
+                                class="chip-btn"
+                                onclick="moveActiveChip('left')"
+                            >
+                                Move Left ⬅
+                            </button>
+
+                            <button
+                                class="chip-btn"
+                                onclick="moveActiveChip('right')"
+                            >
+                                Move Right ➡
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        style="
+                            text-align:center;
+                            font-size:11px;
+                            color:var(--text-muted);
+                            margin-top:6px;
+                        "
+                    >
+                        Drag and drop horizontally or click a number
+                        then use the buttons to rearrange.
+                    </div>
+
+                `;
+
+
+                answerBox.innerHTML =
+                    html;
+
+
+                setupDragAndDrop();
+
+            }
+
+        }
+
+
+        /* =====================================================
+           DRAG AND DROP
+           ===================================================== */
+
+        function setupDragAndDrop() {
+
+            const container =
+                document.getElementById(
+                    "chipContainer"
+                );
+
+
+            const chips =
+                container.querySelectorAll(
+                    ".sort-chip"
+                );
+
+
+            chips.forEach(chip => {
+
+
+                chip.addEventListener(
+                    "click",
+                    () => {
+
+                        chips.forEach(other => {
+
+                            other.style.borderColor =
+                                "var(--primary-accent)";
+
+                        });
+
+
+                        chip.style.borderColor =
+                            "var(--primary-dark)";
+
+
+                        activeSelectedChip =
+                            chip;
+
+                    }
+                );
+
+
+                chip.addEventListener(
+                    "dragstart",
+                    event => {
+
+                        draggedElement =
+                            chip;
+
+
+                        chip.classList.add(
+                            "dragging"
+                        );
+
+
+                        event.dataTransfer
+                            .effectAllowed =
+                            "move";
+
+                    }
+                );
+
+
+                chip.addEventListener(
+                    "dragend",
+                    () => {
+
+                        chip.classList.remove(
+                            "dragging"
+                        );
+
+
+                        draggedElement =
+                            null;
+
+
+                        container
+                            .querySelectorAll(
+                                ".sort-chip"
+                            )
+                            .forEach(other => {
+
+                                other.classList.remove(
+                                    "drag-over"
+                                );
+
+                            });
+
+                    }
+                );
+
+
+                chip.addEventListener(
+                    "dragover",
+                    event => {
+
+                        event.preventDefault();
+
+
+                        if (
+                            chip !==
+                            draggedElement
+                        ) {
+
+                            chip.classList.add(
+                                "drag-over"
+                            );
+
+                        }
+
+                    }
+                );
+
+
+                chip.addEventListener(
+                    "dragleave",
+                    () => {
+
+                        chip.classList.remove(
+                            "drag-over"
+                        );
+
+                    }
+                );
+
+
+                chip.addEventListener(
+                    "drop",
+                    event => {
+
+                        event.preventDefault();
+
+
+                        chip.classList.remove(
+                            "drag-over"
+                        );
+
+
+                        if (
+                            draggedElement &&
+                            draggedElement !== chip
+                        ) {
+
+                            let allChips =
+                                Array.from(
+                                    container
+                                        .querySelectorAll(
+                                            ".sort-chip"
+                                        )
+                                );
+
+
+                            let draggedIndex =
+                                allChips.indexOf(
+                                    draggedElement
+                                );
+
+
+                            let targetIndex =
+                                allChips.indexOf(
+                                    chip
+                                );
+
+
+                            if (
+                                draggedIndex <
+                                targetIndex
+                            ) {
+
+                                container.insertBefore(
+                                    draggedElement,
+                                    chip.nextSibling
+                                );
+
+                            }
+
+                            else {
+
+                                container.insertBefore(
+                                    draggedElement,
+                                    chip
+                                );
+
+                            }
+
+                        }
+
+                    }
+                );
+
+            });
+
+        }
+
+
+        /* =====================================================
+           MOVE SELECTED CHIP
+           ===================================================== */
+
+        function moveActiveChip(direction) {
+
+            if (!activeSelectedChip) {
+
+                alert(
+                    "Please click on a number chip first to select it for moving."
+                );
+
+                return;
+
+            }
+
+
+            const container =
+                document.getElementById(
+                    "chipContainer"
+                );
+
+
+            if (
+                direction === "left" &&
+                activeSelectedChip.previousElementSibling
+            ) {
+
+                container.insertBefore(
+                    activeSelectedChip,
+                    activeSelectedChip
+                        .previousElementSibling
+                );
+
+            }
+
+            else if (
+                direction === "right" &&
+                activeSelectedChip.nextElementSibling
+            ) {
+
+                container.insertBefore(
+                    activeSelectedChip
+                        .nextElementSibling,
+                    activeSelectedChip
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           RADICAL COMPUTATION
+           
+           ONLY FOR COEFFICIENT RADICALS
+
+           4√2
+           =
+           √(4² × 2)
+           =
+           √(16 × 2)
+           =
+           √32
+
+           Plain √2 = NO computation
+           ===================================================== */
+
+        function createRadicalExplanation(value) {
+
+            value =
+                value.trim();
+
+
+            /* Whole number = NO computation */
+
+            if (!value.includes("√")) {
+
+                return "";
+
+            }
+
+
+            let parts =
+                value.split("√");
+
+
+            let coefficientText =
+                parts[0].trim();
+
+
+            /* Plain radical = NO computation */
+
+            if (coefficientText === "") {
+
+                return "";
+
+            }
+
+
+            let coefficient =
+                parseInt(
+                    coefficientText
+                );
+
+
+            let radicand =
+                parseInt(
+                    parts[1]
+                );
+
+
+            if (
+                isNaN(coefficient) ||
+                isNaN(radicand)
+            ) {
+
+                return "";
+
+            }
+
+
+            let squaredCoefficient =
+                coefficient *
+                coefficient;
+
+
+            let multipliedValue =
+                squaredCoefficient *
+                radicand;
+
+
+            return `
+
+                <div class="math-step">
+
+                    <strong>
+
+                        ${value}
+                        =
+                        √(${coefficient}² × ${radicand})
+                        =
+                        √(${squaredCoefficient} × ${radicand})
+                        =
+                        √${multipliedValue}
+
+                    </strong>
+
+                </div>
+
+            `;
+
+        }
+
+
+        /* =====================================================
+           SUBMIT ANSWER
+           ===================================================== */
+
+        function submitAnswer() {
+
+            const question =
+                questions[currentIdx];
+
+
+            const result =
+                document.getElementById(
+                    "outAns"
+                );
+
+
+            result.style.display =
+                "block";
+
+
+            /* =================================================
+               COMPARING
+               ================================================= */
+
+            if (
+                question.type === "compare"
+            ) {
+
+                const selected =
+                    document
+                        .getElementById(
+                            "compareSelect"
+                        )
+                        .value;
+
+
+                if (!selected) {
+
+                    alert(
+                        "Please select an inequality symbol."
+                    );
+
+
+                    result.style.display =
+                        "none";
+
+
+                    return;
+
+                }
+
+
+                let computationHTML = "";
+
+
+                /*
+                    ONLY coefficient radicals
+                    receive computation.
+                */
+
+                computationHTML +=
+                    createRadicalExplanation(
+                        question.val1
+                    );
+
+
+                computationHTML +=
+                    createRadicalExplanation(
+                        question.val2
+                    );
+
+
+                let explanationHTML = "";
+
+
+                if (
+                    computationHTML !== ""
+                ) {
+
+                    explanationHTML = `
+
+                        <div class="explanation-box">
+
+                            <div class="explanation-title">
+                                Computation
+                            </div>
+
+                            ${computationHTML}
+
+                        </div>
+
+                    `;
+
+                }
+
+
+                if (
+                    selected ===
+                    question.answer
+                ) {
+
+                    score++;
+
+
+                    document
+                        .getElementById("score")
+                        .textContent =
+                        `Score: ${score} / ${questions.length}`;
+
+
+                    result.style.background =
+                        "var(--correct-bg)";
+
+
+                    result.style.color =
+                        "var(--correct-text)";
+
+
+                    result.innerHTML = `
+
+                        <strong>
+                            Correct! 🎉
+                        </strong>
+
+                        ${explanationHTML}
+
+                    `;
+
+                }
+
+                else {
+
+                    result.style.background =
+                        "var(--wrong-bg)";
+
+
+                    result.style.color =
+                        "var(--wrong-text)";
+
+
+                    result.innerHTML = `
+
+                        <strong>
+                            Incorrect.
+                        </strong>
+
+                        <div class="math-step">
+
+                            Correct answer:
+
+                            <strong>
+                                ${question.val1}
+                                ${question.answer}
+                                ${question.val2}
+                            </strong>
+
+                        </div>
+
+                        ${explanationHTML}
+
+                    `;
+
+                }
+
+            }
+
+
+            /* =================================================
+               LEAST TO GREATEST
+
+               NO COMPUTATION HERE.
+               ONLY:
+               - Green = correct position
+               - Red = wrong position
+               - Correct Order
+               ================================================= */
+
+            else {
+
+                const container =
+                    document.getElementById(
+                        "chipContainer"
+                    );
+
+
+                const chips =
+                    container.querySelectorAll(
+                        ".sort-chip"
+                    );
+
+
+                let userOrder = [];
+
+
+                chips.forEach(chip => {
+
+                    userOrder.push(
+                        chip.getAttribute(
+                            "data-value"
+                        )
+                    );
+
+                });
+
+
+                let correctOrder =
+                    [...question.items]
+                        .sort(
+                            (a, b) =>
+                                evaluateValue(a) -
+                                evaluateValue(b)
+                        );
+
+
+                let allCorrect = true;
+
+
+                /* =================================================
+                   COLOR EACH POSITION
+                   ================================================= */
+
+                userOrder.forEach(
+                    (value, index) => {
+
+                        let correctPosition =
+                            value ===
+                            correctOrder[index];
+
+
+                        if (!correctPosition) {
+
+                            allCorrect =
+                                false;
+
+                        }
+
+
+                        let bg =
+                            correctPosition
+                                ? "var(--correct-bg)"
+                                : "var(--wrong-bg)";
+
+
+                        let border =
+                            correctPosition
+                                ? "var(--correct-border)"
+                                : "var(--wrong-border)";
+
+
+                        let text =
+                            correctPosition
+                                ? "var(--correct-text)"
+                                : "var(--wrong-text)";
+
+
+                        chips[index].style.background =
+                            bg;
+
+
+                        chips[index].style.borderColor =
+                            border;
+
+
+                        chips[index].style.color =
+                            text;
+
+                    }
+                );
+
+
+                if (allCorrect) {
+
+                    score++;
+
+
+                    document
+                        .getElementById("score")
+                        .textContent =
+                        `Score: ${score} / ${questions.length}`;
+
+                }
+
+
+                /* =================================================
+                   CORRECT ORDER ONLY
+                   ================================================= */
+
+                let correctOrderDisplay =
+                    correctOrder.join(" → ");
+
+
+                result.style.background =
+                    allCorrect
+                        ? "var(--correct-bg)"
+                        : "var(--tint-light)";
+
+
+                result.style.color =
+                    "var(--primary-dark)";
+
+
+                result.innerHTML = `
+
+                    <div class="correct-order-box">
+
+                        <span class="correct-order-label">
+                            Correct Order
+                        </span>
+
+                        <span class="correct-order-value">
+                            ${correctOrderDisplay}
+                        </span>
+
+                    </div>
+
+                `;
+
+            }
+
+
+            /* =================================================
+               AFTER ANSWERING
+               ================================================= */
+
+            document
+                .getElementById("submitBtn")
+                .style.display =
+                "none";
+
+
+            /*
+                If this is NOT the last question,
+                show Next Question.
+            */
+
+            if (
+                currentIdx <
+                questions.length - 1
+            ) {
+
+                const next =
+                    document.getElementById(
+                        "nextBtn"
+                    );
+
+
+                next.style.display =
+                    "block";
+
+
+                next.textContent =
+                    "Next Question";
+
+
+                next.onclick =
+                    nextQuestion;
+
+            }
+
+
+            /*
+                If this IS the last question,
+                show Show Summary instead.
+            */
+
+            else {
+
+                document
+                    .getElementById(
+                        "nextBtn"
+                    )
+                    .style.display =
+                    "none";
+
+
+                document
+                    .getElementById(
+                        "showSummaryBtn"
+                    )
+                    .style.display =
+                    "block";
+
+            }
+
+        }
+
+
+        /* =====================================================
+           NEXT QUESTION
+           ===================================================== */
+
+        function nextQuestion() {
+
+            currentIdx++;
+
+
+            loadQuestion();
+
+        }
+
+
+        /* =====================================================
+           SHOW SUMMARY / FINISH SCREEN
+           ===================================================== */
+
+        function finishQuiz() {
+
+            clearInterval(
+                timerInterval
+            );
+
+
+            timerInterval =
+                null;
+
+
+            quizTakenCount++;
+
+
+            let minutes =
+                Math.floor(
+                    timeElapsed / 60
+                );
+
+
+            let seconds =
+                timeElapsed % 60;
+
+
+            let finalTime =
+                String(minutes).padStart(
+                    2,
+                    "0"
+                )
+                +
+                ":"
+                +
+                String(seconds).padStart(
+                    2,
+                    "0"
+                );
+
+
+            let quizType =
+                selectedMode === "compare"
+                    ? "Comparing Irrational Numbers"
+                    : "Least to Greatest";
+
+
+            document
+                .getElementById("summaryName")
+                .textContent =
+                studentName;
+
+
+            document
+                .getElementById("summarySection")
+                .textContent =
+                studentSection;
+
+
+            document
+                .getElementById("summaryType")
+                .textContent =
+                quizType;
+
+
+            document
+                .getElementById("finalScore")
+                .textContent =
+                score;
+
+
+            document
+                .getElementById("finalTime")
+                .textContent =
+                finalTime;
+
+
+            document
+                .getElementById("studentInfo")
+                .style.display =
+                "none";
+
+
+            document
+                .getElementById("quizArea")
+                .style.display =
+                "none";
+
+
+            document
+                .getElementById("finishMessage")
+                .style.display =
+                "block";
+
+
+            document
+                .getElementById("showSummaryBtn")
+                .style.display =
+                "none";
+
+
+            window.scrollTo({
+
+                top: 0,
+
+                behavior: "smooth"
+
+            });
+
+        }
+
+
+        /* =====================================================
+           BACK TO QUIZ TYPES
+           ===================================================== */
+
+        function backToQuizTypes() {
+
+            document
+                .getElementById("quizArea")
+                .style.display =
+                "none";
+
+
+            document
+                .getElementById("studentInfo")
+                .style.display =
+                "none";
+
+
+            document
+                .getElementById("finishMessage")
+                .style.display =
+                "none";
+
+
+            document
+                .getElementById("modeSelect")
+                .style.display =
+                "block";
+
+
+            questions = [];
+
+            currentIdx = 0;
+
+            score = 0;
+
+            timeElapsed = 0;
+
+            selectedMode = "";
+
+            activeSelectedChip = null;
+
+            draggedElement = null;
+
+
+            if (timerInterval) {
+
+                clearInterval(
+                    timerInterval
+                );
+
+                timerInterval = null;
+
+            }
+
+
+            document
+                .getElementById("timerDisplay")
+                .textContent =
+                "Time Elapsed: 0:00";
+
+
+            document
+                .getElementById("score")
+                .textContent =
+                "Score: 0 / 10";
+
+
+            document
+                .getElementById("quizCount")
+                .textContent =
+                "Question: 1 / 10";
+
+
+            document
+                .getElementById("showSummaryBtn")
+                .style.display =
+                "none";
+
+
+            document
+                .getElementById("nextBtn")
+                .style.display =
+                "none";
+
+
+            document
+                .getElementById("modeSelect")
+                .scrollIntoView({
+
+                    behavior: "smooth"
+
+                });
+
+        }
+
+    </script>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-bottom">
+      <div>&copy; 2026 ProjectFactr. All rights reserved.</div>
+      <div>Mathematics Learning &amp; Curriculum Platform</div>
+    </div>
+  </footer>
+
+  <!-- JavaScript for Hamburger Toggle & Mobile Dropdown Support -->
+  <script src="../../js/helper/navbar.js">
+    
+  </script>
+
+</body>
+</html>

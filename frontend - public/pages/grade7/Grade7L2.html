@@ -1,0 +1,2181 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>PROJECTFACTR — Mathematics Remedial Learning Platform</title>
+  <meta name="description" content="ProjectFactr — Mathematics Remedial Learning Platform for Grade 7 to 11.">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Design.css -->
+  <!-- <link rel="stylesheet" href="Design.css"> -->
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&display=swap"
+    rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/style/style.css">
+
+  <style>
+
+    /* =========================================================
+       PROJECTFACTR MAIN VARIABLES
+       ========================================================= */
+
+    :root {
+      --primary-dark: #073827;
+      --primary-forest: #16623d;
+      --primary-accent: #339763;
+      --tint-light: #e7f7ee;
+      --card-bg: #f7faf8;
+      --text-main: #073827;
+      --text-body: #2d473b;
+      --text-muted: #567e6c;
+      --border-color: #d8eade;
+      --white: #ffffff;
+
+      --font-brand: 'Montserrat', sans-serif;
+      --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+
+    /* =========================================================
+       BASIC RESET
+       ========================================================= */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: #f7faf8;
+      color: var(--text-body);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+    }
+
+
+
+    /* =========================================================
+  ====================================================
+       HAMBURGER
+       ========================================================= */
+
+
+    /* =========================================================
+       COVER IMAGE
+       ========================================================= */
+
+    .cover-section {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .cover-wrapper {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .cover-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    /* =========================================================
+       GREEN SPACE BAR
+       ========================================================= */
+
+    .quiz-space-bar {
+      width: 100%;
+      height: 32px;
+      background-color: #16623d;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    /* =========================================================
+       QUIZ SECTION
+       ========================================================= */
+
+    .quiz-section {
+      width: 100%;
+      min-height: 500px;
+      padding: 45px 15px 60px;
+      background: #f7faf8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+
+    /* =========================================================
+       QUIZ TITLE
+       ========================================================= */
+
+    .quiz-title {
+      width: 92%;
+      max-width: 700px;
+      margin: 0 auto 20px;
+      color: #073827;
+      font-family: Arial, sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+
+    /* =========================================================
+       STUDENT START
+       ========================================================= */
+
+    #studentStart {
+      width: 92%;
+      max-width: 440px;
+      margin: 10px auto 40px;
+      padding: 35px;
+      background: #ffffff;
+      border: 1px solid #e2ede6;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(7, 56, 39, 0.07);
+    }
+
+    #studentStart h2 {
+      margin: 0 0 20px;
+      color: #073827;
+      font-family: Arial, sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    #studentStart input {
+      display: block;
+      width: 100%;
+      height: 48px;
+      margin: 0 0 16px;
+      padding: 10px 16px;
+      background: #f0f7f3;
+      border: 1px solid #e2ede6;
+      border-radius: 10px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    #studentStart input:focus {
+      border-color: #339763;
+      background: #ffffff;
+    }
+
+
+    /* =========================================================
+       QUIZ PRIMARY BUTTON
+       ========================================================= */
+
+    .quiz-btn {
+      display: block;
+      width: 100%;
+      min-height: 48px;
+      margin-top: 16px;
+      padding: 10px 16px;
+      background: #16623d;
+      color: #ffffff;
+      border: 0;
+      border-radius: 10px;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .quiz-btn:hover {
+      background: #073827;
+    }
+
+    .quiz-btn:active {
+      transform: scale(0.98);
+    }
+
+
+    /* =========================================================
+       MODE SELECT
+       ========================================================= */
+
+    #modeSelect {
+      width: 92%;
+      max-width: 440px;
+      margin: 10px auto 40px;
+      padding: 35px;
+      background: #ffffff;
+      border: 1px solid #e2ede6;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(7, 56, 39, 0.07);
+    }
+
+    #modeSelect h2 {
+      margin: 0 0 20px;
+      color: #073827;
+      font-family: Arial, sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .mode-btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .mode-btn {
+      width: 100%;
+      padding: 14px;
+      background: #f0f7f3;
+      border: 2px solid #e2ede6;
+      color: #073827;
+      border-radius: 10px;
+      font-family: Arial, sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .mode-btn:hover {
+      border-color: #339763;
+      background: #ffffff;
+    }
+
+    .mode-btn:active {
+      transform: scale(0.98);
+    }
+
+
+    /* =========================================================
+       COUNTDOWN
+       ========================================================= */
+
+    #countdownOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(7, 56, 39, 0.75);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    #countdownOverlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .countdown-card {
+      background: #ffffff;
+      padding: 40px 60px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .countdown-card h3 {
+      color: #073827;
+      font-family: Arial, sans-serif;
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    #countdownNumber {
+      font-family: Arial, sans-serif;
+      font-size: 5rem;
+      font-weight: 800;
+      color: #16623d;
+    }
+
+
+    /* =========================================================
+       STUDENT INFO
+       ========================================================= */
+
+    #studentInfo {
+      width: 92%;
+      max-width: 580px;
+      margin: 0 auto 16px;
+      padding: 18px 20px;
+      background: #ffffff;
+      border: 1px solid #e2ede6;
+      border-radius: 16px;
+      box-shadow: 0 2px 4px rgba(7, 56, 39, 0.02);
+      display: none;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    #studentInfo p {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    #showName,
+    #showSection {
+      color: #073827;
+      font-weight: 700;
+    }
+
+    #score,
+    #quizCount,
+    #timerDisplay {
+      background: #f0f7f3;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #e2ede6;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #16623d;
+    }
+
+    #timerDisplay {
+      grid-column: span 2;
+      background: #073827;
+      color: #ffffff;
+    }
+
+
+    /* =========================================================
+       QUIZ AREA
+       ========================================================= */
+
+    #quizArea {
+      width: 92%;
+      max-width: 580px;
+      margin: 0 auto 40px;
+      padding: 35px;
+      background: #ffffff;
+      border: 1px solid #e2ede6;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(7, 56, 39, 0.07);
+      display: none;
+    }
+
+    #category {
+      font-family: Arial, sans-serif;
+      margin-bottom: 16px;
+      color: #073827;
+      font-size: 18px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    #displayGiven {
+      width: 100%;
+      min-height: 70px;
+      margin-bottom: 20px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #073827;
+      background: #f0f7f3;
+      border: 1px solid #e2ede6;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+
+    /* =========================================================
+       FIXED MATH SUPERSCRIPT
+       ========================================================= */
+
+    .math-power {
+      display: inline-block;
+      position: relative;
+      top: -0.45em;
+      margin-left: 2px;
+      font-size: 0.62em;
+      font-weight: 800;
+      line-height: 1;
+      vertical-align: baseline;
+    }
+
+
+    /* =========================================================
+       ANSWER BOX
+       ========================================================= */
+
+    #answerBox {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 20px 0 16px;
+      text-align: center;
+    }
+
+    #answerBox input {
+      width: 120px;
+      height: 48px;
+      padding: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      text-align: center;
+      border: 2px solid #e2ede6;
+      border-radius: 10px;
+      background: #ffffff;
+      outline: none;
+    }
+
+    #answerBox input:focus {
+      border-color: #339763;
+    }
+
+    #outAns {
+      width: 100%;
+      margin: 16px 0;
+      padding: 14px;
+      background: #f0f7f3;
+      border: 1px solid #e2ede6;
+      border-radius: 10px;
+      color: #073827;
+      font-size: 13px;
+      font-weight: 500;
+      text-align: center;
+      display: none;
+      line-height: 1.5;
+    }
+
+
+    /* =========================================================
+       QUIZ RESULT
+       ========================================================= */
+
+    #quizResult {
+      width: 92%;
+      max-width: 580px;
+      margin: 0 auto 40px;
+      padding: 35px;
+      background: #ffffff;
+      border: 1px solid #e2ede6;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(7, 56, 39, 0.07);
+      display: none;
+      text-align: center;
+    }
+
+    #quizResult h2 {
+      margin: 0 0 20px;
+      color: #073827;
+      font-family: Arial, sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .result-info {
+      margin: 10px 0;
+      padding: 12px;
+      background: #f0f7f3;
+      border: 1px solid #e2ede6;
+      border-radius: 10px;
+      color: #334d42;
+      font-size: 14px;
+    }
+
+    .result-info strong {
+      color: #073827;
+      font-weight: 700;
+    }
+
+    #resultScore {
+      margin: 20px 0;
+      color: #16623d;
+      font-family: Arial, sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+
+   
+
+    /* =========================================================
+       QUIZ MOBILE
+       ========================================================= */
+
+    @media (max-width: 600px) {
+
+      .quiz-section {
+        padding: 30px 0 45px;
+      }
+
+      .quiz-title {
+        font-size: 22px;
+      }
+
+      #studentStart,
+      #modeSelect,
+      #quizArea,
+      #quizResult {
+        width: 94%;
+        padding: 24px;
+      }
+
+      #studentInfo {
+        width: 94%;
+        padding: 15px;
+      }
+
+      #displayGiven {
+        font-size: 16px;
+        min-height: 65px;
+      }
+
+      #answerBox input {
+        width: 100px;
+      }
+
+      .countdown-card {
+        padding: 35px 45px;
+      }
+
+      #countdownNumber {
+        font-size: 4rem;
+      }
+    }
+
+
+    @media (max-width: 400px) {
+
+      .nav-tagline {
+        display: none;
+      }
+
+      #studentInfo {
+        grid-template-columns: 1fr;
+      }
+
+      #timerDisplay {
+        grid-column: span 1;
+      }
+
+      #studentStart,
+      #modeSelect,
+      #quizArea,
+      #quizResult {
+        padding: 20px;
+      }
+
+      .quiz-title {
+        font-size: 20px;
+      }
+
+      #resultScore {
+        font-size: 34px;
+      }
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =========================================================
+       TOP NAVIGATION
+       ========================================================= -->
+
+  <header class="top-nav-bar" id="navbar">
+
+   
+
+  </header>
+
+
+  <!-- =========================================================
+       MAIN
+       ========================================================= -->
+
+  <main>
+
+
+    <!-- COVER -->
+
+    <section
+      class="cover-section"
+      id="cover">
+
+      <div class="cover-wrapper">
+
+        <img
+          src="../../assets/img/background/7-Roots.jpeg"
+          alt="ProjectFactr Mathematics Remedial Learning Platform Banner"
+          class="cover-image"
+          id="main-cover-image">
+
+      </div>
+
+    </section>
+
+
+    <!-- GREEN BAR -->
+
+    <div class="quiz-space-bar"></div>
+
+
+    <!-- =========================================================
+         QUIZ
+         ========================================================= -->
+
+    <section class="quiz-section">
+
+
+      <h1 class="quiz-title">
+        Square Roots and Cube Roots Quiz
+      </h1>
+
+
+      <!-- STUDENT START -->
+
+      <div id="studentStart">
+
+        <h2>
+          Enter Student Details
+        </h2>
+
+        <input
+          type="text"
+          id="fullName"
+          placeholder="Full Name"
+          autocomplete="name">
+
+        <input
+          type="text"
+          id="section"
+          placeholder="Grade & Section">
+
+        <button
+          class="quiz-btn"
+          onclick="proceedToModeSelect()">
+
+          Next: Choose Quiz Type
+
+        </button>
+
+      </div>
+
+
+      <!-- QUIZ TYPE -->
+
+      <div
+        id="modeSelect"
+        style="display:none;">
+
+        <h2>
+          Select Quiz Type
+        </h2>
+
+        <div class="mode-btn-group">
+
+          <button
+            class="mode-btn"
+            onclick="startQuizWithCountdown('sqrt')">
+
+            Square Root
+
+          </button>
+
+          <button
+            class="mode-btn"
+            onclick="startQuizWithCountdown('simplify')">
+
+            Simplify Square Root
+
+          </button>
+
+          <button
+            class="mode-btn"
+            onclick="startQuizWithCountdown('cbrt')">
+
+            Cube Root
+
+          </button>
+
+          <button
+            class="mode-btn"
+            onclick="startQuizWithCountdown('square')">
+
+            Square
+
+          </button>
+
+          <button
+            class="mode-btn"
+            onclick="startQuizWithCountdown('cube')">
+
+            Cube
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- COUNTDOWN -->
+
+      <div id="countdownOverlay">
+
+        <div class="countdown-card">
+
+          <h3>
+            GET READY
+          </h3>
+
+          <div id="countdownNumber">
+            3
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- STUDENT INFORMATION -->
+
+      <div
+        id="studentInfo"
+        style="display:none;">
+
+        <p>
+          Name:
+          <span id="showName"></span>
+        </p>
+
+        <p>
+          Section:
+          <span id="showSection"></span>
+        </p>
+
+        <div id="score">
+          Score: 0 / 10
+        </div>
+
+        <div id="quizCount">
+          Question: 1 / 10
+        </div>
+
+        <div id="timerDisplay">
+          Time Elapsed: 0:00
+        </div>
+
+      </div>
+
+
+      <!-- QUIZ AREA -->
+
+      <div
+        id="quizArea"
+        style="display:none;">
+
+        <div id="category">
+          Topic
+        </div>
+
+        <div id="displayGiven">
+          Question
+        </div>
+
+        <div id="answerBox"></div>
+
+        <div id="outAns"></div>
+
+        <button
+          class="quiz-btn"
+          id="submitBtn"
+          onclick="checkAns()">
+
+          Submit Answer
+
+        </button>
+
+        <button
+          class="quiz-btn"
+          id="nextBtn"
+          onclick="newQuestion()"
+          style="display:none; background:#339763;">
+
+          Next Question
+
+        </button>
+
+        <button
+          class="quiz-btn"
+          id="backToModeBtn"
+          onclick="backToQuizType()"
+          style="display:none; background:#073827;">
+
+          Back to Quiz Type
+
+        </button>
+
+      </div>
+
+
+      <!-- RESULT -->
+
+      <div id="quizResult">
+
+        <h2>
+          Quiz Finished!
+        </h2>
+
+        <div class="result-info">
+
+          Name:
+          <strong id="resultName"></strong>
+
+        </div>
+
+        <div class="result-info">
+
+          Section:
+          <strong id="resultSection"></strong>
+
+        </div>
+
+        <div class="result-info">
+
+          Quiz Type:
+          <strong id="resultQuizType"></strong>
+
+        </div>
+
+        <div id="resultScore">
+          0/10
+        </div>
+
+        <div class="result-info">
+
+          Time:
+          <strong id="resultTime">
+            00:00
+          </strong>
+
+        </div>
+
+        <button
+          class="quiz-btn"
+          onclick="backToQuizType()">
+
+          Back to Quiz Types
+
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer class="site-footer">
+
+    <div class="footer-bottom">
+
+      <div>
+        &copy; 2026 ProjectFactr. All rights reserved.
+      </div>
+
+      <div>
+        Mathematics Learning &amp; Curriculum Platform
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- =========================================================
+       JAVASCRIPT
+       ========================================================= -->
+
+  <script>
+
+   
+    /* =========================================================
+       QUIZ VARIABLES
+       ========================================================= */
+
+    let studentName = "";
+
+    let studentSection = "";
+
+    let selectedMode = "";
+
+    let quizNumber = 0;
+
+    let score = 0;
+
+    let timerInterval;
+
+    let secondsElapsed = 0;
+
+    let ansr;
+
+    let simplifyCoefficient;
+
+    let simplifyRadicand;
+
+    let simplifyNumber;
+
+
+    /* =========================================================
+       PREVENT QUESTION REPETITION
+       ========================================================= */
+
+    let usedQuestions = new Set();
+
+
+    /* =========================================================
+       RADICAL TERMS
+       ========================================================= */
+
+    const radicalTerms = [
+
+      8,
+      12,
+      18,
+      20,
+      24,
+      27,
+      28,
+      32,
+      40,
+      44,
+      45,
+      48,
+      50,
+      52,
+      54,
+      63,
+      72,
+      75,
+      90,
+      98,
+      99,
+      108,
+      125,
+      128,
+      162,
+      250,
+      300
+
+    ];
+
+
+    /* =========================================================
+       STUDENT DETAILS
+       ========================================================= */
+
+    function proceedToModeSelect() {
+
+      studentName =
+        document
+          .getElementById("fullName")
+          .value
+          .trim();
+
+
+      studentSection =
+        document
+          .getElementById("section")
+          .value
+          .trim();
+
+
+      if (
+        !studentName ||
+        !studentSection
+      ) {
+
+        alert(
+          "Please enter your name and section before choosing a quiz type."
+        );
+
+        return;
+
+      }
+
+
+      document.getElementById(
+        "studentStart"
+      ).style.display = "none";
+
+
+      document.getElementById(
+        "modeSelect"
+      ).style.display = "block";
+
+    }
+
+
+    /* =========================================================
+       START QUIZ
+       ========================================================= */
+
+    function startQuizWithCountdown(mode) {
+
+      selectedMode = mode;
+
+      quizNumber = 0;
+
+      score = 0;
+
+      secondsElapsed = 0;
+
+      usedQuestions.clear();
+
+
+      document.getElementById(
+        "showName"
+      ).textContent = studentName;
+
+
+      document.getElementById(
+        "showSection"
+      ).textContent = studentSection;
+
+
+      document.getElementById(
+        "score"
+      ).textContent = "Score: 0 / 10";
+
+
+      document.getElementById(
+        "quizCount"
+      ).textContent = "Question: 1 / 10";
+
+
+      document.getElementById(
+        "timerDisplay"
+      ).textContent = "Time Elapsed: 0:00";
+
+
+      document.getElementById(
+        "modeSelect"
+      ).style.display = "none";
+
+
+      document.getElementById(
+        "quizResult"
+      ).style.display = "none";
+
+
+      document.getElementById(
+        "quizArea"
+      ).style.display = "none";
+
+
+      const overlay =
+        document.getElementById(
+          "countdownOverlay"
+        );
+
+
+      const numberDisplay =
+        document.getElementById(
+          "countdownNumber"
+        );
+
+
+      overlay.classList.add("active");
+
+
+      let count = 3;
+
+
+      numberDisplay.textContent = count;
+
+
+      const countdownInterval =
+        setInterval(() => {
+
+          count--;
+
+
+          if (count > 0) {
+
+            numberDisplay.textContent =
+              count;
+
+          }
+
+          else if (count === 0) {
+
+            numberDisplay.textContent =
+              "GO!";
+
+          }
+
+          else {
+
+            clearInterval(
+              countdownInterval
+            );
+
+
+            overlay.classList.remove(
+              "active"
+            );
+
+
+            document.getElementById(
+              "studentInfo"
+            ).style.display = "grid";
+
+
+            document.getElementById(
+              "quizArea"
+            ).style.display = "block";
+
+
+            startTimer();
+
+            newQuestion();
+
+          }
+
+        }, 1000);
+
+    }
+
+
+    /* =========================================================
+       TIMER
+       ========================================================= */
+
+    function startTimer() {
+
+      clearInterval(timerInterval);
+
+
+      timerInterval =
+        setInterval(() => {
+
+          secondsElapsed++;
+
+
+          const mins =
+            Math.floor(
+              secondsElapsed / 60
+            );
+
+
+          const secs =
+            secondsElapsed % 60;
+
+
+          document.getElementById(
+            "timerDisplay"
+          ).textContent =
+
+            "Time Elapsed: " +
+
+            mins +
+
+            ":" +
+
+            (secs < 10 ? "0" : "") +
+
+            secs;
+
+        }, 1000);
+
+    }
+
+
+    /* =========================================================
+       RANDOM NUMBER
+       ========================================================= */
+
+    function randomInt(min, max) {
+
+      return Math.floor(
+        Math.random() *
+        (max - min + 1)
+      ) + min;
+
+    }
+
+
+    /* =========================================================
+       SIMPLIFY RADICAL
+       ========================================================= */
+
+    function simplifyRadical(number) {
+
+      let outside = 1;
+
+      let inside = number;
+
+
+      for (
+        let i = Math.floor(
+          Math.sqrt(number)
+        );
+
+        i >= 2;
+
+        i--
+
+      ) {
+
+        if (
+          number % (i * i) === 0
+        ) {
+
+          outside = i;
+
+          inside =
+            number / (i * i);
+
+          break;
+
+        }
+
+      }
+
+
+      return {
+
+        coefficient: outside,
+
+        radicand: inside
+
+      };
+
+    }
+
+
+    /* =========================================================
+       RANDOM RADICAL
+       ========================================================= */
+
+    function getRandomRadical() {
+
+      const randomIndex =
+        Math.floor(
+          Math.random() *
+          radicalTerms.length
+        );
+
+
+      return radicalTerms[
+        randomIndex
+      ];
+
+    }
+
+
+    /* =========================================================
+       NEW QUESTION
+       ========================================================= */
+
+    function newQuestion() {
+
+      if (quizNumber >= 10) {
+
+        return;
+
+      }
+
+
+      document.getElementById(
+        "outAns"
+      ).style.display = "none";
+
+
+      document.getElementById(
+        "outAns"
+      ).innerHTML = "";
+
+
+      document.getElementById(
+        "submitBtn"
+      ).style.display = "block";
+
+
+      document.getElementById(
+        "nextBtn"
+      ).style.display = "none";
+
+
+      document.getElementById(
+        "quizCount"
+      ).textContent =
+
+        "Question: " +
+
+        (quizNumber + 1) +
+
+        " / 10";
+
+
+      document.getElementById(
+        "score"
+      ).textContent =
+
+        "Score: " +
+
+        score +
+
+        " / 10";
+
+
+      /* =====================================================
+         SQUARE ROOT
+         ===================================================== */
+
+      if (selectedMode === "sqrt") {
+
+        let root;
+
+        let perfectSquare;
+
+        let questionKey;
+
+
+        do {
+
+          root =
+            randomInt(1, 10);
+
+          perfectSquare =
+            root * root;
+
+          questionKey =
+            "sqrt-" +
+            perfectSquare;
+
+        }
+
+        while (
+          usedQuestions.has(
+            questionKey
+          )
+        );
+
+
+        usedQuestions.add(
+          questionKey
+        );
+
+
+        document.getElementById(
+          "category"
+        ).textContent =
+          "Square Root";
+
+
+        document.getElementById(
+          "displayGiven"
+        ).innerHTML =
+
+          "What is √" +
+          perfectSquare +
+          "?";
+
+
+        document.getElementById(
+          "answerBox"
+        ).innerHTML =
+
+          '<input type="text" id="ans" ' +
+          'placeholder="Answer" ' +
+          'inputmode="numeric" ' +
+          'autocomplete="off">';
+
+
+        ansr = root;
+
+      }
+
+
+      /* =====================================================
+         SIMPLIFY
+         ===================================================== */
+
+      else if (
+        selectedMode === "simplify"
+      ) {
+
+        let questionKey;
+
+
+        do {
+
+          simplifyNumber =
+            getRandomRadical();
+
+
+          questionKey =
+            "simplify-" +
+            simplifyNumber;
+
+        }
+
+        while (
+          usedQuestions.has(
+            questionKey
+          )
+        );
+
+
+        usedQuestions.add(
+          questionKey
+        );
+
+
+        const result =
+          simplifyRadical(
+            simplifyNumber
+          );
+
+
+        simplifyCoefficient =
+          result.coefficient;
+
+
+        simplifyRadicand =
+          result.radicand;
+
+
+        document.getElementById(
+          "category"
+        ).textContent =
+          "Simplify Square Root";
+
+
+        document.getElementById(
+          "displayGiven"
+        ).innerHTML =
+
+          "Simplify √" +
+          simplifyNumber +
+          ".";
+
+
+        document.getElementById(
+          "answerBox"
+        ).innerHTML =
+
+          '<input type="text" id="ans1" ' +
+          'placeholder="Coefficient" ' +
+          'inputmode="numeric" ' +
+          'autocomplete="off">' +
+
+          '<span style="font-size:24px;">√</span>' +
+
+          '<input type="text" id="ans2" ' +
+          'placeholder="Radicand" ' +
+          'inputmode="numeric" ' +
+          'autocomplete="off">';
+
+      }
+
+
+      /* =====================================================
+         CUBE ROOT
+         ===================================================== */
+
+      else if (
+        selectedMode === "cbrt"
+      ) {
+
+        let root;
+
+        let perfectCube;
+
+        let questionKey;
+
+
+        do {
+
+          root =
+            randomInt(1, 10);
+
+          perfectCube =
+            root *
+            root *
+            root;
+
+          questionKey =
+            "cbrt-" +
+            perfectCube;
+
+        }
+
+        while (
+          usedQuestions.has(
+            questionKey
+          )
+        );
+
+
+        usedQuestions.add(
+          questionKey
+        );
+
+
+        document.getElementById(
+          "category"
+        ).textContent =
+          "Cube Root";
+
+
+        document.getElementById(
+          "displayGiven"
+        ).innerHTML =
+
+          "What is ∛" +
+          perfectCube +
+          "?";
+
+
+        document.getElementById(
+          "answerBox"
+        ).innerHTML =
+
+          '<input type="text" id="ans" ' +
+          'placeholder="Answer" ' +
+          'inputmode="numeric" ' +
+          'autocomplete="off">';
+
+
+        ansr = root;
+
+      }
+
+
+      /* =====================================================
+         SQUARE
+         ===================================================== */
+
+      else if (
+        selectedMode === "square"
+      ) {
+
+        let base;
+
+        let questionKey;
+
+
+        do {
+
+          base =
+            randomInt(1, 10);
+
+          questionKey =
+            "square-" +
+            base;
+
+        }
+
+        while (
+          usedQuestions.has(
+            questionKey
+          )
+        );
+
+
+        usedQuestions.add(
+          questionKey
+        );
+
+
+        document.getElementById(
+          "category"
+        ).textContent =
+          "Square";
+
+
+        /*
+         * FIXED:
+         * No longer uses <sup>2</sup>.
+         * Uses .math-power so Design.css cannot
+         * distort the superscript.
+         */
+
+        document.getElementById(
+          "displayGiven"
+        ).innerHTML =
+
+          "What is " +
+          base +
+          '<span class="math-power">2</span>?';
+
+
+        document.getElementById(
+          "answerBox"
+        ).innerHTML =
+
+          '<input type="text" id="ans" ' +
+          'placeholder="Answer" ' +
+          'inputmode="numeric" ' +
+          'autocomplete="off">';
+
+
+        ansr =
+          base *
+          base;
+
+      }
+
+
+      /* =====================================================
+         CUBE
+         ===================================================== */
+
+      else if (
+        selectedMode === "cube"
+      ) {
+
+        let base;
+
+        let questionKey;
+
+
+        do {
+
+          base =
+            randomInt(1, 10);
+
+          questionKey =
+            "cube-" +
+            base;
+
+        }
+
+        while (
+          usedQuestions.has(
+            questionKey
+          )
+        );
+
+
+        usedQuestions.add(
+          questionKey
+        );
+
+
+        document.getElementById(
+          "category"
+        ).textContent =
+          "Cube";
+
+
+        /*
+         * FIXED:
+         * No longer uses <sup>3</sup>.
+         * Uses .math-power.
+         */
+
+        document.getElementById(
+          "displayGiven"
+        ).innerHTML =
+
+          "What is " +
+          base +
+          '<span class="math-power">3</span>?';
+
+
+        document.getElementById(
+          "answerBox"
+        ).innerHTML =
+
+          '<input type="text" id="ans" ' +
+          'placeholder="Answer" ' +
+          'inputmode="numeric" ' +
+          'autocomplete="off">';
+
+
+        ansr =
+          base *
+          base *
+          base;
+
+      }
+
+
+      const firstInput =
+        document.querySelector(
+          "#answerBox input"
+        );
+
+
+      if (firstInput) {
+
+        firstInput.focus();
+
+      }
+
+    }
+
+
+    /* =========================================================
+       CHECK ANSWER
+       ========================================================= */
+
+    function checkAns() {
+
+      let isCorrect = false;
+
+      let correctText = "";
+
+
+      if (
+        selectedMode === "simplify"
+      ) {
+
+        const answer1 =
+          document
+            .getElementById("ans1")
+            .value
+            .trim();
+
+
+        const answer2 =
+          document
+            .getElementById("ans2")
+            .value
+            .trim();
+
+
+        if (
+          answer1 === "" ||
+          answer2 === ""
+        ) {
+
+          alert(
+            "Please enter both the coefficient and radicand."
+          );
+
+          return;
+
+        }
+
+
+        isCorrect =
+
+          Number(answer1) ===
+            simplifyCoefficient &&
+
+          Number(answer2) ===
+            simplifyRadicand;
+
+
+        correctText =
+
+          simplifyCoefficient +
+          "√" +
+          simplifyRadicand;
+
+      }
+
+
+      else {
+
+        const answer =
+          document
+            .getElementById("ans")
+            .value
+            .trim();
+
+
+        if (answer === "") {
+
+          alert(
+            "Please enter your answer."
+          );
+
+          return;
+
+        }
+
+
+        isCorrect =
+          Number(answer) === ansr;
+
+
+        correctText = ansr;
+
+      }
+
+
+      if (isCorrect) {
+
+        score++;
+
+
+        document.getElementById(
+          "outAns"
+        ).innerHTML =
+
+          '<span style="color:#16623d;font-weight:700;">' +
+
+          "✓ Correct!" +
+
+          "</span><br>" +
+
+          "Correct answer: " +
+
+          correctText;
+
+      }
+
+      else {
+
+        document.getElementById(
+          "outAns"
+        ).innerHTML =
+
+          '<span style="color:#dc2626;font-weight:700;">' +
+
+          "✗ Wrong!" +
+
+          "</span><br>" +
+
+          "Correct answer: " +
+
+          correctText;
+
+      }
+
+
+      document.getElementById(
+        "outAns"
+      ).style.display = "block";
+
+
+      quizNumber++;
+
+
+      document.getElementById(
+        "score"
+      ).textContent =
+
+        "Score: " +
+        score +
+        " / 10";
+
+
+      document.getElementById(
+        "submitBtn"
+      ).style.display = "none";
+
+
+      if (quizNumber >= 10) {
+
+        document.getElementById(
+          "nextBtn"
+        ).style.display = "block";
+
+
+        document.getElementById(
+          "nextBtn"
+        ).textContent =
+          "Show Summary Result";
+
+
+        document.getElementById(
+          "nextBtn"
+        ).onclick =
+          showQuizSummary;
+
+      }
+
+      else {
+
+        document.getElementById(
+          "nextBtn"
+        ).style.display = "block";
+
+
+        document.getElementById(
+          "nextBtn"
+        ).textContent =
+          "Next Question";
+
+
+        document.getElementById(
+          "nextBtn"
+        ).onclick =
+          newQuestion;
+
+      }
+
+    }
+
+
+    /* =========================================================
+       SUMMARY
+       ========================================================= */
+
+    function showQuizSummary() {
+
+      clearInterval(
+        timerInterval
+      );
+
+
+      const mins =
+        Math.floor(
+          secondsElapsed / 60
+        );
+
+
+      const secs =
+        secondsElapsed % 60;
+
+
+      const finalTime =
+
+        mins
+          .toString()
+          .padStart(2, "0") +
+
+        ":" +
+
+        secs
+          .toString()
+          .padStart(2, "0");
+
+
+      let quizTypeName = "";
+
+
+      if (selectedMode === "sqrt") {
+
+        quizTypeName =
+          "Square Root";
+
+      }
+
+      else if (
+        selectedMode === "simplify"
+      ) {
+
+        quizTypeName =
+          "Simplify Square Root";
+
+      }
+
+      else if (
+        selectedMode === "cbrt"
+      ) {
+
+        quizTypeName =
+          "Cube Root";
+
+      }
+
+      else if (
+        selectedMode === "square"
+      ) {
+
+        quizTypeName =
+          "Square";
+
+      }
+
+      else if (
+        selectedMode === "cube"
+      ) {
+
+        quizTypeName =
+          "Cube";
+
+      }
+
+
+      document.getElementById(
+        "resultName"
+      ).textContent =
+        studentName;
+
+
+      document.getElementById(
+        "resultSection"
+      ).textContent =
+        studentSection;
+
+
+      document.getElementById(
+        "resultQuizType"
+      ).textContent =
+        quizTypeName;
+
+
+      document.getElementById(
+        "resultScore"
+      ).textContent =
+        score + "/10";
+
+
+      document.getElementById(
+        "resultTime"
+      ).textContent =
+        finalTime;
+
+
+      document.getElementById(
+        "studentInfo"
+      ).style.display =
+        "none";
+
+
+      document.getElementById(
+        "quizArea"
+      ).style.display =
+        "none";
+
+
+      document.getElementById(
+        "quizResult"
+      ).style.display =
+        "block";
+
+    }
+
+
+    /* =========================================================
+       BACK TO QUIZ TYPES
+       ========================================================= */
+
+    function backToQuizType() {
+
+      clearInterval(
+        timerInterval
+      );
+
+
+      document.getElementById(
+        "quizArea"
+      ).style.display =
+        "none";
+
+
+      document.getElementById(
+        "studentInfo"
+      ).style.display =
+        "none";
+
+
+      document.getElementById(
+        "quizResult"
+      ).style.display =
+        "none";
+
+
+      document.getElementById(
+        "modeSelect"
+      ).style.display =
+        "block";
+
+
+      quizNumber = 0;
+
+      score = 0;
+
+      secondsElapsed = 0;
+
+      selectedMode = "";
+
+
+      usedQuestions.clear();
+
+
+      document.getElementById(
+        "score"
+      ).textContent =
+        "Score: 0 / 10";
+
+
+      document.getElementById(
+        "quizCount"
+      ).textContent =
+        "Question: 1 / 10";
+
+
+      document.getElementById(
+        "timerDisplay"
+      ).textContent =
+        "Time Elapsed: 0:00";
+
+
+      document.getElementById(
+        "outAns"
+      ).style.display =
+        "none";
+
+
+      document.getElementById(
+        "outAns"
+      ).innerHTML =
+        "";
+
+    }
+
+  </script>
+  <script src="../../js/helper/navbar.js"></script>
+
+
+</body>
+
+</html>
+
+
