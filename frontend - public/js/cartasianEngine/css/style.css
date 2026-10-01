@@ -20,6 +20,7 @@
 
         --background: #f5faf7;
         --card-bg: #ffffff;
+        --white: #ffffff;
 
         --text-main: #073827;
         --text-body: #2d473b;
@@ -75,6 +76,119 @@
 
     button {
         cursor: pointer;
+    }
+
+    input {
+        font: inherit;
+    }
+
+    /* =========================
+       STUDENT START
+    ========================= */
+
+    #studentStart {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+        min-height: 0;
+        padding: 48px 24px;
+        background:
+            radial-gradient(circle at top left, rgba(51, 151, 99, 0.12), transparent 40%),
+            var(--background);
+    }
+
+    .start-card {
+        width: min(100%, 460px);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 36px;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        box-shadow: var(--shadow-medium), var(--shadow-large);
+    }
+
+    .start-card .eyebrow {
+        color: var(--primary-accent);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+    }
+
+    .start-card h1 {
+        color: var(--primary-dark);
+        font-size: 30px;
+        line-height: 1.2;
+    }
+
+    .start-copy {
+        margin-bottom: 8px;
+        color: var(--text-muted);
+    }
+
+    .start-card label {
+        color: var(--text-body);
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .start-card input {
+        width: 100%;
+        min-height: 48px;
+        padding: 0 14px;
+        color: var(--text-main);
+        background: var(--white);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        outline: none;
+    }
+
+    .start-card select {
+        width: 100%;
+        min-height: 48px;
+        padding: 0 14px;
+        color: var(--text-main);
+        background: var(--white);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        outline: none;
+    }
+
+    .start-card input:focus {
+        border-color: var(--primary-accent);
+        box-shadow: 0 0 0 4px rgba(51, 151, 99, 0.12);
+    }
+
+    .start-card select:focus {
+        border-color: var(--primary-accent);
+        box-shadow: 0 0 0 4px rgba(51, 151, 99, 0.12);
+    }
+
+    .start-button {
+        min-height: 48px;
+        margin-top: 8px;
+        color: var(--white);
+        background: var(--primary-forest);
+        border: 0;
+        border-radius: 10px;
+        font-weight: 700;
+    }
+
+    .start-button:hover {
+        background: var(--primary-dark);
+    }
+
+    @media (max-width: 480px) {
+        .start-card {
+            padding: 28px 22px;
+        }
+
+        .start-card h1 {
+            font-size: 26px;
+        }
     }
 
     /* =========================
@@ -158,6 +272,13 @@
 
         font-size: 15px;
         line-height: 1.65;
+    }
+
+    .question-progress {
+        margin-top: 14px;
+        color: var(--primary-forest);
+        font-size: 13px;
+        font-weight: 700;
     }
 
     /* =========================
@@ -316,6 +437,94 @@
 
     .next-button:hover {
         background: #d8f0e3;
+    }
+
+    .button-group button:disabled {
+        cursor: not-allowed;
+        opacity: 0.55;
+    }
+
+    /* =========================
+       QUIZ RESULTS
+    ========================= */
+
+    #quizResult {
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background:
+            radial-gradient(circle at top left, rgba(51, 151, 99, 0.12), transparent 40%),
+            rgba(245, 250, 247, 0.97);
+    }
+
+    #quizResult:not(.hide) {
+        display: flex;
+    }
+
+    .result-card {
+        width: min(100%, 520px);
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        padding: 36px;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        box-shadow: var(--shadow-medium), var(--shadow-large);
+    }
+
+    .result-card h1 {
+        color: var(--primary-dark);
+        font-size: 30px;
+    }
+
+    .result-student {
+        display: grid;
+        gap: 12px;
+        padding: 16px;
+        background: var(--tint-lighter);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+    }
+
+    .result-student div {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    .result-student span,
+    .result-score span {
+        color: var(--text-muted);
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .result-student strong {
+        color: var(--primary-dark);
+        overflow-wrap: anywhere;
+    }
+
+    .result-score {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+    }
+
+    .result-score strong {
+        color: var(--primary-forest);
+        font-size: 38px;
+        line-height: 1;
+    }
+
+    .result-percentage {
+        margin-top: -12px;
+        color: var(--text-muted);
+        font-weight: 700;
     }
 
     /* =========================
@@ -510,5 +719,20 @@
 
         .coordinate {
             font-size: 17px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .start-card h1,
+        .result-card h1 {
+            font-size: 26px;
+        }
+
+        .result-card {
+            padding: 28px 22px;
+        }
+
+        .result-score strong {
+            font-size: 32px;
         }
     }

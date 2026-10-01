@@ -1,517 +1,1609 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Grade 10 - Solving Quadratic Inequalities in One Variable</title>
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-<!-- html2pdf Library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<link rel="stylesheet" href="../../assets/style/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<title>
+    ProjectFactr — Grade 10 Mathematics Quiz
+</title>
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
+</script>
 
 <style>
-    * {
-    box-sizing: border-box;
+
+:root {
+
+    --primary-dark: #073827;
+    --primary-forest: #16623d;
+    --primary-accent: #339763;
+
+    --tint-light: #f0f7f3;
+    --card-bg: #ffffff;
+
+    --text-main: #073827;
+    --text-body: #334d42;
+    --text-muted: #628273;
+
+    --border-color: #e2ede6;
+
+    --correct-bg: #e7f7ee;
+    --correct-border: #339763;
+    --correct-text: #073827;
+
+    --wrong-bg: #fde8e8;
+    --wrong-border: #e02424;
+    --wrong-text: #9b1c1c;
+
+    --warning-bg: #fff8e1;
+    --warning-border: #f0b429;
+    --warning-text: #7a5b00;
+
+    --font-brand: "Montserrat", Arial, sans-serif;
+    --font-body: Arial, sans-serif;
+
+    --shadow-sm:
+        0 2px 4px rgba(7, 56, 39, .03);
+
+    --shadow-md:
+        0 10px 25px -5px rgba(7, 56, 39, .08);
+
+    --shadow-lg:
+        0 20px 40px -10px rgba(7, 56, 39, .12);
+
+    --radius: 16px;
+
 }
 
-body {
+
+*,
+*::before,
+*::after {
+
+    box-sizing: border-box;
+
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: #e8f5e9;
-    color: #1b5e20;
+
+    padding: 0;
+
 }
 
-.screen {
+
+html,
+body {
+
+    width: 100%;
+
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+
+    background: #f7faf8;
+
+    font-family: var(--font-body);
+
+    color: var(--text-body);
+
+    overflow-x: hidden;
+
 }
 
-.hidden {
-    display: none !important;
-}
 
-.card {
-    width: 100%;
-    max-width: 850px;
-    background: white;
-    padding: 30px;
-    border-radius: 18px;
-    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.15);
-    border: 1px solid #c8e6c9;
-}
+button,
+input,
+select {
 
-#startScreen,
-#resultScreen {
-    text-align: center;
-}
-
-#startScreen h1 {
-    font-size: 34px;
-    margin-bottom: 10px;
-    color: #2e7d32;
-}
-
-#startScreen h2 {
-    font-size: 22px;
-    color: #388e3c;
-    margin-bottom: 25px;
-}
-
-.student-info-group {
-    text-align: left;
-    margin-bottom: 20px;
-}
-
-.student-info-group label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 6px;
-    color: #2e7d32;
-}
-
-.student-info-group input,
-.student-info-group select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #a5d6a7;
-    border-radius: 8px;
-    font-size: 16px;
-    outline: none;
-    background: white;
-}
-
-.student-info-group input:focus,
-.student-info-group select:focus {
-    border-color: #2e7d32;
-}
-
-button {
-    width: 100%;
-    padding: 14px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 9px;
-    background: #2e7d32;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-button:hover {
-    background: #1b5e20;
-}
-
-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.countdown-card {
-    text-align: center;
-}
-
-#countdownNumber {
-    font-size: 110px;
-    font-weight: bold;
-    color: #2e7d32;
-}
-
-.top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #2e7d32;
-}
-
-#timer {
-    font-size: 20px;
-}
-
-.dataset-box {
-    background: #f1f8e9;
-    padding: 22px;
-    border-radius: 12px;
-    margin-bottom: 22px;
-    border: 1px solid #c8e6c9;
-    text-align: center;
-}
-
-#datasetDescription {
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 1.5;
-    margin-bottom: 12px;
-    color: #1b5e20;
-}
-
-#equationDisplay {
-    line-height: 1.8;
-    word-break: break-word;
-    font-size: 27px;
-    font-weight: bold;
-    color: #2e7d32;
-}
-
-.question-box {
-    margin-bottom: 18px;
-}
-
-.question-type {
-    font-size: 14px;
-    font-weight: bold;
-    color: #388e3c;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-}
-
-#questionLimit {
-    width: 100%;
-    height: 44px;
-    padding: 0 12px;
-    box-sizing: border-box;
-
-    border: 1px solid #81c784;
-    border-radius: 8px;
-
-    background-color: #ffffff;
-    color: #555;
-
-    font-size: 16px;
     font-family: inherit;
 
-    outline: none;
-    cursor: pointer;
 }
 
+.top-nav-bar {
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 100;
+
+    width: 100%;
+
+    background:
+        rgba(255, 255, 255, .94);
+
+    border-bottom:
+        1px solid var(--border-color);
+
+    padding:
+        16px 32px;
+
+    backdrop-filter:
+        blur(10px);
+
+}
+
+
+.nav-container {
+
+    width: 100%;
+
+    max-width: 1200px;
+
+    margin: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+}
+
+
+.nav-logo {
+
+    font-family:
+        var(--font-brand);
+
+    font-size:
+        1.25rem;
+
+    font-weight:
+        800;
+
+    color:
+        var(--primary-forest);
+
+    text-decoration:
+        none;
+
+}
+
+
+.nav-tagline {
+
+    font-size:
+        .75rem;
+
+    font-weight:
+        500;
+
+    color:
+        var(--text-muted);
+
+    border-left:
+        1px solid var(--border-color);
+
+    padding-left:
+        12px;
+
+}
+
+
+/* =========================================================
+   PAGE TITLE
+========================================================= */
+
+.page-title {
+
+    width: 92%;
+
+    max-width: 600px;
+
+    margin:
+        30px auto 15px;
+
+    font-family:
+        var(--font-brand);
+
+    color:
+        var(--primary-dark);
+
+    font-size:
+        26px;
+
+    font-weight:
+        800;
+
+    text-align:
+        center;
+
+}
+
+
+/* =========================================================
+   MAIN CARDS
+========================================================= */
+
+#studentStart,
+#quizArea,
+#finishMessage {
+
+    width: 92%;
+
+    max-width: 580px;
+
+    margin-left: auto;
+
+    margin-right: auto;
+
+    background:
+        var(--card-bg);
+
+    border:
+        1px solid var(--border-color);
+
+    border-radius:
+        var(--radius);
+
+    box-shadow:
+        var(--shadow-md);
+
+}
+
+
+/* =========================================================
+   STUDENT START
+========================================================= */
+
+#studentStart {
+
+    max-width: 440px;
+
+    margin-top:
+        10px;
+
+    margin-bottom:
+        40px;
+
+    padding:
+        35px;
+
+}
+
+
+#studentStart h2 {
+
+    margin-bottom:
+        20px;
+
+    font-family:
+        var(--font-brand);
+
+    color:
+        var(--primary-dark);
+
+    font-size:
+        20px;
+
+    font-weight:
+        700;
+
+    text-align:
+        center;
+
+}
+
+
+.student-label {
+
+    display: block;
+
+    margin:
+        0 0 7px;
+
+    color:
+        var(--primary-dark);
+
+    font-size:
+        13px;
+
+    font-weight:
+        700;
+
+}
+
+
+#studentStart input,
+#questionLimit {
+
+    display:
+        block;
+
+    width:
+        100%;
+
+    height:
+        48px;
+
+    margin-bottom:
+        16px;
+
+    padding:
+        10px 16px;
+
+    background:
+        var(--tint-light);
+
+    border:
+        1px solid var(--border-color);
+
+    border-radius:
+        10px;
+
+    color:
+        var(--text-body);
+
+    font-size:
+        15px;
+
+    outline:
+        none;
+
+}
+
+
+#studentStart input:focus,
 #questionLimit:focus {
-    border-color: #2e7d32;
-    box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.08);
+
+    background:
+        white;
+
+    border-color:
+        var(--primary-accent);
+
 }
 
-.answer-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-    margin-top: 10px;
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.btn-primary {
+
+    display:
+        block;
+
+    width:
+        100%;
+
+    min-height:
+        48px;
+
+    margin-top:
+        16px;
+
+    padding:
+        10px 15px;
+
+    background:
+        var(--primary-forest);
+
+    color:
+        white;
+
+    border:
+        none;
+
+    border-radius:
+        10px;
+
+    font-family:
+        var(--font-brand);
+
+    font-size:
+        15px;
+
+    font-weight:
+        600;
+
+    cursor:
+        pointer;
+
+    transition:
+        .2s ease;
+
 }
+
+
+.btn-primary:hover {
+
+    background:
+        var(--primary-dark);
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+.btn-primary:disabled {
+
+    opacity:
+        .55;
+
+    cursor:
+        not-allowed;
+
+    transform:
+        none;
+
+}
+
+
+/* =========================================================
+   COUNTDOWN
+========================================================= */
+
+#countdownOverlay {
+
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    width:
+        100vw;
+
+    height:
+        100vh;
+
+    z-index:
+        9999;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    background:
+        rgba(7, 56, 39, .76);
+
+    backdrop-filter:
+        blur(8px);
+
+    opacity:
+        0;
+
+    pointer-events:
+        none;
+
+    transition:
+        .25s ease;
+
+}
+
+
+#countdownOverlay.active {
+
+    opacity:
+        1;
+
+    pointer-events:
+        auto;
+
+}
+
+
+.countdown-card {
+
+    padding:
+        40px 60px;
+
+    background:
+        white;
+
+    border-radius:
+        20px;
+
+    text-align:
+        center;
+
+    box-shadow:
+        var(--shadow-lg);
+
+}
+
+
+.countdown-card h3 {
+
+    margin-bottom:
+        8px;
+
+    font-family:
+        var(--font-brand);
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        14px;
+
+}
+
+
+#countdownNumber {
+
+    font-family:
+        var(--font-brand);
+
+    font-size:
+        80px;
+
+    font-weight:
+        800;
+
+    color:
+        var(--primary-forest);
+
+}
+
+
+/* =========================================================
+   STUDENT INFORMATION BAR
+========================================================= */
+
+#studentInfo {
+
+    width:
+        92%;
+
+    max-width:
+        580px;
+
+    margin:
+        0 auto 16px;
+
+    padding:
+        18px 20px;
+
+    background:
+        white;
+
+    border:
+        1px solid var(--border-color);
+
+    border-radius:
+        var(--radius);
+
+    box-shadow:
+        var(--shadow-sm);
+
+    display:
+        none;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        12px;
+
+}
+
+
+#studentInfo p {
+
+    font-size:
+        13px;
+
+    font-weight:
+        500;
+
+}
+
+
+#showName,
+#showSection {
+
+    color:
+        var(--primary-dark);
+
+    font-weight:
+        700;
+
+}
+
+
+#score,
+#quizCount {
+
+    padding:
+        8px 12px;
+
+    background:
+        var(--tint-light);
+
+    border:
+        1px solid var(--border-color);
+
+    border-radius:
+        8px;
+
+    color:
+        var(--primary-forest);
+
+    text-align:
+        center;
+
+    font-size:
+        13px;
+
+    font-weight:
+        600;
+
+}
+
+
+#timerDisplay {
+
+    grid-column:
+        span 2;
+
+    padding:
+        8px 12px;
+
+    background:
+        var(--primary-dark);
+
+    border-radius:
+        8px;
+
+    color:
+        white;
+
+    text-align:
+        center;
+
+    font-size:
+        13px;
+
+    font-weight:
+        600;
+
+}
+
+
+/* =========================================================
+   QUIZ AREA
+========================================================= */
+
+#quizArea {
+
+    display:
+        none;
+
+    margin-bottom:
+        40px;
+
+    padding:
+        35px;
+
+}
+
+
+#category {
+
+    margin-bottom:
+        16px;
+
+    font-family:
+        var(--font-brand);
+
+    color:
+        var(--primary-dark);
+
+    font-size:
+        18px;
+
+    font-weight:
+        700;
+
+    text-align:
+        center;
+
+}
+
+
+#displayGiven {
+
+    width:
+        100%;
+
+    min-height:
+        70px;
+
+    margin-bottom:
+        20px;
+
+    padding:
+        16px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    background:
+        var(--tint-light);
+
+    border:
+        1px solid var(--border-color);
+
+    border-radius:
+        12px;
+
+    color:
+        var(--primary-dark);
+
+    font-size:
+        22px;
+
+    font-weight:
+        700;
+
+    line-height:
+        1.4;
+
+    text-align:
+        center;
+
+}
+
+
+/* =========================================================
+   QUESTION DESCRIPTION
+========================================================= */
+
+.question-instruction {
+
+    width:
+        100%;
+
+    margin:
+        0 0 15px;
+
+    padding:
+        12px 14px;
+
+    background:
+        white;
+
+    border:
+        1px solid var(--border-color);
+
+    border-radius:
+        10px;
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        13px;
+
+    line-height:
+        1.5;
+
+    text-align:
+        center;
+
+}
+
+
+/* =========================================================
+   ANSWER BOX
+========================================================= */
 
 .answer-box {
-    padding: 16px;
-    border: 1px solid #c8e6c9;
-    border-radius: 10px;
-    background: #f1f8e9;
-    transition: 0.2s;
+
+    width:
+        100%;
+
+    padding:
+        15px;
+
+    margin:
+        15px 0;
+
+    background:
+        var(--tint-light);
+
+    border:
+        1px solid var(--border-color);
+
+    border-radius:
+        12px;
+
+    transition:
+        .2s ease;
+
 }
+
 
 .answer-box p {
-    margin-top: 0;
-    margin-bottom: 10px;
-    color: #1b5e20;
+
+    margin-bottom:
+        9px;
+
+    color:
+        var(--primary-dark);
+
+    font-size:
+        13px;
+
+    font-weight:
+        700;
+
 }
+
 
 .answer-box input {
-    width: 100%;
-    padding: 14px;
-    border: 2px solid #a5d6a7;
-    border-radius: 8px;
-    font-size: 18px;
-    outline: none;
-    transition: 0.2s;
+
+    width:
+        100%;
+
+    height:
+        48px;
+
+    padding:
+        10px 14px;
+
+    background:
+        white;
+
+    border:
+        2px solid var(--border-color);
+
+    border-radius:
+        10px;
+
+    color:
+        var(--primary-dark);
+
+    font-size:
+        17px;
+
+    outline:
+        none;
+
 }
+
 
 .answer-box input:focus {
-    border-color: #2e7d32;
-    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.10);
+
+    border-color:
+        var(--primary-accent);
+
 }
 
-/* ERROR STATE */
 
 .answer-box.input-error {
-    border-color: #d32f2f;
-    background: #fff5f5;
+
+    background:
+        var(--wrong-bg);
+
+    border-color:
+        var(--wrong-border);
+
 }
+
 
 .answer-box.input-error input {
-    border-color: #d32f2f;
-    background: #fffafa;
+
+    border-color:
+        var(--wrong-border);
+
 }
+
 
 .answer-box.input-correct-format {
-    border-color: #66bb6a;
+
+    border-color:
+        var(--correct-border);
+
 }
+
 
 .input-error-message {
-    margin-top: 9px;
-    padding: 8px 10px;
-    border-radius: 6px;
-    background: #ffebee;
-    border: 1px solid #ef9a9a;
-    color: #c62828;
-    font-size: 13px;
-    font-weight: bold;
-    line-height: 1.4;
+
+    margin-top:
+        9px;
+
+    padding:
+        9px 10px;
+
+    background:
+        var(--wrong-bg);
+
+    border:
+        1px solid #f3aaaa;
+
+    border-radius:
+        8px;
+
+    color:
+        var(--wrong-text);
+
+    font-size:
+        12px;
+
+    font-weight:
+        700;
+
+    line-height:
+        1.4;
+
 }
 
-/* SYMBOL BOX */
+
+/* =========================================================
+   SYMBOL PANEL
+========================================================= */
 
 .symbol-panel {
-    margin-top: 18px;
-    padding: 16px;
-    background: #f8fbf8;
-    border: 1px solid #c8e6c9;
-    border-radius: 12px;
+
+    width:
+        100%;
+
+    margin:
+        15px 0;
+
+    padding:
+        15px;
+
+    background:
+        var(--tint-light);
+
+    border:
+        1px solid var(--border-color);
+
+    border-radius:
+        12px;
+
 }
+
 
 .symbol-title {
-    font-size: 15px;
-    font-weight: bold;
-    color: #2e7d32;
-    margin-bottom: 10px;
-    text-align: center;
+
+    margin-bottom:
+        5px;
+
+    color:
+        var(--primary-dark);
+
+    font-family:
+        var(--font-brand);
+
+    font-size:
+        14px;
+
+    font-weight:
+        700;
+
+    text-align:
+        center;
+
 }
+
 
 .symbol-description {
-    text-align: center;
-    font-size: 12px;
-    color: #558b5f;
-    margin-bottom: 12px;
+
+    margin-bottom:
+        12px;
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        11px;
+
+    text-align:
+        center;
+
 }
+
 
 .symbol-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 8px;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    gap:
+        7px;
+
 }
+
 
 .symbol-button {
-    margin: 0;
-    padding: 10px 5px;
-    min-height: 42px;
-    background: white;
-    color: #2e7d32;
-    border: 1px solid #a5d6a7;
-    border-radius: 7px;
-    font-size: 17px;
-    font-weight: bold;
+
+    min-height:
+        42px;
+
+    margin:
+        0;
+
+    padding:
+        8px 4px;
+
+    background:
+        white;
+
+    border:
+        1px solid var(--border-color);
+
+    border-radius:
+        8px;
+
+    color:
+        var(--primary-dark);
+
+    font-size:
+        16px;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+    transition:
+        .2s ease;
+
 }
+
 
 .symbol-button:hover {
-    background: #e8f5e9;
-    color: #1b5e20;
+
+    background:
+        var(--tint-light);
+
+    border-color:
+        var(--primary-accent);
+
+    transform:
+        translateY(-1px);
+
 }
+
 
 .symbol-button.infinity {
-    font-size: 21px;
+
+    font-size:
+        19px;
+
 }
 
-/* FEEDBACK */
+
+.symbol-button.union {
+
+    font-size:
+        21px;
+
+}
+
+
+.symbol-button.vertical-line {
+
+    font-size:
+        20px;
+
+}
+
+
+/* =========================================================
+   FEEDBACK
+========================================================= */
 
 #feedback {
-    margin-top: 15px;
-    padding: 14px;
-    border-radius: 8px;
-    font-weight: bold;
-    line-height: 1.6;
+
+    width:
+        100%;
+
+    margin:
+        16px 0;
+
+    padding:
+        14px;
+
+    border-radius:
+        10px;
+
+    font-size:
+        13px;
+
+    line-height:
+        1.5;
+
+    text-align:
+        center;
+
 }
+
 
 .correct {
-    background: #e8f5e9;
-    color: #1b5e20;
-    border: 1px solid #a5d6a7;
+
+    background:
+        var(--correct-bg);
+
+    border:
+        1px solid var(--correct-border);
+
+    color:
+        var(--correct-text);
+
 }
+
 
 .wrong {
-    background: #ffebee;
-    color: #c62828;
-    border: 1px solid #ef9a9a;
+
+    background:
+        var(--wrong-bg);
+
+    border:
+        1px solid var(--wrong-border);
+
+    color:
+        var(--wrong-text);
+
 }
+
 
 .syntax-warning {
-    background: #fff8e1;
-    color: #8d6e00;
-    border: 1px solid #ffcc80;
+
+    background:
+        var(--warning-bg);
+
+    border:
+        1px solid var(--warning-border);
+
+    color:
+        var(--warning-text);
+
 }
 
-.top-bar{
-    width: 100%;
-}
-/* RESULT */
 
-#finalScore {
-    font-size: 32px;
-    font-weight: bold;
-    margin: 20px 0;
-    color: #2e7d32;
-}
+/* =========================================================
+   RESULT SCREEN
+========================================================= */
 
-#studentSummary,
-#finalTime,
-#finalCategory {
-    background: #f1f8e9;
-    padding: 15px;
-    border-radius: 8px;
-    margin: 10px 0;
-    color: #1b5e20;
-}
+#finishMessage {
 
-#newQuizButton {
-    background: #558b2f;
+    display:
+        none;
+
+    margin:
+        0 auto 40px;
+
+    padding:
+        35px;
+
+    text-align:
+        center;
+
 }
 
-#newQuizButton:hover {
-    background: #33691e;
+
+#finishMessage h2 {
+
+    margin:
+        0 0 20px;
+
+    color:
+        var(--primary-dark);
+
+    font-family:
+        var(--font-brand);
+
+    font-size:
+        22px;
+
+    font-weight:
+        800;
+
 }
 
-@media (max-width: 700px) {
 
-    .card {
-        padding: 20px;
+.summary-item {
+
+    margin:
+        10px 0;
+
+    padding:
+        12px;
+
+    background:
+        var(--tint-light);
+
+    border:
+        1px solid var(--border-color);
+
+    border-radius:
+        10px;
+
+    color:
+        var(--text-body);
+
+    font-size:
+        14px;
+
+}
+
+
+.summary-item strong {
+
+    color:
+        var(--primary-dark);
+
+    font-weight:
+        700;
+
+}
+
+
+.final-score {
+
+    margin:
+        20px 0;
+
+    color:
+        var(--primary-forest);
+
+    font-size:
+        42px;
+
+    font-weight:
+        800;
+
+    line-height:
+        1;
+
+}
+
+
+/* =========================================================
+   HIDDEN
+========================================================= */
+
+.hidden {
+
+    display:
+        none !important;
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:600px) {
+
+    .top-nav-bar {
+
+        padding:
+            14px 18px;
+
     }
 
-    #startScreen h1 {
-        font-size: 27px;
+
+    .nav-tagline {
+
+        font-size:
+            10px;
+
     }
 
-    #startScreen h2 {
-        font-size: 18px;
+
+    .page-title {
+
+        font-size:
+            22px;
+
+        margin-top:
+            24px;
+
     }
 
-    .top-bar {
-        font-size: 14px;
+
+    #studentStart,
+    #quizArea {
+
+        padding:
+            25px 20px;
+
     }
 
-    #timer {
-        font-size: 17px;
+
+    #studentInfo {
+
+        grid-template-columns:
+            1fr;
+
     }
 
-    #countdownNumber {
-        font-size: 80px;
+
+    #timerDisplay {
+
+        grid-column:
+            span 1;
+
     }
 
-    .answer-row {
-        grid-template-columns: 1fr;
+
+    #displayGiven {
+
+        font-size:
+            19px;
+
     }
+
 
     .symbol-grid {
-        grid-template-columns: repeat(4, 1fr);
+
+        grid-template-columns:
+            repeat(4, 1fr);
+
     }
 
-    #equationDisplay {
-        font-size: 23px;
+
+    .countdown-card {
+
+        padding:
+            35px 50px;
+
     }
+
+
+    #countdownNumber {
+
+        font-size:
+            70px;
+
+    }
+
+
+    #finishMessage {
+
+        width:
+            94%;
+
+        padding:
+            24px;
+
+    }
+
+
+    #finishMessage h2 {
+
+        font-size:
+            20px;
+
+    }
+
+
+    .summary-item {
+
+        font-size:
+            13px;
+
+        padding:
+            11px;
+
+    }
+
+
+    .final-score {
+
+        font-size:
+            38px;
+
+    }
+
 }
-.top-bar {
-    width: 100%;
+
+
+@media(max-width:400px) {
+
+    #finishMessage {
+
+        padding:
+            20px;
+
+    }
+
+
+    .final-score {
+
+        font-size:
+            34px;
+
+    }
+
 }
+
 </style>
+<link rel="stylesheet" href="../../assets/style/style.css">
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 </head>
+
 
 <body>
 
-<!-- =========================================
-     START SCREEN
-========================================= -->
+
+<!-- =========================================================
+     NAV BAR
+========================================================= -->
 
 <header class="top-nav-bar" id="navbar">
-   
+
   </header>
- <section class="cover-section" id="cover">
+  <script src="../../js/helper/navbar.js"></script>
+     <section class="cover-section" id="cover">
       <div class="cover-wrapper">
         <img 
-          src="../../assets/img/background/7-Unit.jpg" 
+          src="../../assets/img/background/Banner Of Project FACTR.png" 
           alt="ProjectFactr Mathematics Remedial Learning Platform Banner" 
           class="cover-image"
           id="main-cover-image"
         >
+       <div class="cover-content">
+    <h1>Quadratic Inequalities </h1>
+
+    <h2>
+        <!-- Formative Assessment on Calculation via Task Randomization -->
+    </h2>
+</div>
       </div>
     </section>
-<section id="startScreen" class="screen">
-
-    <div class="card">
-
-        <h1>GRADE 10</h1>
-
-        <h2>SOLVING QUADRATIC INEQUALITIES IN ONE VARIABLE</h2>
-
-        <div class="student-info-group">
-
-            <label for="studentName">
-                Student Name
-            </label>
-
-            <input
-                type="text"
-                id="studentName"
-                placeholder="e.g. Juan Dela Cruz"
-                required
-            >
-
-        </div>
-
-        <div class="student-info-group">
-
-            <label for="studentSection">
-                Section:
-            </label>
-
-            <input
-                type="text"
-                id="studentSection"
-                placeholder="e.g. Grade 10 - Emerald"
-                required
-            >
-
-        </div>
-
-        <div class="student-info-group">
-
-            <label for="questionLimit">
-                Number of Questions:
-            </label>
-
-            <select id="questionLimit">
-
-                <option value="5">1 to 5</option>
-                <option value="10" selected>1 to 10</option>
-                <option value="15">1 to 15</option>
-                <option value="20">1 to 20</option>
-                <option value="25">1 to 25</option>
-                <option value="30">1 to 30</option>
-                <option value="35">1 to 35</option>
-                <option value="40">1 to 40</option>
-                <option value="45">1 to 45</option>
-                <option value="50">1 to 50</option>
-
-            </select>
-
-        </div>
-
-        <button id="startButton">
-            START QUIZ
-        </button>
-
-    </div>
-
-</section>
 
 
-<!-- =========================================
-     COUNTDOWN SCREEN
-========================================= -->
+<!-- =========================================================
+     TITLE
+========================================================= -->
 
-<section id="countdownScreen" class="screen hidden">
+<h1 class="page-title">
 
-    <div class="card countdown-card">
+    Solving Quadratic Inequalities
+    in One Variable
+
+</h1>
+
+
+<!-- =========================================================
+     STUDENT START
+========================================================= -->
+
+<div id="studentStart">
+
+    <h2>
+        Enter Student Details
+    </h2>
+
+
+    <label
+        class="student-label"
+        for="studentName"
+    >
+        Student Name
+    </label>
+
+    <input
+        type="text"
+        id="studentName"
+        placeholder="Full Name"
+        autocomplete="off"
+    >
+
+
+    <label
+        class="student-label"
+        for="studentSection"
+    >
+        Section
+    </label>
+
+    <input
+        type="text"
+        id="studentSection"
+        placeholder="Grade & Section"
+        autocomplete="off"
+    >
+
+
+    <label
+        class="student-label"
+        for="questionLimit"
+    >
+        Number of Questions
+    </label>
+
+    <select id="questionLimit">
+
+        <option value="5">
+            1 to 5
+        </option>
+
+        <option
+            value="10"
+            selected
+        >
+            1 to 10
+        </option>
+
+        <option value="15">
+            1 to 15
+        </option>
+
+        <option value="20">
+            1 to 20
+        </option>
+
+        <option value="25">
+            1 to 25
+        </option>
+
+        <option value="30">
+            1 to 30
+        </option>
+
+        <option value="35">
+            1 to 35
+        </option>
+
+        <option value="40">
+            1 to 40
+        </option>
+
+        <option value="45">
+            1 to 45
+        </option>
+
+        <option value="50">
+            1 to 50
+        </option>
+
+    </select>
+
+
+    <button
+        class="btn-primary"
+        id="startButton"
+    >
+        START QUIZ
+    </button>
+
+</div>
+
+
+<!-- =========================================================
+     COUNTDOWN
+========================================================= -->
+
+<div id="countdownOverlay">
+
+    <div class="countdown-card">
+
+        <h3>
+            GET READY
+        </h3>
 
         <div id="countdownNumber">
             3
@@ -519,241 +1611,376 @@ button:disabled {
 
     </div>
 
-</section>
+</div>
 
 
-<!-- =========================================
-     QUIZ SCREEN
-========================================= -->
+<!-- =========================================================
+     STUDENT INFO
+========================================================= -->
 
-<section id="quizScreen" class="screen hidden">
+<div id="studentInfo">
 
-    <div class="card">
-
-        <div class="top-bar">
-
-            <span id="questionCount">
-                Question 1 of 10
-            </span>
-
-            <span id="timer">
-                Time: 00:00
-            </span>
-
-        </div>
+    <p>
+        Name:
+        <span id="showName"></span>
+    </p>
 
 
-        <div class="dataset-box">
-
-            <div id="datasetDescription">
-                Solve the given quadratic inequality.
-            </div>
-
-            <div id="equationDisplay">
-                x² - 5x + 6 &gt; 0
-            </div>
-
-        </div>
+    <p>
+        Section:
+        <span id="showSection"></span>
+    </p>
 
 
-        <div class="question-box">
-
-            <div
-                class="question-type"
-                id="questionType"
-            >
-                SOLVING QUADRATIC INEQUALITIES IN ONE VARIABLE
-            </div>
+    <div id="score">
+        Score: 0 / 10
+    </div>
 
 
-            <div class="answer-row">
-
-                <div
-                    id="answer1Stage"
-                    class="answer-box"
-                >
-
-                    <p>
-                        <strong>
-                            1. First solution interval
-                        </strong>
-                    </p>
-
-                    <input
-                        type="text"
-                        id="answer1"
-                        placeholder="e.g. (-∞, 2)"
-                        autocomplete="off"
-                    >
-
-                    <div
-                        id="answer1Error"
-                        class="input-error-message hidden"
-                    ></div>
-
-                </div>
+    <div id="quizCount">
+        Question: 1 / 10
+    </div>
 
 
-                <div
-                    id="answer2Stage"
-                    class="answer-box"
-                >
+    <div id="timerDisplay">
+        Time Elapsed: 0:00
+    </div>
 
-                    <p>
-                        <strong>
-                            2. Second solution interval
-                        </strong>
-                    </p>
-
-                    <input
-                        type="text"
-                        id="answer2"
-                        placeholder="e.g. (3, ∞)"
-                        autocomplete="off"
-                    >
-
-                    <div
-                        id="answer2Error"
-                        class="input-error-message hidden"
-                    ></div>
-
-                </div>
-
-            </div>
+</div>
 
 
-            <!-- SYMBOL PANEL -->
+<!-- =========================================================
+     QUIZ
+========================================================= -->
 
-            <div class="symbol-panel">
-
-                <div class="symbol-title">
-                    SYMBOL &amp; SIGN BOX
-                </div>
-
-                <div class="symbol-description">
-                    Click an answer box first, then choose the symbol you need.
-                </div>
-
-                <div class="symbol-grid">
-
-                    <button type="button" class="symbol-button" data-symbol="−">
-                        −
-                    </button>
-
-                    <button type="button" class="symbol-button infinity" data-symbol="∞">
-                        ∞
-                    </button>
-
-                    <button type="button" class="symbol-button" data-symbol="(">
-                        (
-                    </button>
-
-                    <button type="button" class="symbol-button" data-symbol=")">
-                        )
-                    </button>
-
-                    <button type="button" class="symbol-button" data-symbol="[">
-                        [
-                    </button>
-
-                    <button type="button" class="symbol-button" data-symbol="]">
-                        ]
-                    </button>
-
-                    <button type="button" class="symbol-button" data-symbol=",">
-                        ,
-                    </button>
-
-                    <button type="button" class="symbol-button" data-symbol="x">
-                        x
-                    </button>
-
-                    <button type="button" class="symbol-button" data-symbol="<">
-                        &lt;
-                    </button>
-
-                    <button type="button" class="symbol-button" data-symbol=">">
-                        &gt;
-                    </button>
-
-                    <button type="button" class="symbol-button" data-symbol="≤">
-                        ≤
-                    </button>
-
-                    <button type="button" class="symbol-button" data-symbol="≥">
-                        ≥
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
+<div id="quizArea">
 
 
-        <button id="submitButton">
-            SUBMIT ANSWER
-        </button>
+    <div id="category">
+
+        SOLVING QUADRATIC
+        INEQUALITIES IN ONE VARIABLE
+
+    </div>
+
+
+    <div id="displayGiven">
+
+        x² − 5x + 6 &gt; 0
+
+    </div>
+
+
+    <div class="question-instruction">
+
+        Solve the quadratic inequality and
+        enter the solution interval.
+        Use ∪ when the solution has two intervals.
+
+    </div>
+
+
+    <!-- ANSWER -->
+
+    <div class="answer-box" id="answerStage">
+
+        <p>
+
+            <strong>
+                Solution Interval
+            </strong>
+
+        </p>
+
+
+        <input
+            type="text"
+            id="answer"
+            placeholder="e.g. (-∞, 2) ∪ (3, ∞)"
+            autocomplete="off"
+        >
 
 
         <div
-            id="feedback"
-            class="hidden"
+            id="answerError"
+            class="input-error-message hidden"
         ></div>
 
+    </div>
 
-        <button
-            id="nextButton"
-            class="hidden"
-        >
-            NEXT QUESTION
-        </button>
+
+    <!-- SYMBOL PANEL -->
+
+    <div class="symbol-panel">
+
+        <div class="symbol-title">
+
+            SYMBOL &amp; INTERVAL BOX
+
+        </div>
+
+
+        <div class="symbol-description">
+
+            Click the answer box first,
+            then choose the symbol you need.
+
+        </div>
+
+
+        <div class="symbol-grid">
+
+
+            <button
+                type="button"
+                class="symbol-button"
+                data-symbol="−"
+            >
+                −
+            </button>
+
+
+            <button
+                type="button"
+                class="symbol-button infinity"
+                data-symbol="∞"
+            >
+                ∞
+            </button>
+
+
+            <button
+                type="button"
+                class="symbol-button"
+                data-symbol="("
+            >
+                (
+            </button>
+
+
+            <button
+                type="button"
+                class="symbol-button"
+                data-symbol=")"
+            >
+                )
+            </button>
+
+
+            <button
+                type="button"
+                class="symbol-button"
+                data-symbol="["
+            >
+                [
+            </button>
+
+
+            <button
+                type="button"
+                class="symbol-button"
+                data-symbol="]"
+            >
+                ]
+            </button>
+
+
+            <button
+                type="button"
+                class="symbol-button"
+                data-symbol=","
+            >
+                ,
+            </button>
+
+
+            <button
+                type="button"
+                class="symbol-button union"
+                data-symbol="∪"
+            >
+                ∪
+            </button>
+
+
+            <button
+                type="button"
+                class="symbol-button vertical-line"
+                data-symbol="|"
+            >
+                |
+            </button>
+
+
+            <button
+                type="button"
+                class="symbol-button"
+                data-symbol="x"
+            >
+                x
+            </button>
+
+
+            <button
+                type="button"
+                class="symbol-button"
+                data-symbol="<"
+            >
+                &lt;
+            </button>
+
+
+            <button
+                type="button"
+                class="symbol-button"
+                data-symbol=">"
+            >
+                &gt;
+            </button>
+
+
+            <button
+                type="button"
+                class="symbol-button"
+                data-symbol="≤"
+            >
+                ≤
+            </button>
+
+
+            <button
+                type="button"
+                class="symbol-button"
+                data-symbol="≥"
+            >
+                ≥
+            </button>
+
+
+        </div>
 
     </div>
 
-</section>
+
+    <!-- SUBMIT -->
+
+    <button
+        class="btn-primary"
+        id="submitButton"
+    >
+        SUBMIT ANSWER
+    </button>
 
 
-<!-- =========================================
-     RESULT SCREEN
-========================================= -->
+    <!-- FEEDBACK -->
 
-<section id="resultScreen" class="screen hidden">
+    <div
+        id="feedback"
+        class="hidden"
+    ></div>
 
-    <div class="card">
 
-        <h1>
-            QUIZ COMPLETE
-        </h1>
+    <!-- NEXT -->
 
-        <div id="studentSummary">
-            Name: - | Section: -
-        </div>
+    <button
+        class="btn-primary hidden"
+        id="nextButton"
+    >
+        NEXT QUESTION
+    </button>
 
-        <div id="finalScore">
-            Score: 0 / 10
-        </div>
 
-        <div id="finalTime">
-            Time: 00:00
-        </div>
+</div>
 
-        <div id="finalCategory">
-            10 Questions Completed
-        </div>
 
-        <button id="downloadPdfButton">
-            SAVE RESULTS TO PDF
-        </button>
+<!-- =========================================================
+     FINISH SCREEN
+========================================================= -->
 
-        <button id="newQuizButton">
-            NEW QUIZ
-        </button>
+<div id="finishMessage">
+
+    <h2>
+        Quiz Finished!
+    </h2>
+
+
+    <div class="summary-item">
+
+        Name:
+
+        <strong id="summaryName">
+            -
+        </strong>
 
     </div>
 
-</section>
-  <footer class="site-footer">
+
+    <div class="summary-item">
+
+        Section:
+
+        <strong id="summarySection">
+            -
+        </strong>
+
+    </div>
+
+
+    <div class="summary-item">
+
+        Quiz Type:
+
+        <strong id="summaryType">
+            Solving Quadratic Inequalities
+        </strong>
+
+    </div>
+
+
+    <div class="final-score">
+
+        <span id="finalScore">
+            0
+        </span>
+
+        /
+
+        <span id="finalTotal">
+            10
+        </span>
+
+    </div>
+
+
+    <div class="summary-item">
+
+        Time:
+
+        <strong id="finalTime">
+            00:00
+        </strong>
+
+    </div>
+
+
+    <button
+        class="btn-primary"
+        id="downloadPdfButton"
+    >
+        SAVE RESULTS TO PDF
+    </button>
+
+
+    <button
+        class="btn-primary"
+        id="newQuizButton"
+        style="background:var(--primary-accent);"
+    >
+        NEW QUIZ
+    </button>
+
+</div>
+<footer class="site-footer">
     <div class="footer-bottom">
       <div>&copy; 2026 ProjectFactr. All rights reserved.</div>
       <div>Mathematics Learning &amp; Curriculum Platform</div>
@@ -762,158 +1989,277 @@ button:disabled {
 
 
 <script>
-    "use strict";
 
-document.addEventListener("DOMContentLoaded", function () {
+"use strict";
 
-    /* =========================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+    /* =====================================================
        VARIABLES
-    ========================================= */
+    ===================================================== */
 
     let TOTAL_QUESTIONS = 10;
 
     let questions = [];
-    let currentQuestionIndex = 0;
+
+    let currentQuestion = 0;
+
     let score = 0;
-
-    let startTime = 0;
-    let elapsedSeconds = 0;
-    let timerInterval = null;
-
-    let hasSubmitted = false;
 
     let quizResults = [];
 
     let studentName = "";
+
     let studentSection = "";
+
+    let timerInterval = null;
+
+    let startTime = null;
+
+    let elapsedSeconds = 0;
+
+    let hasSubmitted = false;
 
     let activeInput = null;
 
 
-    /* =========================================
-       DOM ELEMENTS
-    ========================================= */
+    /* =====================================================
+       DOM
+    ===================================================== */
 
-    const startScreen =
-        document.getElementById("startScreen");
+    const studentStart =
+        document.getElementById(
+            "studentStart"
+        );
 
-    const countdownScreen =
-        document.getElementById("countdownScreen");
 
-    const quizScreen =
-        document.getElementById("quizScreen");
-
-    const resultScreen =
-        document.getElementById("resultScreen");
+    const startButton =
+        document.getElementById(
+            "startButton"
+        );
 
 
     const studentNameInput =
-        document.getElementById("studentName");
+        document.getElementById(
+            "studentName"
+        );
+
 
     const studentSectionInput =
-        document.getElementById("studentSection");
+        document.getElementById(
+            "studentSection"
+        );
+
 
     const questionLimit =
-        document.getElementById("questionLimit");
+        document.getElementById(
+            "questionLimit"
+        );
 
-    const startButton =
-        document.getElementById("startButton");
+
+    const countdownOverlay =
+        document.getElementById(
+            "countdownOverlay"
+        );
 
 
     const countdownNumber =
-        document.getElementById("countdownNumber");
-
-    const questionCount =
-        document.getElementById("questionCount");
-
-    const timer =
-        document.getElementById("timer");
-
-    const equationDisplay =
-        document.getElementById("equationDisplay");
+        document.getElementById(
+            "countdownNumber"
+        );
 
 
-    const answer1 =
-        document.getElementById("answer1");
+    const studentInfo =
+        document.getElementById(
+            "studentInfo"
+        );
 
-    const answer2 =
-        document.getElementById("answer2");
 
-    const answer1Stage =
-        document.getElementById("answer1Stage");
+    const showName =
+        document.getElementById(
+            "showName"
+        );
 
-    const answer2Stage =
-        document.getElementById("answer2Stage");
 
-    const answer1Error =
-        document.getElementById("answer1Error");
+    const showSection =
+        document.getElementById(
+            "showSection"
+        );
 
-    const answer2Error =
-        document.getElementById("answer2Error");
+
+    const scoreDisplay =
+        document.getElementById(
+            "score"
+        );
+
+
+    const quizCount =
+        document.getElementById(
+            "quizCount"
+        );
+
+
+    const timerDisplay =
+        document.getElementById(
+            "timerDisplay"
+        );
+
+
+    const quizArea =
+        document.getElementById(
+            "quizArea"
+        );
+
+
+    const category =
+        document.getElementById(
+            "category"
+        );
+
+
+    const displayGiven =
+        document.getElementById(
+            "displayGiven"
+        );
+
+
+    const answer =
+        document.getElementById(
+            "answer"
+        );
+
+
+    const answerStage =
+        document.getElementById(
+            "answerStage"
+        );
+
+
+    const answerError =
+        document.getElementById(
+            "answerError"
+        );
 
 
     const submitButton =
-        document.getElementById("submitButton");
+        document.getElementById(
+            "submitButton"
+        );
+
 
     const nextButton =
-        document.getElementById("nextButton");
+        document.getElementById(
+            "nextButton"
+        );
+
 
     const feedback =
-        document.getElementById("feedback");
+        document.getElementById(
+            "feedback"
+        );
 
 
-    const studentSummary =
-        document.getElementById("studentSummary");
+    const finishMessage =
+        document.getElementById(
+            "finishMessage"
+        );
+
+
+    const summaryName =
+        document.getElementById(
+            "summaryName"
+        );
+
+
+    const summarySection =
+        document.getElementById(
+            "summarySection"
+        );
+
+
+    const summaryType =
+        document.getElementById(
+            "summaryType"
+        );
+
 
     const finalScore =
-        document.getElementById("finalScore");
+        document.getElementById(
+            "finalScore"
+        );
+
+
+    const finalTotal =
+        document.getElementById(
+            "finalTotal"
+        );
+
 
     const finalTime =
-        document.getElementById("finalTime");
-
-    const finalCategory =
-        document.getElementById("finalCategory");
+        document.getElementById(
+            "finalTime"
+        );
 
 
     const downloadPdfButton =
-        document.getElementById("downloadPdfButton");
+        document.getElementById(
+            "downloadPdfButton"
+        );
+
 
     const newQuizButton =
-        document.getElementById("newQuizButton");
+        document.getElementById(
+            "newQuizButton"
+        );
 
 
-    /* =========================================
+    /* =====================================================
        NAME VALIDATION
-    ========================================= */
+    ===================================================== */
 
-    studentNameInput.addEventListener("input", function () {
+    studentNameInput.addEventListener(
+        "input",
+        function () {
 
-        this.value =
-            this.value.replace(/[^a-zA-Z\s.-]/g, "");
+            this.value =
+                this.value.replace(
+                    /[^a-zA-Z\s.-]/g,
+                    ""
+                );
 
-    });
+        }
+    );
 
 
-    /* =========================================
-       RANDOM NUMBER
-    ========================================= */
+    /* =====================================================
+       RANDOM INTEGER
+    ===================================================== */
 
-    function getRandomInteger(min, max) {
+    function getRandomInteger(
+        min,
+        max
+    ) {
 
         return Math.floor(
-            Math.random() * (max - min + 1)
+            Math.random() *
+            (max - min + 1)
         ) + min;
 
     }
 
 
-    /* =========================================
+    /* =====================================================
        SHUFFLE
-    ========================================= */
+    ===================================================== */
 
     function shuffle(array) {
 
         const arr = [...array];
+
 
         for (
             let i = arr.length - 1;
@@ -922,7 +2268,11 @@ document.addEventListener("DOMContentLoaded", function () {
         ) {
 
             const j =
-                Math.floor(Math.random() * (i + 1));
+                Math.floor(
+                    Math.random() *
+                    (i + 1)
+                );
+
 
             [
                 arr[i],
@@ -934,44 +2284,61 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
+
         return arr;
 
     }
 
 
-    /* =========================================
-       FORMAT QUADRATIC
-    ========================================= */
+    /* =====================================================
+       QUADRATIC FORMAT
+    ===================================================== */
 
-    function makeQuadratic(r1, r2) {
+    function makeQuadratic(
+        r1,
+        r2
+    ) {
 
-        const sum = r1 + r2;
-        const product = r1 * r2;
+        const sum =
+            r1 + r2;
+
+
+        const product =
+            r1 * r2;
+
 
         let middle = "";
 
+
         if (sum > 0) {
 
-            middle = ` - ${sum}x`;
+            middle =
+                ` − ${sum}x`;
 
         }
+
         else if (sum < 0) {
 
-            middle = ` + ${Math.abs(sum)}x`;
+            middle =
+                ` + ${Math.abs(sum)}x`;
 
         }
 
 
         let constant = "";
 
+
         if (product > 0) {
 
-            constant = ` + ${product}`;
+            constant =
+                ` + ${product}`;
 
         }
+
         else if (product < 0) {
 
-            constant = ` - ${Math.abs(product)}`;
+            constant =
+                ` − ${Math.abs(product)}`;
 
         }
 
@@ -981,11 +2348,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* =========================================
-       CREATE INTERVAL ANSWERS
-    ========================================= */
+    /* =====================================================
+       CREATE CORRECT SOLUTION
+    ===================================================== */
 
-    function makeSolutions(low, high, operator) {
+    function makeSolutions(
+        low,
+        high,
+        operator
+    ) {
 
         if (operator === ">") {
 
@@ -1000,14 +2371,13 @@ document.addEventListener("DOMContentLoaded", function () {
         if (operator === "<") {
 
             return [
-                `(${low}, ${high})`,
-                ""
+                `(${low}, ${high})`
             ];
 
         }
 
 
-        if (operator === ">=") {
+        if (operator === "≥") {
 
             return [
                 `(-∞, ${low}]`,
@@ -1018,27 +2388,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         return [
-            `[${low}, ${high}]`,
-            ""
+            `[${low}, ${high}]`
         ];
 
     }
 
 
-    /* =========================================
-       GENERATE ONE QUESTION
-    ========================================= */
+    /* =====================================================
+       GENERATE QUESTION
+    ===================================================== */
 
     function generateQuestion() {
 
         const r1 =
-            getRandomInteger(-9, 9);
+            getRandomInteger(
+                -9,
+                9
+            );
+
 
         let r2 =
-            getRandomInteger(-9, 9);
+            getRandomInteger(
+                -9,
+                9
+            );
 
 
-        if (r1 === r2) {
+        if (
+            r1 === r2
+        ) {
 
             return generateQuestion();
 
@@ -1046,17 +2424,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         const low =
-            Math.min(r1, r2);
+            Math.min(
+                r1,
+                r2
+            );
+
 
         const high =
-            Math.max(r1, r2);
+            Math.max(
+                r1,
+                r2
+            );
 
 
         const operators = [
             ">",
             "<",
-            ">=",
-            "<="
+            "≥",
+            "≤"
         ];
 
 
@@ -1069,47 +2454,122 @@ document.addEventListener("DOMContentLoaded", function () {
             ];
 
 
+        const answers =
+            makeSolutions(
+                low,
+                high,
+                operator
+            );
+
+
         return {
 
             equation:
-                `${makeQuadratic(r1, r2)} ${operator} 0`,
+                `${makeQuadratic(
+                    r1,
+                    r2
+                )} ${operator} 0`,
 
             answers:
-                makeSolutions(
-                    low,
-                    high,
-                    operator
-                )
+                answers,
+
+            correctDisplay:
+                answers.join(" ∪ ")
 
         };
 
     }
 
 
-    /* =========================================
+    function makeSetDisplay(answers) {
+
+        const parts = answers.map(function (item) {
+            const parsed = validateSingleInterval(item);
+            const left = parsed.left === -Infinity ? "" : String(parsed.left);
+            const right = parsed.right === Infinity ? "" : String(parsed.right);
+            const leftOp = parsed.left === -Infinity ? "x < " : (parsed.leftClosed ? "x ≥ " : "x > ");
+            const rightOp = parsed.right === Infinity ? "x > " : (parsed.rightClosed ? "x ≤ " : "x < ");
+
+            if (parsed.left === -Infinity) return leftOp + right;
+            if (parsed.right === Infinity) return leftOp + left;
+            return left + (parsed.leftClosed ? " ≤ x " : " < x ") + (parsed.rightClosed ? "≤ " : "< ") + right;
+        });
+
+        return "{x | " + parts.join(" U ") + "}";
+    }
+
+
+    /* =====================================================
        GENERATE QUESTION SET
-    ========================================= */
+    ===================================================== */
+
+    function generateNotationTypes() {
+
+        const types = [];
+        const intervalCount = Math.floor(TOTAL_QUESTIONS / 2);
+        const setCount = TOTAL_QUESTIONS - intervalCount;
+
+        for (let i = 0; i < intervalCount; i++) {
+            types.push("interval");
+        }
+
+        for (let i = 0; i < setCount; i++) {
+            types.push("set");
+        }
+
+        return shuffle(types);
+    }
+
 
     function generateQuestionSet() {
 
         const result = [];
+        const notationTypes = generateNotationTypes();
+
+
+        let attempts = 0;
 
 
         while (
-            result.length < TOTAL_QUESTIONS
+            result.length <
+            TOTAL_QUESTIONS
         ) {
+
+            attempts++;
+
 
             const q =
                 generateQuestion();
 
+            q.notationType =
+                notationTypes[result.length];
 
-            if (
-                !result.some(
-                    x => x.equation === q.equation
-                )
-            ) {
+
+            const duplicate =
+                result.some(
+                    function (item) {
+
+                        return (
+                            item.equation ===
+                            q.equation
+                        );
+
+                    }
+                );
+
+
+            if (!duplicate) {
 
                 result.push(q);
+
+            }
+
+
+            if (
+                attempts > 10000
+            ) {
+
+                break;
 
             }
 
@@ -1121,94 +2581,122 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* =========================================
+    /* =====================================================
        NORMALIZE
-    ========================================= */
+    ===================================================== */
 
     function normalize(text) {
 
-        return String(text || "")
-            .trim()
-            .replace(/−/g, "-")
-            .replace(/∞/g, "∞")
-            .replace(/\s+/g, "");
+        return String(
+            text || ""
+        )
+
+        .trim()
+
+        .replace(
+            /−/g,
+            "-"
+        )
+
+        .replace(
+            /\s+/g,
+            "");
 
     }
 
 
-    /* =========================================
-       VALIDATE INTERVAL
-    ========================================= */
+    /* =====================================================
+       VALIDATE ONE INTERVAL
+    ===================================================== */
 
-    function validateInterval(text) {
+    function validateSingleInterval(
+        text
+    ) {
 
-        const original = String(text || "").trim();
+        const original =
+            String(
+                text || ""
+            ).trim();
+
 
         if (!original) {
 
             return {
+
                 valid: false,
-                error: "Answer is empty. Please enter a solution interval."
+
+                error:
+                    "Answer is empty. Please enter a solution interval."
+
             };
 
         }
 
 
-        const s = normalize(original);
+        const s =
+            normalize(
+                original
+            );
 
-
-        /* -------------------------------------
-           BASIC SYMBOL CHECK
-        ------------------------------------- */
 
         const allowed =
             /^[\-\d∞\(\)\[\],]+$/;
 
 
-        if (!allowed.test(s)) {
+        if (
+            !allowed.test(s)
+        ) {
 
             return {
+
                 valid: false,
+
                 error:
                     "Invalid symbol detected. Use numbers, comma, parentheses, brackets, −∞, or ∞."
+
             };
 
         }
 
 
-        /* -------------------------------------
-           MUST HAVE COMMA
-        ------------------------------------- */
-
-        if (!s.includes(",")) {
+        if (
+            !s.includes(",")
+        ) {
 
             return {
+
                 valid: false,
+
                 error:
                     "Missing comma. Example: (-∞, 2)"
+
             };
 
         }
 
 
         const commaCount =
-            (s.match(/,/g) || []).length;
+            (
+                s.match(/,/g) ||
+                []
+            ).length;
 
 
-        if (commaCount !== 1) {
+        if (
+            commaCount !== 1
+        ) {
 
             return {
+
                 valid: false,
+
                 error:
-                    "There should be exactly one comma separating the interval."
+                    "Each interval must contain exactly one comma."
+
             };
 
         }
 
-
-        /* -------------------------------------
-           LEFT / RIGHT PARTS
-        ------------------------------------- */
 
         const parts =
             s.split(",");
@@ -1217,71 +2705,81 @@ document.addEventListener("DOMContentLoaded", function () {
         const left =
             parts[0];
 
+
         const right =
             parts[1];
 
 
-        if (!left || !right) {
+        if (
+            !left ||
+            !right
+        ) {
 
             return {
+
                 valid: false,
+
                 error:
                     "Both sides of the comma must contain a value."
+
             };
 
         }
 
 
-        /* -------------------------------------
-           LEFT ENDPOINT
-        ------------------------------------- */
-
         const leftOpen =
             left.startsWith("(");
+
 
         const leftClosed =
             left.startsWith("[");
 
 
-        if (!leftOpen && !leftClosed) {
+        if (
+            !leftOpen &&
+            !leftClosed
+        ) {
 
             return {
+
                 valid: false,
+
                 error:
-                    "Missing opening parenthesis or bracket. Use ( or [."
+                    "Missing opening parenthesis or bracket."
+
             };
 
         }
 
-
-        /* -------------------------------------
-           RIGHT ENDPOINT
-        ------------------------------------- */
 
         const rightClosed =
             right.endsWith(")");
 
-        const rightOpen =
+
+        const rightBracket =
             right.endsWith("]");
 
 
-        if (!rightClosed && !rightOpen) {
+        if (
+            !rightClosed &&
+            !rightBracket
+        ) {
 
             return {
+
                 valid: false,
+
                 error:
-                    "Missing closing parenthesis or bracket. Use ) or ]."
+                    "Missing closing parenthesis or bracket."
+
             };
 
         }
 
 
-        /* -------------------------------------
-           EXTRACT VALUES
-        ------------------------------------- */
-
         const leftValue =
             left.substring(1);
+
 
         const rightValue =
             right.substring(
@@ -1293,9 +2791,12 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!leftValue) {
 
             return {
+
                 valid: false,
+
                 error:
-                    "Missing left endpoint before the comma."
+                    "Missing left endpoint."
+
             };
 
         }
@@ -1304,107 +2805,108 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!rightValue) {
 
             return {
+
                 valid: false,
+
                 error:
-                    "Missing right endpoint after the comma."
+                    "Missing right endpoint."
+
             };
 
         }
 
 
-        /* -------------------------------------
-           VALID ENDPOINTS
-        ------------------------------------- */
-
         const numberPattern =
             /^-?\d+$/;
 
+
         const negativeInfinity =
-            leftValue === "-∞" ||
-            leftValue === "−∞";
+            leftValue === "-∞";
+
 
         const positiveInfinity =
             rightValue === "∞";
 
 
         const leftIsNumber =
-            numberPattern.test(leftValue);
+            numberPattern.test(
+                leftValue
+            );
+
 
         const rightIsNumber =
-            numberPattern.test(rightValue);
+            numberPattern.test(
+                rightValue
+            );
 
-
-        if (!negativeInfinity && !leftIsNumber) {
-
-            return {
-                valid: false,
-                error:
-                    "Invalid left endpoint. Use a whole number or −∞."
-            };
-
-        }
-
-
-        if (!positiveInfinity && !rightIsNumber) {
-
-            return {
-                valid: false,
-                error:
-                    "Invalid right endpoint. Use a whole number or ∞."
-            };
-
-        }
-
-
-        /* -------------------------------------
-           INFINITY RULES
-        ------------------------------------- */
-
-        if (negativeInfinity && !leftOpen) {
-
-            return {
-                valid: false,
-                error:
-                    "Negative infinity must use an opening parenthesis: (-∞, ...)."
-            };
-
-        }
-
-
-        if (positiveInfinity && !rightClosed) {
-
-            return {
-                valid: false,
-                error:
-                    "Positive infinity must use a closing parenthesis: (..., ∞)."
-            };
-
-        }
-
-
-        /* -------------------------------------
-           LOGICAL ENDPOINT RULES
-        ------------------------------------- */
 
         if (
-            negativeInfinity &&
-            rightIsNumber &&
-            !rightClosed &&
-            !rightOpen
+            !negativeInfinity &&
+            !leftIsNumber
         ) {
 
             return {
+
                 valid: false,
+
                 error:
-                    "Invalid closing symbol."
+                    "Invalid left endpoint."
+
             };
 
         }
 
 
-        /* -------------------------------------
-           RETURN PARSED INTERVAL
-        ------------------------------------- */
+        if (
+            !positiveInfinity &&
+            !rightIsNumber
+        ) {
+
+            return {
+
+                valid: false,
+
+                error:
+                    "Invalid right endpoint."
+
+            };
+
+        }
+
+
+        if (
+            negativeInfinity &&
+            !leftOpen
+        ) {
+
+            return {
+
+                valid: false,
+
+                error:
+                    "Negative infinity must use an opening parenthesis."
+
+            };
+
+        }
+
+
+        if (
+            positiveInfinity &&
+            !rightClosed
+        ) {
+
+            return {
+
+                valid: false,
+
+                error:
+                    "Positive infinity must use a closing parenthesis."
+
+            };
+
+        }
+
 
         return {
 
@@ -1424,259 +2926,504 @@ document.addEventListener("DOMContentLoaded", function () {
                 leftClosed,
 
             rightClosed:
-                rightOpen,
-
-            normalized:
-                `${left[0]}${leftValue},${rightValue}${right[right.length - 1]}`
+                rightBracket
 
         };
 
     }
 
 
-    /* =========================================
-       COMPARE INTERVALS
-    ========================================= */
+    /* =====================================================
+       VALIDATE SET NOTATION
+    ===================================================== */
 
-    function intervalsEquivalent(a, b) {
+    function validateSetNotation(text) {
 
-        const x =
-            validateInterval(a);
+        let cleaned = String(text || "")
+            .trim()
+            .replace(/\s+/g, "")
+            .replace(/^\{x\|/i, "")
+            .replace(/\}$/, "")
+            .replace(/U/g, "∪")
+            .replace(/u/g, "∪");
 
-        const y =
-            validateInterval(b);
+        if (!cleaned) {
+            return { valid: false, error: "Enter the set notation answer after {x | ." };
+        }
+
+        const pieces = cleaned.split("∪");
+        if (pieces.length > 2) {
+            return { valid: false, error: "A solution may contain at most two parts." };
+        }
+
+        const intervals = [];
+
+        for (const piece of pieces) {
+            let part = piece.replace(/^\{/, "").replace(/\}$/, "");
+
+            // Bounded set: a < x < b, a <= x <= b, etc.
+            let m = part.match(/^(-?\d+)(<|<=|≤)x(<|<=|≤)(-?\d+)$/);
+            if (m) {
+                const leftClosed = m[2] === "<=" || m[2] === "≤";
+                const rightClosed = m[3] === "<=" || m[3] === "≤";
+                const intervalText =
+                    (leftClosed ? "[" : "(") + m[1] + "," + m[4] + (rightClosed ? "]" : ")");
+                const parsed = validateSingleInterval(intervalText);
+                if (!parsed.valid) return parsed;
+                intervals.push(parsed);
+                continue;
+            }
+
+            // One-sided set: x < a, x <= a, x > a, x >= a
+            m = part.match(/^x(<|<=|≤)(-?\d+)$/);
+            if (m) {
+                const rightClosed = m[1] === "<=" || m[1] === "≤";
+                const parsed = validateSingleInterval("(-∞," + m[2] + (rightClosed ? "]" : ")"));
+                if (!parsed.valid) return parsed;
+                intervals.push(parsed);
+                continue;
+            }
+
+            m = part.match(/^x(>|>=|≥)(-?\d+)$/);
+            if (m) {
+                const leftClosed = m[1] === ">=" || m[1] === "≥";
+                const parsed = validateSingleInterval((leftClosed ? "[" : "(") + m[2] + ",∞)");
+                if (!parsed.valid) return parsed;
+                intervals.push(parsed);
+                continue;
+            }
+
+            return {
+                valid: false,
+                error: "Use set notation like {x | x < 2} or {x | x < 2 U x > 5}."
+            };
+        }
+
+        return { valid: true, intervals: intervals };
+    }
 
 
-        if (!x.valid || !y.valid) {
+    /* =====================================================
+       VALIDATE COMPLETE SOLUTION
+    ===================================================== */
+
+    function validateSolution(
+        text
+    ) {
+
+        const original =
+            String(
+                text || ""
+            ).trim();
+
+
+        if (!original) {
+
+            return {
+
+                valid: false,
+
+                error:
+                    "Answer is empty."
+
+            };
+
+        }
+
+        if (/^\{\s*x\s*\|/i.test(original)) {
+            return validateSetNotation(original);
+        }
+
+
+        const cleaned =
+            original
+
+                .replace(
+                    /\s+/g,
+                    ""
+                )
+
+                .replace(
+                    /U/g,
+                    "∪"
+                )
+
+                .replace(
+                    /u/g,
+                    "∪"
+                );
+
+
+        const pieces =
+            cleaned.split("∪");
+
+
+        if (
+            pieces.length > 2
+        ) {
+
+            return {
+
+                valid: false,
+
+                error:
+                    "A solution may contain at most two intervals."
+
+            };
+
+        }
+
+
+        const first =
+            validateSingleInterval(
+                pieces[0]
+            );
+
+
+        if (
+            !first.valid
+        ) {
+
+            return first;
+
+        }
+
+
+        let second = null;
+
+
+        if (
+            pieces.length === 2
+        ) {
+
+            second =
+                validateSingleInterval(
+                    pieces[1]
+                );
+
+
+            if (
+                !second.valid
+            ) {
+
+                return second;
+
+            }
+
+        }
+
+
+        return {
+
+            valid: true,
+
+            intervals:
+                second
+                    ? [first, second]
+                    : [first]
+
+        };
+
+    }
+
+
+    /* =====================================================
+       FORMAT INTERVAL OBJECT
+    ===================================================== */
+
+    function formatIntervalObject(
+        interval
+    ) {
+
+        const leftSymbol =
+            interval.leftClosed
+                ? "["
+                : "(";
+
+
+        const rightSymbol =
+            interval.rightClosed
+                ? "]"
+                : ")";
+
+
+        const leftValue =
+            interval.left === -Infinity
+                ? "-∞"
+                : String(interval.left);
+
+
+        const rightValue =
+            interval.right === Infinity
+                ? "∞"
+                : String(interval.right);
+
+
+        return (
+            leftSymbol +
+            leftValue +
+            "," +
+            rightValue +
+            rightSymbol
+        );
+
+    }
+
+
+    /* =====================================================
+       INTERVAL COMPARISON
+    ===================================================== */
+
+    function intervalsEquivalent(
+        a,
+        b
+    ) {
+
+        return (
+
+            a.left === b.left &&
+
+            a.right === b.right &&
+
+            a.leftClosed ===
+                b.leftClosed &&
+
+            a.rightClosed ===
+                b.rightClosed
+
+        );
+
+    }
+
+
+    /* =====================================================
+       COMPLETE SOLUTION COMPARISON
+    ===================================================== */
+
+    function solutionsEquivalent(
+        userAnswer,
+        correctAnswers
+    ) {
+
+        const user =
+            validateSolution(
+                userAnswer
+            );
+
+
+        if (
+            !user.valid
+        ) {
 
             return false;
 
         }
 
 
+        const correctIntervals =
+            correctAnswers.map(
+                function (item) {
+
+                    return validateSingleInterval(
+                        item
+                    );
+
+                }
+            );
+
+
+        if (
+            user.intervals.length !==
+            correctIntervals.length
+        ) {
+
+            return false;
+
+        }
+
+
+        if (
+            user.intervals.length === 1
+        ) {
+
+            return intervalsEquivalent(
+                user.intervals[0],
+                correctIntervals[0]
+            );
+
+        }
+
+
+        const direct =
+            intervalsEquivalent(
+                user.intervals[0],
+                correctIntervals[0]
+            )
+            &&
+            intervalsEquivalent(
+                user.intervals[1],
+                correctIntervals[1]
+            );
+
+
+        const reversed =
+            intervalsEquivalent(
+                user.intervals[0],
+                correctIntervals[1]
+            )
+            &&
+            intervalsEquivalent(
+                user.intervals[1],
+                correctIntervals[0]
+            );
+
+
         return (
-
-            x.left === y.left &&
-
-            x.right === y.right &&
-
-            x.leftClosed === y.leftClosed &&
-
-            x.rightClosed === y.rightClosed
-
+            direct ||
+            reversed
         );
 
     }
 
 
-    /* =========================================
-       CLEAR ERRORS
-    ========================================= */
+    /* =====================================================
+       CLEAR ERROR
+    ===================================================== */
 
-    function clearInputError(input, box, errorBox) {
+    function clearInputError() {
 
-        box.classList.remove("input-error");
+        answerStage.classList.remove(
+            "input-error"
+        );
 
-        box.classList.remove("input-correct-format");
 
-        errorBox.classList.add("hidden");
+        answerStage.classList.remove(
+            "input-correct-format"
+        );
 
-        errorBox.textContent = "";
+
+        answerError.classList.add(
+            "hidden"
+        );
+
+
+        answerError.textContent =
+            "";
 
     }
 
 
-    /* =========================================
-       SHOW INPUT ERROR
-    ========================================= */
+    /* =====================================================
+       SHOW ERROR
+    ===================================================== */
 
     function showInputError(
-        input,
-        box,
-        errorBox,
         message
     ) {
 
-        box.classList.add("input-error");
+        answerStage.classList.add(
+            "input-error"
+        );
 
-        box.classList.remove("input-correct-format");
 
-        errorBox.textContent = "⚠ " + message;
+        answerStage.classList.remove(
+            "input-correct-format"
+        );
 
-        errorBox.classList.remove("hidden");
+
+        answerError.textContent =
+            "⚠ " + message;
+
+
+        answerError.classList.remove(
+            "hidden"
+        );
 
     }
 
 
-    /* =========================================
-       MARK VALID FORMAT
-    ========================================= */
+    /* =====================================================
+       VALID FORMAT
+    ===================================================== */
 
-    function markValidFormat(
-        box,
-        errorBox
-    ) {
+    function markValidFormat() {
 
-        box.classList.remove("input-error");
+        answerStage.classList.remove(
+            "input-error"
+        );
 
-        box.classList.add("input-correct-format");
 
-        errorBox.classList.add("hidden");
+        answerStage.classList.add(
+            "input-correct-format"
+        );
 
-        errorBox.textContent = "";
+
+        answerError.classList.add(
+            "hidden"
+        );
 
     }
 
 
-    /* =========================================
-       VALIDATE BEFORE SCORING
-    ========================================= */
+    /* =====================================================
+       STUDENT ANSWER VALIDATION
+    ===================================================== */
 
-    function validateStudentAnswers(q) {
+    function validateStudentAnswer() {
 
-        let valid = true;
-
-
-        const first =
-            validateInterval(answer1.value);
+        clearInputError();
 
 
-        clearInputError(
-            answer1,
-            answer1Stage,
-            answer1Error
-        );
+        const result =
+            validateSolution(
+                answer.value
+            );
 
 
-        clearInputError(
-            answer2,
-            answer2Stage,
-            answer2Error
-        );
-
-
-        if (!first.valid) {
+        if (
+            !result.valid
+        ) {
 
             showInputError(
-                answer1,
-                answer1Stage,
-                answer1Error,
-                first.error
+                result.error
             );
 
-            valid = false;
 
-        }
-        else {
-
-            markValidFormat(
-                answer1Stage,
-                answer1Error
-            );
+            return false;
 
         }
 
 
-        /* -------------------------------------
-           SECOND ANSWER REQUIRED
-           ONLY WHEN QUESTION HAS TWO INTERVALS
-        ------------------------------------- */
-
-        if (q.answers[1]) {
-
-            const second =
-                validateInterval(answer2.value);
+        markValidFormat();
 
 
-            if (!second.valid) {
-
-                showInputError(
-                    answer2,
-                    answer2Stage,
-                    answer2Error,
-                    second.error
-                );
-
-                valid = false;
-
-            }
-            else {
-
-                markValidFormat(
-                    answer2Stage,
-                    answer2Error
-                );
-
-            }
-
-        }
-
-
-        return valid;
+        return true;
 
     }
 
 
-    /* =========================================
-       CHECK ANSWER
-    ========================================= */
+    /* =====================================================
+       TIME
+    ===================================================== */
 
-    function isCorrect(
-        user1,
-        user2,
-        correct
+    function formatTime(
+        seconds
     ) {
 
-        if (!correct[1]) {
-
-            return (
-                intervalsEquivalent(
-                    user1,
-                    correct[0]
-                )
-            );
-
-        }
-
-
-        const order1 =
-            intervalsEquivalent(
-                user1,
-                correct[0]
-            ) &&
-            intervalsEquivalent(
-                user2,
-                correct[1]
+        const minutes =
+            Math.floor(
+                seconds / 60
             );
 
 
-        const order2 =
-            intervalsEquivalent(
-                user1,
-                correct[1]
-            ) &&
-            intervalsEquivalent(
-                user2,
-                correct[0]
-            );
+        const remainingSeconds =
+            seconds % 60;
 
-
-        return order1 || order2;
-
-    }
-
-
-    /* =========================================
-       TIME
-    ========================================= */
-
-    function formatTime(seconds) {
 
         return (
 
-            String(
-                Math.floor(seconds / 60)
-            ).padStart(2, "0")
+            String(minutes)
+                .padStart(2, "0")
 
             +
 
@@ -1685,112 +3432,137 @@ document.addEventListener("DOMContentLoaded", function () {
             +
 
             String(
-                seconds % 60
-            ).padStart(2, "0")
+                remainingSeconds
+            )
+                .padStart(2, "0")
 
         );
 
     }
 
 
-    /* =========================================
-       START TIMER
-    ========================================= */
+    /* =====================================================
+       TIMER
+    ===================================================== */
 
     function startTimer() {
 
-        clearInterval(timerInterval);
+        clearInterval(
+            timerInterval
+        );
+
 
         startTime =
             Date.now();
 
-        elapsedSeconds = 0;
 
-        timer.textContent =
-            "Time: 00:00";
+        elapsedSeconds =
+            0;
+
+
+        timerDisplay.textContent =
+            "Time Elapsed: 00:00";
 
 
         timerInterval =
-            setInterval(function () {
+            setInterval(
+                function () {
 
-                elapsedSeconds =
-                    Math.floor(
-                        (Date.now() - startTime) / 1000
-                    );
+                    elapsedSeconds =
+                        Math.floor(
+                            (
+                                Date.now() -
+                                startTime
+                            ) / 1000
+                        );
 
-                timer.textContent =
-                    "Time: " +
-                    formatTime(elapsedSeconds);
 
-            }, 1000);
+                    timerDisplay.textContent =
+                        "Time Elapsed: " +
+                        formatTime(
+                            elapsedSeconds
+                        );
+
+                },
+                1000
+            );
 
     }
 
 
-    /* =========================================
+    /* =====================================================
        SHOW QUESTION
-    ========================================= */
+    ===================================================== */
 
     function showQuestion() {
 
-        hasSubmitted = false;
+        hasSubmitted =
+            false;
+
 
         const q =
-            questions[currentQuestionIndex];
+            questions[
+                currentQuestion
+            ];
 
 
-        questionCount.textContent =
-            `Question ${
-                currentQuestionIndex + 1
-            } of ${TOTAL_QUESTIONS}`;
+        quizCount.textContent =
+            `Question: ${
+                currentQuestion + 1
+            } / ${
+                TOTAL_QUESTIONS
+            }`;
 
 
-        equationDisplay.textContent =
+        scoreDisplay.textContent =
+            `Score: ${
+                score
+            } / ${
+                TOTAL_QUESTIONS
+            }`;
+
+
+        category.textContent =
+            "SOLVING QUADRATIC INEQUALITIES IN ONE VARIABLE";
+
+
+        displayGiven.textContent =
             q.equation;
 
+        const answerLabel =
+            answerStage.querySelector("strong");
 
-        answer1.value = "";
-        answer2.value = "";
-
-
-        answer1.disabled = false;
-        answer2.disabled = false;
-
-
-        clearInputError(
-            answer1,
-            answer1Stage,
-            answer1Error
-        );
-
-        clearInputError(
-            answer2,
-            answer2Stage,
-            answer2Error
-        );
-
-
-        if (q.answers[1]) {
-
-            answer2Stage.classList.remove(
-                "hidden"
-            );
-
-        }
-        else {
-
-            answer2Stage.classList.add(
-                "hidden"
-            );
-
+        if (q.notationType === "set") {
+            answerLabel.textContent = "Set Notation";
+            answer.placeholder = "e.g. {x | x < 2 U x > 5}";
+            answer.value = "";
+        } else {
+            answerLabel.textContent = "Interval Notation";
+            answer.placeholder = "e.g. (-∞, 2) U (5, ∞)";
+            answer.value = "";
         }
 
 
-        submitButton.disabled = false;
+        if (q.notationType === "interval") {
+            answer.value = "";
+        }
+
+
+        answer.disabled =
+            false;
+
+
+        clearInputError();
+
+
+        submitButton.disabled =
+            false;
+
 
         submitButton.classList.remove(
             "hidden"
         );
+
 
         nextButton.classList.add(
             "hidden"
@@ -1800,24 +3572,30 @@ document.addEventListener("DOMContentLoaded", function () {
         feedback.className =
             "hidden";
 
+
         feedback.textContent =
             "";
 
 
-        activeInput = answer1;
+        activeInput =
+            answer;
 
 
         setTimeout(
-            () => answer1.focus(),
+            function () {
+
+                answer.focus();
+
+            },
             50
         );
 
     }
 
 
-    /* =========================================
+    /* =====================================================
        BEGIN QUIZ
-    ========================================= */
+    ===================================================== */
 
     function beginQuiz() {
 
@@ -1825,23 +3603,45 @@ document.addEventListener("DOMContentLoaded", function () {
             generateQuestionSet();
 
 
-        currentQuestionIndex = 0;
+        currentQuestion =
+            0;
 
-        score = 0;
 
-        quizResults = [];
+        score =
+            0;
+
+
+        quizResults =
+            [];
+
+
+        showName.textContent =
+            studentName;
+
+
+        showSection.textContent =
+            studentSection;
+
+
+        studentInfo.style.display =
+            "grid";
+
+
+        quizArea.style.display =
+            "block";
 
 
         startTimer();
+
 
         showQuestion();
 
     }
 
 
-    /* =========================================
+    /* =====================================================
        START BUTTON
-    ========================================= */
+    ===================================================== */
 
     startButton.addEventListener(
         "click",
@@ -1849,6 +3649,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             studentName =
                 studentNameInput.value.trim();
+
 
             studentSection =
                 studentSectionInput.value.trim();
@@ -1866,107 +3667,132 @@ document.addEventListener("DOMContentLoaded", function () {
             ) {
 
                 alert(
-                    "Please enter both Name and Section to begin."
+                    "Please enter both your Name and Section to start the quiz."
                 );
+
 
                 return;
 
             }
 
 
-            startScreen.classList.add(
-                "hidden"
+            if (
+                TOTAL_QUESTIONS < 5
+            ) {
+
+                TOTAL_QUESTIONS =
+                    5;
+
+            }
+
+
+            if (
+                TOTAL_QUESTIONS > 50
+            ) {
+
+                TOTAL_QUESTIONS =
+                    50;
+
+            }
+
+
+            studentStart.style.display =
+                "none";
+
+
+            countdownOverlay.classList.add(
+                "active"
             );
 
-            countdownScreen.classList.remove(
-                "hidden"
-            );
 
-
-            let count = 3;
-
-            countdownNumber.textContent =
-                count;
-
-
-            const countdown =
-                setInterval(
-                    function () {
-
-                        count--;
-
-
-                        if (count > 0) {
-
-                            countdownNumber.textContent =
-                                count;
-
-                        }
-                        else {
-
-                            clearInterval(
-                                countdown
-                            );
-
-
-                            countdownScreen.classList.add(
-                                "hidden"
-                            );
-
-                            quizScreen.classList.remove(
-                                "hidden"
-                            );
-
-
-                            beginQuiz();
-
-                        }
-
-                    },
-                    1000
-                );
+            startCountdown();
 
         }
     );
 
 
-    /* =========================================
-       ANSWER INPUT TRACKING
-    ========================================= */
+    /* =====================================================
+       COUNTDOWN
+    ===================================================== */
 
-    answer1.addEventListener(
+    function startCountdown() {
+
+        let count =
+            3;
+
+
+        countdownNumber.textContent =
+            count;
+
+
+        const countdown =
+            setInterval(
+                function () {
+
+                    count--;
+
+
+                    if (
+                        count > 0
+                    ) {
+
+                        countdownNumber.textContent =
+                            count;
+
+                    }
+
+                    else {
+
+                        clearInterval(
+                            countdown
+                        );
+
+
+                        countdownOverlay.classList.remove(
+                            "active"
+                        );
+
+
+                        beginQuiz();
+
+                    }
+
+                },
+                1000
+            );
+
+    }
+
+
+    /* =====================================================
+       ANSWER FOCUS
+    ===================================================== */
+
+    answer.addEventListener(
         "focus",
         function () {
 
-            activeInput = answer1;
+            activeInput =
+                answer;
 
         }
     );
 
 
-    answer2.addEventListener(
-        "focus",
-        function () {
+    /* =====================================================
+       CLEAR ERROR WHEN TYPING
+    ===================================================== */
 
-            activeInput = answer2;
-
-        }
-    );
-
-
-    /* =========================================
-       CLEAR ERROR WHILE EDITING
-    ========================================= */
-
-    answer1.addEventListener(
+    answer.addEventListener(
         "input",
         function () {
 
-            answer1Stage.classList.remove(
+            answerStage.classList.remove(
                 "input-error"
             );
 
-            answer1Error.classList.add(
+
+            answerError.classList.add(
                 "hidden"
             );
 
@@ -1974,25 +3800,9 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
 
-    answer2.addEventListener(
-        "input",
-        function () {
-
-            answer2Stage.classList.remove(
-                "input-error"
-            );
-
-            answer2Error.classList.add(
-                "hidden"
-            );
-
-        }
-    );
-
-
-    /* =========================================
+    /* =====================================================
        SYMBOL BUTTONS
-    ========================================= */
+    ===================================================== */
 
     const symbolButtons =
         document.querySelectorAll(
@@ -2010,10 +3820,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     event.preventDefault();
 
 
-                    if (!activeInput) {
+                    if (
+                        !activeInput
+                    ) {
 
                         activeInput =
-                            answer1;
+                            answer;
 
                     }
 
@@ -2025,6 +3837,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     const start =
                         activeInput.selectionStart;
 
+
                     const end =
                         activeInput.selectionEnd;
 
@@ -2034,6 +3847,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                     activeInput.value =
+
                         current.substring(
                             0,
                             start
@@ -2051,10 +3865,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                     const newPosition =
-                        start + symbol.length;
+                        start +
+                        symbol.length;
 
 
                     activeInput.focus();
+
 
                     activeInput.setSelectionRange(
                         newPosition,
@@ -2078,13 +3894,15 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
 
-    /* =========================================
+    /* =====================================================
        SUBMIT ANSWER
-    ========================================= */
+    ===================================================== */
 
     function submitAnswer() {
 
-        if (hasSubmitted) {
+        if (
+            hasSubmitted
+        ) {
 
             return;
 
@@ -2092,59 +3910,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         const q =
-            questions[currentQuestionIndex];
+            questions[
+                currentQuestion
+            ];
 
 
-        /*
-         * IMPORTANT:
-         *
-         * Validation happens BEFORE scoring.
-         *
-         * Therefore:
-         * Missing comma / bracket / infinity
-         * = NOT COUNTED AS WRONG.
-         */
+        const syntaxValid =
+            validateStudentAnswer();
 
 
-        const syntaxIsValid =
-            validateStudentAnswers(q);
-
-
-        if (!syntaxIsValid) {
+        if (
+            !syntaxValid
+        ) {
 
             feedback.textContent =
                 "⚠ Please fix the highlighted answer format first. Your score has NOT been affected.";
 
+
             feedback.className =
                 "syntax-warning";
+
 
             feedback.classList.remove(
                 "hidden"
             );
 
 
-            /*
-             * Focus the first invalid field.
-             */
-
-            if (
-                answer1Stage.classList.contains(
-                    "input-error"
-                )
-            ) {
-
-                answer1.focus();
-
-            }
-            else if (
-                answer2Stage.classList.contains(
-                    "input-error"
-                )
-            ) {
-
-                answer2.focus();
-
-            }
+            answer.focus();
 
 
             return;
@@ -2152,46 +3944,51 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        /* -------------------------------------
-           NOW IT CAN BE COUNTED
-        ------------------------------------- */
-
-        hasSubmitted = true;
+        hasSubmitted =
+            true;
 
 
-        const user1 =
-            answer1.value.trim();
-
-        const user2 =
-            answer2.value.trim();
+        const userAnswer =
+            answer.value.trim();
 
 
         const correct =
-            isCorrect(
-                user1,
-                user2,
+            solutionsEquivalent(
+                userAnswer,
                 q.answers
             );
 
 
-        if (correct) {
+        if (
+            correct
+        ) {
 
             score++;
 
         }
 
 
+        scoreDisplay.textContent =
+            `Score: ${
+                score
+            } / ${
+                TOTAL_QUESTIONS
+            }`;
+
+
         feedback.innerHTML =
 
             correct
 
-                ? "Correct! ✓<br>Excellent work!"
+                ?
 
-                : `Incorrect ✗<br>
-                   Correct solution:
-                   ${q.answers
-                       .filter(Boolean)
-                       .join(" OR ")}`;
+                "Correct! ✓<br>Excellent work!"
+
+                :
+
+                `Incorrect ✗<br>
+                 Correct solution:
+                 ${q.notationType === "set" ? makeSetDisplay(q.answers) : q.correctDisplay}`;
 
 
         feedback.className =
@@ -2211,14 +4008,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 q.equation,
 
             userAnswers:
-                q.answers[1]
-                    ? `${user1} OR ${user2}`
-                    : user1,
+                userAnswer,
 
             correctAnswers:
-                q.answers
-                    .filter(Boolean)
-                    .join(" OR "),
+                q.correctDisplay,
 
             result:
                 correct
@@ -2228,8 +4021,8 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
 
-        answer1.disabled = true;
-        answer2.disabled = true;
+        answer.disabled =
+            true;
 
 
         submitButton.classList.add(
@@ -2239,12 +4032,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
         nextButton.textContent =
 
-            currentQuestionIndex <
+            currentQuestion <
             TOTAL_QUESTIONS - 1
 
-                ? "NEXT QUESTION"
+                ?
 
-                : "VIEW RESULTS";
+                "NEXT QUESTION"
+
+                :
+
+                "SHOW SUMMARY";
 
 
         nextButton.classList.remove(
@@ -2260,48 +4057,45 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
 
-    /* =========================================
+    /* =====================================================
        NEXT QUESTION
-    ========================================= */
+    ===================================================== */
 
     nextButton.addEventListener(
         "click",
         function () {
 
-            currentQuestionIndex++;
-
-
             if (
-                currentQuestionIndex >=
-                TOTAL_QUESTIONS
+                currentQuestion >=
+                TOTAL_QUESTIONS - 1
             ) {
 
                 finishQuiz();
 
-            }
-            else {
-
-                showQuestion();
+                return;
 
             }
+
+
+            currentQuestion++;
+
+
+            showQuestion();
 
         }
     );
 
 
-    /* =========================================
+    /* =====================================================
        ENTER KEY
-    ========================================= */
+    ===================================================== */
 
     document.addEventListener(
         "keydown",
-        function (e) {
+        function (event) {
 
             if (
-                e.key !== "Enter" ||
-                quizScreen.classList.contains(
-                    "hidden"
-                )
+                event.key !== "Enter"
             ) {
 
                 return;
@@ -2309,12 +4103,17 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
 
-            /*
-             * Do NOT automatically submit when
-             * the user is still fixing syntax.
-             */
+            if (
+                quizArea.style.display !==
+                "block"
+            ) {
 
-            e.preventDefault();
+                return;
+
+            }
+
+
+            event.preventDefault();
 
 
             if (
@@ -2326,6 +4125,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 nextButton.click();
 
             }
+
             else {
 
                 submitAnswer();
@@ -2336,363 +4136,748 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
 
-    /* =========================================
+    /* =====================================================
        FINISH QUIZ
-    ========================================= */
+    ===================================================== */
 
     function finishQuiz() {
-    clearInterval(timerInterval);
 
-    const percentage = Math.round((score / TOTAL_QUESTIONS) * 100);
-    const quizType = "Solving Quadratic Inequalities in One Variable";
-
-    // SAVE RESULT TO GOOGLE SHEETS
-    const formData = new URLSearchParams();
-
-    formData.append("quizType", quizType);
-    formData.append("studentName", studentName);
-    formData.append("section", studentSection);
-    formData.append("score", score);
-    formData.append("totalQuiz", TOTAL_QUESTIONS);
-    formData.append("percentage", percentage + "%");
-    formData.append("time", formatTime(elapsedSeconds));
-
-    fetch("https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js", {
-        method: "POST",
-        mode: "no-cors",
-        body: formData
-    })
-    .then(() => {
-        console.log("Quiz result sent to Google Sheets.");
-    })
-    .catch((error) => {
-        console.error("Could not send quiz result:", error);
-    });
-
-    // SHOW RESULT SCREEN
-    quizScreen.classList.add("hidden");
-    resultScreen.classList.remove("hidden");
-
-    studentSummary.textContent =
-        `Name: ${studentName} | Section: ${studentSection}`;
-
-    finalScore.textContent =
-        `Score: ${score} / ${TOTAL_QUESTIONS}`;
-
-    finalTime.textContent =
-        `Time: ${formatTime(elapsedSeconds)}`;
-
-    finalCategory.textContent =
-        `${TOTAL_QUESTIONS} Questions Completed`;}
+        clearInterval(
+            timerInterval
+        );
 
 
-
-    /* =========================================
-       PDF REPORT
-    ========================================= */
-
-    downloadPdfButton.addEventListener(
-        "click",
-        function () {
-
-            const container =
-                document.createElement("div");
-
-
-            container.style.padding =
-                "25px";
-
-            container.style.fontFamily =
-                "Arial, sans-serif";
-
-            container.style.color =
-                "#1b5e20";
-
-
-            const percentage =
-                Math.round(
-                    (score / TOTAL_QUESTIONS) *
-                    100
-                );
-
-
-            let rowsHtml = "";
-
-
-            quizResults.forEach(
-                function (res, i) {
-
-                    const correct =
-                        res.result === "CORRECT";
-
-
-                    const resultColor =
-                        correct
-                            ? "#2e7d32"
-                            : "#c62828";
-
-
-                    const rowBg =
-                        i % 2 === 0
-                            ? "#f9fbf9"
-                            : "#ffffff";
-
-
-                    rowsHtml += `
-
-                        <tr style="
-                            background-color:${rowBg};
-                            border-bottom:1px solid #e0e0e0;
-                            font-size:11px;
-                        ">
-
-                            <td style="
-                                padding:8px;
-                                text-align:center;
-                                font-weight:bold;
-                            ">
-                                ${i + 1}
-                            </td>
-
-                            <td style="
-                                padding:8px;
-                                font-weight:bold;
-                            ">
-                                ${res.equation}
-                            </td>
-
-                            <td style="
-                                padding:8px;
-                            ">
-                                ${res.userAnswers}
-                            </td>
-
-                            <td style="
-                                padding:8px;
-                            ">
-                                ${res.correctAnswers}
-                            </td>
-
-                            <td style="
-                                padding:8px;
-                                text-align:center;
-                                font-weight:bold;
-                                color:${resultColor};
-                            ">
-                                ${res.result}
-                            </td>
-
-                        </tr>
-
-                    `;
-
-                }
+        const percentage =
+            Math.round(
+                (
+                    score /
+                    TOTAL_QUESTIONS
+                ) * 100
             );
 
 
-            container.innerHTML = `
-
-                <div style="
-                    text-align:center;
-                    border-bottom:3px solid #2e7d32;
-                    padding-bottom:12px;
-                    margin-bottom:20px;
-                ">
-
-                    <h1 style="
-                        margin:0;
-                        color:#2e7d32;
-                        font-size:22px;
-                    ">
-                        GRADE 10 MATHEMATICS QUIZ REPORT
-                    </h1>
-
-                    <h3 style="
-                        margin:5px 0 0;
-                        color:#388e3c;
-                        font-size:14px;
-                        font-weight:normal;
-                    ">
-                        Solving Quadratic Inequalities in One Variable
-                    </h3>
-
-                </div>
+        const quizType =
+            "Solving Quadratic Inequalities in One Variable";
 
 
-                <table style="
-                    width:100%;
-                    border-collapse:collapse;
-                    margin-bottom:20px;
-                    font-size:13px;
-                    background:#f1f8e9;
-                    border:1px solid #c8e6c9;
-                ">
+        /* =================================================
+           GOOGLE SHEETS
+        ================================================= */
 
-                    <tr>
-
-                        <td style="
-                            padding:10px;
-                            width:50%;
-                        ">
-                            <strong>
-                                Student Name:
-                            </strong>
-                            ${studentName}
-                        </td>
-
-                        <td style="
-                            padding:10px;
-                            width:50%;
-                        ">
-                            <strong>
-                                Section:
-                            </strong>
-                            ${studentSection}
-                        </td>
-
-                    </tr>
+        const formData =
+            new URLSearchParams();
 
 
-                    <tr>
-
-                        <td style="padding:10px;">
-
-                            <strong>
-                                Final Score:
-                            </strong>
-
-                            ${score}
-                            /
-                            ${TOTAL_QUESTIONS}
-
-                            (${percentage}%)
-
-                        </td>
+        formData.append(
+            "quizType",
+            quizType
+        );
 
 
-                        <td style="padding:10px;">
-
-                            <strong>
-                                Total Time:
-                            </strong>
-
-                            ${formatTime(
-                                elapsedSeconds
-                            )}
-
-                        </td>
-
-                    </tr>
-
-                </table>
+        formData.append(
+            "studentName",
+            studentName
+        );
 
 
-                <h3 style="
-                    color:#2e7d32;
-                    font-size:14px;
-                    margin-bottom:10px;
-                ">
-                    Detailed Question Summary
-                </h3>
+        formData.append(
+            "section",
+            studentSection
+        );
 
 
-                <table style="
-                    width:100%;
-                    border-collapse:collapse;
-                    border:1px solid #c8e6c9;
-                ">
+        formData.append(
+            "score",
+            score
+        );
 
-                    <thead>
 
-                        <tr style="
-                            background:#2e7d32;
-                            color:white;
-                            font-size:11px;
-                        ">
+        formData.append(
+            "totalQuiz",
+            TOTAL_QUESTIONS
+        );
 
-                            <th style="padding:8px;">
-                                #
-                            </th>
 
-                            <th style="
-                                padding:8px;
-                                text-align:left;
-                            ">
-                                Inequality
-                            </th>
+        formData.append(
+            "percentage",
+            percentage + "%"
+        );
 
-                            <th style="
-                                padding:8px;
-                                text-align:left;
-                            ">
-                                Student Answer
-                            </th>
 
-                            <th style="
-                                padding:8px;
-                                text-align:left;
-                            ">
-                                Correct Solution
-                            </th>
+        formData.append(
+            "time",
+            formatTime(
+                elapsedSeconds
+            )
+        );
 
-                            <th style="padding:8px;">
-                                Status
-                            </th>
+
+        fetch(
+            "https://script.google.com/macros/s/AKfycbzrMeuIcPYOPPifmbcYofRp70xKMS4DszabX3tsIcCAO3fFa9ggsHpHubj2b5uWfpU/exec",
+            {
+
+                method:
+                    "POST",
+
+                mode:
+                    "no-cors",
+
+                body:
+                    formData
+
+            }
+        )
+        .then(
+            function () {
+
+                console.log(
+                    "Quiz result sent to Google Sheets."
+                );
+
+            }
+        )
+        .catch(
+            function (error) {
+
+                console.error(
+                    "Could not send quiz result:",
+                    error
+                );
+
+            }
+        );
+
+
+        /* =================================================
+           RESULT SCREEN
+        ================================================= */
+
+        quizArea.style.display =
+            "none";
+
+
+        studentInfo.style.display =
+            "none";
+
+
+        finishMessage.style.display =
+            "block";
+
+
+        summaryName.textContent =
+            studentName;
+
+
+        summarySection.textContent =
+            studentSection;
+
+
+        summaryType.textContent =
+            quizType;
+
+
+        finalScore.textContent =
+            score;
+
+
+        finalTotal.textContent =
+            TOTAL_QUESTIONS;
+
+
+        finalTime.textContent =
+            formatTime(
+                elapsedSeconds
+            );
+
+    }
+
+
+    /* =====================================================
+       PDF
+    ===================================================== */
+
+    downloadPdfButton.addEventListener(
+        "click",
+        async function () {
+
+            if (
+                typeof html2pdf ===
+                "undefined"
+            ) {
+
+                alert(
+                    "PDF library is not loaded. Please refresh the page."
+                );
+
+
+                return;
+
+            }
+
+
+            downloadPdfButton.disabled =
+                true;
+
+
+            downloadPdfButton.textContent =
+                "CREATING PDF...";
+
+
+            try {
+
+                const percentage =
+                    Math.round(
+                        (
+                            score /
+                            TOTAL_QUESTIONS
+                        ) * 100
+                    );
+
+
+                let rowsHtml =
+                    "";
+
+
+                quizResults.forEach(
+                    function (
+                        res,
+                        index
+                    ) {
+
+                        const isCorrect =
+                            res.result ===
+                            "CORRECT";
+
+
+                        const resultColor =
+                            isCorrect
+                                ? "#073827"
+                                : "#9b1c1c";
+
+
+                        const resultBackground =
+                            isCorrect
+                                ? "#e7f7ee"
+                                : "#fde8e8";
+
+
+                        rowsHtml += `
+
+                            <tr>
+
+                                <td
+                                    style="
+                                        padding:8px;
+                                        text-align:center;
+                                        font-weight:bold;
+                                        border-bottom:1px solid #e2ede6;
+                                    "
+                                >
+                                    ${index + 1}
+                                </td>
+
+
+                                <td
+                                    style="
+                                        padding:8px;
+                                        font-weight:bold;
+                                        border-bottom:1px solid #e2ede6;
+                                    "
+                                >
+                                    ${res.equation}
+                                </td>
+
+
+                                <td
+                                    style="
+                                        padding:8px;
+                                        border-bottom:1px solid #e2ede6;
+                                    "
+                                >
+                                    ${res.userAnswers}
+                                </td>
+
+
+                                <td
+                                    style="
+                                        padding:8px;
+                                        border-bottom:1px solid #e2ede6;
+                                    "
+                                >
+                                    ${res.correctAnswers}
+                                </td>
+
+
+                                <td
+                                    style="
+                                        padding:8px;
+                                        text-align:center;
+                                        font-weight:bold;
+                                        color:${resultColor};
+                                        background:${resultBackground};
+                                        border-bottom:1px solid #e2ede6;
+                                    "
+                                >
+                                    ${res.result}
+                                </td>
+
+                            </tr>
+
+                        `;
+
+                    }
+                );
+
+
+                const pdfContainer =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                pdfContainer.style.width =
+                    "100%";
+
+
+                pdfContainer.style.maxWidth =
+                    "900px";
+
+
+                pdfContainer.style.padding =
+                    "25px";
+
+
+                pdfContainer.style.background =
+                    "#ffffff";
+
+
+                pdfContainer.style.fontFamily =
+                    "Arial, sans-serif";
+
+
+                pdfContainer.style.color =
+                    "#334d42";
+
+
+                pdfContainer.innerHTML = `
+
+                    <div
+                        style="
+                            text-align:center;
+                            border-bottom:3px solid #16623d;
+                            padding-bottom:12px;
+                            margin-bottom:20px;
+                        "
+                    >
+
+                        <h1
+                            style="
+                                margin:0;
+                                color:#073827;
+                                font-size:22px;
+                            "
+                        >
+                            GRADE 10 MATHEMATICS
+                            QUIZ REPORT
+                        </h1>
+
+
+                        <div
+                            style="
+                                margin-top:6px;
+                                color:#628273;
+                                font-size:14px;
+                            "
+                        >
+                            Solving Quadratic
+                            Inequalities in One Variable
+                        </div>
+
+                    </div>
+
+
+                    <table
+                        style="
+                            width:100%;
+                            border-collapse:collapse;
+                            margin-bottom:20px;
+                            font-size:13px;
+                            background:#f0f7f3;
+                            border:1px solid #e2ede6;
+                        "
+                    >
+
+                        <tr>
+
+                            <td
+                                style="
+                                    padding:10px;
+                                    width:50%;
+                                "
+                            >
+
+                                <strong>
+                                    Student Name:
+                                </strong>
+
+                                ${studentName}
+
+                            </td>
+
+
+                            <td
+                                style="
+                                    padding:10px;
+                                    width:50%;
+                                "
+                            >
+
+                                <strong>
+                                    Section:
+                                </strong>
+
+                                ${studentSection}
+
+                            </td>
 
                         </tr>
 
-                    </thead>
 
-                    <tbody>
+                        <tr>
 
-                        ${rowsHtml}
+                            <td
+                                style="
+                                    padding:10px;
+                                "
+                            >
 
-                    </tbody>
+                                <strong>
+                                    Final Score:
+                                </strong>
 
-                </table>
+                                ${score}
+                                /
+                                ${TOTAL_QUESTIONS}
 
-            `;
+                                (${percentage}%)
+
+                            </td>
 
 
-            html2pdf()
-                .set({
+                            <td
+                                style="
+                                    padding:10px;
+                                "
+                            >
 
-                    margin: 0.4,
+                                <strong>
+                                    Total Time:
+                                </strong>
 
-                    filename:
-                        `${studentName.replace(
+                                ${formatTime(
+                                    elapsedSeconds
+                                )}
+
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+
+                    <div
+                        style="
+                            margin-bottom:18px;
+                            padding:12px;
+                            border:1px solid #e2ede6;
+                            background:#f0f7f3;
+                            border-radius:8px;
+                            font-size:13px;
+                        "
+                    >
+
+                        <strong>
+                            Quiz Summary:
+                        </strong>
+
+                        ${score}
+
+                        correct out of
+
+                        ${TOTAL_QUESTIONS}
+
+                        questions
+
+                        —
+
+                        ${percentage}%
+
+                    </div>
+
+
+                    <h3
+                        style="
+                            color:#073827;
+                            font-size:15px;
+                            margin-bottom:10px;
+                        "
+                    >
+                        Detailed Question Summary
+                    </h3>
+
+
+                    <table
+                        style="
+                            width:100%;
+                            border-collapse:collapse;
+                            border:1px solid #e2ede6;
+                            font-size:10px;
+                        "
+                    >
+
+                        <thead>
+
+                            <tr
+                                style="
+                                    background:#16623d;
+                                    color:white;
+                                "
+                            >
+
+                                <th
+                                    style="
+                                        padding:8px;
+                                    "
+                                >
+                                    #
+                                </th>
+
+
+                                <th
+                                    style="
+                                        padding:8px;
+                                        text-align:left;
+                                    "
+                                >
+                                    Equation
+                                </th>
+
+
+                                <th
+                                    style="
+                                        padding:8px;
+                                        text-align:left;
+                                    "
+                                >
+                                    Student Answer
+                                </th>
+
+
+                                <th
+                                    style="
+                                        padding:8px;
+                                        text-align:left;
+                                    "
+                                >
+                                    Correct Answer
+                                </th>
+
+
+                                <th
+                                    style="
+                                        padding:8px;
+                                    "
+                                >
+                                    Status
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            ${rowsHtml}
+
+                        </tbody>
+
+                    </table>
+
+
+                    <div
+                        style="
+                            margin-top:20px;
+                            text-align:center;
+                            font-size:10px;
+                            color:#628273;
+                        "
+                    >
+                        Generated by Grade 10
+                        Mathematics Quiz
+                    </div>
+
+                `;
+
+
+                pdfContainer.style.position =
+                    "fixed";
+
+
+                pdfContainer.style.left =
+                    "-100000px";
+
+
+                pdfContainer.style.top =
+                    "0";
+
+
+                document.body.appendChild(
+                    pdfContainer
+                );
+
+
+                const safeStudentName =
+                    studentName
+
+                        .replace(
+                            /[^a-zA-Z0-9\s.-]/g,
+                            ""
+                        )
+
+                        .trim()
+
+                        .replace(
                             /\s+/g,
                             "_"
-                        )}_Quadratic_Inequalities_Quiz_Results.pdf`,
+                        );
+
+
+                const options = {
+
+                    margin: [
+                        0.35,
+                        0.35,
+                        0.35,
+                        0.35
+                    ],
+
+                    filename:
+                        `${safeStudentName}_Grade10_Quadratic_Inequalities_Results.pdf`,
 
                     image: {
-                        type: "jpeg",
-                        quality: 0.98
+
+                        type:
+                            "jpeg",
+
+                        quality:
+                            0.98
+
                     },
 
                     html2canvas: {
-                        scale: 2
+
+                        scale:
+                            2,
+
+                        useCORS:
+                            true,
+
+                        backgroundColor:
+                            "#ffffff"
+
                     },
 
                     jsPDF: {
-                        unit: "in",
-                        format: "letter",
-                        orientation: "portrait"
+
+                        unit:
+                            "in",
+
+                        format:
+                            "letter",
+
+                        orientation:
+                            "portrait"
+
+                    },
+
+                    pagebreak: {
+
+                        mode: [
+                            "avoid-all",
+                            "css",
+                            "legacy"
+                        ]
+
                     }
 
-                })
+                };
 
-                .from(container)
 
-                .save();
+                await html2pdf()
+
+                    .set(
+                        options
+                    )
+
+                    .from(
+                        pdfContainer
+                    )
+
+                    .save();
+
+
+                pdfContainer.remove();
+
+
+                downloadPdfButton.textContent =
+                    "PDF SAVED ✓";
+
+
+                setTimeout(
+                    function () {
+
+                        downloadPdfButton.textContent =
+                            "SAVE RESULTS TO PDF";
+
+                        downloadPdfButton.disabled =
+                            false;
+
+                    },
+                    2000
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "PDF generation error:",
+                    error
+                );
+
+
+                alert(
+                    "Hindi ma-create ang PDF. Please try again."
+                );
+
+
+                downloadPdfButton.textContent =
+                    "SAVE RESULTS TO PDF";
+
+
+                downloadPdfButton.disabled =
+                    false;
+
+            }
 
         }
     );
 
 
-    /* =========================================
+    /* =====================================================
        NEW QUIZ
-    ========================================= */
+    ===================================================== */
 
     newQuizButton.addEventListener(
         "click",
@@ -2703,43 +4888,82 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
-            questions = [];
-
-            currentQuestionIndex = 0;
-
-            score = 0;
-
-            quizResults = [];
-
-            elapsedSeconds = 0;
-
-            hasSubmitted = false;
+            questions =
+                [];
 
 
-            resultScreen.classList.add(
-                "hidden"
+            currentQuestion =
+                0;
+
+
+            score =
+                0;
+
+
+            quizResults =
+                [];
+
+
+            elapsedSeconds =
+                0;
+
+
+            hasSubmitted =
+                false;
+
+
+            activeInput =
+                null;
+
+
+            finishMessage.style.display =
+                "none";
+
+
+            quizArea.style.display =
+                "none";
+
+
+            studentInfo.style.display =
+                "none";
+
+
+            studentStart.style.display =
+                "block";
+
+
+            studentNameInput.value =
+                "";
+
+
+            studentSectionInput.value =
+                "";
+
+
+            answer.value =
+                "";
+
+
+            countdownOverlay.classList.remove(
+                "active"
             );
 
-            startScreen.classList.remove(
-                "hidden"
-            );
+
+            downloadPdfButton.disabled =
+                false;
 
 
-            timer.textContent =
-                "Time: 00:00";
-
-
-            studentNameInput.value = "";
-
-            studentSectionInput.value = "";
-
-            questionLimit.value = "10";
+            downloadPdfButton.textContent =
+                "SAVE RESULTS TO PDF";
 
         }
     );
 
+
 });
+
 </script>
-<script src="../../js/helper/navbar.js"></script>
+
 </body>
+
 </html>

@@ -13,6 +13,7 @@ const $gradeLevel = document.getElementById("grade-level")
 const $studentInformationForm = document.getElementById("student-information")
 const $continueBtn = document.getElementById("continue")
 const $stat = document.getElementById("stats")
+const $questionCount = document.getElementById("question-count")
 let currSession;
 
 const dataTransportation = {
@@ -231,13 +232,22 @@ class Session {
         // $debugDisplay.innerHTML 
 
         this.saveData()
-         $studentInformationForm.style.display = this.data.sessionData.isSaved ? "none" : "flex"
+        $studentInformationForm.hidden = this.data.sessionData.isSaved;
+        document.getElementById("piecewise-information").hidden = !this.data.sessionData.isSaved;
     $continueBtn.onclick = () => {
         if(this.setSessionDataInData()){
+                this.#questions = [];
+                this.#currentIndex = 0;
+                this.data._ = [];
+                this.data.sessionData.score = 0;
+                this.#createQuestions(Number($questionCount.value));
+                this.#questions.forEach(q => this.data._.push(q.getQuestionAndAnswer()));
             this.data.sessionData.isSaved = true
             this.saveData()
             this.showStat()
-            $studentInformationForm.style.display = 'none'
+            $studentInformationForm.hidden = true;
+            document.getElementById("piecewise-information").hidden = false;
+                this.#showQuestion()
         }
         
         }
@@ -250,8 +260,8 @@ class Session {
     }
 
     
-    #createQuestions() {
-        for (let i = 0; i < 20; i++) {
+    #createQuestions(questionCount = 20) {
+        for (let i = 0; i < questionCount; i++) {
             this.#questions.push(createTransportation());
         }
     }
@@ -309,8 +319,10 @@ class Session {
     }
     #setupSubmit() {
         $submitBtn.onclick = () => {
-            this.#studentAnswer = $answerInput.value;
+            if ($submitBtn.disabled) return;
 
+            this.#studentAnswer = $answerInput.value;
+            $submitBtn.disabled = true;
             this.#checkAnswer();
         };
     }
@@ -333,6 +345,7 @@ class Session {
              ${transportation.templateQuestion()}`;
 
         $answerInput.value = "";
+    $submitBtn.disabled = false;
         $answerTextDisplay.innerHTML = "";
     }
 
@@ -354,11 +367,14 @@ class Session {
     }
     #showAnswer(state, answer) {
         $answerTextDisplay.innerHTML = `
-            <h1>${state}</h1>
-            The answer is ₱${answer}
+            <div class="answer-feedback">
+                <h3 class="answer-state ${state.toLowerCase()}">${state}</h3>
+                <p class="answer-reveal">The answer is <strong>₱${answer}</strong></p>
+            </div>
         `;
 
         const btn = document.createElement("button");
+        btn.className = "answer-next";
 
         if (this.#currentIndex < this.#questions.length - 1) {
             btn.innerText = "Next Question";
@@ -378,13 +394,26 @@ class Session {
 
     #finishSession() {
         $questionTextDisplay.innerHTML = `
-            <h1>Session Complete</h1>
-            <p>You have completed all 20 questions.</p>
-            <strong>${this.data.sessionData.score}/20</strong>
-            
+            <div class="completion-summary">
+                <p class="quiz-eyebrow">GRADE 11 MATHEMATICS</p>
+                <h2>Quiz Completed</h2>
+                <p>You completed ${this.#questions.length} questions.</p>
+                <dl>
+                    <div><dt>Student</dt><dd id="finish-student"></dd></div>
+                    <div><dt>Section</dt><dd id="finish-section"></dd></div>
+                    <div><dt>Grade</dt><dd id="finish-grade"></dd></div>
+                    <div><dt>Score</dt><dd>${this.data.sessionData.score} / ${this.#questions.length}</dd></div>
+                    <div><dt>Percentage</dt><dd>${Math.round(this.data.sessionData.score / this.#questions.length * 100)}%</dd></div>
+                </dl>
+            </div>
         `;
 
         $answerTextDisplay.innerHTML = "";
+        document.getElementById("finish-student").textContent = this.data.sessionData.studentName;
+        document.getElementById("finish-section").textContent = this.data.sessionData.section;
+        document.getElementById("finish-grade").textContent = this.data.sessionData.gradeLevel;
+        document.getElementById("answer-input-container").hidden = true;
+        document.getElementById("answer-container").hidden = true;
     }
 }
 newSession()

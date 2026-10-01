@@ -6,14 +6,18 @@ let randomPoints = []
 let m
 let currMode
 const $question = document.getElementById("question");
+const $main = document.querySelector("main");
 let score = 0;
-let quizeIndex = 0 ; 
+let currentQuestion = 1;
+let totalQuestions = 5;
+let questionAnswered = false;
+let studentName = "";
+let studentSection = "";
 let isQuizing = false
 window.setup = function () {
 
     const container = document.getElementById("canvas-container");
     score = 0
-    quizeIndex = 1
     const size = Math.min(
         container.clientWidth,
         520
@@ -24,15 +28,32 @@ window.setup = function () {
     ctx.id("canvas");
     ctx.parent("canvas-container");
     m = new Quiz()
-    // plane = m.instance();
+    plane = m.instance();
     setupQuizControls();
+    document.getElementById("studentStartForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        studentName = document.getElementById("studentName").value.trim();
+        studentSection = document.getElementById("studentSection").value.trim();
+        totalQuestions = Number(document.getElementById("questionCount").value);
+        m.currentMode = document.getElementById("quizMode").value;
+        currentQuestion = 1;
+        score = 0;
+        questionAnswered = false;
+        isQuizing = true;
+        document.getElementById("studentStart").classList.add("hide");
+        m.startNewQuiz();
+        plane = m.instance();
+        updateQuestionProgress();
+        show_();
+    });
 
-    // 2. Start the first question cycle
-    startNewGameRound();
-    currMode = document.getElementById("menu-option").value
-    // createQuestion();
-    // plane.renderQuestion()
-    // plane.generateLinearPoints()
+    document.getElementById("restartQuizBtn").addEventListener("click", () => {
+        document.getElementById("quizResult").classList.add("hide");
+        document.getElementById("studentStart").classList.remove("hide");
+        hide_();
+    });
+
+    hide_();
 
 };
     // plane = new Plane();
@@ -42,25 +63,13 @@ window.setup = function () {
     // }
     // $question.innerHTML= p
 function startNewGameRound() {
-    // True Option 2 Reset: Re-instantiate the session via the manager
-    // This cleanly completely resets zoom, offsets, and points state
-    if(!isQuizing){
-        hide_()
-        show$()
-    }
-    quizeIndex++
-    const quizAmount =5
-    if(quizeIndex ==quizAmount){
-
-        
-    }
     m.startNewQuiz()
     plane = m.instance(); 
-    
-    // Generate data and build the HTML inside $question
-    // plane.createQuestion(); 
+    questionAnswered = false;
+    updateQuestionProgress();
 }
 function hide_(){
+    $main.hidden = true;
     $question.classList.add("hide")
     document.getElementById("canvas-container").classList.add("hide")
 }
@@ -68,6 +77,7 @@ function show$(){
     
 }
 function show_(){
+    $main.hidden = false;
      $question.classList.remove("hide")
     document.getElementById("canvas-container").classList.remove("hide")
 }
@@ -79,36 +89,63 @@ function setupQuizControls() {
         
         // Match the "Check Points" Button click
         if (event.target.id === "check-answer") {
-            plane.checkPoint();
+            if (questionAnswered) return;
+
+            const result = plane.checkPoint();
+            if (!result) return;
+
+            questionAnswered = true;
+            if (result.correct === result.total && result.wrong === 0) {
+                score++;
+            }
+
+            document.getElementById("check-answer").disabled = true;
+            document.getElementById("next-question").textContent =
+                currentQuestion === totalQuestions ? "View Results" : "Next Question";
         }
 
         // Match the "Next Question" Button click
         if (event.target.id === "next-question") {
-            startNewGameRound(); // discard old plane and boot new plane instance
+            if (currentQuestion === totalQuestions) {
+                finishQuiz();
+                return;
+            }
+
+            currentQuestion++;
+            startNewGameRound();
         }
-    //     if(event.target.id === "menu-option"){
-    //        if(event.target.value){
-    //          m.currentMode = event.target.value
-    //           let t = event.target.value
-    //         startNewGameRound()
-    //         document.getElementById(event.target.id).value = t
-    //        }
-    //     }
-
-        if (event.target.id === "menu-option") {
-    const mode = event.target.value;
-
-    if (!mode) return;
-
-    m.currentMode = mode;
-
-    startNewGameRound();
-}
     });
     
 
 }
+
+function updateQuestionProgress() {
+    const $progress = document.getElementById("question-progress");
+    if ($progress) {
+        $progress.textContent = `Question ${currentQuestion} of ${totalQuestions}`;
+    }
+
+    const $nextButton = document.getElementById("next-question");
+    if ($nextButton) {
+        $nextButton.textContent = currentQuestion === totalQuestions ? "View Results" : "Next Question";
+    }
+}
+
+function finishQuiz() {
+    isQuizing = false;
+    hide_();
+
+    document.getElementById("resultName").textContent = studentName;
+    document.getElementById("resultSection").textContent = studentSection;
+    document.getElementById("resultScore").textContent = `${score} / ${totalQuestions}`;
+    document.getElementById("resultPercentage").textContent =
+        `${Math.round((score / totalQuestions) * 100)}%`;
+    document.getElementById("quizResult").classList.remove("hide");
+}
+
 window.draw = function () {
+    if (!plane) return;
+
     background(255);
     // const mouse = getCanvasMouse(window.event);
 
@@ -149,6 +186,8 @@ window.draw = function () {
 };
 
 window.mouseClicked = function () {
+    if (!plane || !isQuizing || questionAnswered) return;
+
     // Apply matching offset logic to clicking captures
     const translatedMX = mouseX - (width / 2) - plane.xOffset;
     const translatedMY = mouseY - (height / 2) - plane.yOffset;

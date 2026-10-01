@@ -10,6 +10,9 @@ const $gradeAndSection = document.getElementById("grade-section")
 const $topic = document.getElementById("topic");
 let currQuizNum = 1
 let questionAmount = 5
+let currScore = 0
+let studentName = ""
+let studentGradeSection = ""
 
 
 const $initialize = document.getElementById("initialize");
@@ -17,12 +20,21 @@ const $quiz = document.getElementById("quiz");
 const $startQuizBtn = document.getElementById("startQuizBtn");
 
 $startQuizBtn.addEventListener("click", () => {
-    if($topic.value){
-        $initialize.hidden = true;
-    $quiz.hidden = false;
+    const $questionCount = document.getElementById("question-count");
+    const $startError = document.getElementById("start-error");
+    studentName = $name.value.trim();
+    studentGradeSection = $gradeAndSection.value.trim();
 
-    startQuiz($topic.value);
+    if (!studentName || !studentGradeSection || !$topic.value || !$questionCount.value) {
+        $startError.textContent = "Enter your name and section, then select a topic and question count.";
+        return;
     }
+
+    questionAmount = Number($questionCount.value);
+    $startError.textContent = "";
+    $initialize.hidden = true;
+    $quiz.hidden = false;
+    startQuiz($topic.value);
 });
 // const standardDeviationSituations = [
 //     {
@@ -319,15 +331,17 @@ class statistic {
             <h3>${$$$?"correct": "incorrect"} mode: ${this._dataset.mode()}</h3>
 
         `
+        return $ && $$ && $$$;
     }
     _$() {
-        this.curSituation.isPopulation ? this.$__() : this._$_()
+        return this.curSituation.isPopulation ? this.$__() : this._$_()
     }
     $$$() {
-        
+        const isCorrect = this.isRangeCorrect(document.getElementById("range").value);
         $answer.innerHTML += `
-            <h3>${this.isRangeCorrect(document.getElementById("range").value) ? "correct": "incorrect" } range: ${this._standardDev.range()}</h3>
+            <h3>${isCorrect ? "correct": "incorrect" } range: ${this._standardDev.range()}</h3>
         `
+        return isCorrect;
     }
     /**
      * display if is population standard deviation correct 
@@ -339,6 +353,7 @@ class statistic {
             <h3>${$?"correct": "incorrect"} Population: ${roundDecimals(this._standardDev.population(), 2)}</h3>
 
         `
+    return $;
     }
     /**
      * check if sample standard deviation correct
@@ -350,6 +365,7 @@ class statistic {
             <h3> ${x? "correct": "incorrect"}sample: ${roundDecimals(this._standardDev.sample(), 2)}</h3>
 
         `
+        return x;
     }
 
 
@@ -490,6 +506,7 @@ function opt1() {
     s.generateDataset()
 
     $question.innerHTML = `
+        <div class="quiz-question-progress">Question ${currQuizNum} of ${questionAmount}</div>
         <div>${s.question()}</div>
     `
 
@@ -507,10 +524,8 @@ function opt1() {
     `
 
     document.getElementById("confirm").addEventListener("click", () => {
-        s._()
-
-
-        updateQuiz()
+        if (s._()) currScore++;
+        if (!updateQuiz()) return;
 
         const $btn = document.createElement("button")
         $btn.onclick = opt1
@@ -527,6 +542,7 @@ function opt2() {
     s.generateDataset()
     s.generateStandardDeviation()
     $question.innerHTML = `
+        <div class="quiz-question-progress">Question ${currQuizNum} of ${questionAmount}</div>
         <div>${s.question()}</div>
     `;
 
@@ -541,9 +557,10 @@ function opt2() {
 
     document.getElementById("confirm").addEventListener("click", () => {
         $answer.innerHTML = "";
-        s._$()
-        s.$$$()
-        updateQuiz()
+        const isStandardDeviationCorrect = s._$();
+        const isRangeCorrect = s.$$$();
+        if (isStandardDeviationCorrect && isRangeCorrect) currScore++;
+        if (!updateQuiz()) return;
 
         const $btn = document.createElement("button")
         $btn.onclick = opt2
@@ -560,6 +577,7 @@ function opt3() {
     s.generateStandardDeviation()
 
     $question.innerHTML = `
+        <div class="quiz-question-progress">Question ${currQuizNum} of ${questionAmount}</div>
         <div>${s.question()}</div>
     `
 
@@ -579,10 +597,11 @@ function opt3() {
     document.getElementById("confirm").addEventListener("click", () => {
         $answer.innerHTML = ""
 
-        s._()
-        s.$$$()
-        s._$()
-        updateQuiz()
+        const isCentralTendencyCorrect = s._();
+        const isRangeCorrect = s.$$$();
+        const isStandardDeviationCorrect = s._$();
+        if (isCentralTendencyCorrect && isRangeCorrect && isStandardDeviationCorrect) currScore++;
+        if (!updateQuiz()) return;
         const $btn = document.createElement("button")
         $btn.onclick = opt3
         $btn.innerText = "next"
@@ -605,17 +624,20 @@ function getSession() {
     return localStorage.getItem(sessionKey)
 }
 function updateQuiz() {
-
-    if (currQuizNum + 1 > questionAmount) {
-        endQuiz();
-        return;
-    }
-
     document.getElementById("confirm").disabled = true;
 
+    if (currQuizNum >= questionAmount) {
+        endQuiz();
+        return false;
+    }
+
     currQuizNum++;
+    return true;
 }
 function startQuiz(val) {
+    currQuizNum = 1;
+    currScore = 0;
+
     switch (val) {
         case "1":
             opt1()
@@ -631,7 +653,6 @@ function startQuiz(val) {
             opt1()
             break;
     }
-    currQuizNum = 1
 }
 function endQuiz() {
 
@@ -647,8 +668,14 @@ function endQuiz() {
                     </span>
 
                     <span class="quiz-end-message">
-                        You have completed the quiz.
+                        You have completed ${questionAmount} questions.
                     </span>
+                </div>
+
+                <div class="quiz-end-student">
+                    <div><span>Student</span><span id="resultStudent"></span></div>
+                    <div><span>Grade &amp; Section</span><span id="resultGradeSection"></span></div>
+                    <div><span>Topic</span><span id="resultTopic"></span></div>
                 </div>
 
                 <div class="quiz-result">
@@ -656,14 +683,14 @@ function endQuiz() {
                     <div class="result-item">
                         <span class="result-label">Score</span>
                         <span class="result-value" id="finalScore">
-                            0 / ${questionAmount}
+                            ${currScore} / ${questionAmount}
                         </span>
                     </div>
 
                     <div class="result-item">
                         <span class="result-label">Percentage</span>
                         <span class="result-value" id="finalPercentage">
-                            0%
+                            ${Math.round((currScore / questionAmount) * 100)}%
                         </span>
                     </div>
 
@@ -683,6 +710,10 @@ function endQuiz() {
             </div>
         </div>
     `;
+
+    document.getElementById("resultStudent").textContent = studentName;
+    document.getElementById("resultGradeSection").textContent = studentGradeSection;
+    document.getElementById("resultTopic").textContent = $topic.options[$topic.selectedIndex].text.trim();
 
         // <div class="field-group">
                 //     <label for="topic">topic</label>

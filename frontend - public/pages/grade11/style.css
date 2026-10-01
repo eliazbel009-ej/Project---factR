@@ -4,18 +4,18 @@
        MATHEMATICS THEME
     ========================= */
 
-    --math-blue: #2457a6;
-    --math-blue-dark: #163b73;
-    --math-blue-deep: #1d477f;
-    --math-blue-light: #dce9f8;
-    --math-blue-bright: #bcd4f2;
+    --math-blue: #16623d;
+    --math-blue-dark: #073827;
+    --math-blue-deep: #0f4c32;
+    --math-blue-light: #e7f7ee;
+    --math-blue-bright: #d8f0e3;
 
     --paper: #ffffff;
-    --paper-muted: #f4f7fb;
-    --text: #1d2733;
-    --text-muted: #607080;
+    --paper-muted: #f5faf7;
+    --text: #2d473b;
+    --text-muted: #567e6c;
 
-    --border: #c8d4e3;
+    --border: #d8eade;
     --success: #2e7d32;
     --danger: #c62828;
 }
@@ -99,14 +99,29 @@ body {
    FORM HEADER
 ========================= */
 
-#initialize .wrapper::before {
-    content: "MATHEMATICS";
-    
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
+.quiz-heading {
+    width: min(100%, 1100px);
+    margin: 0 auto 24px;
+}
 
+#initialize .quiz-heading {
+    width: 100%;
+    margin: 0 0 0.5rem;
+}
+
+.quiz-heading .eyebrow {
+    margin-bottom: 8px;
     color: var(--math-blue);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.quiz-heading h1 {
+    color: var(--math-blue-dark);
+    font-size: clamp(1.6rem, 4vw, 2rem);
+    line-height: 1.2;
 }
 
 
@@ -154,6 +169,12 @@ body {
 
     box-shadow:
         0 0 0 3px var(--math-blue-light);
+}
+
+.form-error {
+    min-height: 1.2em;
+    color: var(--danger);
+    font-size: 0.875rem;
 }
 
 
@@ -454,6 +475,41 @@ button:active {
 
 .quiz-end-message {
     color: var(--text-muted);
+}
+
+.quiz-question-progress {
+    margin-bottom: 0.75rem;
+    color: var(--math-blue);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.quiz-end-student {
+    display: grid;
+    gap: 0.75rem;
+    padding: 1rem;
+    text-align: left;
+    background: var(--paper-muted);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.quiz-end-student div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.quiz-end-student span:first-child {
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.quiz-end-student span:last-child {
+    color: var(--math-blue-dark);
+    font-weight: 700;
+    overflow-wrap: anywhere;
 }
 
 

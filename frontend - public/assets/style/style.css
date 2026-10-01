@@ -20,17 +20,20 @@
   margin: 0;
   padding: 0;
 }
-
 html, body {
-  width: 100%;
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  background-color: var(--white);
-  font-family: var(--font-body);
-  color: var(--text-body);
-  scroll-behavior: smooth;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: var(--white);
+    font-family: var(--font-body);
+    color: var(--text-body);
+    scroll-behavior: smooth;
+}
+
+body {
+    padding-top: 65px !important; /* Adjust this value based on the height of your fixed navbar */
 }
 
 .top-nav-bar {
@@ -62,7 +65,11 @@ html, body {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+}
+
+.nav-container > nav {
+  margin-left: auto;
 }
 
 .nav-brand {
@@ -300,11 +307,46 @@ html, body {
     gap: 5px;
     width: 100%;
     text-align: left;
-    cursor: default;
+    cursor: pointer;
     user-select: none;
     position: relative;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+  .nav-btn-toggle::after {
+    content: "";
+    position: absolute;
+    right: 10px;
+    bottom: 4px;
+    left: 10px;
+    height: 2px;
+    background-color: var(--primary-accent);
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .nav-btn-toggle:hover {
+    color: var(--primary-forest);
+    background-color: var(--tint-light);
+    transform: translateY(-2px);
+  }
+
+  .nav-btn-toggle:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .nav-btn-toggle.active {
+    color: var(--white);
+    background-color: var(--primary-forest);
+    box-shadow: 0 4px 14px rgba(22, 98, 61, 0.25);
+  }
+
+  .nav-btn-toggle.active::after {
+    display: none;
+  }
 @keyframes spacerGradientFlow {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -532,6 +574,25 @@ html, body {
       background-color: #e7f7ee;
     }
 
+    .top-nav-bar .hamburger-btn {
+      width: auto;
+      min-width: 0;
+      min-height: 0;
+      margin: 0;
+      padding: 6px;
+      border: 0;
+      border-radius: 6px;
+      box-shadow: none;
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+
+    .top-nav-bar .hamburger-btn:hover:not(:disabled) {
+      background-color: #e7f7ee;
+      box-shadow: none;
+      transform: none;
+    }
+
     /* Decorative Green Accent Bar (No Text) */
     .accent-green-bar {
       width: 100%;
@@ -674,8 +735,17 @@ html, body {
 }
 
 @media (max-width: 768px) {
+  .nav-container > nav {
+    margin-left: 0;
+  }
+
   .hamburger-btn {
     display: block;
+    margin-left: auto;
+  }
+
+  .top-nav-bar .hamburger-btn {
+    margin-left: auto;
   }
 
   .nav-links {

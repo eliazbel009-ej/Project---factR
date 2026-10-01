@@ -228,16 +228,11 @@ addPoint(x, y) {
 
             <h1>Coordinate Challenge</h1>
 
+            <p id="question-progress" class="question-progress"></p>
+
             <p class="description">
                 Plot all the given points on the coordinate plane.
             </p>
-            <select name="" id="menu-option">
-                <option value="">select mode</option>
-                <option value="random">random points</option>
-                <option value="linear">linear</option>
-                <option value="linearAbsolute">linear absolute</option>
-                <option value="quadratic">quadratic</option>
-            </select>
         </div>
 
         <div class="target-point">
@@ -297,8 +292,9 @@ addPoint(x, y) {
 
     const wrongCount = this.points.length - correctCount;
 
-    $feedback.textContent = `${correctCount} correct, ${wrongCount} incorrect.`;
-    $feedback.className = wrongCount === 0 ? "feedback success" : "feedback error";
+    const isComplete = correctCount === this.randomPoints.length && wrongCount === 0;
+    $feedback.textContent = `${correctCount} of ${this.randomPoints.length} target points correct; ${wrongCount} incorrect.`;
+    $feedback.className = isComplete ? "feedback success" : "feedback error";
 
     return {
         correct: correctCount,
@@ -322,7 +318,6 @@ export class RandomizedPoint extends Session{
             )
         
             this.randomPoints.push(r) ;
-            this.addPoint(r.x, r.y)
         }
     }
     createQuestion(){
@@ -354,7 +349,6 @@ export class Quadratic extends Session{
         let y = (x)=> x*x 
         for(let x = -2; x <= 2; x++){
             let hx = x + h
-            this.addPoint(hx, unary * y(x) + k )
             this.randomPoints.push(createVector(hx, unary*y(x) + k))
         }
 
@@ -411,7 +405,6 @@ export class LinearAbsolute extends Session{
         unary = unary == 0 ? 1: unary
         for(let x = -2; x <= 2;x++){
             this.randomAbsoluteLinearPoints.push(createVector(x,y(x)))
-            this.addPoint(x+h,   unary * y(x))
             this.randomPoints.push(createVector(x, unary * y(x)))
             console.log("x: " + x,"y: "+ y(x));
             
@@ -463,7 +456,6 @@ export class Linear extends Session{
         const y  = (x) => x *  h + n
         for(let x = -2; x <= 2;x++){
             this.randomLinearPoints.push(createVector(x,y(x)))
-            this.addPoint(x,y(x))
             this.randomPoints.push(createVector(x,y(x)))
             console.log("x: " + x,"y: "+ y(x));
             
