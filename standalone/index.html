@@ -6,253 +6,525 @@
     <title>cartasianEngine</title>
    
     <style>
-        * {
-    box-sizing: border-box;
-}
+    /* =========================
+       RESET
+    ========================= */
 
-body {
-    margin: 0;
-    min-height: 100vh;
-
-    font-family: Arial, sans-serif;
-
-    background: #f5f5f5;
-    color: #222;
-}
-
-main {
-    width: min(1100px, 95%);
-    min-height: 100vh;
-    margin: auto;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 30px;
-}
-
-/* =========================
-   QUESTION PANEL
-========================= */
-
-#question {
-    width: 380px;
-    width: 50%;
-    height: 100vh;
-    flex-shrink: 0;
-
-    padding: 30px;
-
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 16px;
-
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-}
-
-.quiz-header {
-    margin-bottom: 30px;
-}
-
-.eyebrow {
-    margin: 0 0 8px;
-
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 2px;
-
-    color: #777;
-}
-
-.quiz-header h1 {
-    margin: 0;
-
-    font-size: 28px;
-}
-
-.description {
-    margin-top: 12px;
-
-    color: #666;
-    line-height: 1.5;
-}
-
-
-/* =========================
-   TARGET POINT
-========================= */
-
-.target-point {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 20px;
-
-    background: #f5f5f5;
-    border-radius: 12px;
-
-    margin-bottom: 20px;
-}
-
-.point-label {
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
-
-.coordinate {
-    font-size: 26px;
-    font-weight: bold;
-}
-
-
-/* =========================
-   BUTTONS
-========================= */
-
-.button-group {
-    display: flex;
-    gap: 10px;
-}
-
-.button-group button {
-    flex: 1;
-
-    padding: 12px 16px;
-
-    border: none;
-    border-radius: 8px;
-
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.submit-button {
-    background: #54141d;
-    color: white;
-}
-
-.next-button {
-    background: #e5e5e5;
-    color: #222;
-}
-
-.button-group button:hover {
-    opacity: 0.85;
-}
-
-
-/* =========================
-   FEEDBACK
-========================= */
-
-#feedback {
-    min-height: 20px;
-
-    margin: 15px 0;
-
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.feedback.success {
-    color: #16803c;
-}
-
-.feedback.error {
-    color: #c62828;
-}
-
-
-/* =========================
-   CANVAS
-========================= */
-
-#canvas-container {
-    flex-shrink: 0;
-
-    width: 520px;
-    height: 520px;
-    /* height: 100vh; */
-
-    background: white;
-
-    border-radius: 16px;
-
-    overflow: hidden;
-
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-}
-
-#canvas {
-        /* width: 100% !important;
-        height: auto !important; */
-        display: block;
-        /* height: 100%; */
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
     }
 
+    /* =========================
+       THEME
+    ========================= */
 
-/* =========================
-   TABLET
-========================= */
+    :root {
+        --primary-dark: #073827;
+        --primary-forest: #16623d;
+        --primary-accent: #339763;
 
-@media (max-width: 950px) {
+        --tint-light: #e7f7ee;
+        --tint-lighter: #f3faf6;
+
+        --background: #f5faf7;
+        --card-bg: #ffffff;
+
+        --text-main: #073827;
+        --text-body: #2d473b;
+        --text-muted: #567e6c;
+
+        --border-color: #d8eade;
+
+        --success: #26734d;
+        --danger: #b43c3c;
+
+        --shadow-small:
+            0 2px 8px rgba(7, 56, 39, 0.04);
+
+        --shadow-medium:
+            0 8px 24px rgba(7, 56, 39, 0.07);
+
+        --shadow-large:
+            0 20px 50px rgba(7, 56, 39, 0.09);
+    }
+
+    /* =========================
+       GLOBAL
+    ========================= */
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        min-height: 100vh;
+
+        font-family:
+            Inter,
+            -apple-system,
+            BlinkMacSystemFont,
+            "SF Pro Display",
+            "Segoe UI",
+            Roboto,
+            Helvetica,
+            Arial,
+            sans-serif;
+
+        color: var(--text-body);
+        background: var(--background);
+
+        line-height: 1.5;
+    }
+
+    button,
+    select {
+        font: inherit;
+    }
+
+    button {
+        cursor: pointer;
+    }
+
+    /* =========================
+       MAIN LAYOUT
+    ========================= */
 
     main {
-        gap: 20px;
+        width: min(1200px, 94%);
+        min-height: 100vh;
+
+        margin: 0 auto;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        gap: 28px;
+
+        padding: 40px 0;
     }
+
+    /* =========================
+       QUESTION PANEL
+    ========================= */
 
     #question {
-        width: 320px;
-    }
+        width: 390px;
+        min-height: 520px;
 
-    #canvas-container {
-        width: 450px;
-        height: 450px;
-    }
-}
+        flex: 0 0 390px;
 
+        padding: 32px;
 
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 800px) {
-
-    main {
-        width: 100%;
-        min-height: auto;
-        /* padding: 20px 15px;
-         */
-         padding: 0;
+        display: flex;
         flex-direction: column;
-        gap: 0px;
+
+        background: var(--card-bg);
+
+        border: 1px solid var(--border-color);
+        border-radius: 24px;
+
+        box-shadow:
+            var(--shadow-small),
+            var(--shadow-large);
     }
 
-    #question {
-        width: 100%;
-        max-width: none;
-        padding: 24px;
-        height: fit-content;
-       
+    /* =========================
+       QUIZ HEADER
+    ========================= */
+
+    .quiz-header {
+        margin-bottom: 26px;
     }
+
+    .eyebrow {
+        margin-bottom: 8px;
+
+        color: var(--primary-accent);
+
+        font-size: 11px;
+        font-weight: 800;
+
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    .quiz-header h1 {
+        color: var(--primary-dark);
+
+        font-size: 29px;
+        font-weight: 750;
+
+        line-height: 1.15;
+        letter-spacing: -0.6px;
+    }
+
+    .description {
+        margin-top: 13px;
+
+        color: var(--text-muted);
+
+        font-size: 15px;
+        line-height: 1.65;
+    }
+
+    /* =========================
+       MODE SELECT
+    ========================= */
+
+    #menu-option {
+        width: 100%;
+        height: 48px;
+
+        margin-top: 20px;
+        padding: 0 14px;
+
+        color: var(--text-main);
+        background: var(--white);
+
+        border: 1px solid var(--border-color);
+        border-radius: 11px;
+
+        outline: none;
+
+        cursor: pointer;
+
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    #menu-option:hover {
+        border-color: #a9cdb8;
+    }
+
+    #menu-option:focus {
+        border-color: var(--primary-accent);
+
+        box-shadow:
+            0 0 0 4px rgba(51, 151, 99, 0.12);
+    }
+
+    /* =========================
+       TARGET POINT
+    ========================= */
+
+    .target-point {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        padding: 20px;
+
+        margin-bottom: 20px;
+
+        background: var(--tint-lighter);
+
+        border: 1px solid var(--border-color);
+        border-left: 4px solid var(--primary-accent);
+
+        border-radius: 15px;
+    }
+
+    .point-label {
+        color: var(--text-muted);
+
+        font-size: 11px;
+        font-weight: 800;
+
+        letter-spacing: 1.5px;
+    }
+
+    .coordinate {
+        color: var(--primary-dark);
+
+        font-size: 20px;
+        font-weight: 700;
+
+        line-height: 1.7;
+        word-break: break-word;
+    }
+
+    /* =========================
+       FEEDBACK
+    ========================= */
+
+    #feedback {
+        min-height: 24px;
+
+        margin: 4px 0 18px;
+
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .feedback.success {
+        color: var(--success);
+    }
+
+    .feedback.error {
+        color: var(--danger);
+    }
+
+    /* =========================
+       BUTTONS
+    ========================= */
+
+    .button-group {
+        display: flex;
+        gap: 10px;
+
+        margin-top: auto;
+    }
+
+    .button-group button {
+        min-height: 48px;
+
+        flex: 1;
+
+        padding: 0 15px;
+
+        border: none;
+        border-radius: 11px;
+
+        font-size: 14px;
+        font-weight: 700;
+
+        transition:
+            background 0.2s ease,
+            transform 0.15s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .button-group button:active {
+        transform: scale(0.98);
+    }
+
+    .submit-button {
+        color: white;
+        background: var(--primary-forest);
+
+        box-shadow:
+            0 5px 14px rgba(22, 98, 61, 0.14);
+    }
+
+    .submit-button:hover {
+        background: var(--primary-accent);
+
+        box-shadow:
+            0 7px 18px rgba(22, 98, 61, 0.2);
+    }
+
+    .next-button {
+        color: var(--primary-dark);
+        background: var(--tint-light);
+
+        border: 1px solid var(--border-color) !important;
+    }
+
+    .next-button:hover {
+        background: #d8f0e3;
+    }
+
+    /* =========================
+       CANVAS CONTAINER
+    ========================= */
 
     #canvas-container {
-        width: 100%;
-        height: auto;
+        position: relative;
+
+        width: min(520px, 100%);
         aspect-ratio: 1 / 1;
+
+        flex: 0 1 520px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 0;
+
+        background: #ffffff;
+
+        border: 1px solid var(--border-color);
+        border-radius: 24px;
+
+        overflow: hidden;
+
+        box-shadow:
+            var(--shadow-small),
+            var(--shadow-large);
     }
+
+    /* =========================
+       CANVAS
+    ========================= */
 
     #canvas {
-        width: 100% !important;
-        height: auto !important;
         display: block;
-         touch-action: none;
+
+        max-width: 100%;
+        max-height: 100%;
     }
-}
-    </style>
+
+    /* =========================
+       TABLET
+    ========================= */
+
+    @media (max-width: 1050px) {
+
+        main {
+            width: 94%;
+
+            gap: 20px;
+        }
+
+        #question {
+            width: 340px;
+            flex-basis: 340px;
+
+            padding: 28px;
+        }
+
+        #canvas-container {
+            flex-basis: 460px;
+        }
+    }
+
+    /* =========================
+       SMALL TABLET
+    ========================= */
+
+    @media (max-width: 850px) {
+
+        main {
+            min-height: 100vh;
+
+            padding: 30px 0;
+
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        #question {
+            width: 100%;
+            min-height: auto;
+
+            flex: none;
+        }
+
+        #canvas-container {
+            width: min(600px, 100%);
+            flex: none;
+
+            margin: 0 auto;
+        }
+
+        .button-group {
+            margin-top: 20px;
+        }
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 600px) {
+
+        body {
+            background: var(--background);
+        }
+
+        main {
+            width: 100%;
+
+            padding: 0;
+
+            gap: 0;
+        }
+
+        #question {
+            width: 100%;
+
+            padding: 24px 20px;
+
+            border-radius: 0 0 20px 20px;
+
+            border-left: none;
+            border-right: none;
+            border-top: none;
+
+            box-shadow:
+                0 5px 20px rgba(7, 56, 39, 0.07);
+        }
+
+        .quiz-header {
+            margin-bottom: 20px;
+        }
+
+        .quiz-header h1 {
+            font-size: 25px;
+        }
+
+        .description {
+            font-size: 14px;
+        }
+
+        .target-point {
+            padding: 17px;
+        }
+
+        .coordinate {
+            font-size: 18px;
+        }
+
+        .button-group {
+            flex-direction: column;
+        }
+
+        .button-group button {
+            width: 100%;
+        }
+
+        #canvas-container {
+            width: 100%;
+
+            border-radius: 0;
+
+            border-left: none;
+            border-right: none;
+
+            box-shadow: none;
+        }
+    }
+
+    /* =========================
+       SMALL MOBILE
+    ========================= */
+
+    @media (max-width: 400px) {
+
+        #question {
+            padding: 22px 16px;
+        }
+
+        .quiz-header h1 {
+            font-size: 23px;
+        }
+
+        .eyebrow {
+            font-size: 10px;
+        }
+
+        .coordinate {
+            font-size: 17px;
+        }
+    }
+</style>
 </head>
 <body>
 
@@ -684,7 +956,282 @@ addPoint(x, y) {
   
     
 }
+class RandomizedPoint extends Session{
+    constructor(){
+       super()
+      this.generateRandomPoints()
+    }
+    generateRandomPoints(){
+        for (let i = 1 ; i <= 5; i++) {
+            const r = createVector(
+                constraint(-( this.dimension.x - 1), this.dimension.x - 1),
+                constraint(-( this.dimension.y - 1), this.dimension.y- 1)
+            )
+        
+            this.randomPoints.push(r) ;
+            this.addPoint(r.x, r.y)
+        }
+    }
+    createQuestion(){
+        this.generateRandomPoints()
+        this.renderQuestion();
+    }
 
+  
+  
+}
+ class Quadratic extends Session{
+    constructor(){
+        super()
+        this.generateQuadraticPoints()
+        this.v = 4
+    }
+    generateQuadraticPoints(){
+        let unary = constraint(-1,1)
+        unary = unary == 0 ? 1 : unary
+        let k, h;
+        if(unary == 1){
+            k = constraint(-9,5)
+            h = constraint(-7,7)
+        }else{
+            h = constraint(-7,7)
+            k = constraint(-5, 9)
+        }
+
+        let y = (x)=> x*x 
+        for(let x = -2; x <= 2; x++){
+            let hx = x + h
+            this.addPoint(hx, unary * y(x) + k )
+            this.randomPoints.push(createVector(hx, unary*y(x) + k))
+        }
+
+        
+    }
+    createQuestion(){
+        this.generateQuadraticPoints()
+        this.renderQuestion()
+    }
+}
+
+
+
+ class LinearAbsolute extends Session{
+    constructor(){
+
+        super()
+        this.randomAbsoluteLinearPoints = []
+        this.v = 4
+        this.generateAbsoluteLinearPoints()
+    }
+    generateAbsoluteLinearPoints(){
+        /**
+         * The slope value constrained within the plane's
+         * minimum and maximum coordinate range.
+         */
+        let s = constraint(-this.v, this.v) 
+        // make h 1 if 0, 
+        s = s == 0 ? 1 : s
+
+        /**
+         * The maximum vertical intercept range based on
+         * the plane dimensions and the selected slope.
+         */
+        const c = this.dimension.y - (s*s) - 2
+
+        /**
+         * The maximum vertical intercept range based on
+         * the plane dimensions and the selected slope.
+         */
+        const n =  constraint(-c , c) 
+        // console.log(h, n );
+        /**
+         * Represents the linear function using the
+         * selected slope and vertical intercept.
+         *
+         * @param {number} x - The x-coordinate.
+         * @returns {number} The corresponding y-coordinate.
+         */
+        const y  = (x) => Math.abs(x *  s) + n
+        let k;
+        let h = constraint(-7, 7);
+        let unary = constraint(-1, 1)
+        unary = unary == 0 ? 1: unary
+        for(let x = -2; x <= 2;x++){
+            this.randomAbsoluteLinearPoints.push(createVector(x,y(x)))
+            this.addPoint(x+h,   unary * y(x))
+            this.randomPoints.push(createVector(x, unary * y(x)))
+            console.log("x: " + x,"y: "+ y(x));
+            
+        }
+       
+    }
+    createQuestion(){
+        this.generateAbsoluteLinearPoints()
+        this.renderQuestion()
+    }
+
+    
+}
+class Linear extends Session{
+    constructor(){
+        super()
+        this.randomLinearPoints= []
+        this.generateLinearPoints()
+        this.v = 4
+    }
+    generateLinearPoints(){
+        /**
+         * The slope value constrained within the plane's
+         * minimum and maximum coordinate range.
+         */
+        let h = constraint(-4, 4) 
+        // make h 1 if 0, 
+        h = h == 0 ? 1 : h
+
+        /**
+         * The maximum vertical intercept range based on
+         * the plane dimensions and the selected slope.
+         */
+        const c = this.dimension.y - (h*h) - 1
+
+        /**
+         * The maximum vertical intercept range based on
+         * the plane dimensions and the selected slope.
+         */
+        const n =  constraint(-c , c) 
+        // console.log(h, n );
+        /**
+         * Represents the linear function using the
+         * selected slope and vertical intercept.
+         *
+         * @param {number} x - The x-coordinate.
+         * @returns {number} The corresponding y-coordinate.
+         */
+        const y  = (x) => x *  h + n
+        for(let x = -2; x <= 2;x++){
+            this.randomLinearPoints.push(createVector(x,y(x)))
+            this.addPoint(x,y(x))
+            this.randomPoints.push(createVector(x,y(x)))
+            console.log("x: " + x,"y: "+ y(x));
+            
+        }
+       
+        
+        
+    }
+    createQuestion(){
+        console.log(this.points);
+        // this.resetPlaneState()
+        this.generateLinearPoints()
+        this.renderQuestion()
+        
+        
+    }
+
+}
+
+
+function constraint(c1, c2){
+    // check if c1 and c2 have valid value
+    if((c1.length === 0 || c1 === null) ||  (c2.length === 0 || c2 === null)){
+        return 0;
+    }
+    if(c1 > c2){
+        return 0;
+    }
+
+    return Math.floor(Math.random() * (Math.floor(c2)-Math.ceil(c1)+1) )+ Math.ceil(c1)
+}
+ class Quiz{
+    constructor(){
+        this.activeInstance = null
+        this.currentMode = "random" 
+       
+        // this.setupListener()
+        this.startNewQuiz()
+    }
+    startNewQuiz(){
+        console.log('hello');
+        
+        if(this.activeInstance){
+            this.activeInstance = null
+        }
+
+        if (this.currentMode === 'random') {
+            this.activeInstance = new RandomizedPoint();
+        } else if (this.currentMode === 'linear') {
+            this.activeInstance = new Linear();
+        } else if(this.currentMode === "linearAbsolute"){
+            this.activeInstance = new LinearAbsolute();
+            
+        } 
+        
+        else if(this.currentMode === 'quadratic') {
+            this.activeInstance = new Quadratic();
+        }
+        this.activeInstance.renderQuestion()
+
+        /**
+         * 
+         *  <div class="button-group">
+            <button
+                type="button"
+                id="check-answer"
+                class="submit-button"
+            >
+                Check Points
+            </button>
+
+            <button
+                type="button"
+                id="next-question"
+                class="next-button"
+            >
+                Next Question
+            </button>
+        </div>
+         */
+
+        // const div = document.createElement("div")
+        // div.classList.add("button-group")
+        // const chkBtn = document.createElement("button")
+        // chkBtn.classList.add("submit-button")
+        // chkBtn.id = "check-answer"
+        // chkBtn.textContent = "check points"
+        // const nxtBtn = document.createElement("button")
+        // nxtBtn.classList.add("next-button")
+        // nxtBtn.textContent = "next question" 
+        // nxtBtn.id = "next-button"
+
+        // div.appendChild(chkBtn)
+        // div.appendChild(nxtBtn)
+        // $question.appendChild(div)
+        // const $nextBtn = document.getElementById("next-question");
+        // if ($nextBtn) {
+        //     $nextBtn.addEventListener("click", () => this.startNewQuestion(), { once: true });
+        // }
+    }
+    setupListener(){
+        const $parent = $question
+
+        // Listen to the parent container permanently
+        $parent.addEventListener("click", (event) => {
+            // Check if the clicked element was the "Check Points" button
+            if (event.target.id === "check-answer" && this.activeInstance) {
+                
+                this.activeInstance.checkPoint();
+            }
+
+            // Check if the clicked element was the "Next Question" button
+            if (event.target.id === "next-question") {
+                this.startNewQuiz(); // Destroys old plane, boots up a fresh one!
+            }
+        });
+    }
+    instance(){
+        return this.activeInstance
+    }
+}
 class Vector {
   constructor(x = 0, y = 0, z = 0) {
     this.x = x;
@@ -742,6 +1289,9 @@ let canvas;
 let width = window.innerWidth
 let height = window.innerHeight
 let randomPoints = []
+
+let m
+let currMode
 const $question = document.getElementById("question");
  function setup () {
 
@@ -760,11 +1310,56 @@ const $question = document.getElementById("question");
     height =      canvas.height
     container.appendChild(canvas)
     ctx = canvas.getContext('2d')
-    plane = new Plane();
+    m = new Quiz()
+    setupQuizControls();
+    startNewGameRound();
+    currMode = document.getElementById("menu-option").value
+    
       rect = canvas.getBoundingClientRect();
 
-    createQuestion();
 };
+
+function startNewGameRound() {
+    m.startNewQuiz()
+    plane = m.instance(); 
+} 
+
+function setupQuizControls() {
+    // Listen to the permanent parent container. It catches button clicks even when 
+    // the inner HTML is completely blown away and rebuilt!
+    $question.addEventListener("click", (event) => {
+        
+        // Match the "Check Points" Button click
+        if (event.target.id === "check-answer") {
+            plane.checkPoint();
+        }
+
+        // Match the "Next Question" Button click
+        if (event.target.id === "next-question") {
+            startNewGameRound(); // discard old plane and boot new plane instance
+        }
+    //     if(event.target.id === "menu-option"){
+    //        if(event.target.value){
+    //          m.currentMode = event.target.value
+    //           let t = event.target.value
+    //         startNewGameRound()
+    //         document.getElementById(event.target.id).value = t
+    //        }
+    //     }
+
+        if (event.target.id === "menu-option") {
+    const mode = event.target.value;
+
+    if (!mode) return;
+
+    m.currentMode = mode;
+
+    startNewGameRound();
+}
+    });
+    
+
+}
 setup()
 function draw() {
     ctx.setTransform(1, 0, 0, 1, 0, 0);

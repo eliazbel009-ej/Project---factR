@@ -46,6 +46,7 @@ html, body {
   animation: slideDownNav 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+
 @keyframes slideDownNav {
   from {
     opacity: 0;
@@ -151,44 +152,121 @@ html, body {
 .nav-link.active::after {
   display: none;
 }
+/* ============================================================
+   COVER SECTION
+   ============================================================ */
+
 .cover-section {
-  width: 100vw;
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-  background: #1b4332; /* Changed from light gradient to dark green matching your theme to hide sub-pixel gaps */
-  border-bottom: none; /* REMOVED the white line/border */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  overflow: hidden;
+    position: relative;
+
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    background-color: #1b4332;
+
+    overflow: hidden;
 }
 
 .cover-wrapper {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  line-height: 0;
+    position: relative;
+
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    line-height: 0;
 }
 
 .cover-image {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: 85vh;
-  object-fit: cover;
-  margin: 0;
-  padding: 0;
-  border-radius: 0;
-  opacity: 0;
-  transform: translateY(25px) scale(0.99);
-  animation: entranceCover 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards,
-             subtleFloat 6s ease-in-out 1.4s infinite alternate;
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    max-height: 85vh;
+
+    object-fit: cover;
+
+    margin: 0;
+    padding: 0;
+
+    border-radius: 0;
+
+    opacity: 0;
+
+    transform: translateY(25px) scale(0.99);
+
+    animation:
+        entranceCover 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards,
+        subtleFloat 6s ease-in-out 1.4s infinite alternate;
 }
 
+
+/* ============================================================
+   COVER CONTENT
+   ============================================================ */
+
+.cover-content {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    z-index: 2;
+
+    width: min(900px, 90%);
+
+    transform: translate(-50%, -50%);
+
+    text-align: center;
+
+    color: var(--white);
+
+    line-height: normal;
+}
+
+
+/* ============================================================
+   COVER TITLE
+   ============================================================ */
+
+.cover-content h1 {
+    margin: 0;
+
+    font-family: var(--font-brand);
+    font-size: clamp(2.2rem, 6vw, 5rem);
+    font-weight: 900;
+
+    line-height: 1.05;
+
+    color: var(--text-main);
+
+    text-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+
+/* ============================================================
+   COVER SUBTITLE
+   ============================================================ */
+
+.cover-content h2 {
+    margin: 16px auto 0;
+
+    max-width: 800px;
+
+    font-family: var(--font-body);
+    font-size: clamp(0.85rem, 2vw, 1.25rem);
+    font-weight: 500;
+
+    line-height: 1.5;
+
+    color: var(--text-main);
+
+    text-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.35);
+}
 /* ==========================================================================
    ANIMATED GREEN SPACER BAR (Directly below cover image, zero white lines)
    ========================================================================== */

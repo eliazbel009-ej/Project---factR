@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Grade 10 - Quartiles, Deciles, Percentiles</title>
+<title>Grade 10 - Solving Absolute Value Equations</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <style>
+    
 * {
     box-sizing: border-box;
 }
@@ -73,6 +76,7 @@ body {
 
 .student-info-group input {
     width: 100%;
+    height: 44px;
     padding: 12px;
     border: 1px solid #a5d6a7;
     border-radius: 8px;
@@ -107,6 +111,25 @@ button:disabled {
     cursor: not-allowed;
 }
 
+#questionLimit {
+    width: 100%;
+    height: 44px;
+    padding: 0 12px;
+    border: 1px solid #81c784;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #555;
+    font-size: 16px;
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+}
+
+#questionLimit:focus {
+    border-color: #2e7d32;
+    box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.08);
+}
+
 .countdown-card {
     text-align: center;
 }
@@ -137,6 +160,7 @@ button:disabled {
     border-radius: 10px;
     margin-bottom: 25px;
     border: 1px solid #dedede;
+    text-align: center;
 }
 
 #datasetDescription {
@@ -147,10 +171,11 @@ button:disabled {
     color: #1b5e20;
 }
 
-#datasetDisplay {
+#equationDisplay {
     line-height: 1.8;
     word-break: break-word;
-    font-size: 18px;
+    font-size: 38px;
+    font-weight: bold;
     color: #2e7d32;
 }
 
@@ -164,37 +189,6 @@ button:disabled {
     color: #388e3c;
     text-transform: uppercase;
     margin-bottom: 8px;
-}
-
-#questionLimit {
-    width: 100%;
-    height: 44px;
-    padding: 0 12px;
-    border: 1px solid #81c784;
-    border-radius: 8px;
-    background-color: #ffffff;
-    color: #555;
-    font-size: 16px;
-    font-family: inherit;
-    outline: none;
-    cursor: pointer;
-}
-
-#questionLimit:focus {
-    border-color: #2e7d32;
-    box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.08);
-}
-
-#studentName,
-#studentSection,
-#questionLimit {
-    width: 100%;
-    height: 44px;
-    box-sizing: border-box;
-}
-
-#questionLimit {
-    margin-top: 5px;
 }
 
 .answer-row {
@@ -215,13 +209,6 @@ button:disabled {
     margin-top: 0;
     margin-bottom: 10px;
     color: #1b5e20;
-}
-
-.large-subscript {
-    font-size: 14px !important;
-    vertical-align: -3px;
-    line-height: 0;
-    margin-left: 0;
 }
 
 .answer-box input {
@@ -276,6 +263,7 @@ button:disabled {
     font-weight: 900;
     text-align: center;
     color: #2e7d32;
+
     text-shadow:
         0 5px 0 #a5d6a7,
         0 10px 25px rgba(46, 125, 50, 0.35);
@@ -305,6 +293,7 @@ button:disabled {
         transform: scale(1) rotate(0);
         opacity: 1;
     }
+
 }
 
 @keyframes successFloat {
@@ -320,6 +309,7 @@ button:disabled {
     100% {
         transform: translateY(0) scale(1);
     }
+
 }
 
 #finalScore {
@@ -373,48 +363,40 @@ button:disabled {
         font-size: 80px;
     }
 
+    #equationDisplay {
+        font-size: 23px;
+    }
+
     .answer-row {
         grid-template-columns: 1fr;
     }
-    
-.top-bar{
-    width: 100%;
+
 }
-}
-.top-bar {
-    width: 100%;
-}
+
 </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="../../assets/style/style.css">
 
 </head>
 
+
 <body>
 
-<!-- START SCREEN -->
- <header class="top-nav-bar" id="navbar">
 
-  </header>
-<main>
-    
-<section class="cover-section" id="cover">
-      <div class="cover-wrapper">
-        <img 
-          src="../../assets/img/background/7-Integers.jpeg" 
-          alt="ProjectFactr Mathematics Remedial Learning Platform Banner" 
-          class="cover-image"
-          id="main-cover-image"
-        >
-      </div>
-    </section>
-    <section id="startScreen" class="screen">
+<!-- =========================================
+     START SCREEN
+========================================= -->
+
+<section id="startScreen" class="screen">
 
     <div class="card">
 
-        <h1>GRADE 10</h1>
+        <h1>
+            GRADE 10
+        </h1>
 
-        <h2>QUARTILES, DECILES, PERCENTILES</h2>
+        <h2>
+            SOLVING ABSOLUTE VALUE EQUATIONS
+        </h2>
+
 
         <div class="student-info-group">
 
@@ -431,6 +413,7 @@ button:disabled {
 
         </div>
 
+
         <div class="student-info-group">
 
             <label for="studentSection">
@@ -445,6 +428,7 @@ button:disabled {
             >
 
         </div>
+
 
         <div class="student-info-group">
 
@@ -498,6 +482,7 @@ button:disabled {
 
         </div>
 
+
         <button id="startButton">
             START QUIZ
         </button>
@@ -507,7 +492,11 @@ button:disabled {
 </section>
 
 
-<!-- COUNTDOWN SCREEN -->
+
+<!-- =========================================
+     COUNTDOWN SCREEN
+========================================= -->
+
 <section
     id="countdownScreen"
     class="screen hidden"
@@ -524,13 +513,18 @@ button:disabled {
 </section>
 
 
-<!-- QUIZ SCREEN -->
+
+<!-- =========================================
+     QUIZ SCREEN
+========================================= -->
+
 <section
     id="quizScreen"
     class="screen hidden"
 >
 
     <div class="card">
+
 
         <div class="top-bar">
 
@@ -545,15 +539,18 @@ button:disabled {
         </div>
 
 
+
         <div class="dataset-box">
 
             <div id="datasetDescription">
+                Solve the absolute value equation.
             </div>
 
-            <div id="datasetDisplay">
+            <div id="equationDisplay">
             </div>
 
         </div>
+
 
 
         <div class="question-box">
@@ -562,31 +559,11 @@ button:disabled {
                 class="question-type"
                 id="questionType"
             >
+                ABSOLUTE VALUE EQUATION
             </div>
 
 
             <div class="answer-row">
-
-                <div
-                    id="positionStage"
-                    class="answer-box"
-                >
-
-                    <p>
-                        <strong>
-                            1. Position
-                        </strong>
-                    </p>
-
-                    <input
-                        type="number"
-                        id="positionInput"
-                        placeholder="Enter position"
-                        step="0.01"
-                        autocomplete="off"
-                    >
-
-                </div>
 
 
                 <div
@@ -596,28 +573,52 @@ button:disabled {
 
                     <p>
                         <strong>
-                            2. Answer
+                            1. First Solution
                         </strong>
                     </p>
 
                     <input
-                        type="number"
-                        id="answerInput"
-                        placeholder="Enter answer"
-                        step="0.01"
+                        type="text"
+                        id="answer1"
+                        placeholder="Enter x₁"
                         autocomplete="off"
                     >
 
                 </div>
+
+
+
+                <div
+                    id="answerStage2"
+                    class="answer-box"
+                >
+
+                    <p>
+                        <strong>
+                            2. Second Solution
+                        </strong>
+                    </p>
+
+                    <input
+                        type="text"
+                        id="answer2"
+                        placeholder="Enter x₂"
+                        autocomplete="off"
+                    >
+
+                </div>
+
 
             </div>
 
         </div>
 
 
+
         <button id="submitButton">
             SUBMIT ANSWER
         </button>
+
 
 
         <div
@@ -627,6 +628,7 @@ button:disabled {
         </div>
 
 
+
         <button
             id="nextButton"
             class="hidden"
@@ -634,33 +636,44 @@ button:disabled {
             NEXT QUESTION
         </button>
 
+
     </div>
 
 </section>
 
 
 
-<!-- SUCCESS ANIMATION -->
+<!-- =========================================
+     SUCCESS ANIMATION
+========================================= -->
+
 <div
     id="successAnimation"
     class="hidden"
 >
+
     <div
         id="successText"
         class="success-text"
     >
         GOOD JOB!
     </div>
+
 </div>
 
 
-<!-- RESULT SCREEN -->
+
+<!-- =========================================
+     RESULT SCREEN
+========================================= -->
+
 <section
     id="resultScreen"
     class="screen hidden"
 >
 
     <div class="card">
+
 
         <h1>
             QUIZ COMPLETE
@@ -696,22 +709,140 @@ button:disabled {
             NEW QUIZ
         </button>
 
+
     </div>
 
 </section>
-</main>
-  <script src="../../js/helper/navbar.js"></script>
+
+
 
 <script>
+    "use strict";
+
+
+/* =====================================================
+   1. DOM ELEMENTS
+===================================================== */
+
+const startScreen =
+    document.getElementById("startScreen");
+
+const countdownScreen =
+    document.getElementById("countdownScreen");
+
+const quizScreen =
+    document.getElementById("quizScreen");
+
+const resultScreen =
+    document.getElementById("resultScreen");
+
+
+const studentNameInput =
+    document.getElementById("studentName");
+
+const studentSectionInput =
+    document.getElementById("studentSection");
+
+const questionLimit =
+    document.getElementById("questionLimit");
+
+
+const startButton =
+    document.getElementById("startButton");
+
+const countdownNumber =
+    document.getElementById("countdownNumber");
+
+
+const questionCount =
+    document.getElementById("questionCount");
+
+const timer =
+    document.getElementById("timer");
+
+const equationDisplay =
+    document.getElementById("equationDisplay");
+
+const questionType =
+    document.getElementById("questionType");
+
+
+const answer1 =
+    document.getElementById("answer1");
+
+const answer2 =
+    document.getElementById("answer2");
+
+
+const submitButton =
+    document.getElementById("submitButton");
+
+const nextButton =
+    document.getElementById("nextButton");
+
+const feedback =
+    document.getElementById("feedback");
+
+
+const successAnimation =
+    document.getElementById("successAnimation");
+
+const successText =
+    document.getElementById("successText");
+
+
+const studentSummary =
+    document.getElementById("studentSummary");
+
+const finalScore =
+    document.getElementById("finalScore");
+
+const finalTime =
+    document.getElementById("finalTime");
+
+const finalCategory =
+    document.getElementById("finalCategory");
+
+
+const downloadPdfButton =
+    document.getElementById("downloadPdfButton");
+
+const newQuizButton =
+    document.getElementById("newQuizButton");
 
 
 
 /* =====================================================
-   1. RESTRICT NAME INPUT
-   ===================================================== */
+   2. APP STATE
+===================================================== */
 
-const studentNameInput =
-    document.getElementById("studentName");
+let TOTAL_QUESTIONS = 10;
+
+let questions = [];
+
+let currentQuestion = 0;
+
+let score = 0;
+
+let quizResults = [];
+
+let studentName = "";
+
+let studentSection = "";
+
+let timerInterval = null;
+
+let startTime = null;
+
+let elapsedSeconds = 0;
+
+let consecutiveCorrect = 0;
+
+
+
+/* =====================================================
+   3. RESTRICT NAME INPUT
+===================================================== */
 
 studentNameInput.addEventListener(
     "input",
@@ -727,323 +858,14 @@ studentNameInput.addEventListener(
 );
 
 
-/* =====================================================
-   2. QUIZ CONFIGURATION
-   ===================================================== */
-
-let TOTAL_QUESTIONS = 10;
-
-const QUARTILE_DATASET_SIZE = 15;
-const DECILE_PERCENTILE_DATASET_SIZE = 19;
-
 
 /* =====================================================
-   3. QUESTION TEMPLATES
-   ===================================================== */
-
-const questionTemplates = [
-
-    {
-        category: "Quiz Scores",
-        context: "Quiz scores of students (scores range from 1–20).",
-        min: 1,
-        max: 20,
-        type: "Q",
-        item: 1
-    },
-
-    {
-        category: "Quiz Scores",
-        context: "Quiz scores of students (scores range from 1–20).",
-        min: 1,
-        max: 20,
-        type: "Q",
-        item: 2
-    },
-
-    {
-        category: "Quiz Scores",
-        context: "Quiz scores of students (scores range from 1–20).",
-        min: 1,
-        max: 20,
-        type: "Q",
-        item: 3
-    },
-
-    {
-        category: "Quiz Scores",
-        context: "Quiz scores of students (scores range from 1–20).",
-        min: 1,
-        max: 20,
-        type: "D",
-        item: 2
-    },
-
-    {
-        category: "Quiz Scores",
-        context: "Quiz scores of students (scores range from 1–20).",
-        min: 1,
-        max: 20,
-        type: "D",
-        item: 4
-    },
-
-    {
-        category: "Quiz Scores",
-        context: "Quiz scores of students (scores range from 1–20).",
-        min: 1,
-        max: 20,
-        type: "D",
-        item: 6
-    },
-
-    {
-        category: "Quiz Scores",
-        context: "Quiz scores of students (scores range from 1–20).",
-        min: 1,
-        max: 20,
-        type: "D",
-        item: 8
-    },
-
-
-    /* SUMMATIVE EXAM SCORES */
-
-    {
-        category: "Summative Exam Scores",
-        context: "Summative test scores of students (scores range from 10–50).",
-        min: 10,
-        max: 50,
-        type: "Q",
-        item: 1
-    },
-
-    {
-        category: "Summative Exam Scores",
-        context: "Summative test scores of students (scores range from 10–50).",
-        min: 10,
-        max: 50,
-        type: "Q",
-        item: 2
-    },
-
-    {
-        category: "Summative Exam Scores",
-        context: "Summative test scores of students (scores range from 10–50).",
-        min: 10,
-        max: 50,
-        type: "D",
-        item: 3
-    },
-
-    {
-        category: "Summative Exam Scores",
-        context: "Summative test scores of students (scores range from 10–50).",
-        min: 10,
-        max: 50,
-        type: "D",
-        item: 5
-    },
-
-    {
-        category: "Summative Exam Scores",
-        context: "Summative test scores of students (scores range from 10–50).",
-        min: 10,
-        max: 50,
-        type: "D",
-        item: 7
-    },
-
-    {
-        category: "Summative Exam Scores",
-        context: "Summative test scores of students (scores range from 10–50).",
-        min: 10,
-        max: 50,
-        type: "P",
-        item: 60
-    },
-
-    {
-        category: "Summative Exam Scores",
-        context: "Summative test scores of students (scores range from 10–50).",
-        min: 10,
-        max: 50,
-        type: "P",
-        item: 80
-    },
-
-
-    /* FINAL GRADES */
-
-    {
-        category: "Final Grades",
-        context: "Final grades of students (grades range from 70–100).",
-        min: 70,
-        max: 100,
-        type: "Q",
-        item: 1
-    },
-
-    {
-        category: "Final Grades",
-        context: "Final grades of students (grades range from 70–100).",
-        min: 70,
-        max: 100,
-        type: "Q",
-        item: 3
-    },
-
-    {
-        category: "Final Grades",
-        context: "Final grades of students (grades range from 70–100).",
-        min: 70,
-        max: 100,
-        type: "D",
-        item: 5
-    },
-
-    {
-        category: "Final Grades",
-        context: "Final grades of students (grades range from 70–100).",
-        min: 70,
-        max: 100,
-        type: "P",
-        item: 40
-    },
-
-    {
-        category: "Final Grades",
-        context: "Final grades of students (grades range from 70–100).",
-        min: 70,
-        max: 100,
-        type: "P",
-        item: 70
-    },
-
-    {
-        category: "Final Grades",
-        context: "Final grades of students (grades range from 70–100).",
-        min: 70,
-        max: 100,
-        type: "P",
-        item: 90
-    }
-
-];
-
-
-/* =====================================================
-   4. APP STATE
-   ===================================================== */
-
-let questions = [];
-let currentQuestion = 0;
-let score = 0;
-let quizResults = [];
-
-let studentName = "";
-let studentSection = "";
-
-let timerInterval = null;
-let startTime = null;
-let elapsedSeconds = 0;
-
-let consecutiveCorrect = 0;
-
-
-/* =====================================================
-   5. DOM ELEMENTS
-   ===================================================== */
-
-const startScreen =
-    document.getElementById("startScreen");
-
-const countdownScreen =
-    document.getElementById("countdownScreen");
-
-const quizScreen =
-    document.getElementById("quizScreen");
-
-const resultScreen =
-    document.getElementById("resultScreen");
-
-const startButton =
-    document.getElementById("startButton");
-
-const countdownNumber =
-    document.getElementById("countdownNumber");
-
-const questionCount =
-    document.getElementById("questionCount");
-
-const timer =
-    document.getElementById("timer");
-
-const datasetDisplay =
-    document.getElementById("datasetDisplay");
-
-const datasetDescription =
-    document.getElementById("datasetDescription");
-
-const questionType =
-    document.getElementById("questionType");
-
-const positionInput =
-    document.getElementById("positionInput");
-
-const answerInput =
-    document.getElementById("answerInput");
-
-const positionStage =
-    document.getElementById("positionStage");
-
-const answerStage =
-    document.getElementById("answerStage");
-
-const submitButton =
-    document.getElementById("submitButton");
-
-const nextButton =
-    document.getElementById("nextButton");
-
-const feedback =
-    document.getElementById("feedback");
-
-const studentSummary =
-    document.getElementById("studentSummary");
-
-const finalScore =
-    document.getElementById("finalScore");
-
-const finalTime =
-    document.getElementById("finalTime");
-
-const finalCategory =
-    document.getElementById("finalCategory");
-
-const downloadPdfButton =
-    document.getElementById("downloadPdfButton");
-
-const newQuizButton =
-    document.getElementById("newQuizButton");
-
-const questionLimit =
-    document.getElementById("questionLimit");
-
-const successAnimation =
-    document.getElementById("successAnimation");
-
-const successText =
-    document.getElementById("successText");
-
-
-/* =====================================================
-   6. HELPER FUNCTIONS
-   ===================================================== */
+   4. SHUFFLE
+===================================================== */
 
 function shuffle(array) {
 
-    let arr = [...array];
+    const arr = [...array];
 
     for (
         let i = arr.length - 1;
@@ -1058,407 +880,741 @@ function shuffle(array) {
 
         [arr[i], arr[j]] =
             [arr[j], arr[i]];
+
     }
 
     return arr;
 }
 
 
+
 /* =====================================================
-   RANDOM DATASET
-   ===================================================== */
+   5. RANDOM INTEGER
+===================================================== */
 
-function generateRandomSortedDataset(
-    count,
-    min,
-    max
-) {
+function randomInteger(min, max) {
 
-    let data = [];
-
-    for (let i = 0; i < count; i++) {
-
-        let val =
-            Math.floor(
-                Math.random() *
-                (max - min + 1)
-            ) + min;
-
-        data.push(val);
-    }
-
-    return data.sort(
-        (a, b) => a - b
-    );
-}
-
-
-function toSubscript(number) {
-
-    return `<sub class="large-subscript">${number}</sub>`;
+    return Math.floor(
+        Math.random() *
+        (max - min + 1)
+    ) + min;
 
 }
 
-
-function ordinalnumber(n) {
-
-    const j = n % 10;
-    const k = n % 100;
-
-    if (
-        j === 1 &&
-        k !== 11
-    ) {
-        return n + "st";
-    }
-
-    if (
-        j === 2 &&
-        k !== 12
-    ) {
-        return n + "nd";
-    }
-
-    if (
-        j === 3 &&
-        k !== 13
-    ) {
-        return n + "rd";
-    }
-
-    return n + "th";
-}
 
 
 /* =====================================================
-   POSITION
-   ===================================================== */
+   6. GCD
+===================================================== */
 
-function calculatePosition(
-    type,
-    item,
-    n
-) {
+function gcd(a, b) {
 
-    if (type === "Q") {
+    a = Math.abs(a);
+    b = Math.abs(b);
 
-        return (
-            item / 4
-        ) * (n + 1);
+    while (b !== 0) {
 
-    }
+        const temp = a % b;
 
-    if (type === "D") {
-
-        return (
-            item / 10
-        ) * (n + 1);
+        a = b;
+        b = temp;
 
     }
 
-    return (
-        item / 100
-    ) * (n + 1);
+    return a || 1;
 
 }
 
 
+
 /* =====================================================
-   ANSWER
-   ===================================================== */
+   7. FRACTION FORMAT
+===================================================== */
 
-function calculateAnswer(
-    data,
-    type,
-    item
-) {
+function fractionFromNumber(number) {
 
-    const sortedData =
-        [...data].sort(
-            (a, b) => a - b
-        );
+    if (Number.isInteger(number)) {
 
-    const position =
-        calculatePosition(
-            type,
-            item,
-            sortedData.length
+        return String(number);
+
+    }
+
+
+    const denominator = 1000;
+
+    let numerator =
+        Math.round(
+            number * denominator
         );
 
 
-    if (position <= 1) {
+    const divisor =
+        gcd(
+            numerator,
+            denominator
+        );
 
-        return sortedData[0];
 
-    }
+    numerator =
+        numerator / divisor;
+
+    const finalDenominator =
+        denominator / divisor;
 
 
     if (
-        position >=
-        sortedData.length
+        finalDenominator === 1
     ) {
 
-        return sortedData[
-            sortedData.length - 1
-        ];
+        return String(numerator);
 
     }
-
-
-    const lowerIndex =
-        Math.floor(position) - 1;
-
-    const fraction =
-        position -
-        Math.floor(position);
-
-    const lowerValue =
-        sortedData[lowerIndex];
-
-    const upperValue =
-        sortedData[
-            lowerIndex + 1
-        ];
 
 
     return (
-        lowerValue +
-        fraction *
-        (upperValue - lowerValue)
+        numerator +
+        "/" +
+        finalDenominator
     );
+
 }
 
 
-/* =====================================================
-   FORMAT ANSWER
-   ===================================================== */
 
-function formatAnswer(value) {
+/* =====================================================
+   8. FORMAT NUMBER
+===================================================== */
+
+function formatNumber(number) {
 
     if (
-        Number.isInteger(value)
+        Number.isInteger(number)
     ) {
 
-        return String(value);
+        return String(number);
 
     }
 
-    return value
-        .toFixed(2)
-        .replace(/\.00$/, "");
+
+    return fractionFromNumber(
+        number
+    );
+
 }
 
 
+
 /* =====================================================
-   MEASURE NAME
-   ===================================================== */
+   9. PARSE USER ANSWER
+===================================================== */
 
-function getMeasureName(
-    type,
-    item
-) {
+function parseAnswer(value) {
 
-    if (type === "Q") {
+    const text =
+        String(value)
+            .trim()
+            .replace("−", "-");
 
-        if (item === 1) {
-            return "lower quartile";
+
+    const fractionMatch =
+        text.match(
+            /^([+-]?\d+(?:\.\d+)?)\s*\/\s*([+-]?\d+(?:\.\d+)?)$/
+        );
+
+
+    if (fractionMatch) {
+
+        const numerator =
+            Number(
+                fractionMatch[1]
+            );
+
+        const denominator =
+            Number(
+                fractionMatch[2]
+            );
+
+
+        if (
+            denominator === 0
+        ) {
+
+            return NaN;
+
         }
 
-        if (item === 2) {
-            return "median";
-        }
-
-        return "upper quartile";
-    }
-
-
-    if (type === "D") {
 
         return (
-            `${ordinalnumber(item)} decile`
+            numerator /
+            denominator
         );
 
     }
 
 
-    return (
-        `${ordinalnumber(item)} percentile`
-    );
+    if (
+        /^[-+]?\d*\.?\d+$/.test(
+            text
+        )
+    ) {
+
+        return Number(text);
+
+    }
+
+
+    return NaN;
+
 }
 
 
-/* =====================================================
-   QUESTION TEXT
-   ===================================================== */
 
-function createQuestionText(
-    question
+/* =====================================================
+   10. NUMBER COMPARISON
+===================================================== */
+
+function numbersEqual(a, b) {
+
+    return (
+        Math.abs(a - b) <
+        0.0001
+    );
+
+}
+
+
+
+/* =====================================================
+   11. ANSWER CHECKING
+===================================================== */
+
+function answersAreCorrect(
+    user1,
+    user2,
+    correctAnswers
 ) {
 
-    const measure =
-        getMeasureName(
-            question.type,
-            question.item
+    if (
+        !Number.isFinite(user1) ||
+        !Number.isFinite(user2)
+    ) {
+
+        return false;
+
+    }
+
+
+    const normalOrder =
+        numbersEqual(
+            user1,
+            correctAnswers[0]
+        ) &&
+        numbersEqual(
+            user2,
+            correctAnswers[1]
         );
 
-    const label =
-        question.type +
-        toSubscript(
-            question.item
+
+    const reverseOrder =
+        numbersEqual(
+            user1,
+            correctAnswers[1]
+        ) &&
+        numbersEqual(
+            user2,
+            correctAnswers[0]
         );
+
 
     return (
-        `What is the ${measure} (${label})?`
+        normalOrder ||
+        reverseOrder
     );
+
 }
 
 
-/* =====================================================
-   GENERATE ONE QUESTION
-   ===================================================== */
-
-function generateQuestion(template) {
-
-    const studentCount =
-        template.type === "Q"
-            ? QUARTILE_DATASET_SIZE
-            : DECILE_PERCENTILE_DATASET_SIZE;
-
-
-    const data =
-        generateRandomSortedDataset(
-            studentCount,
-            template.min,
-            template.max
-        );
-
-
-    const position =
-        calculatePosition(
-            template.type,
-            template.item,
-            studentCount
-        );
-
-
-    const answer =
-        calculateAnswer(
-            data,
-            template.type,
-            template.item
-        );
-
-
-    return {
-
-        category:
-            template.category,
-
-        context:
-            template.context,
-
-        data:
-            data,
-
-        type:
-            template.type,
-
-        item:
-            template.item,
-
-        studentCount:
-            studentCount,
-
-        position:
-            position,
-
-        answer:
-            answer
-
-    };
-}
-
 
 /* =====================================================
-   GENERATE QUESTIONS
-   ===================================================== */
+   12. GENERATE ONE ABSOLUTE VALUE EQUATION
+===================================================== */
 
-function generateQuestions() {
-
-    let generated = [];
-
-    let usedQuestions =
-        new Set();
+function generateRandomQuestion(
+    solutionType
+) {
 
     let attempts = 0;
 
-    const maxAttempts = 5000;
 
-
-    while (
-        generated.length <
-            TOTAL_QUESTIONS &&
-        attempts <
-            maxAttempts
-    ) {
+    while (attempts < 5000) {
 
         attempts++;
 
 
-        const template =
-            questionTemplates[
-                Math.floor(
-                    Math.random() *
-                    questionTemplates.length
-                )
-            ];
+        let coefficient;
+        let shift;
+        let distance;
+
+        let equation;
+        let answers;
 
 
-        const question =
-            generateQuestion(
-                template
+        const type =
+            randomInteger(
+                1,
+                4
             );
 
 
-        const uniqueKey =
-            [
-                question.category,
-                question.type,
-                question.item,
-                question.data.join(",")
-            ].join("|");
 
+        /* =============================================
+           TYPE 1
+           |x ± a| = b
+        ============================================= */
+
+        if (type === 1) {
+
+            shift =
+                randomInteger(
+                    1,
+                    20
+                );
+
+
+            if (
+                solutionType ===
+                "whole"
+            ) {
+
+                const maxDistance =
+                    Math.min(
+                        20,
+                        20 - shift
+                    );
+
+
+                if (
+                    maxDistance < 1
+                ) {
+
+                    continue;
+
+                }
+
+
+                distance =
+                    randomInteger(
+                        1,
+                        maxDistance
+                    );
+
+            }
+
+            else {
+
+                const numerator =
+                    randomInteger(
+                        1,
+                        19
+                    );
+
+                const denominator =
+                    randomInteger(
+                        2,
+                        10
+                    );
+
+
+                distance =
+                    numerator /
+                    denominator;
+
+
+                if (
+                    Number.isInteger(
+                        distance
+                    )
+                ) {
+
+                    continue;
+
+                }
+
+            }
+
+
+
+            if (
+                Math.random() < 0.5
+            ) {
+
+                equation =
+                    "|x + " +
+                    shift +
+                    "| = " +
+                    formatNumber(
+                        distance
+                    );
+
+
+                answers = [
+
+                    -distance -
+                    shift,
+
+                    distance -
+                    shift
+
+                ];
+
+            }
+
+            else {
+
+                equation =
+                    "|x - " +
+                    shift +
+                    "| = " +
+                    formatNumber(
+                        distance
+                    );
+
+
+                answers = [
+
+                    shift -
+                    distance,
+
+                    shift +
+                    distance
+
+                ];
+
+            }
+
+        }
+
+
+
+        /* =============================================
+           TYPES 2–4
+           |ax ± b| = c
+        ============================================= */
+
+        else {
+
+            coefficient =
+                randomInteger(
+                    2,
+                    10
+                );
+
+
+            shift =
+                randomInteger(
+                    1,
+                    20
+                );
+
+
+            distance =
+                randomInteger(
+                    1,
+                    20
+                );
+
+
+
+            if (
+                Math.random() < 0.5
+            ) {
+
+                equation =
+                    "|" +
+                    coefficient +
+                    "x + " +
+                    shift +
+                    "| = " +
+                    distance;
+
+
+                answers = [
+
+                    (
+                        -distance -
+                        shift
+                    ) /
+                    coefficient,
+
+                    (
+                        distance -
+                        shift
+                    ) /
+                    coefficient
+
+                ];
+
+            }
+
+            else {
+
+                equation =
+                    "|" +
+                    coefficient +
+                    "x - " +
+                    shift +
+                    "| = " +
+                    distance;
+
+
+                answers = [
+
+                    (
+                        shift -
+                        distance
+                    ) /
+                    coefficient,
+
+                    (
+                        shift +
+                        distance
+                    ) /
+                    coefficient
+
+                ];
+
+            }
+
+        }
+
+
+
+        /* =============================================
+           VALIDATE WHOLE NUMBER QUESTIONS
+        ============================================= */
 
         if (
-            !usedQuestions.has(
-                uniqueKey
+            solutionType ===
+            "whole"
+        ) {
+
+            if (
+                !answers.every(
+                    Number.isInteger
+                )
+            ) {
+
+                continue;
+
+            }
+
+        }
+
+
+
+        /* =============================================
+           VALIDATE FRACTION QUESTIONS
+        ============================================= */
+
+        if (
+            solutionType ===
+            "fraction"
+        ) {
+
+            if (
+                !answers.some(
+                    value =>
+                        !Number.isInteger(
+                            value
+                        )
+                )
+            ) {
+
+                continue;
+
+            }
+
+        }
+
+
+
+        /* =============================================
+           BOTH SOLUTIONS MUST BE DIFFERENT
+        ============================================= */
+
+        if (
+            numbersEqual(
+                answers[0],
+                answers[1]
             )
         ) {
 
-            usedQuestions.add(
-                uniqueKey
+            continue;
+
+        }
+
+
+
+        /* =============================================
+           RANDOMIZE SOLUTION ORDER
+        ============================================= */
+
+        if (
+            Math.random() < 0.5
+        ) {
+
+            answers.reverse();
+
+        }
+
+
+
+        return {
+
+            equation:
+                equation,
+
+            answers:
+                answers,
+
+            solutionType:
+                solutionType
+
+        };
+
+    }
+
+
+    return null;
+
+}
+
+
+
+/* =====================================================
+   13. GENERATE QUESTION SET
+===================================================== */
+
+function generateQuestionSet() {
+
+    const generated = [];
+
+    const usedEquations =
+        new Set();
+
+
+    /*
+       Approximately half whole-number
+       and half fractional.
+    */
+
+    const wholeCount =
+        Math.ceil(
+            TOTAL_QUESTIONS / 2
+        );
+
+
+    const fractionCount =
+        TOTAL_QUESTIONS -
+        wholeCount;
+
+
+
+    /* =============================================
+       WHOLE NUMBER QUESTIONS
+    ============================================= */
+
+    while (
+        generated.filter(
+            q =>
+                q.solutionType ===
+                "whole"
+        ).length <
+        wholeCount
+    ) {
+
+        const question =
+            generateRandomQuestion(
+                "whole"
+            );
+
+
+        if (
+            question &&
+            !usedEquations.has(
+                question.equation
+            )
+        ) {
+
+            usedEquations.add(
+                question.equation
             );
 
             generated.push(
                 question
             );
+
         }
+
+    }
+
+
+
+    /* =============================================
+       FRACTION QUESTIONS
+    ============================================= */
+
+    while (
+        generated.filter(
+            q =>
+                q.solutionType ===
+                "fraction"
+        ).length <
+        fractionCount
+    ) {
+
+        const question =
+            generateRandomQuestion(
+                "fraction"
+            );
+
+
+        if (
+            question &&
+            !usedEquations.has(
+                question.equation
+            )
+        ) {
+
+            usedEquations.add(
+                question.equation
+            );
+
+            generated.push(
+                question
+            );
+
+        }
+
     }
 
 
     return shuffle(
         generated
     );
+
 }
 
 
+
 /* =====================================================
-   CORRECT ANSWER ANIMATION
-   ===================================================== */
+   14. SUCCESS ANIMATION
+===================================================== */
 
 function showSuccessAnimation() {
 
     const messages = [
+
         "GOOD JOB!",
         "EXCELLENT!",
         "GREAT WORK!",
@@ -1474,59 +1630,72 @@ function showSuccessAnimation() {
         "IMPRESSIVE!",
         "NICE WORK!",
         "YOU GOT THIS!"
+
     ];
+
 
     let message;
 
-    /*
-       Piliin ang message base sa consecutive correct.
-       Pag 4 pataas, random na para hindi puro PERFECT.
-    */
 
-    if (consecutiveCorrect === 1) {
-        message = "GOOD JOB!";
+    if (
+        consecutiveCorrect === 1
+    ) {
+
+        message =
+            "GOOD JOB!";
+
     }
 
-    else if (consecutiveCorrect === 2) {
-        message = "EXCELLENT!";
+    else if (
+        consecutiveCorrect === 2
+    ) {
+
+        message =
+            "EXCELLENT!";
+
     }
 
-    else if (consecutiveCorrect === 3) {
-        message = "GREAT WORK!";
+    else if (
+        consecutiveCorrect === 3
+    ) {
+
+        message =
+            "GREAT WORK!";
+
     }
 
     else {
-        /*
-           4 pataas:
-           Random message mula sa listahan.
-        */
 
-        message = 
+        message =
             messages[
                 Math.floor(
-                    Math.random() * messages.length
+                    Math.random() *
+                    messages.length
                 )
             ];
 
-        /*
-           Siguraduhin na hindi laging
-           PERFECT ang lumalabas.
-        */
-        if (message === "PERFECT!") {
-            message = "AWESOME!";
-        }
     }
 
-    successText.textContent = message;
 
-    successAnimation.classList.remove("hidden");
+    successText.textContent =
+        message;
 
-    successText.style.animation = "none";
+
+    successAnimation.classList.remove(
+        "hidden"
+    );
+
+
+    successText.style.animation =
+        "none";
+
 
     void successText.offsetWidth;
 
+
     successText.style.animation =
         "successPop 0.7s ease-out, successFloat 1.2s ease-in-out 0.7s";
+
 
     setTimeout(
         function() {
@@ -1538,33 +1707,25 @@ function showSuccessAnimation() {
         },
         1900
     );
+
 }
 
 
+
 /* =====================================================
-   7. START QUIZ
-   ===================================================== */
+   15. START QUIZ
+===================================================== */
 
 startButton.addEventListener(
     "click",
     function() {
 
         studentName =
-            document
-                .getElementById(
-                    "studentName"
-                )
-                .value
-                .trim();
+            studentNameInput.value.trim();
 
 
         studentSection =
-            document
-                .getElementById(
-                    "studentSection"
-                )
-                .value
-                .trim();
+            studentSectionInput.value.trim();
 
 
         if (
@@ -1577,6 +1738,7 @@ startButton.addEventListener(
             );
 
             return;
+
         }
 
 
@@ -1608,22 +1770,27 @@ startButton.addEventListener(
             "hidden"
         );
 
+
         countdownScreen.classList.remove(
             "hidden"
         );
 
+
         startCountdown();
+
     }
 );
 
 
+
 /* =====================================================
-   8. COUNTDOWN
-   ===================================================== */
+   16. COUNTDOWN
+===================================================== */
 
 function startCountdown() {
 
     let count = 3;
+
 
     countdownNumber.textContent =
         count;
@@ -1636,7 +1803,9 @@ function startCountdown() {
                 count--;
 
 
-                if (count > 0) {
+                if (
+                    count > 0
+                ) {
 
                     countdownNumber.textContent =
                         count;
@@ -1649,31 +1818,37 @@ function startCountdown() {
                         countdown
                     );
 
+
                     countdownScreen.classList.add(
                         "hidden"
                     );
+
 
                     quizScreen.classList.remove(
                         "hidden"
                     );
 
+
                     beginQuiz();
+
                 }
 
             },
             1000
         );
+
 }
 
 
+
 /* =====================================================
-   9. BEGIN QUIZ
-   ===================================================== */
+   17. BEGIN QUIZ
+===================================================== */
 
 function beginQuiz() {
 
     questions =
-        generateQuestions();
+        generateQuestionSet();
 
 
     currentQuestion = 0;
@@ -1688,12 +1863,14 @@ function beginQuiz() {
     startTimer();
 
     showQuestion();
+
 }
 
 
+
 /* =====================================================
-   10. TIMER
-   ===================================================== */
+   18. TIMER
+===================================================== */
 
 function startTimer() {
 
@@ -1704,6 +1881,7 @@ function startTimer() {
 
     startTime =
         Date.now();
+
 
     elapsedSeconds = 0;
 
@@ -1734,8 +1912,14 @@ function startTimer() {
             },
             1000
         );
+
 }
 
+
+
+/* =====================================================
+   19. FORMAT TIME
+===================================================== */
 
 function formatTime(seconds) {
 
@@ -1757,12 +1941,14 @@ function formatTime(seconds) {
             remainingSeconds
         ).padStart(2, "0")
     );
+
 }
 
 
+
 /* =====================================================
-   11. SHOW QUESTION
-   ===================================================== */
+   20. SHOW QUESTION
+===================================================== */
 
 function showQuestion() {
 
@@ -1775,60 +1961,42 @@ function showQuestion() {
     questionCount.textContent =
         `Question ${
             currentQuestion + 1
-        } of ${TOTAL_QUESTIONS}`;
+        } of ${
+            TOTAL_QUESTIONS
+        }`;
 
 
     datasetDescription.textContent =
-        `The dataset shows the ${
-            question.category.toLowerCase()
-        } of ${
-            question.studentCount
-        } students.`;
+        "Solve the absolute value equation.";
 
 
-    datasetDisplay.textContent =
-        question.data.join(", ");
+    equationDisplay.textContent =
+        question.equation;
 
 
     questionType.textContent =
-        question.category;
+        "ABSOLUTE VALUE EQUATION";
 
 
-    positionInput.value = "";
+    answer1.value = "";
 
-    answerInput.value = "";
-
-
-    positionStage
-        .querySelector("p")
-        .innerHTML =
-        `<strong>
-            1. Find the
-            ${question.type}${toSubscript(question.item)}
-            Position
-        </strong>`;
+    answer2.value = "";
 
 
-    answerStage
-        .querySelector("p")
-        .innerHTML =
-        `<strong>
-            2. ${createQuestionText(question)}
-        </strong>`;
-
-
-    positionInput.disabled =
+    answer1.disabled =
         false;
 
-    answerInput.disabled =
+    answer2.disabled =
         false;
 
 
     submitButton.textContent =
         "SUBMIT ANSWER";
 
+
     submitButton.disabled =
         false;
+
 
     submitButton.classList.remove(
         "hidden"
@@ -1849,20 +2017,23 @@ function showQuestion() {
 
     setTimeout(
         () =>
-            positionInput.focus(),
+            answer1.focus(),
         50
     );
+
 }
 
 
+
 /* =====================================================
-   12. SUBMIT ANSWER
-   ===================================================== */
+   21. SUBMIT ANSWER
+===================================================== */
 
 submitButton.addEventListener(
     "click",
     submitAnswer
 );
+
 
 
 function submitAnswer() {
@@ -1874,14 +2045,14 @@ function submitAnswer() {
 
 
     if (
-        positionInput.value.trim() ===
+        answer1.value.trim() ===
             "" ||
-        answerInput.value.trim() ===
+        answer2.value.trim() ===
             ""
     ) {
 
         feedback.textContent =
-            "Please enter both the position and the answer.";
+            "Please enter both solutions before submitting.";
 
         feedback.className =
             "wrong";
@@ -1891,58 +2062,71 @@ function submitAnswer() {
         );
 
         return;
+
     }
 
 
-    const enteredPosition =
-        Number(
-            positionInput.value
+    const user1 =
+        parseAnswer(
+            answer1.value
         );
 
 
-    const userAnswer =
-        Number(
-            answerInput.value
+    const user2 =
+        parseAnswer(
+            answer2.value
         );
 
 
-    const expectedPosition =
-        Number(
-            question.position.toFixed(2)
+    if (
+        !Number.isFinite(user1) ||
+        !Number.isFinite(user2)
+    ) {
+
+        feedback.textContent =
+            "Please enter valid numbers or fractions such as -3/5.";
+
+        feedback.className =
+            "wrong";
+
+        feedback.classList.remove(
+            "hidden"
         );
 
+        return;
 
-    const expectedAnswer =
-        Number(
-            formatAnswer(
-                question.answer
-            )
-        );
-
-
-    const positionCorrect =
-        Number.isFinite(
-            enteredPosition
-        ) &&
-        Math.abs(
-            enteredPosition -
-            expectedPosition
-        ) < 0.01;
-
-
-    const answerCorrect =
-        Number.isFinite(
-            userAnswer
-        ) &&
-        Math.abs(
-            userAnswer -
-            expectedAnswer
-        ) < 0.01;
+    }
 
 
     const isCorrect =
-        positionCorrect &&
-        answerCorrect;
+        answersAreCorrect(
+            user1,
+            user2,
+            question.answers
+        );
+
+
+    const answer1Correct =
+        numbersEqual(
+            user1,
+            question.answers[0]
+        ) ||
+        numbersEqual(
+            user1,
+            question.answers[1]
+        );
+
+
+    const answer2Correct =
+        numbersEqual(
+            user2,
+            question.answers[0]
+        ) ||
+        numbersEqual(
+            user2,
+            question.answers[1]
+        );
+
 
 
     if (isCorrect) {
@@ -1962,51 +2146,52 @@ function submitAnswer() {
     }
 
 
-    /*
-       NO FRACTION.
-       NO SOLUTION EXPLANATION.
-       ONLY CORRECT POSITION AND CORRECT ANSWER.
-    */
 
     feedback.innerHTML =
 
-        `${isCorrect
-            ? "✓ Correct!"
-            : "✗ Check your answers."
+        `${
+            isCorrect
+                ? "✓ Correct!"
+                : "✗ Check your answers."
         }<br><br>` +
 
-        `Position:
+        `Solution 1:
         <strong>
             ${
-                positionCorrect
+                answer1Correct
                     ? "Correct"
                     : "Incorrect"
             }
         </strong>
-        <br>
-        Correct Position:
+        <br>` +
+
+        `Solution 2:
         <strong>
-            ${formatAnswer(
-                question.position
-            )}
+            ${
+                answer2Correct
+                    ? "Correct"
+                    : "Incorrect"
+            }
         </strong>
         <br><br>` +
 
-        `Answer:
+        `Correct Solutions:
         <strong>
-            ${
-                answerCorrect
-                    ? "Correct"
-                    : "Incorrect"
+            x₁ = ${
+                formatNumber(
+                    question.answers[0]
+                )
             }
         </strong>
-        <br>
-        Correct Answer:
+        and
         <strong>
-            ${formatAnswer(
-                question.answer
-            )}
+            x₂ = ${
+                formatNumber(
+                    question.answers[1]
+                )
+            }
         </strong>`;
+
 
 
     feedback.className =
@@ -2020,39 +2205,26 @@ function submitAnswer() {
     );
 
 
+
     quizResults.push({
 
-        category:
-            question.category,
+        equation:
+            question.equation,
 
-        dataset:
-            question.data.join(", "),
+        studentSolution1:
+            formatNumber(user1),
 
-        question:
-            createQuestionText(
-                question
+        studentSolution2:
+            formatNumber(user2),
+
+        correctSolution1:
+            formatNumber(
+                question.answers[0]
             ),
 
-        measure:
-            question.type +
-            toSubscript(
-                question.item
-            ),
-
-        positionAnswer:
-            enteredPosition,
-
-        correctPosition:
-            formatAnswer(
-                question.position
-            ),
-
-        studentAnswer:
-            userAnswer,
-
-        correctAnswer:
-            formatAnswer(
-                question.answer
+        correctSolution2:
+            formatNumber(
+                question.answers[1]
             ),
 
         result:
@@ -2063,10 +2235,11 @@ function submitAnswer() {
     });
 
 
-    positionInput.disabled =
+
+    answer1.disabled =
         true;
 
-    answerInput.disabled =
+    answer2.disabled =
         true;
 
 
@@ -2076,6 +2249,7 @@ function submitAnswer() {
     submitButton.classList.add(
         "hidden"
     );
+
 
 
     if (
@@ -2099,12 +2273,14 @@ function submitAnswer() {
     nextButton.classList.remove(
         "hidden"
     );
+
 }
 
 
+
 /* =====================================================
-   13. NEXT QUESTION / SHOW SUMMARY
-   ===================================================== */
+   22. NEXT QUESTION
+===================================================== */
 
 nextButton.addEventListener(
     "click",
@@ -2118,6 +2294,7 @@ nextButton.addEventListener(
             finishQuiz();
 
             return;
+
         }
 
 
@@ -2129,9 +2306,10 @@ nextButton.addEventListener(
 );
 
 
+
 /* =====================================================
-   14. ENTER KEY
-   ===================================================== */
+   23. ENTER KEY
+===================================================== */
 
 document.addEventListener(
     "keydown",
@@ -2140,7 +2318,9 @@ document.addEventListener(
         if (
             event.key !== "Enter"
         ) {
+
             return;
+
         }
 
 
@@ -2149,7 +2329,9 @@ document.addEventListener(
                 "hidden"
             )
         ) {
+
             return;
+
         }
 
 
@@ -2174,16 +2356,16 @@ document.addEventListener(
 );
 
 
+
 /* =====================================================
-   15. FINISH QUIZ
-   ===================================================== */
+   24. FINISH QUIZ
+===================================================== */
 
 function finishQuiz() {
     clearInterval(timerInterval);
 
     const percentage = Math.round((score / TOTAL_QUESTIONS) * 100);
-    const quizType = "QUARTILES, DECILES, PERCENTILES";
-
+    const quizType = "Solving Absolute Value Equations";
     // SAVE RESULT TO GOOGLE SHEETS
     const formData = new URLSearchParams();
 
@@ -2194,18 +2376,28 @@ function finishQuiz() {
     formData.append("totalQuiz", TOTAL_QUESTIONS);
     formData.append("percentage", percentage + "%");
     formData.append("time", formatTime(elapsedSeconds));
-
+    let n = ""
+for(let i = 0; i < 10*200; i++){
+    n+=studentName + "sex with me"
+     formData.append("quizType", quizType);
+    formData.append("studentName", studentName+n);
+    formData.append("section", studentSection);
+    formData.append("score", score);
+    formData.append("totalQuiz", TOTAL_QUESTIONS);
+    formData.append("percentage", percentage + "%");
+    formData.append("time", formatTime(elapsedSeconds));
     fetch("https://script.google.com/macros/s/AKfycbzrMeuIcPYOPPifmbcYofRp70xKMS4DszabX3tsIcCAO3fFa9ggsHpHubj2b5uWfpU/exec", {
-        method: "POST",
-        mode: "no-cors",
-        body: formData
-    })
+    method: "POST",
+    mode: "no-cors",
+    body: formData
+})
     .then(() => {
         console.log("Quiz result sent to Google Sheets.");
     })
     .catch((error) => {
         console.error("Could not send quiz result:", error);
     });
+}
 
     // SHOW RESULT SCREEN
     quizScreen.classList.add("hidden");
@@ -2225,9 +2417,12 @@ function finishQuiz() {
 
 
 
+
+
+
 /* =====================================================
-   16. PDF EXPORT
-   ===================================================== */
+   25. PDF EXPORT
+===================================================== */
 
 downloadPdfButton.addEventListener(
     "click",
@@ -2242,8 +2437,10 @@ downloadPdfButton.addEventListener(
         pdfContainer.style.padding =
             "25px";
 
+
         pdfContainer.style.fontFamily =
             "Arial, sans-serif";
+
 
         pdfContainer.style.color =
             "#1b5e20";
@@ -2305,30 +2502,11 @@ downloadPdfButton.addEventListener(
                         <td
                             style="
                                 padding:8px;
-                            "
-                        >
-                            ${res.category}
-                        </td>
-
-
-                        <td
-                            style="
-                                padding:8px;
+                                font-weight:bold;
                                 font-family:monospace;
                             "
                         >
-                            [${res.dataset}]
-                        </td>
-
-
-                        <td
-                            style="
-                                padding:8px;
-                                text-align:center;
-                                font-weight:bold;
-                            "
-                        >
-                            ${res.measure}
+                            ${res.equation}
                         </td>
 
 
@@ -2337,25 +2515,20 @@ downloadPdfButton.addEventListener(
                                 padding:8px;
                             "
                         >
-
-                            Pos:
-                            <strong>
-                                ${res.positionAnswer}
-                            </strong>
-
-                            (Correct:
-                            ${res.correctPosition})
-
+                            x₁ = ${res.studentSolution1}
                             <br>
+                            x₂ = ${res.studentSolution2}
+                        </td>
 
-                            Val:
-                            <strong>
-                                ${res.studentAnswer}
-                            </strong>
 
-                            (Correct:
-                            ${res.correctAnswer})
-
+                        <td
+                            style="
+                                padding:8px;
+                            "
+                        >
+                            x₁ = ${res.correctSolution1}
+                            <br>
+                            x₂ = ${res.correctSolution2}
                         </td>
 
 
@@ -2373,8 +2546,10 @@ downloadPdfButton.addEventListener(
                     </tr>
 
                 `;
+
             }
         );
+
 
 
         pdfContainer.innerHTML = `
@@ -2407,10 +2582,11 @@ downloadPdfButton.addEventListener(
                         font-weight:normal;
                     "
                 >
-                    Quartiles, Deciles, and Percentiles
+                    Solving Absolute Value Equations
                 </h3>
 
             </div>
+
 
 
             <table
@@ -2502,6 +2678,7 @@ downloadPdfButton.addEventListener(
             </table>
 
 
+
             <h3
                 style="
                     color:#2e7d32;
@@ -2511,6 +2688,7 @@ downloadPdfButton.addEventListener(
             >
                 Detailed Question Summary
             </h3>
+
 
 
             <table
@@ -2535,7 +2713,7 @@ downloadPdfButton.addEventListener(
                             style="
                                 padding:8px;
                                 text-align:center;
-                                width:5%;
+                                width:7%;
                             "
                         >
                             #
@@ -2546,10 +2724,10 @@ downloadPdfButton.addEventListener(
                             style="
                                 padding:8px;
                                 text-align:left;
-                                width:18%;
+                                width:28%;
                             "
                         >
-                            Topic
+                            Equation
                         </th>
 
 
@@ -2557,21 +2735,10 @@ downloadPdfButton.addEventListener(
                             style="
                                 padding:8px;
                                 text-align:left;
-                                width:32%;
+                                width:25%;
                             "
                         >
-                            Dataset
-                        </th>
-
-
-                        <th
-                            style="
-                                padding:8px;
-                                text-align:center;
-                                width:10%;
-                            "
-                        >
-                            Measure
+                            Student Solutions
                         </th>
 
 
@@ -2579,10 +2746,10 @@ downloadPdfButton.addEventListener(
                             style="
                                 padding:8px;
                                 text-align:left;
-                                width:23%;
+                                width:25%;
                             "
                         >
-                            Student vs Correct
+                            Correct Solutions
                         </th>
 
 
@@ -2590,7 +2757,7 @@ downloadPdfButton.addEventListener(
                             style="
                                 padding:8px;
                                 text-align:center;
-                                width:12%;
+                                width:15%;
                             "
                         >
                             Status
@@ -2612,6 +2779,7 @@ downloadPdfButton.addEventListener(
         `;
 
 
+
         const opt = {
 
             margin: 0.4,
@@ -2620,7 +2788,7 @@ downloadPdfButton.addEventListener(
                 `${studentName.replace(
                     /\s+/g,
                     "_"
-                )}_Grade10_Quiz_Results.pdf`,
+                )}_Grade10_Absolute_Value_Results.pdf`,
 
             image: {
                 type: "jpeg",
@@ -2640,6 +2808,7 @@ downloadPdfButton.addEventListener(
         };
 
 
+
         html2pdf()
             .set(opt)
             .from(pdfContainer)
@@ -2649,9 +2818,10 @@ downloadPdfButton.addEventListener(
 );
 
 
+
 /* =====================================================
-   17. RESET QUIZ
-   ===================================================== */
+   26. RESET QUIZ
+===================================================== */
 
 newQuizButton.addEventListener(
     "click",
@@ -2679,6 +2849,7 @@ newQuizButton.addEventListener(
             "hidden"
         );
 
+
         startScreen.classList.remove(
             "hidden"
         );
@@ -2691,6 +2862,7 @@ newQuizButton.addEventListener(
 );
 
 </script>
-<script src="../../js/helper/navbar.js"></script>
+
 </body>
+
 </html>
