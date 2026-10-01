@@ -39,15 +39,7 @@ function createNavbarHTML() {
             <ul class="nav-links" id="navLinksList">
 
                 <!-- Homepage -->
-                <li>
-                    <a
-                        href="${homePath}"
-                        class="nav-link"
-                        data-page="home"
-                    >
-                        Homepage
-                    </a>
-                </li>
+               
 
 
                 <!-- About ProjectFactr -->
