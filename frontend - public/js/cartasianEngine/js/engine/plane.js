@@ -276,46 +276,36 @@ addPoint(x, y) {
      
    
 
-    checkPoint(){
-        const $feedback = document.getElementById("feedback");
+   checkPoint() {
+    const $feedback = document.getElementById("feedback");
 
     if (this.points.length === 0) {
         $feedback.textContent = "Plot a point first.";
         $feedback.className = "feedback error";
-        return;
+        return null;
     }
 
     let correctCount = 0;
 
     this.points.forEach(point => {
-
-        // Check if this plotted point exists
-        // anywhere in the random target points
         const matchingTarget = this.randomPoints.find(target =>
-            point.x === target.x &&
-            point.y === target.y
+            point.x === target.x && point.y === target.y
         );
-
         point.correct = matchingTarget !== undefined;
-
-        if (point.correct) {
-            correctCount++;
-        }
+        if (point.correct) correctCount++;
     });
 
-    const wrongCount =
-        this.points.length - correctCount;
+    const wrongCount = this.points.length - correctCount;
 
-    $feedback.textContent =
-        `${correctCount} correct, ${wrongCount} incorrect.`;
+    $feedback.textContent = `${correctCount} correct, ${wrongCount} incorrect.`;
+    $feedback.className = wrongCount === 0 ? "feedback success" : "feedback error";
 
-    $feedback.className =
-        wrongCount === 0
-            ? "feedback success"
-            : "feedback error";
-
-
-    }
+    return {
+        correct: correctCount,
+        wrong: wrongCount,
+        total: this.randomPoints.length
+    };
+}
   
     
 }

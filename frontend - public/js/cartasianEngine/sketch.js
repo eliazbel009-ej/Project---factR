@@ -6,10 +6,14 @@ let randomPoints = []
 let m
 let currMode
 const $question = document.getElementById("question");
+let score = 0;
+let quizeIndex = 0 ; 
+let isQuizing = false
 window.setup = function () {
 
     const container = document.getElementById("canvas-container");
-
+    score = 0
+    quizeIndex = 1
     const size = Math.min(
         container.clientWidth,
         520
@@ -40,11 +44,32 @@ window.setup = function () {
 function startNewGameRound() {
     // True Option 2 Reset: Re-instantiate the session via the manager
     // This cleanly completely resets zoom, offsets, and points state
+    if(!isQuizing){
+        hide_()
+        show$()
+    }
+    quizeIndex++
+    const quizAmount =5
+    if(quizeIndex ==quizAmount){
+
+        
+    }
     m.startNewQuiz()
     plane = m.instance(); 
     
     // Generate data and build the HTML inside $question
     // plane.createQuestion(); 
+}
+function hide_(){
+    $question.classList.add("hide")
+    document.getElementById("canvas-container").classList.add("hide")
+}
+function show$(){
+    
+}
+function show_(){
+     $question.classList.remove("hide")
+    document.getElementById("canvas-container").classList.remove("hide")
 }
 
 function setupQuizControls() {
@@ -160,7 +185,8 @@ function createQuestion() {
 
     renderQuestion();
 
-}function renderQuestion() {
+}
+function renderQuestion() {
 
     const pointsHTML = randomPoints
         .map(point => `(${point.x}, ${point.y})`)

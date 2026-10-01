@@ -94,22 +94,15 @@ function createNavbarHTML() {
                                 href="${getNavPath("grade7/Grade7L3.html")}#lesson3"
                                 class="dropdown-item"
                             >
-                                Comparing Irrationals
+                                Comparing & Arranging Irrationals
                             </a>
                         </li>
 
-                        <li>
-                            <a
-                                href="${getNavPath("grade7/Grade7L3.html")}#lesson4"
-                                class="dropdown-item"
-                            >
-                                Arranging Irrationals
-                            </a>
-                        </li>
+                        
 
                         <li>
                             <a
-                                href="${getNavPath("grade7/Grade7L5.html")}#lesson5"
+                                href="${getNavPath("grade7/Grade7L4.html")}#lesson5"
                                 class="dropdown-item"
                             >
                                 Operations on Fractions
@@ -118,7 +111,7 @@ function createNavbarHTML() {
 
                         <li>
                             <a
-                                href="${getNavPath("grade7/Grade7L6.html")}#lesson6"
+                                href="${getNavPath("grade7/Grade7L5.html")}#lesson6"
                                 class="dropdown-item"
                             >
                                 Unit Conversion
