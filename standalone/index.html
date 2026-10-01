@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cartasianEngine</title>
+   
+    <style>
+        * {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family: Arial, sans-serif;
+
+    background: #f5f5f5;
+    color: #222;
+}
+
+main {
+    width: min(1100px, 95%);
+    min-height: 100vh;
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 30px;
+}
+
+/* =========================
+   QUESTION PANEL
+========================= */
+
+#question {
+    width: 380px;
+    width: 50%;
+    height: 100vh;
+    flex-shrink: 0;
+
+    padding: 30px;
+
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.quiz-header {
+    margin-bottom: 30px;
+}
+
+.eyebrow {
+    margin: 0 0 8px;
+
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+
+    color: #777;
+}
+
+.quiz-header h1 {
+    margin: 0;
+
+    font-size: 28px;
+}
+
+.description {
+    margin-top: 12px;
+
+    color: #666;
+    line-height: 1.5;
+}
+
+
+/* =========================
+   TARGET POINT
+========================= */
+
+.target-point {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 20px;
+
+    background: #f5f5f5;
+    border-radius: 12px;
+
+    margin-bottom: 20px;
+}
+
+.point-label {
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.coordinate {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.button-group {
+    display: flex;
+    gap: 10px;
+}
+
+.button-group button {
+    flex: 1;
+
+    padding: 12px 16px;
+
+    border: none;
+    border-radius: 8px;
+
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.submit-button {
+    background: #54141d;
+    color: white;
+}
+
+.next-button {
+    background: #e5e5e5;
+    color: #222;
+}
+
+.button-group button:hover {
+    opacity: 0.85;
+}
+
+
+/* =========================
+   FEEDBACK
+========================= */
+
+#feedback {
+    min-height: 20px;
+
+    margin: 15px 0;
+
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.feedback.success {
+    color: #16803c;
+}
+
+.feedback.error {
+    color: #c62828;
+}
+
+
+/* =========================
+   CANVAS
+========================= */
+
+#canvas-container {
+    flex-shrink: 0;
+
+    width: 520px;
+    height: 520px;
+    /* height: 100vh; */
+
+    background: white;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+#canvas {
+        /* width: 100% !important;
+        height: auto !important; */
+        display: block;
+        /* height: 100%; */
+    }
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 950px) {
+
+    main {
+        gap: 20px;
+    }
+
+    #question {
+        width: 320px;
+    }
+
+    #canvas-container {
+        width: 450px;
+        height: 450px;
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 800px) {
+
+    main {
+        width: 100%;
+        min-height: auto;
+        /* padding: 20px 15px;
+         */
+         padding: 0;
+        flex-direction: column;
+        gap: 0px;
+    }
+
+    #question {
+        width: 100%;
+        max-width: none;
+        padding: 24px;
+        height: fit-content;
+       
+    }
+
+    #canvas-container {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+
+    #canvas {
+        width: 100% !important;
+        height: auto !important;
+        display: block;
+         touch-action: none;
+    }
+}
+    </style>
+</head>
+<body>
+
+    <main>
+
+        <aside class="" id="question">
+            
+        </aside>
+        <div id="canvas-container"></div>
+    </main>
+    <script>
+
+        class Plane {
+        constructor() {
+        this.dimension = {
+            x: 10,
+            y: 10
+        };
+        this.points = []
+        this.zoom = 0.7;
+        this.defaultZoom()
+
+        this.xOffset = 0;
+        this.yOffset = 0;
+        this.zoomScalar = 0.05
+        this.scale = width/this.scalar;
+        this.scale = (width / (this.dimension.x * 2)) * this.zoom;
+        this.isDragging = false;
+        this.startX = 0;
+        this.startY = 0;
+        this.enableZooming = true
+        this.enablePanning = true
+    }
+defaultZoom(){
+    this.zoom = 1
+}
+pan() {
+    // 1. Calculate how far the mouse has dragged since the previous frame
+    let targetX = this.xOffset + (mouseX - pmouseX);
+    let targetY = this.yOffset + (mouseY - pmouseY);
+
+    // 2. Calculate the maximum distance the center point can slide
+    // before the outer boundaries of your grid hit the edges of the canvas screen.
+    const maxPanX = (this.dimension.x * this.scale) - (width / 2);
+    const maxPanY = (this.dimension.y * this.scale) - (height / 2);
+
+    // 3. Keep the plane locked inside boundaries relative to center (0,0)
+    // If zoomed out far (maxPan is negative), lock it perfectly at 0 (center)
+    this.xOffset = maxPanX > 0 ? constrain(targetX, -maxPanX, maxPanX) : 0;
+    this.yOffset = maxPanY > 0 ? constrain(targetY, -maxPanY, maxPanY) : 0;
+    this.pointsToPlot = []
+}
+    zoomOut(){
+        this.zoom += this.zoomScalar
+        this.zoom = Math.min(this.zoom, 3.0); 
+    }
+
+    zoomIn(){
+        this.zoom -= this.zoomScalar
+        this.zoom = Math.max(this.zoom, 0.15); 
+
+    }
+    updateZoom(){
+            this.minZoom = 0.5; 
+
+    this.zoom = Math.max(this.zoom, this.minZoom);
+
+
+        this.scale = (width / (this.dimension.x * 2)) * this.zoom;
+        
+    }
+    axis() {
+
+  
+
+    ctx.save();
+
+    ctx.strokeStyle = "rgb(200, 200, 200)";
+    ctx.lineWidth = 1;
+
+    ctx.fillStyle = "black";
+    ctx.font = "6px Arial";
+
+    // vertical
+    for (
+        let x = -this.dimension.x;
+        x <= this.dimension.x;
+        x++
+    ) {
+
+        const currX =
+            this.xOffset + x * this.scale;
+
+        // Draw vertical grid line
+        ctx.beginPath();
+
+        ctx.moveTo(
+            currX,
+            this.yOffset - this.dimension.y * this.scale
+        );
+
+        ctx.lineTo(
+            currX,
+            this.yOffset + this.dimension.y * this.scale
+        );
+
+        ctx.stroke();
+
+
+        if (x === -this.dimension.x) {
+
+            ctx.textAlign = "left";
+            ctx.textBaseline = "top";
+
+            ctx.fillText(
+                x,
+                currX + 5,
+                this.yOffset + 5
+            );
+
+        }
+        else if (x === this.dimension.x) {
+
+            ctx.textAlign = "right";
+            ctx.textBaseline = "top";
+
+            ctx.fillText(
+                x,
+                currX - 5,
+                this.yOffset + 5
+            );
+
+        }
+        else {
+
+            ctx.textAlign = "center";
+            ctx.textBaseline = "top";
+
+            ctx.fillText(
+                x,
+                currX,
+                this.yOffset + 5
+            );
+        }
+    }
+
+
+ 
+    // horrizontal
+    for (
+        let y = -this.dimension.y;
+        y <= this.dimension.y;
+        y++
+    ) {
+
+        // Canvas Y coordinate
+        const currY =
+            this.yOffset - y * this.scale;
+
+
+        // Draw horizontal grid line
+        ctx.beginPath();
+
+        ctx.moveTo(
+            this.xOffset - this.dimension.x * this.scale,
+            currY
+        );
+
+        ctx.lineTo(
+            this.xOffset + this.dimension.x * this.scale,
+            currY
+        );
+
+        ctx.stroke();
+
+
+        // Don't draw Y label for 0
+        if (y === 0) {
+            continue;
+        }
+
+
+
+        if (y === -this.dimension.y) {
+
+            ctx.textAlign = "right";
+            ctx.textBaseline = "bottom";
+
+            ctx.fillText(
+                y,
+                this.xOffset - 5,
+                currY - 5
+            );
+
+        }
+        else if (y === this.dimension.y) {
+
+            ctx.textAlign = "right";
+            ctx.textBaseline = "top";
+
+            ctx.fillText(
+                y,
+                this.xOffset - 5,
+                currY + 5
+            );
+
+        }
+        else {
+
+            ctx.textAlign = "right";
+            ctx.textBaseline = "middle";
+
+            ctx.fillText(
+                y,
+                this.xOffset - 5,
+                currY
+            );
+        }
+    }
+
+    ctx.restore();
+}
+        
+    
+   plot(mx, my) {
+        const x = mx / this.scale;
+        const y = -my / this.scale; // Inverted because canvas standard pixels run downwards
+
+        const snappedX = Math.round(x);
+        const snappedY = Math.round(y);
+        console.log("snapped:", snappedX,snappedY);
+        
+
+        return createVector(snappedX, snappedY);
+    }
+    randomPoint() {
+
+        const x = Math.floor(Math.random() * (this.dimension.x * 2 + 1)) - this.dimension.x;
+        const y = Math.floor(Math.random() * (this.dimension.y * 2 + 1)) - this.dimension.y;
+        // this.pointsToPlot.push(createVector(x,y))
+        return createVector(x,y)
+    }
+drawPoints() {
+    this.points.forEach(point => {
+
+        const x = point.x * this.scale;
+        const y = -point.y * this.scale;
+
+        if (point.correct === true) {
+            ctx.fillStyle = "rgb(0, 180, 180)";
+        } else if (point.correct === false) {
+            ctx.fillStyle = "rgb(220, 40, 40)";
+        } else {
+            ctx.fillStyle = "rgb(0, 0, 0)";
+        }
+
+        // p5: noStroke()
+        // Canvas doesn't stroke a circle unless we call ctx.stroke()
+        
+        ctx.beginPath();
+        ctx.arc(
+            x,
+            y,
+        5,              // radius (12 / 2)
+            0,
+            Math.PI * 1
+        );
+        ctx.fill();
+    });
+}
+
+
+plotPoints() {
+    this.points.forEach(point => {
+        const x = point.x * this.scale;
+        const y = -point.y * this.scale;
+
+        ctx.save();
+
+        if (point.correct === true) {
+            // Correct point
+            ctx.fillStyle = "rgb(0, 180, 80)";
+        } else if (point.correct === false) {
+            // Wrong point
+            ctx.fillStyle = "rgb(220, 40, 40)";
+        } else {
+            // Not checked yet
+            ctx.fillStyle = "rgb(100, 100, 100)";
+        }
+
+        ctx.beginPath();
+        ctx.arc(
+            x,
+            y,
+            6,
+            0,
+            Math.PI * 2
+        );
+        ctx.fill();
+
+        ctx.restore();
+    });
+}
+addPoint(x, y) {
+
+    this.points.push(
+        createVector(x, y)
+    );
+
+}
+
+
+  getMouseCoordinate() {
+        // This helper should match the updated plot input calculations
+        const translatedMX = mouseX - (width / 2) - this.xOffset;
+        const translatedMY = mouseY - (height / 2) - this.yOffset;
+    // console.log(mouseX, width / 2, this.xOffset);
+    
+        console.log(translatedMX,translatedMY);
+        
+        return this.plot(translatedMX, translatedMY);
+    }}
+
+
+   class Session extends Plane{
+    constructor(){
+        super()
+        this.randomPoints = []
+    }
+     renderQuestion(){
+        const pointsHTML = this.randomPoints
+        .map(point => `(${point.x}, ${point.y})`)
+        .join(", <br>");
+
+    $question.innerHTML = `
+        <div class="quiz-header">
+            <p class="eyebrow">CARTESIAN PLANE</p>
+
+            <h1>Coordinate Challenge</h1>
+
+            <p class="description">
+                Plot all the given points on the coordinate plane.
+            </p>
+            <select name="" id="menu-option">
+                <option value="">select mode</option>
+                <option value="random">random points</option>
+                <option value="linear">linear</option>
+                <option value="linearAbsolute">linear absolute</option>
+                <option value="quadratic">quadratic</option>
+            </select>
+        </div>
+
+        <div class="target-point">
+            <span class="point-label">POINTS</span>
+
+            <span class="coordinate">
+                ${pointsHTML}
+            </span>
+        </div>
+
+        <p id="feedback"></p>
+         <div class="button-group">
+            <button
+                type="button"
+                id="check-answer"
+                class="submit-button"
+            >
+                Check Points
+            </button>
+
+            <button
+                type="button"
+                id="next-question"
+                class="next-button"
+            >
+                Next Question
+            </button>
+        </div>
+       
+    `;
+
+    // document
+    //     .getElementById("check-answer")
+    //     .addEventListener("click", ()=> this.checkPoint());
+     }
+     
+   
+
+    checkPoint(){
+        const $feedback = document.getElementById("feedback");
+
+    if (this.points.length === 0) {
+        $feedback.textContent = "Plot a point first.";
+        $feedback.className = "feedback error";
+        return;
+    }
+
+    let correctCount = 0;
+
+    this.points.forEach(point => {
+
+        // Check if this plotted point exists
+        // anywhere in the random target points
+        const matchingTarget = this.randomPoints.find(target =>
+            point.x === target.x &&
+            point.y === target.y
+        );
+
+        point.correct = matchingTarget !== undefined;
+
+        if (point.correct) {
+            correctCount++;
+        }
+    });
+
+    const wrongCount =
+        this.points.length - correctCount;
+
+    $feedback.textContent =
+        `${correctCount} correct, ${wrongCount} incorrect.`;
+
+    $feedback.className =
+        wrongCount === 0
+            ? "feedback success"
+            : "feedback error";
+
+
+    }
+  
+    
+}
+
+class Vector {
+  constructor(x = 0, y = 0, z = 0) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+  }
+
+  // Add another vector to this one
+  add(v) {
+    this.x += v.x;
+    this.y += v.y;
+    this.z += v.z;
+    return this; // Allows method chaining
+  }
+
+  // Multiply by a scalar number
+  mult(n) {
+    this.x *= n;
+    this.y *= n;
+    this.z *= n;
+    return this;
+  }
+
+  // Calculate the magnitude (length) of the vector
+  mag() {
+    return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+  }
+}
+
+// helper function
+const createVector = (x, y, z) => new Vector(x, y, z);
+
+
+let mouseX;
+let mouseY;
+let rect;
+window.addEventListener("pointermove", (event) => {
+    updateMousePos()
+});
+function updateMousePos(){
+    const rect = canvas.getBoundingClientRect();
+
+    // Display coordinates .internal canvas coordinates
+    mouseX =
+        (event.clientX - rect.left) *
+        (canvas.width / rect.width);
+
+    mouseY =
+        (event.clientY - rect.top) *
+        (canvas.height / rect.height);
+}
+let plane;
+let ctx;
+let canvas;
+let width = window.innerWidth
+let height = window.innerHeight
+let randomPoints = []
+const $question = document.getElementById("question");
+ function setup () {
+
+    const container = document.getElementById("canvas-container");
+
+    const size = Math.min(
+        container.clientWidth,
+        520
+    );
+
+    canvas = document.createElement("canvas");
+     canvas.width = size
+     canvas.height = size
+    canvas.id = "canvas";
+    width =      canvas.width
+    height =      canvas.height
+    container.appendChild(canvas)
+    ctx = canvas.getContext('2d')
+    plane = new Plane();
+      rect = canvas.getBoundingClientRect();
+
+    createQuestion();
+};
+setup()
+function draw() {
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.fillStyle = 'rgb(255,255,255)';
+    
+     ctx.fillRect(0, 0, width, height);
+
+    // Center the viewport origin 0,0 in the middle of the screen
+    ctx.translate(width / 2, height / 2);
+
+    // Render the grid background
+    plane.axis();
+
+    const translatedMX = mouseX - (width / 2) - plane.xOffset;
+    const translatedMY = mouseY - (height / 2) - plane.yOffset;
+    const coordinate = plane.getMouseCoordinate();
+
+    // Show tracking text layout
+    ctx.fillStyle = 'rgb(0,0,0)';
+    // noStroke();
+    ctx.strokeStyle = "transparent";
+
+    ctx.font = "14px Arial";
+
+    // Draw interactive tracking guide mouse dot
+    ctx.save();
+    ctx.lineWidth = 10;
+    ctx.strokeStyle = "rgb(0, 150, 255)";
+
+    const x = coordinate.x * plane.scale;
+    const y = -coordinate.y * plane.scale;
+
+    ctx.beginPath();
+    ctx.arc(x, y, 5, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+
+    // Draw permanent dots array onto the screen
+    plane.plotPoints();
+    requestAnimationFrame(draw)
+};
+draw()
+window.addEventListener("pointerdown", ()=>{
+    updateMousePos()
+    const coordinate = plane.getMouseCoordinate();
+  
+
+    if (
+        Math.abs(coordinate.x) <= plane.dimension.x &&
+        Math.abs(coordinate.y) <= plane.dimension.y
+    ) {
+        const target = coordinate
+        const hasPoint = plane.points.some(p => p.x === target.x && p.y === target.y);
+       
+        const index = plane.points.findIndex(
+            p => p.x === coordinate.x && p.y === coordinate.y
+        );
+
+        if (index !== -1) {
+            plane.points.splice(index, 1);
+        
+        } else {
+            plane.addPoint(coordinate.x, coordinate.y);
+          
+        }
+        
+    }
+
+})
+
+function createQuestion() {
+    randomPoints = [];
+    plane = new Plane
+
+    for (let i = 0; i < 5; i++) {
+        randomPoints.push(plane.randomPoint());
+    }
+
+    renderQuestion();
+
+}function renderQuestion() {
+
+    const pointsHTML = randomPoints
+        .map(point => `(${point.x}, ${point.y})`)
+        .join(", ");
+
+    $question.innerHTML = `
+        <div class="quiz-header">
+            <p class="eyebrow">CARTESIAN PLANE</p>
+
+            <h1>Coordinate Challenge</h1>
+
+            <p class="description">
+                Plot all the given points on the coordinate plane.
+            </p>
+        </div>
+
+        <div class="target-point">
+            <span class="point-label">POINTS</span>
+
+            <span class="coordinate">
+                ${pointsHTML}
+            </span>
+        </div>
+
+        <p id="feedback"></p>
+
+        <div class="button-group">
+            <button
+                type="button"
+                id="check-answer"
+                class="submit-button"
+            >
+                Check Points
+            </button>
+
+            <button
+                type="button"
+                id="next-question"
+                class="next-button"
+            >
+                Next Question
+            </button>
+        </div>
+    `;
+
+    document
+        .getElementById("check-answer")
+        .addEventListener("click", checkPoint);
+
+    document
+        .getElementById("next-question")
+        .addEventListener("click", createQuestion);
+}
+function checkPoint() {
+    const $feedback = document.getElementById("feedback");
+
+    if (plane.points.length === 0) {
+        $feedback.textContent = "Plot a point first.";
+        $feedback.className = "feedback error";
+        return;
+    }
+
+    let correctCount = 0;
+
+    plane.points.forEach(point => {
+
+        // Check if this plotted point exists
+        // anywhere in the random target points
+        const matchingTarget = randomPoints.find(target =>
+            point.x === target.x &&
+            point.y === target.y
+        );
+
+        point.correct = matchingTarget !== undefined;
+
+        if (point.correct) {
+            correctCount++;
+        }
+    });
+
+    const wrongCount =
+        plane.points.length - correctCount;
+
+    $feedback.textContent =
+        `${correctCount} correct, ${wrongCount} incorrect.`;
+
+    $feedback.className =
+        wrongCount === 0
+            ? "feedback success"
+            : "feedback error";
+}
+
+
+
+
+
+
+    </script>
+</body>
+</html>
