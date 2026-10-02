@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cartasianEngine</title>
+   
+    <style>
+    /* =========================
+       RESET
+    ========================= */
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* =========================
+       THEME
+    ========================= */
+
+    :root {
+        --primary-dark: #073827;
+        --primary-forest: #16623d;
+        --primary-accent: #339763;
+
+        --tint-light: #e7f7ee;
+        --tint-lighter: #f3faf6;
+
+        --background: #f5faf7;
+        --card-bg: #ffffff;
+
+        --text-main: #073827;
+        --text-body: #2d473b;
+        --text-muted: #567e6c;
+
+        --border-color: #d8eade;
+
+        --success: #26734d;
+        --danger: #b43c3c;
+
+        --shadow-small:
+            0 2px 8px rgba(7, 56, 39, 0.04);
+
+        --shadow-medium:
+            0 8px 24px rgba(7, 56, 39, 0.07);
+
+        --shadow-large:
+            0 20px 50px rgba(7, 56, 39, 0.09);
+    }
+
+    /* =========================
+       GLOBAL
+    ========================= */
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        min-height: 100vh;
+
+        font-family:
+            Inter,
+            -apple-system,
+            BlinkMacSystemFont,
+            "SF Pro Display",
+            "Segoe UI",
+            Roboto,
+            Helvetica,
+            Arial,
+            sans-serif;
+
+        color: var(--text-body);
+        background: var(--background);
+
+        line-height: 1.5;
+    }
+
+    button,
+    select {
+        font: inherit;
+    }
+
+    button {
+        cursor: pointer;
+    }
+
+    /* =========================
+       MAIN LAYOUT
+    ========================= */
+
+    main {
+        width: min(1200px, 94%);
+        min-height: 100vh;
+
+        margin: 0 auto;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        gap: 28px;
+
+        padding: 40px 0;
+    }
+
+    /* =========================
+       QUESTION PANEL
+    ========================= */
+
+    #question {
+        width: 390px;
+        min-height: 520px;
+
+        flex: 0 0 390px;
+
+        padding: 32px;
+
+        display: flex;
+        flex-direction: column;
+
+        background: var(--card-bg);
+
+        border: 1px solid var(--border-color);
+        border-radius: 24px;
+
+        box-shadow:
+            var(--shadow-small),
+            var(--shadow-large);
+    }
+
+    /* =========================
+       QUIZ HEADER
+    ========================= */
+
+    .quiz-header {
+        margin-bottom: 26px;
+    }
+
+    .eyebrow {
+        margin-bottom: 8px;
+
+        color: var(--primary-accent);
+
+        font-size: 11px;
+        font-weight: 800;
+
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    .quiz-header h1 {
+        color: var(--primary-dark);
+
+        font-size: 29px;
+        font-weight: 750;
+
+        line-height: 1.15;
+        letter-spacing: -0.6px;
+    }
+
+    .description {
+        margin-top: 13px;
+
+        color: var(--text-muted);
+
+        font-size: 15px;
+        line-height: 1.65;
+    }
+
+    /* =========================
+       MODE SELECT
+    ========================= */
+
+    #menu-option {
+        width: 100%;
+        height: 48px;
+
+        margin-top: 20px;
+        padding: 0 14px;
+
+        color: var(--text-main);
+        background: var(--white);
+
+        border: 1px solid var(--border-color);
+        border-radius: 11px;
+
+        outline: none;
+
+        cursor: pointer;
+
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    #menu-option:hover {
+        border-color: #a9cdb8;
+    }
+
+    #menu-option:focus {
+        border-color: var(--primary-accent);
+
+        box-shadow:
+            0 0 0 4px rgba(51, 151, 99, 0.12);
+    }
+
+    /* =========================
+       TARGET POINT
+    ========================= */
+
+    .target-point {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        padding: 20px;
+
+        margin-bottom: 20px;
+
+        background: var(--tint-lighter);
+
+        border: 1px solid var(--border-color);
+        border-left: 4px solid var(--primary-accent);
+
+        border-radius: 15px;
+    }
+
+    .point-label {
+        color: var(--text-muted);
+
+        font-size: 11px;
+        font-weight: 800;
+
+        letter-spacing: 1.5px;
+    }
+
+    .coordinate {
+        color: var(--primary-dark);
+
+        font-size: 20px;
+        font-weight: 700;
+
+        line-height: 1.7;
+        word-break: break-word;
+    }
+
+    /* =========================
+       FEEDBACK
+    ========================= */
+
+    #feedback {
+        min-height: 24px;
+
+        margin: 4px 0 18px;
+
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .feedback.success {
+        color: var(--success);
+    }
+
+    .feedback.error {
+        color: var(--danger);
+    }
+
+    /* =========================
+       BUTTONS
+    ========================= */
+
+    .button-group {
+        display: flex;
+        gap: 10px;
+
+        margin-top: auto;
+    }
+
+    .button-group button {
+        min-height: 48px;
+
+        flex: 1;
+
+        padding: 0 15px;
+
+        border: none;
+        border-radius: 11px;
+
+        font-size: 14px;
+        font-weight: 700;
+
+        transition:
+            background 0.2s ease,
+            transform 0.15s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .button-group button:active {
+        transform: scale(0.98);
+    }
+
+    .submit-button {
+        color: white;
+        background: var(--primary-forest);
+
+        box-shadow:
+            0 5px 14px rgba(22, 98, 61, 0.14);
+    }
+
+    .submit-button:hover {
+        background: var(--primary-accent);
+
+        box-shadow:
+            0 7px 18px rgba(22, 98, 61, 0.2);
+    }
+
+    .next-button {
+        color: var(--primary-dark);
+        background: var(--tint-light);
+
+        border: 1px solid var(--border-color) !important;
+    }
+
+    .next-button:hover {
+        background: #d8f0e3;
+    }
+
+    /* =========================
+       CANVAS CONTAINER
+    ========================= */
+
+    #canvas-container {
+        position: relative;
+
+        width: min(520px, 100%);
+        aspect-ratio: 1 / 1;
+
+        flex: 0 1 520px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 0;
+
+        background: #ffffff;
+
+        border: 1px solid var(--border-color);
+        border-radius: 24px;
+
+        overflow: hidden;
+
+        box-shadow:
+            var(--shadow-small),
+            var(--shadow-large);
+    }
+
+    /* =========================
+       CANVAS
+    ========================= */
+
+    #canvas {
+        display: block;
+
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    /* =========================
+       TABLET
+    ========================= */
+
+    @media (max-width: 1050px) {
+
+        main {
+            width: 94%;
+
+            gap: 20px;
+        }
+
+        #question {
+            width: 340px;
+            flex-basis: 340px;
+
+            padding: 28px;
+        }
+
+        #canvas-container {
+            flex-basis: 460px;
+        }
+    }
+
+    /* =========================
+       SMALL TABLET
+    ========================= */
+
+    @media (max-width: 850px) {
+
+        main {
+            min-height: 100vh;
+
+            padding: 30px 0;
+
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        #question {
+            width: 100%;
+            min-height: auto;
+
+            flex: none;
+        }
+
+        #canvas-container {
+            width: min(600px, 100%);
+            flex: none;
+
+            margin: 0 auto;
+        }
+
+        .button-group {
+            margin-top: 20px;
+        }
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 600px) {
+
+        body {
+            background: var(--background);
+        }
+
+        main {
+            width: 100%;
+
+            padding: 0;
+
+            gap: 0;
+        }
+
+        #question {
+            width: 100%;
+
+            padding: 24px 20px;
+
+            border-radius: 0 0 20px 20px;
+
+            border-left: none;
+            border-right: none;
+            border-top: none;
+
+            box-shadow:
+                0 5px 20px rgba(7, 56, 39, 0.07);
+        }
+
+        .quiz-header {
+            margin-bottom: 20px;
+        }
+
+        .quiz-header h1 {
+            font-size: 25px;
+        }
+
+        .description {
+            font-size: 14px;
+        }
+
+        .target-point {
+            padding: 17px;
+        }
+
+        .coordinate {
+            font-size: 18px;
+        }
+
+        .button-group {
+            flex-direction: column;
+        }
+
+        .button-group button {
+            width: 100%;
+        }
+
+        #canvas-container {
+            width: 100%;
+
+            border-radius: 0;
+
+            border-left: none;
+            border-right: none;
+
+            box-shadow: none;
+        }
+    }
+
+    /* =========================
+       SMALL MOBILE
+    ========================= */
+
+    @media (max-width: 400px) {
+
+        #question {
+            padding: 22px 16px;
+        }
+
+        .quiz-header h1 {
+            font-size: 23px;
+        }
+
+        .eyebrow {
+            font-size: 10px;
+        }
+
+        .coordinate {
+            font-size: 17px;
+        }
+    }
+</style>
+</head>
+<body>
+
+    <main>
+
+        <aside class="" id="question">
+            
+        </aside>
+        <div id="canvas-container"></div>
+    </main>
+    <script>
+
+        class Plane {
+        constructor() {
+        this.dimension = {
+            x: 10,
+            y: 10
+        };
+        this.points = []
+        this.zoom = 0.7;
+        this.defaultZoom()
+
+        this.xOffset = 0;
+        this.yOffset = 0;
+        this.zoomScalar = 0.05
+        this.scale = width/this.scalar;
+        this.scale = (width / (this.dimension.x * 2)) * this.zoom;
+        this.isDragging = false;
+        this.startX = 0;
+        this.startY = 0;
+        this.enableZooming = true
+        this.enablePanning = true
+    }
+defaultZoom(){
+    this.zoom = 1
+}
+pan() {
+    // 1. Calculate how far the mouse has dragged since the previous frame
+    let targetX = this.xOffset + (mouseX - pmouseX);
+    let targetY = this.yOffset + (mouseY - pmouseY);
+
+    // 2. Calculate the maximum distance the center point can slide
+    // before the outer boundaries of your grid hit the edges of the canvas screen.
+    const maxPanX = (this.dimension.x * this.scale) - (width / 2);
+    const maxPanY = (this.dimension.y * this.scale) - (height / 2);
+
+    // 3. Keep the plane locked inside boundaries relative to center (0,0)
+    // If zoomed out far (maxPan is negative), lock it perfectly at 0 (center)
+    this.xOffset = maxPanX > 0 ? constrain(targetX, -maxPanX, maxPanX) : 0;
+    this.yOffset = maxPanY > 0 ? constrain(targetY, -maxPanY, maxPanY) : 0;
+    this.pointsToPlot = []
+}
+    zoomOut(){
+        this.zoom += this.zoomScalar
+        this.zoom = Math.min(this.zoom, 3.0); 
+    }
+
+    zoomIn(){
+        this.zoom -= this.zoomScalar
+        this.zoom = Math.max(this.zoom, 0.15); 
+
+    }
+    updateZoom(){
+            this.minZoom = 0.5; 
+
+    this.zoom = Math.max(this.zoom, this.minZoom);
+
+
+        this.scale = (width / (this.dimension.x * 2)) * this.zoom;
+        
+    }
+    axis() {
+
+  
+
+    ctx.save();
+
+    ctx.strokeStyle = "rgb(200, 200, 200)";
+    ctx.lineWidth = 1;
+
+    ctx.fillStyle = "black";
+    ctx.font = "6px Arial";
+
+    // vertical
+    for (
+        let x = -this.dimension.x;
+        x <= this.dimension.x;
+        x++
+    ) {
+
+        const currX =
+            this.xOffset + x * this.scale;
+
+        // Draw vertical grid line
+        ctx.beginPath();
+
+        ctx.moveTo(
+            currX,
+            this.yOffset - this.dimension.y * this.scale
+        );
+
+        ctx.lineTo(
+            currX,
+            this.yOffset + this.dimension.y * this.scale
+        );
+
+        ctx.stroke();
+
+
+        if (x === -this.dimension.x) {
+
+            ctx.textAlign = "left";
+            ctx.textBaseline = "top";
+
+            ctx.fillText(
+                x,
+                currX + 5,
+                this.yOffset + 5
+            );
+
+        }
+        else if (x === this.dimension.x) {
+
+            ctx.textAlign = "right";
+            ctx.textBaseline = "top";
+
+            ctx.fillText(
+                x,
+                currX - 5,
+                this.yOffset + 5
+            );
+
+        }
+        else {
+
+            ctx.textAlign = "center";
+            ctx.textBaseline = "top";
+
+            ctx.fillText(
+                x,
+                currX,
+                this.yOffset + 5
+            );
+        }
+    }
+
+
+ 
+    // horrizontal
+    for (
+        let y = -this.dimension.y;
+        y <= this.dimension.y;
+        y++
+    ) {
+
+        // Canvas Y coordinate
+        const currY =
+            this.yOffset - y * this.scale;
+
+
+        // Draw horizontal grid line
+        ctx.beginPath();
+
+        ctx.moveTo(
+            this.xOffset - this.dimension.x * this.scale,
+            currY
+        );
+
+        ctx.lineTo(
+            this.xOffset + this.dimension.x * this.scale,
+            currY
+        );
+
+        ctx.stroke();
+
+
+        // Don't draw Y label for 0
+        if (y === 0) {
+            continue;
+        }
+
+
+
+        if (y === -this.dimension.y) {
+
+            ctx.textAlign = "right";
+            ctx.textBaseline = "bottom";
+
+            ctx.fillText(
+                y,
+                this.xOffset - 5,
+                currY - 5
+            );
+
+        }
+        else if (y === this.dimension.y) {
+
+            ctx.textAlign = "right";
+            ctx.textBaseline = "top";
+
+            ctx.fillText(
+                y,
+                this.xOffset - 5,
+                currY + 5
+            );
+
+        }
+        else {
+
+            ctx.textAlign = "right";
+            ctx.textBaseline = "middle";
+
+            ctx.fillText(
+                y,
+                this.xOffset - 5,
+                currY
+            );
+        }
+    }
+
+    ctx.restore();
+}
+        
+    
+   plot(mx, my) {
+        const x = mx / this.scale;
+        const y = -my / this.scale; // Inverted because canvas standard pixels run downwards
+
+        const snappedX = Math.round(x);
+        const snappedY = Math.round(y);
+        console.log("snapped:", snappedX,snappedY);
+        
+
+        return createVector(snappedX, snappedY);
+    }
+    randomPoint() {
+
+        const x = Math.floor(Math.random() * (this.dimension.x * 2 + 1)) - this.dimension.x;
+        const y = Math.floor(Math.random() * (this.dimension.y * 2 + 1)) - this.dimension.y;
+        // this.pointsToPlot.push(createVector(x,y))
+        return createVector(x,y)
+    }
+drawPoints() {
+    this.points.forEach(point => {
+
+        const x = point.x * this.scale;
+        const y = -point.y * this.scale;
+
+        if (point.correct === true) {
+            ctx.fillStyle = "rgb(0, 180, 180)";
+        } else if (point.correct === false) {
+            ctx.fillStyle = "rgb(220, 40, 40)";
+        } else {
+            ctx.fillStyle = "rgb(0, 0, 0)";
+        }
+
+        // p5: noStroke()
+        // Canvas doesn't stroke a circle unless we call ctx.stroke()
+        
+        ctx.beginPath();
+        ctx.arc(
+            x,
+            y,
+        5,              // radius (12 / 2)
+            0,
+            Math.PI * 1
+        );
+        ctx.fill();
+    });
+}
+
+
+plotPoints() {
+    this.points.forEach(point => {
+        const x = point.x * this.scale;
+        const y = -point.y * this.scale;
+
+        ctx.save();
+
+        if (point.correct === true) {
+            // Correct point
+            ctx.fillStyle = "rgb(0, 180, 80)";
+        } else if (point.correct === false) {
+            // Wrong point
+            ctx.fillStyle = "rgb(220, 40, 40)";
+        } else {
+            // Not checked yet
+            ctx.fillStyle = "rgb(100, 100, 100)";
+        }
+
+        ctx.beginPath();
+        ctx.arc(
+            x,
+            y,
+            6,
+            0,
+            Math.PI * 2
+        );
+        ctx.fill();
+
+        ctx.restore();
+    });
+}
+addPoint(x, y) {
+
+    this.points.push(
+        createVector(x, y)
+    );
+
+}
+
+
+  getMouseCoordinate() {
+        // This helper should match the updated plot input calculations
+        const translatedMX = mouseX - (width / 2) - this.xOffset;
+        const translatedMY = mouseY - (height / 2) - this.yOffset;
+    // console.log(mouseX, width / 2, this.xOffset);
+    
+        console.log(translatedMX,translatedMY);
+        
+        return this.plot(translatedMX, translatedMY);
+    }}
+
+
+   class Session extends Plane{
+    constructor(){
+        super()
+        this.randomPoints = []
+    }
+     renderQuestion(){
+        const pointsHTML = this.randomPoints
+        .map(point => `(${point.x}, ${point.y})`)
+        .join(", <br>");
+
+    $question.innerHTML = `
+        <div class="quiz-header">
+            <p class="eyebrow">CARTESIAN PLANE</p>
+
+            <h1>Coordinate Challenge</h1>
+
+            <p class="description">
+                Plot all the given points on the coordinate plane.
+            </p>
+            <select name="" id="menu-option">
+                <option value="">select mode</option>
+                <option value="random">random points</option>
+                <option value="linear">linear</option>
+                <option value="linearAbsolute">linear absolute</option>
+                <option value="quadratic">quadratic</option>
+            </select>
+        </div>
+
+        <div class="target-point">
+            <span class="point-label">POINTS</span>
+
+            <span class="coordinate">
+                ${pointsHTML}
+            </span>
+        </div>
+
+        <p id="feedback"></p>
+         <div class="button-group">
+            <button
+                type="button"
+                id="check-answer"
+                class="submit-button"
+            >
+                Check Points
+            </button>
+
+            <button
+                type="button"
+                id="next-question"
+                class="next-button"
+            >
+                Next Question
+            </button>
+        </div>
+       
+    `;
+
+    // document
+    //     .getElementById("check-answer")
+    //     .addEventListener("click", ()=> this.checkPoint());
+     }
+     
+   
+
+    checkPoint(){
+        const $feedback = document.getElementById("feedback");
+
+    if (this.points.length === 0) {
+        $feedback.textContent = "Plot a point first.";
+        $feedback.className = "feedback error";
+        return;
+    }
+
+    let correctCount = 0;
+
+    this.points.forEach(point => {
+
+        // Check if this plotted point exists
+        // anywhere in the random target points
+        const matchingTarget = this.randomPoints.find(target =>
+            point.x === target.x &&
+            point.y === target.y
+        );
+
+        point.correct = matchingTarget !== undefined;
+
+        if (point.correct) {
+            correctCount++;
+        }
+    });
+
+    const wrongCount =
+        this.points.length - correctCount;
+
+    $feedback.textContent =
+        `${correctCount} correct, ${wrongCount} incorrect.`;
+
+    $feedback.className =
+        wrongCount === 0
+            ? "feedback success"
+            : "feedback error";
+
+
+    }
+  
+    
+}
+class RandomizedPoint extends Session{
+    constructor(){
+       super()
+      this.generateRandomPoints()
+    }
+    generateRandomPoints(){
+        for (let i = 1 ; i <= 5; i++) {
+            const r = createVector(
+                constraint(-( this.dimension.x - 1), this.dimension.x - 1),
+                constraint(-( this.dimension.y - 1), this.dimension.y- 1)
+            )
+        
+            this.randomPoints.push(r) ;
+            this.addPoint(r.x, r.y)
+        }
+    }
+    createQuestion(){
+        this.generateRandomPoints()
+        this.renderQuestion();
+    }
+
+  
+  
+}
+ class Quadratic extends Session{
+    constructor(){
+        super()
+        this.generateQuadraticPoints()
+        this.v = 4
+    }
+    generateQuadraticPoints(){
+        let unary = constraint(-1,1)
+        unary = unary == 0 ? 1 : unary
+        let k, h;
+        if(unary == 1){
+            k = constraint(-9,5)
+            h = constraint(-7,7)
+        }else{
+            h = constraint(-7,7)
+            k = constraint(-5, 9)
+        }
+
+        let y = (x)=> x*x 
+        for(let x = -2; x <= 2; x++){
+            let hx = x + h
+            this.addPoint(hx, unary * y(x) + k )
+            this.randomPoints.push(createVector(hx, unary*y(x) + k))
+        }
+
+        
+    }
+    createQuestion(){
+        this.generateQuadraticPoints()
+        this.renderQuestion()
+    }
+}
+
+
+
+ class LinearAbsolute extends Session{
+    constructor(){
+
+        super()
+        this.randomAbsoluteLinearPoints = []
+        this.v = 4
+        this.generateAbsoluteLinearPoints()
+    }
+    generateAbsoluteLinearPoints(){
+        /**
+         * The slope value constrained within the plane's
+         * minimum and maximum coordinate range.
+         */
+        let s = constraint(-this.v, this.v) 
+        // make h 1 if 0, 
+        s = s == 0 ? 1 : s
+
+        /**
+         * The maximum vertical intercept range based on
+         * the plane dimensions and the selected slope.
+         */
+        const c = this.dimension.y - (s*s) - 2
+
+        /**
+         * The maximum vertical intercept range based on
+         * the plane dimensions and the selected slope.
+         */
+        const n =  constraint(-c , c) 
+        // console.log(h, n );
+        /**
+         * Represents the linear function using the
+         * selected slope and vertical intercept.
+         *
+         * @param {number} x - The x-coordinate.
+         * @returns {number} The corresponding y-coordinate.
+         */
+        const y  = (x) => Math.abs(x *  s) + n
+        let k;
+        let h = constraint(-7, 7);
+        let unary = constraint(-1, 1)
+        unary = unary == 0 ? 1: unary
+        for(let x = -2; x <= 2;x++){
+            this.randomAbsoluteLinearPoints.push(createVector(x,y(x)))
+            this.addPoint(x+h,   unary * y(x))
+            this.randomPoints.push(createVector(x, unary * y(x)))
+            console.log("x: " + x,"y: "+ y(x));
+            
+        }
+       
+    }
+    createQuestion(){
+        this.generateAbsoluteLinearPoints()
+        this.renderQuestion()
+    }
+
+    
+}
+class Linear extends Session{
+    constructor(){
+        super()
+        this.randomLinearPoints= []
+        this.generateLinearPoints()
+        this.v = 4
+    }
+    generateLinearPoints(){
+        /**
+         * The slope value constrained within the plane's
+         * minimum and maximum coordinate range.
+         */
+        let h = constraint(-4, 4) 
+        // make h 1 if 0, 
+        h = h == 0 ? 1 : h
+
+        /**
+         * The maximum vertical intercept range based on
+         * the plane dimensions and the selected slope.
+         */
+        const c = this.dimension.y - (h*h) - 1
+
+        /**
+         * The maximum vertical intercept range based on
+         * the plane dimensions and the selected slope.
+         */
+        const n =  constraint(-c , c) 
+        // console.log(h, n );
+        /**
+         * Represents the linear function using the
+         * selected slope and vertical intercept.
+         *
+         * @param {number} x - The x-coordinate.
+         * @returns {number} The corresponding y-coordinate.
+         */
+        const y  = (x) => x *  h + n
+        for(let x = -2; x <= 2;x++){
+            this.randomLinearPoints.push(createVector(x,y(x)))
+            this.addPoint(x,y(x))
+            this.randomPoints.push(createVector(x,y(x)))
+            console.log("x: " + x,"y: "+ y(x));
+            
+        }
+       
+        
+        
+    }
+    createQuestion(){
+        console.log(this.points);
+        // this.resetPlaneState()
+        this.generateLinearPoints()
+        this.renderQuestion()
+        
+        
+    }
+
+}
+
+
+function constraint(c1, c2){
+    // check if c1 and c2 have valid value
+    if((c1.length === 0 || c1 === null) ||  (c2.length === 0 || c2 === null)){
+        return 0;
+    }
+    if(c1 > c2){
+        return 0;
+    }
+
+    return Math.floor(Math.random() * (Math.floor(c2)-Math.ceil(c1)+1) )+ Math.ceil(c1)
+}
+ class Quiz{
+    constructor(){
+        this.activeInstance = null
+        this.currentMode = "random" 
+       
+        // this.setupListener()
+        this.startNewQuiz()
+    }
+    startNewQuiz(){
+        console.log('hello');
+        
+        if(this.activeInstance){
+            this.activeInstance = null
+        }
+
+        if (this.currentMode === 'random') {
+            this.activeInstance = new RandomizedPoint();
+        } else if (this.currentMode === 'linear') {
+            this.activeInstance = new Linear();
+        } else if(this.currentMode === "linearAbsolute"){
+            this.activeInstance = new LinearAbsolute();
+            
+        } 
+        
+        else if(this.currentMode === 'quadratic') {
+            this.activeInstance = new Quadratic();
+        }
+        this.activeInstance.renderQuestion()
+
+        /**
+         * 
+         *  <div class="button-group">
+            <button
+                type="button"
+                id="check-answer"
+                class="submit-button"
+            >
+                Check Points
+            </button>
+
+            <button
+                type="button"
+                id="next-question"
+                class="next-button"
+            >
+                Next Question
+            </button>
+        </div>
+         */
+
+        // const div = document.createElement("div")
+        // div.classList.add("button-group")
+        // const chkBtn = document.createElement("button")
+        // chkBtn.classList.add("submit-button")
+        // chkBtn.id = "check-answer"
+        // chkBtn.textContent = "check points"
+        // const nxtBtn = document.createElement("button")
+        // nxtBtn.classList.add("next-button")
+        // nxtBtn.textContent = "next question" 
+        // nxtBtn.id = "next-button"
+
+        // div.appendChild(chkBtn)
+        // div.appendChild(nxtBtn)
+        // $question.appendChild(div)
+        // const $nextBtn = document.getElementById("next-question");
+        // if ($nextBtn) {
+        //     $nextBtn.addEventListener("click", () => this.startNewQuestion(), { once: true });
+        // }
+    }
+    setupListener(){
+        const $parent = $question
+
+        // Listen to the parent container permanently
+        $parent.addEventListener("click", (event) => {
+            // Check if the clicked element was the "Check Points" button
+            if (event.target.id === "check-answer" && this.activeInstance) {
+                
+                this.activeInstance.checkPoint();
+            }
+
+            // Check if the clicked element was the "Next Question" button
+            if (event.target.id === "next-question") {
+                this.startNewQuiz(); // Destroys old plane, boots up a fresh one!
+            }
+        });
+    }
+    instance(){
+        return this.activeInstance
+    }
+}
+class Vector {
+  constructor(x = 0, y = 0, z = 0) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+  }
+
+  // Add another vector to this one
+  add(v) {
+    this.x += v.x;
+    this.y += v.y;
+    this.z += v.z;
+    return this; // Allows method chaining
+  }
+
+  // Multiply by a scalar number
+  mult(n) {
+    this.x *= n;
+    this.y *= n;
+    this.z *= n;
+    return this;
+  }
+
+  // Calculate the magnitude (length) of the vector
+  mag() {
+    return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+  }
+}
+
+// helper function
+const createVector = (x, y, z) => new Vector(x, y, z);
+
+
+let mouseX;
+let mouseY;
+let rect;
+window.addEventListener("pointermove", (event) => {
+    updateMousePos()
+});
+function updateMousePos(){
+    const rect = canvas.getBoundingClientRect();
+
+    // Display coordinates .internal canvas coordinates
+    mouseX =
+        (event.clientX - rect.left) *
+        (canvas.width / rect.width);
+
+    mouseY =
+        (event.clientY - rect.top) *
+        (canvas.height / rect.height);
+}
+let plane;
+let ctx;
+let canvas;
+let width = window.innerWidth
+let height = window.innerHeight
+let randomPoints = []
+
+let m
+let currMode
+const $question = document.getElementById("question");
+ function setup () {
+
+    const container = document.getElementById("canvas-container");
+
+    const size = Math.min(
+        container.clientWidth,
+        520
+    );
+
+    canvas = document.createElement("canvas");
+     canvas.width = size
+     canvas.height = size
+    canvas.id = "canvas";
+    width =      canvas.width
+    height =      canvas.height
+    container.appendChild(canvas)
+    ctx = canvas.getContext('2d')
+    m = new Quiz()
+    setupQuizControls();
+    startNewGameRound();
+    currMode = document.getElementById("menu-option").value
+    
+      rect = canvas.getBoundingClientRect();
+
+};
+
+function startNewGameRound() {
+    m.startNewQuiz()
+    plane = m.instance(); 
+} 
+
+function setupQuizControls() {
+    // Listen to the permanent parent container. It catches button clicks even when 
+    // the inner HTML is completely blown away and rebuilt!
+    $question.addEventListener("click", (event) => {
+        
+        // Match the "Check Points" Button click
+        if (event.target.id === "check-answer") {
+            plane.checkPoint();
+        }
+
+        // Match the "Next Question" Button click
+        if (event.target.id === "next-question") {
+            startNewGameRound(); // discard old plane and boot new plane instance
+        }
+    //     if(event.target.id === "menu-option"){
+    //        if(event.target.value){
+    //          m.currentMode = event.target.value
+    //           let t = event.target.value
+    //         startNewGameRound()
+    //         document.getElementById(event.target.id).value = t
+    //        }
+    //     }
+
+        if (event.target.id === "menu-option") {
+    const mode = event.target.value;
+
+    if (!mode) return;
+
+    m.currentMode = mode;
+
+    startNewGameRound();
+}
+    });
+    
+
+}
+setup()
+function draw() {
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.fillStyle = 'rgb(255,255,255)';
+    
+     ctx.fillRect(0, 0, width, height);
+
+    // Center the viewport origin 0,0 in the middle of the screen
+    ctx.translate(width / 2, height / 2);
+
+    // Render the grid background
+    plane.axis();
+
+    const translatedMX = mouseX - (width / 2) - plane.xOffset;
+    const translatedMY = mouseY - (height / 2) - plane.yOffset;
+    const coordinate = plane.getMouseCoordinate();
+
+    // Show tracking text layout
+    ctx.fillStyle = 'rgb(0,0,0)';
+    // noStroke();
+    ctx.strokeStyle = "transparent";
+
+    ctx.font = "14px Arial";
+
+    // Draw interactive tracking guide mouse dot
+    ctx.save();
+    ctx.lineWidth = 10;
+    ctx.strokeStyle = "rgb(0, 150, 255)";
+
+    const x = coordinate.x * plane.scale;
+    const y = -coordinate.y * plane.scale;
+
+    ctx.beginPath();
+    ctx.arc(x, y, 5, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+
+    // Draw permanent dots array onto the screen
+    plane.plotPoints();
+    requestAnimationFrame(draw)
+};
+draw()
+window.addEventListener("pointerdown", ()=>{
+    updateMousePos()
+    const coordinate = plane.getMouseCoordinate();
+  
+
+    if (
+        Math.abs(coordinate.x) <= plane.dimension.x &&
+        Math.abs(coordinate.y) <= plane.dimension.y
+    ) {
+        const target = coordinate
+        const hasPoint = plane.points.some(p => p.x === target.x && p.y === target.y);
+       
+        const index = plane.points.findIndex(
+            p => p.x === coordinate.x && p.y === coordinate.y
+        );
+
+        if (index !== -1) {
+            plane.points.splice(index, 1);
+        
+        } else {
+            plane.addPoint(coordinate.x, coordinate.y);
+          
+        }
+        
+    }
+
+})
+
+function createQuestion() {
+    randomPoints = [];
+    plane = new Plane
+
+    for (let i = 0; i < 5; i++) {
+        randomPoints.push(plane.randomPoint());
+    }
+
+    renderQuestion();
+
+}function renderQuestion() {
+
+    const pointsHTML = randomPoints
+        .map(point => `(${point.x}, ${point.y})`)
+        .join(", ");
+
+    $question.innerHTML = `
+        <div class="quiz-header">
+            <p class="eyebrow">CARTESIAN PLANE</p>
+
+            <h1>Coordinate Challenge</h1>
+
+            <p class="description">
+                Plot all the given points on the coordinate plane.
+            </p>
+        </div>
+
+        <div class="target-point">
+            <span class="point-label">POINTS</span>
+
+            <span class="coordinate">
+                ${pointsHTML}
+            </span>
+        </div>
+
+        <p id="feedback"></p>
+
+        <div class="button-group">
+            <button
+                type="button"
+                id="check-answer"
+                class="submit-button"
+            >
+                Check Points
+            </button>
+
+            <button
+                type="button"
+                id="next-question"
+                class="next-button"
+            >
+                Next Question
+            </button>
+        </div>
+    `;
+
+    document
+        .getElementById("check-answer")
+        .addEventListener("click", checkPoint);
+
+    document
+        .getElementById("next-question")
+        .addEventListener("click", createQuestion);
+}
+function checkPoint() {
+    const $feedback = document.getElementById("feedback");
+
+    if (plane.points.length === 0) {
+        $feedback.textContent = "Plot a point first.";
+        $feedback.className = "feedback error";
+        return;
+    }
+
+    let correctCount = 0;
+
+    plane.points.forEach(point => {
+
+        // Check if this plotted point exists
+        // anywhere in the random target points
+        const matchingTarget = randomPoints.find(target =>
+            point.x === target.x &&
+            point.y === target.y
+        );
+
+        point.correct = matchingTarget !== undefined;
+
+        if (point.correct) {
+            correctCount++;
+        }
+    });
+
+    const wrongCount =
+        plane.points.length - correctCount;
+
+    $feedback.textContent =
+        `${correctCount} correct, ${wrongCount} incorrect.`;
+
+    $feedback.className =
+        wrongCount === 0
+            ? "feedback success"
+            : "feedback error";
+}
+
+
+
+
+
+
+    </script>
+</body>
+</html>

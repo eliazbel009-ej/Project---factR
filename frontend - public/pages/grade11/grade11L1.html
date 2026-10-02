@@ -1,55 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>PROJECTFACTR — Mathematics Remedial Learning Platform</title>
-  <meta name="description" content="ProjectFactr — Mathematics Remedial Learning Platform for Grade 7 to 11.">
-  
-  <!-- FontAwesome Icons for Dropdown & Hamburger -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartesian Plane Quiz | ProjectFactR</title>
+    <link rel="stylesheet" href="../../js/cartasianEngine/css/style.css">
+    <script src="../../js/cartasianEngine/js/p5.js"></script>
+    <link rel="stylesheet" href="../../assets/style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+     
+   <style>
+    #studentStart.hide,
+    #question.hide,
+    #canvas-container.hide,
+    #quizResult.hide {
+        display: none;
+    }
 
-  <!-- Stylesheet link -->
+    main[hidden] {
+        display: none !important;
+    }
 
-
-  <!-- Google Web Fonts (Montserrat & Inter) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="../../assets/style/style.css">
+   </style>
+    <script src="../../js/cartasianEngine/js/addons/p5.sound.min.js"></script>
 </head>
 <body>
 
-  <!-- ========================================================================
-       TOP NAVIGATION BAR
-       ======================================================================== -->
-<header class="top-nav-bar" id="navbar">
-</header>
+    <header class="top-nav-bar" id="navbar">
 
-  <main>
-    <section class="cover-section" id="cover">
+
+  </header>
+  <script src="../../js/helper/navbar.js"></script>
+     <section class="cover-section" id="cover">
       <div class="cover-wrapper">
         <img 
-          src="../../assets/img/background/7-Integers.jpeg" 
+          src="../../assets/img/background/Banner Of Project FACTR.png" 
           alt="ProjectFactr Mathematics Remedial Learning Platform Banner" 
           class="cover-image"
           id="main-cover-image"
         >
+       <div class="cover-content">
+    <h1>Graphing Functions</h1>
+
+    <h2>
+        <!-- Formative Assessment on Calculation via Task Randomization -->
+    </h2>
+</div>
       </div>
     </section>
-  </main>
 
-  <footer class="site-footer">
+    <section id="studentStart" aria-labelledby="start-title">
+        <form class="start-card" id="studentStartForm">
+            <p class="eyebrow">GRADE 11 MATHEMATICS</p>
+            <h1 id="start-title">Cartesian Plane Quiz</h1>
+            <p class="start-copy">Enter Student Details</p>
+
+            <label for="studentName">Full Name</label>
+            <input type="text" id="studentName" name="studentName" placeholder="Full Name" autocomplete="name" required>
+
+            <label for="studentSection">Grade &amp; Section</label>
+            <input type="text" id="studentSection" name="studentSection" placeholder="Grade &amp; Section" required>
+
+            <label for="questionCount">Number of Questions</label>
+            <select id="questionCount" name="questionCount" required>
+                <option value="5">5 questions</option>
+                <option value="10">10 questions</option>
+                <option value="15">15 questions</option>
+                <option value="20">20 questions</option>
+            </select>
+
+            <label for="quizMode">Quiz Mode</label>
+            <select id="quizMode" name="quizMode" required>
+                <option value="random">Random Points</option>
+                <option value="linear">Linear</option>
+                <option value="linearAbsolute">Linear Absolute</option>
+                <option value="quadratic">Quadratic</option>
+            </select>
+
+            <button type="submit" class="start-button" id="startQuizBtn">Start Quiz</button>
+        </form>
+    </section>
+
+  <main>
+        <aside class="" id="menu">
+            <!-- <select name="" id="menu-option">
+                <option value="">select mode</option>
+                <option value="random">random points</option>
+                <option value="linear">linear</option>
+                <option value="quadratic">quadratic</option>
+            </select> -->
+        </aside>
+        <aside class="" id="question">
+            
+        </aside>
+        <div id="canvas-container"></div>
+    </main>
+
+    <section id="quizResult" class="quiz-result-screen hide" aria-labelledby="result-title" aria-live="polite">
+        <div class="result-card">
+            <p class="eyebrow">QUIZ COMPLETE</p>
+            <h1 id="result-title">Your Results</h1>
+
+            <div class="result-student">
+                <div>
+                    <span>Student</span>
+                    <strong id="resultName"></strong>
+                </div>
+                <div>
+                    <span>Grade &amp; Section</span>
+                    <strong id="resultSection"></strong>
+                </div>
+            </div>
+
+            <div class="result-score">
+                <strong id="resultScore"></strong>
+                <span>Points</span>
+            </div>
+            <p class="result-percentage" id="resultPercentage"></p>
+
+            <button type="button" class="start-button" id="restartQuizBtn">Start Another Quiz</button>
+        </div>
+    </section>
+    <footer class="site-footer">
+
     <div class="footer-bottom">
-      <div>&copy; 2026 ProjectFactr. All rights reserved.</div>
-      <div>Mathematics Learning &amp; Curriculum Platform</div>
+
+      <div>
+        &copy; 2026 ProjectFactr. All rights reserved.
+      </div>
+
+      <div>
+        Mathematics Learning &amp; Curriculum Platform
+      </div>
+
     </div>
+
   </footer>
 
-  <!-- JavaScript for Hamburger Toggle & Mobile Dropdown Support -->
-  <script src="../../js/helper/navbar.js"></script>
-  
+
+    <script type="module" src="../../js/cartasianEngine/sketch.js"></script>
 </body>
 </html>

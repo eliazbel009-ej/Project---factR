@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+      <style>
+    /* =========================
+       RESET
+    ========================= */
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* =========================
+       THEME
+    ========================= */
+
+    :root {
+        --primary-dark: #073827;
+        --primary-forest: #16623d;
+        --primary-accent: #339763;
+
+        --tint-light: #e7f7ee;
+        --tint-lighter: #f3faf6;
+
+        --card-bg: #ffffff;
+
+        --text-main: #073827;
+        --text-body: #2d473b;
+        --text-muted: #567e6c;
+
+        --border-color: #d8eade;
+
+        --success: #26734d;
+        --danger: #b43c3c;
+
+        --background: #f5faf7;
+        --white: #ffffff;
+
+        --shadow-small:
+            0 2px 8px rgba(7, 56, 39, 0.04);
+
+        --shadow-medium:
+            0 8px 24px rgba(7, 56, 39, 0.07);
+
+        --shadow-large:
+            0 20px 50px rgba(7, 56, 39, 0.09);
+    }
+
+    /* =========================
+       GLOBAL
+    ========================= */
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        min-height: 100vh;
+
+        font-family:
+            Inter,
+            -apple-system,
+            BlinkMacSystemFont,
+            "SF Pro Display",
+            "Segoe UI",
+            Roboto,
+            Helvetica,
+            Arial,
+            sans-serif;
+
+        color: var(--text-body);
+        background: var(--background);
+
+        line-height: 1.5;
+    }
+
+    button,
+    input,
+    select {
+        font: inherit;
+    }
+
+    button {
+        cursor: pointer;
+    }
+
+    [hidden] {
+        display: none !important;
+    }
+
+    /* =========================
+       GENERAL SECTION
+    ========================= */
+
+    .section {
+        width: 100%;
+        min-height: 100vh;
+
+        padding: 60px 8%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* =========================
+       QUESTION SECTION
+    ========================= */
+
+    #piecewise-information {
+        background:
+            radial-gradient(
+                circle at top left,
+                rgba(51, 151, 99, 0.08),
+                transparent 35%
+            ),
+            var(--background);
+    }
+
+    /* =========================
+       MAIN CARD
+    ========================= */
+
+    #piecewise-card {
+        width: 100%;
+        max-width: 1050px;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+
+        padding: 38px;
+
+        background: var(--card-bg);
+
+        border: 1px solid var(--border-color);
+        border-radius: 24px;
+
+        box-shadow:
+            var(--shadow-small),
+            var(--shadow-large);
+    }
+
+    /* =========================
+       QUIZ STATISTICS
+    ========================= */
+
+    #stats {
+        grid-column: 1 / -1;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        padding-bottom: 18px;
+
+        border-bottom: 1px solid var(--border-color);
+
+        color: var(--text-muted);
+
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    /* =========================
+       HEADING
+    ========================= */
+
+    #piecewise-card > h1 {
+        grid-column: 1 / -1;
+
+        color: var(--primary-dark);
+
+        font-size: 30px;
+        font-weight: 750;
+
+        letter-spacing: -0.6px;
+    }
+
+    /* =========================
+       QUESTION
+    ========================= */
+
+    #display-text {
+        grid-column: 1 / -1;
+
+        padding: 24px;
+
+        background: var(--tint-lighter);
+
+        border: 1px solid var(--border-color);
+        border-left: 4px solid var(--primary-accent);
+
+        border-radius: 16px;
+
+        color: var(--text-body);
+
+        font-size: 17px;
+        line-height: 1.75;
+    }
+
+    /* =========================
+       ANSWER CARDS
+    ========================= */
+
+    #answer-input-container,
+    #answer-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        padding: 24px;
+
+        background: var(--card-bg);
+
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+
+        box-shadow: var(--shadow-small);
+    }
+
+    #answer-input-container label,
+    #answer-container h2 {
+        color: var(--text-muted);
+
+        font-size: 14px;
+        font-weight: 700;
+
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+    }
+
+    #answer-container {
+        min-height: 145px;
+
+        justify-content: center;
+
+        background: var(--tint-lighter);
+    }
+
+    #answer {
+        min-height: 36px;
+
+        display: flex;
+        align-items: center;
+
+        color: var(--primary-forest);
+
+        font-size: 26px;
+        font-weight: 750;
+    }
+
+    /* =========================
+       INPUTS
+    ========================= */
+
+    input,
+    select {
+        width: 100%;
+        height: 50px;
+
+        padding: 0 15px;
+
+        color: var(--text-main);
+        background: var(--white);
+
+        border: 1px solid var(--border-color);
+        border-radius: 11px;
+
+        outline: none;
+
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease,
+            background 0.2s ease;
+    }
+
+    input::placeholder {
+        color: #8aa99a;
+    }
+
+    input:hover,
+    select:hover {
+        border-color: #a9cdb8;
+    }
+
+    input:focus,
+    select:focus {
+        border-color: var(--primary-accent);
+
+        box-shadow:
+            0 0 0 4px rgba(51, 151, 99, 0.12);
+
+        background: var(--white);
+    }
+
+    /* =========================
+       BUTTONS
+    ========================= */
+
+    button {
+        min-height: 50px;
+
+        padding: 0 22px;
+
+        border: none;
+        border-radius: 11px;
+
+        color: var(--white);
+        background: var(--primary-forest);
+
+        font-size: 15px;
+        font-weight: 700;
+
+        transition:
+            background 0.2s ease,
+            transform 0.15s ease,
+            box-shadow 0.2s ease;
+    }
+
+    button:hover {
+        background: var(--primary-accent);
+
+        box-shadow:
+            0 6px 16px rgba(22, 98, 61, 0.18);
+    }
+
+    button:active {
+        transform: scale(0.98);
+    }
+
+    button:focus-visible {
+        outline: 3px solid rgba(51, 151, 99, 0.25);
+        outline-offset: 2px;
+    }
+
+    button:disabled {
+        cursor: not-allowed;
+
+        opacity: 0.55;
+
+        box-shadow: none;
+    }
+
+    /* =========================
+       STUDENT INFORMATION
+    ========================= */
+
+    #student-information {
+        position: fixed;
+        inset: 0;
+
+        width: 100%;
+        min-height: 100vh;
+
+        padding: 24px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background:
+            radial-gradient(
+                circle at top left,
+                rgba(51, 151, 99, 0.12),
+                transparent 40%
+            ),
+            rgba(245, 250, 247, 0.97);
+
+        backdrop-filter: blur(8px);
+
+        z-index: 10;
+    }
+
+    #student-information .container {
+        width: 100%;
+        max-width: 500px;
+
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        padding: 38px;
+
+        background: var(--white);
+
+        border: 1px solid var(--border-color);
+        border-radius: 22px;
+
+        box-shadow:
+            var(--shadow-medium),
+            var(--shadow-large);
+    }
+
+    #student-information h1 {
+        margin-bottom: 5px;
+
+        color: var(--primary-dark);
+
+        font-size: 30px;
+        font-weight: 750;
+
+        letter-spacing: -0.6px;
+    }
+
+    #student-information h1::after {
+        content: "";
+
+        display: block;
+
+        width: 42px;
+        height: 4px;
+
+        margin-top: 10px;
+
+        background: var(--primary-accent);
+
+        border-radius: 20px;
+    }
+
+    /* =========================
+       FORM GROUP
+    ========================= */
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .form-group label {
+        color: var(--text-body);
+
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    /* =========================
+       CONTINUE BUTTON
+    ========================= */
+
+    #continue {
+        width: 100%;
+
+        margin-top: 5px;
+
+        background: var(--primary-forest);
+    }
+
+    #continue:hover {
+        background: var(--primary-accent);
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 800px) {
+
+        .section {
+            padding: 40px 24px;
+        }
+
+        #piecewise-card {
+            grid-template-columns: 1fr;
+
+            padding: 30px;
+
+            border-radius: 20px;
+        }
+
+        #stats,
+        #display-text,
+        #piecewise-card > h1 {
+            grid-column: auto;
+        }
+
+        #piecewise-card > h1 {
+            font-size: 27px;
+        }
+    }
+
+    /* =========================
+       TABLET / MOBILE
+    ========================= */
+
+    @media (max-width: 600px) {
+
+        .section {
+            min-height: 100svh;
+
+            padding: 24px 16px;
+        }
+
+        #piecewise-card {
+            gap: 18px;
+
+            padding: 22px;
+
+            border-radius: 18px;
+        }
+
+        #piecewise-card > h1 {
+            font-size: 24px;
+        }
+
+        #display-text {
+            padding: 20px;
+
+            font-size: 16px;
+            line-height: 1.65;
+        }
+
+        #answer-input-container,
+        #answer-container {
+            padding: 20px;
+        }
+
+        #answer {
+            font-size: 23px;
+        }
+
+        #student-information {
+            padding: 16px;
+        }
+
+        #student-information .container {
+            gap: 17px;
+
+            padding: 27px 22px;
+
+            border-radius: 18px;
+        }
+
+        #student-information h1 {
+            font-size: 25px;
+        }
+    }
+
+    /* =========================
+       SMALL MOBILE
+    ========================= */
+
+    @media (max-width: 420px) {
+
+        #piecewise-card {
+            padding: 18px;
+        }
+
+        #stats {
+            font-size: 12px;
+        }
+
+        #display-text {
+            padding: 17px;
+
+            font-size: 15px;
+        }
+
+        input,
+        select,
+        button {
+            height: 48px;
+        }
+
+        #student-information .container {
+            padding: 23px 19px;
+        }
+
+        #student-information h1 {
+            font-size: 23px;
+        }
+    }
+</style>
+    </head>
+    <body>
+        
+        <span style="display: none;" id="debug"></span>
+        <!-- <section class="section">
+        <div class=" card" id="piecewise-card">
+            <h1>compute and answer </h1>
+        <div id="display-text">
+            
+        </div class="container">
+                <label>answer</label>
+                <input type="number" id="answer-input" >
+                
+                <button id="submit-answer">submit</button>
+                
+                <div class="container" id="answer-container">
+                    <h2>answer</h2>
+                    
+                    <label id="answer"></label>
+        </div>
+        </div>
+        </section> -->
+<section class="section" id="piecewise-information">
+    <div class="card" id="piecewise-card">
+        <div id="stats"></div>
+        <h1>Compute and Answer</h1>
+
+        <div id="display-text"></div>
+
+        <div class="container" id="answer-input-container">
+            <label for="answer-input">Answer</label>
+
+            <input
+                type="number"
+                id="answer-input"
+            >
+
+            <button id="submit-answer">
+                Submit
+            </button>
+        </div>
+
+        <div class="container" id="answer-container">
+            <h2>Answer</h2>
+            <span id="answer"></span>
+        </div>
+
+    </div>
+</section>
+<section class="section"  id="student-information">
+    <div class="container">
+
+        <h1>Student Information</h1>
+
+        <div class="form-group">
+            <label for="student-name">Student Name</label>
+            <input
+                type="text"
+                id="student-name"
+                name="studentName"
+                placeholder="Enter student name"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="section-name">Section Name</label>
+            <input
+                type="text"
+                id="section-name"
+                name="sectionName"
+                placeholder="Enter section name"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="grade-level">Grade Level</label>
+            <select id="grade-level" name="gradeLevel">
+                <option value="" disabled selected>
+                    Select grade level
+                </option>
+                <option value="11">Grade 11</option>
+                <option value="12">Grade 12</option>
+            </select>
+        </div>
+
+        <button type="button" id="continue">
+            continue
+        </button>
+
+    </div>
+</section>
+
+
+        <script >
+ function constraint(c1, c2){
+            // check if c1 and c2 have valid value
+            if((c1.length === 0 || c1 === null) ||  (c2.length === 0 || c2 === null)){
+                return 0;
+            }
+            if(c1 > c2){
+                return 0;
+            }
+ 
+            return Math.floor(Math.random() * (Math.floor(c2)-Math.ceil(c1)+1) )+ Math.ceil(c1)
+        }
+class Piecewise{
+    constructor(pieces = []){
+        this.pieces = pieces
+    }
+    addPiece(piece){
+        this.pieces.push(piece)
+        return this
+    }
+    calculate(input){
+        const piece = this.pieces.find(piece => piece.evaluate(input))
+        if(!piece) throw new Error("no piece")
+        return piece.calculate(input)
+    }
+}
+
+ class Piece{
+    constructor(condition,  calculation){
+        this.condition = condition;
+        this.calculation = calculation;
+
+    }
+    evaluate(e){
+        return this.condition(e)
+    }
+    calculate(c){
+        return this.calculation(c)
+    }
+}
+
+
+class Transportation {
+    #vehicle;
+    #baseFare;
+    #baseDistance;
+    #additionalFare;
+    #targetDistance;
+    #piecewise;
+
+    constructor(vehicle, baseFare, baseDistance, additionalFare, targetDistance) {
+        this.#vehicle = vehicle;
+        this.#baseFare = baseFare;
+        this.#baseDistance = baseDistance;
+        this.#additionalFare = additionalFare;
+        this.#targetDistance = targetDistance;
+
+        this.#piecewise = new Piecewise();
+
+        this.#createFareRules();
+    }
+
+    #createFareRules() {
+        this.#piecewise.addPiece(
+            new Piece(
+                distance => distance <= this.#baseDistance,
+                distance => this.#baseFare
+            )
+        );
+
+        this.#piecewise.addPiece(
+            new Piece(
+                distance => distance > this.#baseDistance,
+                distance =>
+                    this.#baseFare +
+                    (distance - this.#baseDistance) *
+                    this.#additionalFare
+            )
+        );
+    }
+    templateQuestion(){
+        return  `A ${this.#vehicle} has a base fare of ₱${this.#baseFare} for the first ${this.#baseDistance} kilometers. For every additional kilometer traveled, an additional fare of ₱${this.#additionalFare} is charged. If a passenger travels a total distance of ${this.#targetDistance} kilometers, what is the total fare?
+`
+    }
+    getQuestionAndAnswer(){
+        return {
+            question : this.templateQuestion(),
+            answer: this.calculateFare()
+
+        }
+    }
+    calculateFare() {
+        return this.#piecewise.calculate(this.#targetDistance);
+    }
+
+    getBaseFare() {
+        return this.#baseFare;
+    }
+
+    getBaseDistance() {
+        return this.#baseDistance;
+    }
+
+    getAdditionalFare() {
+        return this.#additionalFare;
+    }
+
+    getTargetDistance() {
+        return this.#targetDistance;
+    }
+
+    getVehicle(){
+        return this.#vehicle
+    }
+    setVehicle(v){
+        this.#vehicle= v
+    }
+    setBaseFare(value) {
+        this.#baseFare = value;
+        this.#createFareRules();
+    }
+
+    setBaseDistance(value) {
+        this.#baseDistance = value;
+        this.#createFareRules();
+    }
+
+    setAdditionalFare(value) {
+        this.#additionalFare = value;
+        this.#createFareRules();
+    }
+
+    setTargetDistance(value) {
+        this.#targetDistance = value;
+    }
+}
+
+            const $debugDisplay = document.getElementById("debug")
+const $questionTextDisplay = document.getElementById("display-text")
+const $answerTextDisplay = document.getElementById("answer")
+const $submitBtn = document.getElementById("submit-answer")
+const $answerInput = document.getElementById("answer-input")
+const $AnswerContainer = document.getElementById("answer-container")
+const $studentName = document.getElementById("student-name")
+const $sectionname = document.getElementById("section-name");
+const $gradeLevel = document.getElementById("grade-level")
+const $studentInformationForm = document.getElementById("student-information")
+const $continueBtn = document.getElementById("continue")
+const $stat = document.getElementById("stats")
+let currSession;
+
+const dataTransportation = {
+    transportation: [
+        {
+            vehicle: "Traditional Jeepney",
+            baseDistance: 4,
+            baseFare: 13,
+            additionalFarePerKm: 2.00
+        },
+        {
+            vehicle: "Modern Jeepney",
+            baseDistance: 4,
+            baseFare: 15,
+            additionalFarePerKm: 2.50
+        },
+        {
+            vehicle: "Bus",
+            baseDistance: 5,
+            baseFare: 15,
+            additionalFarePerKm: 2.50
+        },
+        {
+            vehicle: "Air-conditioned Bus",
+            baseDistance: 5,
+            baseFare: 18,
+            additionalFarePerKm: 3.00
+        },
+        {
+            vehicle: "Taxi",
+            baseDistance: 2,
+            baseFare: 50,
+            additionalFarePerKm: 13.50
+        },
+        {
+            vehicle: "UV Express",
+            baseDistance: 4,
+            baseFare: 20,
+            additionalFarePerKm: 2.50
+        },
+        {
+            vehicle: "Tricycle",
+            baseDistance: 1,
+            baseFare: 20,
+            additionalFarePerKm: 5.00
+        },
+        {
+            vehicle: "Motorcycle Taxi",
+            baseDistance: 2,
+            baseFare: 50,
+            additionalFarePerKm: 10.00
+        }
+    ]
+};
+function createTransportation() {
+    const d =  dataTransportation.transportation[constraint(0, dataTransportation.transportation.length-1)]
+    const t = 
+    new Transportation(
+    d.vehicle,
+    d.baseFare,
+    d.baseDistance,
+    d.additionalFarePerKm,
+    constraint(8, 20)
+);
+    return t
+
+    // $debugDisplay.innerHTML =
+    //     JSON.stringify(transportation, null, 2) ;
+}
+
+// function newSession() {
+
+//     // Randomly select a transportation data
+//     const d = dataTransportation.transportation[
+//         constraint(0, dataTransportation.transportation.length - 1)
+//     ];
+
+//     // Randomly generate the travel distance
+//     const targetDistance = constraint(
+//         d.baseDistance + 1,
+//         20
+//     );
+
+//     // Create Transportation object
+//     currSession = new Transportation(
+//     d.vehicle,
+//     d.baseFare,
+//     d.baseDistance,
+//     d.additionalFarePerKm,
+//     targetDistance
+// );
+
+// $questionTextDisplay.innerHTML = currSession.TemplateQuestion;
+// }
+
+ function newSession(){
+   try {
+   
+      $answerTextDisplay.innerHTML = ""
+    //   $AnswerContainer.innerHTML = ""
+      currSession = new Session();
+    currSession.showSession()
+
+   } catch (error) {
+        $debugDisplay = `<pre>${error.message}</pre>`
+   }
+}
+// class Session {
+//     #_;
+//     #answer;
+//     #studentAnswer;
+//     constructor(){
+//         this.#_ = createTransportation()
+//         this.#answer = this.#_.calculateFare()
+//         this.#studentAnswer = null;
+//         $submitBtn.addEventListener("click", ()=>{
+//              this.#studentAnswer = $answerInput.value;
+//              if(this.#checkAnswer()){
+//                 $answerTextDisplay.innerHTML = `<h1>c   orrect</h1>
+                
+//                     ${this.#answer}
+//                 `
+//                 this.#showAnswer("correct", "the answer is")
+                
+//              }else{
+//                  $answerTextDisplay.innerHTML = `<h1>incorrect</h1>
+                
+//                     ₱${this.#answer}
+//                 `
+//                 this.#showAnswer("incorrect", "")
+//                 // const btn = document.createElement("button")
+
+//                 // btn.onclick = newSession
+//                 // btn.innerText = "next question"
+//                 // $answerTextDisplay.appendChild(btn)
+//              }
+//              const btn = document.createElement("button")
+//                 btn.onclick = newSession
+//                 btn.innerText = "next question"
+//                 $answerTextDisplay.appendChild(btn)
+//         })
+
+
+//     }
+//     showSession(){
+//         this.#showQuestion()
+        
+//     }
+//     set studentAnswer(ans){
+//         this.#studentAnswer = ans
+//     }
+//     #showQuestion(){
+//         $questionTextDisplay.innerHTML = this.#_.templateQuestion()
+//     }
+//     #showAnswer(state, message){
+//          $answerTextDisplay.innerHTML = `<h1> ${state}</h1> the answer is ${this.#answer} <br>`
+//     }
+//     #checkAnswer(){
+//         return this.#answer == this.#studentAnswer
+//     }
+// }
+// newSession()
+
+class Session {
+    #questions;
+    #currentIndex;
+    #studentAnswer;
+    #SESSION_KEY;
+    constructor() {
+        this.#questions = [];
+        this.#currentIndex = 0;
+        this.#studentAnswer = null;
+        this.#SESSION_KEY = "hello";
+        this.#createQuestions();
+        this.#setupSubmit();
+        /**
+         * sessionData [
+         * {
+         * question,
+         * studentAnswer,
+         * answer,
+         * isCorrect,
+         * itemNumber,
+         * }
+         * 
+         * ]
+         */
+        const savedSession = localStorage.getItem(this.#SESSION_KEY);
+
+    this.savedData = JSON.parse(localStorage.getItem(this.#SESSION_KEY))
+    this.defaultData = {
+        _ : [], // questions and answer
+        sessionData : {
+            studentName: "_",
+            section: "_",
+            gradeLevel: "_",
+            score: 0,
+            isSaved: false,
+            isSessionDone: false
+        } // session data, student name, section, final score
+    }
+    localStorage.removeItem(this.#SESSION_KEY);
+    this.data = this.defaultData
+    this.#questions.forEach(q => {
+    this.data._.push(q.getQuestionAndAnswer());
+});
+    
+    localStorage.setItem(this.#SESSION_KEY, JSON.stringify(this.data))
+    
+    this.__ = JSON.parse(localStorage.getItem(this.#SESSION_KEY))
+    this._ = this.__._
+       
+      $debugDisplay.innerHTML = JSON.stringify(this.__)
+
+    // JSON.stringify(this.#questions[1].getQuestionAndAnswer())
+        // $debugDisplay.innerHTML 
+
+        this.saveData()
+         $studentInformationForm.style.display = this.data.sessionData.isSaved ? "none" : "flex"
+    $continueBtn.onclick = () => {
+        if(this.setSessionDataInData()){
+            this.data.sessionData.isSaved = true
+            this.saveData()
+            this.showStat()
+            $studentInformationForm.style.display = 'none'
+        }
+        
+        }
+    
+    }
+
+    
+    getSaveData(){
+        return localStorage.getItem(this.#SESSION_KEY)
+    }
+
+    
+    #createQuestions() {
+        for (let i = 0; i < 20; i++) {
+            this.#questions.push(createTransportation());
+        }
+    }
+    setSessionDataInData() {
+
+    const studentName =
+        $studentName.value.trim();
+
+    const section =
+        $sectionname.value.trim();
+
+    const gradeLevel =
+        $gradeLevel.value;
+
+    const errors = [];
+
+    if (!studentName) {
+        errors.push("Student name is required.");
+    }
+
+    if (!section) {
+        errors.push("Section is required.");
+    }
+
+    if (!gradeLevel) {
+        errors.push("Grade level is required.");
+    }
+
+    if (errors.length > 0) {
+        $debugDisplay.innerHTML =
+            errors.join("<br>");
+
+        return false;
+    }
+
+    this.data.sessionData.studentName =
+        studentName;
+
+    this.data.sessionData.section =
+        section;
+
+    this.data.sessionData.gradeLevel =
+        gradeLevel;
+
+    this.saveData();
+
+    return true;
+}
+    saveData(){
+        localStorage.setItem(this.#SESSION_KEY, JSON.stringify(this.data))
+        $debugDisplay.innerHTML = JSON.stringify(this.data)
+    }
+    getSessionData(){
+        return localStorage.getItem(this.#SESSION_KEY)
+    }
+    #setupSubmit() {
+        $submitBtn.onclick = () => {
+            this.#studentAnswer = $answerInput.value;
+
+            this.#checkAnswer();
+        };
+    }
+    showStat(){
+        $stat.innerHTML = `
+            <span>name: ${this.data.sessionData.studentName}</span> 
+            <span>section: ${this.data.sessionData.section}</span> 
+            <span>gradeLevel: ${this.data.sessionData.gradeLevel}</span>
+        `
+    }
+    showSession() {
+        this.#showQuestion();
+    }
+
+    #showQuestion() {
+        const transportation = this.#questions[this.#currentIndex];
+
+        $questionTextDisplay.innerHTML =
+            `<strong>Question ${this.#currentIndex + 1} of ${this.#questions.length}</strong><br><br>
+             ${transportation.templateQuestion()}`;
+
+        $answerInput.value = "";
+        $answerTextDisplay.innerHTML = "";
+    }
+
+    #checkAnswer() {
+        const transportation = this.#questions[this.#currentIndex];
+
+        const correctAnswer = transportation.calculateFare();
+
+        if (Number(this.#studentAnswer) === Number(correctAnswer)) {
+            this.#showAnswer("Correct", correctAnswer);
+            this.incrementScore()
+        } else {
+            this.#showAnswer("Incorrect", correctAnswer);
+        }
+    }
+    incrementScore(){
+        this.data.sessionData.score = Number(this.data.sessionData.score ) + 1
+        this.saveData()
+    }
+    #showAnswer(state, answer) {
+
+        // add prefix depending om situation
+        $answerTextDisplay.innerHTML = `
+            <h1>${state}</h1>
+             ₱${answer}
+        `;
+
+        const btn = document.createElement("button");
+
+        if (this.#currentIndex < this.#questions.length - 1) {
+            btn.innerText = "Next Question";
+            btn.onclick = () => {
+                this.#currentIndex++;
+                this.#showQuestion();
+            };
+        } else {
+            btn.innerText = "Finish";
+            btn.onclick = () => {
+                this.#finishSession();
+            };
+        }
+
+        $answerTextDisplay.appendChild(btn);
+    }
+
+    #finishSession() {
+        $questionTextDisplay.innerHTML = `
+            <h1>Session Complete</h1>
+            <p>You have completed all 20 questions.</p>
+            <strong>${this.data.sessionData.score}/20</strong>
+            
+        `;
+
+        $answerTextDisplay.innerHTML = "";
+    }
+}
+newSession()
+        </script>
+    <!-- <script>
+        const $debugDisplay = document.getElementById("debug")
+        const $questionTextDisplay = document.getElementById("display-text")
+        const $answerTextDisplay = document.getElementById("answer")
+        const $submitBtn = document.getElementById("submit-answer")
+        const $answerInput = document.getElementById("answer-input")
+
+        let currSession;
+
+const data = {
+    transportation: [
+        {
+            vehicle: "Traditional Jeepney",
+            baseDistance: 4,
+            baseFare: 13,
+            additionalFarePerKm: 2.00
+        },
+        {
+            vehicle: "Modern Jeepney",
+            baseDistance: 4,
+            baseFare: 15,
+            additionalFarePerKm: 2.50
+        },
+        {
+            vehicle: "Bus",
+            baseDistance: 5,
+            baseFare: 15,
+            additionalFarePerKm: 2.50
+        },
+        {
+            vehicle: "Air-conditioned Bus",
+            baseDistance: 5,
+            baseFare: 18,
+            additionalFarePerKm: 3.00
+        },
+        {
+            vehicle: "Taxi",
+            baseDistance: 1,
+            baseFare: 50,
+            additionalFarePerKm: 13.50
+        },
+        {
+            vehicle: "UV Express",
+            baseDistance: 4,
+            baseFare: 20,
+            additionalFarePerKm: 2.50
+        },
+        {
+            vehicle: "Tricycle",
+            baseDistance: 1,
+            baseFare: 20,
+            additionalFarePerKm: 5.00
+        },
+        {
+            vehicle: "Motorcycle Taxi",
+            baseDistance: 2,
+            baseFare: 50,
+            additionalFarePerKm: 10.00
+        }
+    ]
+};
+
+    // template question: if a {vehicle} have a base price of {basePrice},
+    // and a base distance before adding additional fare is {baseDistance} Km and your target distination is {targetDistance}. find the total fare
+        function newSession(){
+            const d =  data.transportation[constraint(0, data.transportation.length)]
+            const t = new Transportation(d.baseDistance, d.baseFare, constraint(8, 20), d.additionalFarePerKm, d.vehicle)
+             $questionTextDisplay.innerHTML = t.TemplateQuestion()
+            $answerTextDisplay.innerHTML = t.calculateTotalFare()
+    //         `<h1>
+    //     A ${t.vehicle} has a base fare of ₱${t.baseFare} 
+    //     and a base distance of ${t.baseDistance} km before 
+    //     additional fare is charged. If the target distance is 
+    //     ${t.targetDistance} km and the additional fare is 
+    //     ₱${t.additionalFarePerKm} per kilometer, 
+    //     find the total fare.</h1><br>
+    //     <h1>the answer is ${t.calculateTotalFare()}</h1>
+    // `;
+        }
+       
+
+        // a {vehivcle}  has a base fare of {baseFare} for the first {baseDistance}. and has a succedding fare of a {additionalFarePerKm}. if you travel for {targetDistance}. find the totoal fare
+class Session{
+    constructor(){
+        
+        this._templateQuestion = new TemplateQuestion(); // create the template question to use
+        this._expectedAnswer;
+    }
+}
+// function createTransportation(){
+//     let transportation = [];
+//     const _T = fetch("")
+//     console.log(_T)
+//     data.transportation.forEach(c =>{
+//         transportation.push(c)
+//     })
+//     $debugDisplay.innerHTML = transportation
+// }
+
+function constraint(c1, c2){
+            // check if c1 and c2 have valid value
+            if((c1.length === 0 || c1 === null) ||  (c2.length === 0 || c2 === null)){
+                return 0;
+            }
+            if(c1 > c2){
+                return 0;
+            }
+ 
+            return Math.floor(Math.random() * (Math.floor(c2)-Math.ceil(c1)+1) )+ Math.ceil(c1)
+        }
+
+
+
+        class Transportation {
+    constructor(baseDistance, baseFare, targetDistance, additionalFarePerKm, vehicle) {
+        this.baseDistance = baseDistance;
+        this.baseFare = baseFare;
+        this.targetDistance = targetDistance;
+        this.additionalFarePerKm = additionalFarePerKm;
+        this.vehicle = vehicle;
+    }
+
+    calculateTotalFare(){
+        let totalFare = this.baseFare;
+        for(let i = 0; i < this.targetDistance - this.baseDistance; i++){
+            totalFare +=this.additionalFarePerKm
+        }
+        return totalFare
+    }
+    TemplateQuestion(){
+        return  `A ${this.vehicle} has a base fare of ₱${this.baseFare} for the first ${this.baseDistance} kilometers. For every additional kilometer traveled, an additional fare of ₱${this.additionalFarePerKm} is charged. If a passenger travels a total distance of ${this.targetDistance} kilometers, what is the total fare?
+`
+    }
+    get baseDistance() {
+        return this._baseDistance;
+    }
+
+    set baseDistance(value) {
+        this._baseDistance = value;
+    }
+
+    get baseFare() {
+        return this._baseFare;
+    }
+
+    set baseFare(value) {
+        this._baseFare = value;
+    }
+
+    get targetDistance() {
+        return this._targetDistance;
+    }
+
+    set targetDistance(value) {
+        this._targetDistance = value;
+    }
+
+    get additionalFarePerKm() {
+        return this._additionalFarePerKm;
+    }
+
+    set additionalFarePerKm(value) {
+        this._additionalFarePerKm = value;
+    }
+
+    get vehicle() {
+        return this._vehicle;
+    }
+
+    set vehicle(value) {
+        this._vehicle = value;
+    }
+}
+function createTransportation() {
+    let transportation = [];
+    
+    data.transportation.forEach(c => {
+        let randomizedTargetDistance = constraint(c.baseDistance, 10)
+        const t = new Transportation(
+                c.baseDistance,
+                c.baseFare,
+                constraint(c.baseDistance, 10), // targetDistance will be randomized later
+                c.additionalFarePerKm,
+                c.vehicle
+            )
+            $debugDisplay.innerHTML = t.targetDistance
+        transportation.push(
+            t
+        );
+    });
+
+    console.log(transportation);
+
+    // $debugDisplay.innerHTML =
+    //     JSON.stringify(transportation, null, 2) ;
+}
+newSession()
+class PieceWise{
+    constructor(){
+        this.piece = []
+    }
+    
+    
+}
+// sub function
+class Piece{
+    constructor(func){
+        this.func = func
+    }
+}
+
+
+    </script> -->
+</body>
+</html>

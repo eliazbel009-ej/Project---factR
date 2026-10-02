@@ -1,417 +1,1401 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Grade 10 - Quartiles, Deciles, Percentiles</title>
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<title>
+    Grade 10 - Quartiles, Deciles, Percentiles
+</title>
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
+</script>
 
 <style>
-* {
+
+/* =========================================================
+   PROJECTFACTR DESIGN SYSTEM
+========================================================= */
+
+:root {
+
+    --primary-dark: #073827;
+    --primary-forest: #16623d;
+    --primary-accent: #339763;
+
+    --tint-light: #f0f7f3;
+    --card-bg: #ffffff;
+
+    --text-main: #073827;
+    --text-body: #334d42;
+    --text-muted: #628273;
+
+    --border-color: #e2ede6;
+
+    --correct-bg: #e7f7ee;
+    --correct-border: #339763;
+    --correct-text: #073827;
+
+    --wrong-bg: #fde8e8;
+    --wrong-border: #e02424;
+    --wrong-text: #9b1c1c;
+
+    --shadow-sm:
+        0 2px 4px rgba(7, 56, 39, .03);
+
+    --shadow-md:
+        0 10px 25px -5px rgba(7, 56, 39, .08);
+
+    --shadow-lg:
+        0 20px 40px -10px rgba(7, 56, 39, .12);
+
+    --radius: 16px;
+
+    --font-brand:
+        "Montserrat", Arial, sans-serif;
+
+    --font-body:
+        Arial, sans-serif;
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*,
+*::before,
+*::after {
+
     box-sizing: border-box;
-}
 
-body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: #e8f5e9;
-    color: #1b5e20;
+
+    padding: 0;
+
 }
 
-.screen {
+
+html,
+body {
+
+    width: 100%;
+
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+
+    background: #f7faf8;
+
+    font-family: var(--font-body);
+
+    color: var(--text-body);
+
+    overflow-x: hidden;
+
 }
+
+
+button,
+input,
+select {
+
+    font-family: inherit;
+
+}
+
 
 .hidden {
+
     display: none !important;
+
 }
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.top-nav-bar {
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 100;
+
+    width: 100%;
+
+    background:
+        rgba(255, 255, 255, .94);
+
+    border-bottom:
+        1px solid var(--border-color);
+
+    padding:
+        16px 32px;
+
+    backdrop-filter:
+        blur(10px);
+
+}
+
+
+.nav-container {
+
+    width: 100%;
+
+    max-width: 1200px;
+
+    margin: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+}
+
+
+.nav-logo {
+
+    font-family:
+        var(--font-brand);
+
+    font-size:
+        1.25rem;
+
+    font-weight:
+        800;
+
+    color:
+        var(--primary-forest);
+
+    text-decoration:
+        none;
+
+}
+
+
+.nav-tagline {
+
+    font-size:
+        .75rem;
+
+    font-weight:
+        500;
+
+    color:
+        var(--text-muted);
+
+    border-left:
+        1px solid var(--border-color);
+
+    padding-left:
+        12px;
+
+}
+
+
+/* =========================================================
+   SCREEN
+========================================================= */
+
+.screen {
+
+    width: 100%;
+
+    min-height: calc(100vh - 69px);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: flex-start;
+
+    padding:
+        30px 20px 40px;
+
+}
+
+
+/* =========================================================
+   MAIN CARD
+========================================================= */
 
 .card {
-    width: 100%;
-    max-width: 850px;
-    background: white;
-    padding: 30px;
-    border-radius: 18px;
-    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.15);
-    border: 1px solid #c8e6c9;
+
+    width: 92%;
+
+    max-width: 580px;
+
+    background:
+        var(--card-bg);
+
+    border:
+        1px solid var(--border-color);
+
+    border-radius:
+        var(--radius);
+
+    box-shadow:
+        var(--shadow-md);
+
+    padding:
+        35px;
+
 }
 
-#startScreen,
-#resultScreen {
-    text-align: center;
+
+/* =========================================================
+   START SCREEN
+========================================================= */
+
+#startScreen {
+
+    align-items:
+        flex-start;
+
 }
+
+
+#startScreen .card {
+
+    max-width:
+        440px;
+
+    margin-top:
+        10px;
+
+}
+
 
 #startScreen h1 {
-    font-size: 34px;
-    margin-bottom: 10px;
-    color: #2e7d32;
+
+    margin-bottom:
+        6px;
+
+    font-family:
+        var(--font-brand);
+
+    color:
+        var(--primary-dark);
+
+    font-size:
+        26px;
+
+    font-weight:
+        800;
+
+    text-align:
+        center;
+
 }
+
 
 #startScreen h2 {
-    font-size: 22px;
-    color: #388e3c;
-    margin-bottom: 25px;
+
+    margin-bottom:
+        25px;
+
+    font-family:
+        var(--font-brand);
+
+    color:
+        var(--primary-forest);
+
+    font-size:
+        17px;
+
+    font-weight:
+        700;
+
+    line-height:
+        1.4;
+
+    text-align:
+        center;
+
 }
+
+
+/* =========================================================
+   STUDENT INPUTS
+========================================================= */
 
 .student-info-group {
-    text-align: left;
-    margin-bottom: 20px;
+
+    margin-bottom:
+        18px;
+
 }
+
 
 .student-info-group label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 6px;
-    color: #2e7d32;
+
+    display:
+        block;
+
+    margin:
+        0 0 7px;
+
+    color:
+        var(--primary-dark);
+
+    font-size:
+        13px;
+
+    font-weight:
+        700;
+
 }
 
-.student-info-group input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #a5d6a7;
-    border-radius: 8px;
-    font-size: 16px;
-    outline: none;
+
+.student-info-group input,
+#questionLimit {
+
+    display:
+        block;
+
+    width:
+        100%;
+
+    height:
+        48px;
+
+    padding:
+        10px 16px;
+
+    background:
+        var(--tint-light);
+
+    border:
+        1px solid var(--border-color);
+
+    border-radius:
+        10px;
+
+    color:
+        var(--text-body);
+
+    font-size:
+        15px;
+
+    outline:
+        none;
+
 }
 
-.student-info-group input:focus {
-    border-color: #2e7d32;
+
+.student-info-group input:focus,
+#questionLimit:focus {
+
+    background:
+        white;
+
+    border-color:
+        var(--primary-accent);
+
+    box-shadow:
+        none;
+
 }
+
+
+#questionLimit {
+
+    cursor:
+        pointer;
+
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
 
 button {
-    width: 100%;
-    padding: 14px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 9px;
-    background: #2e7d32;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.2s;
+
+    display:
+        block;
+
+    width:
+        100%;
+
+    min-height:
+        48px;
+
+    margin-top:
+        16px;
+
+    padding:
+        10px 15px;
+
+    background:
+        var(--primary-forest);
+
+    color:
+        white;
+
+    border:
+        none;
+
+    border-radius:
+        10px;
+
+    font-family:
+        var(--font-brand);
+
+    font-size:
+        15px;
+
+    font-weight:
+        600;
+
+    cursor:
+        pointer;
+
+    transition:
+        .2s ease;
+
 }
+
 
 button:hover {
-    background: #1b5e20;
+
+    background:
+        var(--primary-dark);
+
+    transform:
+        translateY(-1px);
+
 }
+
 
 button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+
+    opacity:
+        .55;
+
+    cursor:
+        not-allowed;
+
+    transform:
+        none;
+
 }
+
+
+#newQuizButton {
+
+    background:
+        var(--primary-accent);
+
+}
+
+
+#newQuizButton:hover {
+
+    background:
+        var(--primary-forest);
+
+}
+
+
+/* =========================================================
+   COUNTDOWN
+========================================================= */
+
+#countdownScreen {
+
+    align-items:
+        center;
+
+    min-height:
+        100vh;
+
+    background:
+        rgba(7, 56, 39, .76);
+
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    z-index:
+        9998;
+
+    backdrop-filter:
+        blur(8px);
+
+}
+
 
 .countdown-card {
-    text-align: center;
+
+    max-width:
+        320px;
+
+    padding:
+        40px 60px;
+
+    text-align:
+        center;
+
+    border-radius:
+        20px;
+
+    box-shadow:
+        var(--shadow-lg);
+
 }
+
 
 #countdownNumber {
-    font-size: 110px;
-    font-weight: bold;
-    color: #2e7d32;
+
+    font-family:
+        var(--font-brand);
+
+    font-size:
+        80px;
+
+    font-weight:
+        800;
+
+    color:
+        var(--primary-forest);
+
+    text-align:
+        center;
+
 }
+
+
+/* =========================================================
+   QUIZ TOP BAR
+========================================================= */
 
 .top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #2e7d32;
+
+    width:
+        100%;
+
+    margin-bottom:
+        20px;
+
+    padding:
+        14px 16px;
+
+    background:
+        var(--tint-light);
+
+    border:
+        1px solid var(--border-color);
+
+    border-radius:
+        12px;
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+
+    color:
+        var(--primary-dark);
+
+    font-size:
+        13px;
+
+    font-weight:
+        700;
+
 }
+
 
 #timer {
-    font-size: 20px;
+
+    color:
+        var(--primary-forest);
+
 }
+
+
+/* =========================================================
+   DATASET BOX
+========================================================= */
 
 .dataset-box {
-    background: #f1f8e9;
-    padding: 18px;
-    border-radius: 10px;
-    margin-bottom: 25px;
-    border: 1px solid #dedede;
+
+    width:
+        100%;
+
+    margin-bottom:
+        20px;
+
+    padding:
+        16px;
+
+    background:
+        var(--tint-light);
+
+    border:
+        1px solid var(--border-color);
+
+    border-radius:
+        12px;
+
 }
+
 
 #datasetDescription {
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 1.5;
-    margin-bottom: 10px;
-    color: #1b5e20;
+
+    margin-bottom:
+        10px;
+
+    color:
+        var(--primary-dark);
+
+    font-size:
+        16px;
+
+    font-weight:
+        700;
+
+    line-height:
+        1.5;
+
 }
+
 
 #datasetDisplay {
-    line-height: 1.8;
-    word-break: break-word;
-    font-size: 18px;
-    color: #2e7d32;
+
+    color:
+        var(--primary-forest);
+
+    font-size:
+        17px;
+
+    font-weight:
+        600;
+
+    line-height:
+        1.8;
+
+    word-break:
+        break-word;
+
 }
+
+
+/* =========================================================
+   QUESTION
+========================================================= */
 
 .question-box {
-    margin-bottom: 20px;
+
+    width:
+        100%;
+
+    margin-bottom:
+        20px;
+
 }
+
 
 .question-type {
-    font-size: 14px;
-    font-weight: bold;
-    color: #388e3c;
-    text-transform: uppercase;
-    margin-bottom: 8px;
+
+    width:
+        100%;
+
+    margin-bottom:
+        12px;
+
+    padding:
+        12px 14px;
+
+    background:
+        white;
+
+    border:
+        1px solid var(--border-color);
+
+    border-radius:
+        10px;
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        13px;
+
+    font-weight:
+        700;
+
+    line-height:
+        1.5;
+
+    text-align:
+        center;
+
+    text-transform:
+        uppercase;
+
 }
 
-#questionLimit {
-    width: 100%;
-    height: 44px;
-    padding: 0 12px;
-    border: 1px solid #81c784;
-    border-radius: 8px;
-    background-color: #ffffff;
-    color: #555;
-    font-size: 16px;
-    font-family: inherit;
-    outline: none;
-    cursor: pointer;
-}
 
-#questionLimit:focus {
-    border-color: #2e7d32;
-    box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.08);
-}
-
-#studentName,
-#studentSection,
-#questionLimit {
-    width: 100%;
-    height: 44px;
-    box-sizing: border-box;
-}
-
-#questionLimit {
-    margin-top: 5px;
-}
+/* =========================================================
+   ANSWER ROW
+========================================================= */
 
 .answer-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-    margin-top: 10px;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        14px;
+
+    margin-top:
+        10px;
+
 }
+
 
 .answer-box {
-    padding: 16px;
-    border: 1px solid #c8e6c9;
-    border-radius: 10px;
-    background: #f1f8e9;
+
+    width:
+        100%;
+
+    padding:
+        15px;
+
+    background:
+        var(--tint-light);
+
+    border:
+        1px solid var(--border-color);
+
+    border-radius:
+        12px;
+
+    transition:
+        .2s ease;
+
 }
+
 
 .answer-box p {
-    margin-top: 0;
-    margin-bottom: 10px;
-    color: #1b5e20;
+
+    margin:
+        0 0 9px;
+
+    color:
+        var(--primary-dark);
+
+    font-size:
+        13px;
+
+    font-weight:
+        700;
+
 }
 
-.large-subscript {
-    font-size: 14px !important;
-    vertical-align: -3px;
-    line-height: 0;
-    margin-left: 0;
-}
 
 .answer-box input {
-    width: 100%;
-    padding: 14px;
-    border: 1px solid #a5d6a7;
-    border-radius: 8px;
-    font-size: 18px;
-    outline: none;
+
+    width:
+        100%;
+
+    height:
+        48px;
+
+    padding:
+        10px 14px;
+
+    background:
+        white;
+
+    border:
+        2px solid var(--border-color);
+
+    border-radius:
+        10px;
+
+    color:
+        var(--primary-dark);
+
+    font-size:
+        17px;
+
+    outline:
+        none;
+
 }
+
 
 .answer-box input:focus {
-    border-color: #2e7d32;
+
+    border-color:
+        var(--primary-accent);
+
 }
+
+
+.large-subscript {
+
+    font-size:
+        14px !important;
+
+    vertical-align:
+        -3px;
+
+    line-height:
+        0;
+
+    margin-left:
+        0;
+
+}
+
+
+/* =========================================================
+   FEEDBACK
+========================================================= */
 
 #feedback {
-    margin-top: 15px;
-    padding: 14px;
-    border-radius: 8px;
-    font-weight: bold;
-    line-height: 1.6;
+
+    width:
+        100%;
+
+    margin:
+        16px 0;
+
+    padding:
+        14px;
+
+    border-radius:
+        10px;
+
+    font-size:
+        13px;
+
+    font-weight:
+        600;
+
+    line-height:
+        1.5;
+
+    text-align:
+        center;
+
 }
+
 
 .correct {
-    background: #e8f5e9;
-    color: #1b5e20;
-    border: 1px solid #a5d6a7;
+
+    background:
+        var(--correct-bg);
+
+    border:
+        1px solid var(--correct-border);
+
+    color:
+        var(--correct-text);
+
 }
+
 
 .wrong {
-    background: #ffebee;
-    color: #c62828;
-    border: 1px solid #ef9a9a;
+
+    background:
+        var(--wrong-bg);
+
+    border:
+        1px solid var(--wrong-border);
+
+    color:
+        var(--wrong-text);
+
 }
 
-/* =========================================
-   CORRECT ANSWER ANIMATION
-   ========================================= */
+
+/* =========================================================
+   SUCCESS ANIMATION
+========================================================= */
 
 #successAnimation {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    pointer-events: none;
+
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    z-index:
+        9999;
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    pointer-events:
+        none;
+
 }
 
+
 .success-text {
-    font-size: clamp(55px, 10vw, 130px);
-    font-weight: 900;
-    text-align: center;
-    color: #2e7d32;
+
+    font-size:
+        clamp(55px, 10vw, 130px);
+
+    font-weight:
+        900;
+
+    text-align:
+        center;
+
+    color:
+        var(--primary-forest);
+
     text-shadow:
-        0 5px 0 #a5d6a7,
-        0 10px 25px rgba(46, 125, 50, 0.35);
+        0 5px 0 #a8d8bd,
+        0 10px 25px rgba(7, 56, 39, .20);
 
     animation:
         successPop 0.7s ease-out,
         successFloat 1.2s ease-in-out 0.7s;
+
 }
+
 
 @keyframes successPop {
 
     0% {
-        transform: scale(0.2) rotate(-8deg);
-        opacity: 0;
+
+        transform:
+            scale(.2)
+            rotate(-8deg);
+
+        opacity:
+            0;
+
     }
 
     60% {
-        transform: scale(1.15) rotate(3deg);
-        opacity: 1;
+
+        transform:
+            scale(1.15)
+            rotate(3deg);
+
+        opacity:
+            1;
+
     }
 
     80% {
-        transform: scale(0.95) rotate(-1deg);
+
+        transform:
+            scale(.95)
+            rotate(-1deg);
+
     }
 
     100% {
-        transform: scale(1) rotate(0);
-        opacity: 1;
+
+        transform:
+            scale(1)
+            rotate(0);
+
+        opacity:
+            1;
+
     }
+
 }
+
 
 @keyframes successFloat {
 
     0% {
-        transform: translateY(0) scale(1);
+
+        transform:
+            translateY(0)
+            scale(1);
+
     }
 
     50% {
-        transform: translateY(-15px) scale(1.04);
+
+        transform:
+            translateY(-15px)
+            scale(1.04);
+
     }
 
     100% {
-        transform: translateY(0) scale(1);
+
+        transform:
+            translateY(0)
+            scale(1);
+
     }
+
 }
 
-#finalScore {
-    font-size: 32px;
-    font-weight: bold;
-    margin: 20px 0;
-    color: #2e7d32;
+
+/* =========================================================
+   RESULT SCREEN
+========================================================= */
+
+#resultScreen {
+
+    align-items:
+        flex-start;
+
 }
+
+
+#resultScreen .card {
+
+    max-width:
+        580px;
+
+    text-align:
+        center;
+
+}
+
+
+#resultScreen h1 {
+
+    margin:
+        0 0 20px;
+
+    font-family:
+        var(--font-brand);
+
+    color:
+        var(--primary-dark);
+
+    font-size:
+        22px;
+
+    font-weight:
+        800;
+
+}
+
+
+#finalScore {
+
+    margin:
+        20px 0;
+
+    color:
+        var(--primary-forest);
+
+    font-size:
+        42px;
+
+    font-weight:
+        800;
+
+    line-height:
+        1;
+
+}
+
 
 #studentSummary,
 #finalTime,
 #finalCategory {
-    background: #f1f8e9;
-    padding: 15px;
-    border-radius: 8px;
-    margin: 10px 0;
-    color: #1b5e20;
+
+    margin:
+        10px 0;
+
+    padding:
+        12px;
+
+    background:
+        var(--tint-light);
+
+    border:
+        1px solid var(--border-color);
+
+    border-radius:
+        10px;
+
+    color:
+        var(--text-body);
+
+    font-size:
+        14px;
+
 }
 
-#newQuizButton {
-    background: #558b2f;
+
+#studentSummary {
+
+    color:
+        var(--primary-dark);
+
+    font-weight:
+        600;
+
 }
 
-#newQuizButton:hover {
-    background: #33691e;
-}
+
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media (max-width: 600px) {
 
-    .card {
-        padding: 20px;
+    .top-nav-bar {
+
+        padding:
+            14px 18px;
+
     }
+
+
+    .nav-tagline {
+
+        font-size:
+            10px;
+
+    }
+
+
+    .screen {
+
+        padding:
+            24px 14px 30px;
+
+    }
+
+
+    .card {
+
+        width:
+            94%;
+
+        padding:
+            25px 20px;
+
+    }
+
+
+    #startScreen .card {
+
+        margin-top:
+            0;
+
+    }
+
 
     #startScreen h1 {
-        font-size: 27px;
+
+        font-size:
+            22px;
+
     }
+
 
     #startScreen h2 {
-        font-size: 18px;
+
+        font-size:
+            16px;
+
     }
+
 
     .top-bar {
-        font-size: 14px;
+
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+
+        text-align:
+            center;
+
     }
+
 
     #timer {
-        font-size: 17px;
+
+        padding-top:
+            7px;
+
+        border-top:
+            1px solid var(--border-color);
+
     }
 
-    #countdownNumber {
-        font-size: 80px;
+
+    #datasetDescription {
+
+        font-size:
+            15px;
+
     }
+
+
+    #datasetDisplay {
+
+        font-size:
+            16px;
+
+    }
+
 
     .answer-row {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            12px;
+
     }
-    
-.top-bar{
-    width: 100%;
+
+
+    .countdown-card {
+
+        padding:
+            35px 50px;
+
+    }
+
+
+    #countdownNumber {
+
+        font-size:
+            70px;
+
+    }
+
+
+    #finalScore {
+
+        font-size:
+            38px;
+
+    }
+
 }
+
+
+@media (max-width: 400px) {
+
+    .card {
+
+        padding:
+            22px 17px;
+
+    }
+
+
+    #resultScreen .card {
+
+        padding:
+            22px 17px;
+
+    }
+
+
+    #finalScore {
+
+        font-size:
+            34px;
+
+    }
+
 }
+
 </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="../../assets/style/style.css">
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 </head>
 
+
 <body>
 
-<!-- START SCREEN -->
- <header class="top-nav-bar" id="navbar">
+
+<!-- =========================================================
+     NAV BAR
+========================================================= -->
+
+ <!-- TOP NAVIGATION BAR -->
+<header class="top-nav-bar" id="navbar">
 
   </header>
-<main>
-    
-<section class="cover-section" id="cover">
+  <script src="../../js/helper/navbar.js"></script>
+     <section class="cover-section" id="cover">
       <div class="cover-wrapper">
         <img 
-          src="../../assets/img/background/7-Integers.jpeg" 
+          src="../../assets/img/background/Banner Of Project FACTR.png" 
           alt="ProjectFactr Mathematics Remedial Learning Platform Banner" 
           class="cover-image"
           id="main-cover-image"
         >
+       <div class="cover-content">
+    <h1>QUARTILES, DECILES, PERCENTILES</h1>
+
+    <h2>
+        <!-- Formative Assessment on Calculation via Task Randomization -->
+    </h2>
+</div>
       </div>
     </section>
-    <section id="startScreen" class="screen">
+
+
+<!-- =========================================================
+     START SCREEN
+========================================================= -->
+
+<section
+    id="startScreen"
+    class="screen"
+>
 
     <div class="card">
 
-        <h1>GRADE 10</h1>
+        <h1>
+            GRADE 10
+        </h1>
 
-        <h2>QUARTILES, DECILES, PERCENTILES</h2>
+        <h2>
+            QUARTILES, DECILES, PERCENTILES
+        </h2>
+
 
         <div class="student-info-group">
 
@@ -422,16 +1406,17 @@ button:disabled {
             <input
                 type="text"
                 id="studentName"
-                placeholder="e.g. Juan Dela Cruz"
+                placeholder="Full Name"
                 required
             >
 
         </div>
 
+
         <div class="student-info-group">
 
             <label for="studentSection">
-                Section:
+                Section
             </label>
 
             <input
@@ -443,10 +1428,11 @@ button:disabled {
 
         </div>
 
+
         <div class="student-info-group">
 
             <label for="questionLimit">
-                Number of Questions:
+                Number of Questions
             </label>
 
             <select id="questionLimit">
@@ -455,7 +1441,10 @@ button:disabled {
                     1 to 5
                 </option>
 
-                <option value="10" selected>
+                <option
+                    value="10"
+                    selected
+                >
                     1 to 10
                 </option>
 
@@ -495,6 +1484,7 @@ button:disabled {
 
         </div>
 
+
         <button id="startButton">
             START QUIZ
         </button>
@@ -504,14 +1494,19 @@ button:disabled {
 </section>
 
 
-<!-- COUNTDOWN SCREEN -->
+<!-- =========================================================
+     COUNTDOWN SCREEN
+========================================================= -->
+
 <section
     id="countdownScreen"
     class="screen hidden"
 >
 
     <div class="card countdown-card">
-
+ <h3>
+            GET READY
+        </h3>
         <div id="countdownNumber">
             3
         </div>
@@ -521,7 +1516,10 @@ button:disabled {
 </section>
 
 
-<!-- QUIZ SCREEN -->
+<!-- =========================================================
+     QUIZ SCREEN
+========================================================= -->
+
 <section
     id="quizScreen"
     class="screen hidden"
@@ -563,6 +1561,7 @@ button:disabled {
 
 
             <div class="answer-row">
+
 
                 <div
                     id="positionStage"
@@ -607,6 +1606,7 @@ button:disabled {
 
                 </div>
 
+
             </div>
 
         </div>
@@ -636,22 +1636,29 @@ button:disabled {
 </section>
 
 
+<!-- =========================================================
+     SUCCESS ANIMATION
+========================================================= -->
 
-<!-- SUCCESS ANIMATION -->
 <div
     id="successAnimation"
     class="hidden"
 >
+
     <div
         id="successText"
         class="success-text"
     >
         GOOD JOB!
     </div>
+
 </div>
 
 
-<!-- RESULT SCREEN -->
+<!-- =========================================================
+     RESULT SCREEN
+========================================================= -->
+
 <section
     id="resultScreen"
     class="screen hidden"
@@ -696,11 +1703,15 @@ button:disabled {
     </div>
 
 </section>
-</main>
-  <script src="../../js/helper/navbar.js"></script>
+<footer class="site-footer">
+    <div class="footer-bottom">
+      <div>&copy; 2026 ProjectFactr. All rights reserved.</div>
+      <div>Mathematics Learning &amp; Curriculum Platform</div>
+    </div>
+  </footer>
 
 <script>
-
+"use strict";
 
 
 /* =====================================================
@@ -2179,8 +3190,7 @@ function finishQuiz() {
     clearInterval(timerInterval);
 
     const percentage = Math.round((score / TOTAL_QUESTIONS) * 100);
-    const quizType = "QUARTILES, DECILES, PERCENTILES";
-
+    const quizType = "Quartiles, Deciles, Percentiles";
     // SAVE RESULT TO GOOGLE SHEETS
     const formData = new URLSearchParams();
 
@@ -2193,10 +3203,10 @@ function finishQuiz() {
     formData.append("time", formatTime(elapsedSeconds));
 
     fetch("https://script.google.com/macros/s/AKfycbzrMeuIcPYOPPifmbcYofRp70xKMS4DszabX3tsIcCAO3fFa9ggsHpHubj2b5uWfpU/exec", {
-        method: "POST",
-        mode: "no-cors",
-        body: formData
-    })
+    method: "POST",
+    mode: "no-cors",
+    body: formData
+})
     .then(() => {
         console.log("Quiz result sent to Google Sheets.");
     })
@@ -2222,9 +3232,12 @@ function finishQuiz() {
 
 
 
+
+
+
 /* =====================================================
-   16. PDF EXPORT
-   ===================================================== */
+   25. PDF EXPORT
+===================================================== */
 
 downloadPdfButton.addEventListener(
     "click",
@@ -2239,8 +3252,10 @@ downloadPdfButton.addEventListener(
         pdfContainer.style.padding =
             "25px";
 
+
         pdfContainer.style.fontFamily =
             "Arial, sans-serif";
+
 
         pdfContainer.style.color =
             "#1b5e20";
@@ -2302,30 +3317,11 @@ downloadPdfButton.addEventListener(
                         <td
                             style="
                                 padding:8px;
-                            "
-                        >
-                            ${res.category}
-                        </td>
-
-
-                        <td
-                            style="
-                                padding:8px;
+                                font-weight:bold;
                                 font-family:monospace;
                             "
                         >
-                            [${res.dataset}]
-                        </td>
-
-
-                        <td
-                            style="
-                                padding:8px;
-                                text-align:center;
-                                font-weight:bold;
-                            "
-                        >
-                            ${res.measure}
+                            ${res.equation}
                         </td>
 
 
@@ -2334,25 +3330,20 @@ downloadPdfButton.addEventListener(
                                 padding:8px;
                             "
                         >
-
-                            Pos:
-                            <strong>
-                                ${res.positionAnswer}
-                            </strong>
-
-                            (Correct:
-                            ${res.correctPosition})
-
+                            x₁ = ${res.studentSolution1}
                             <br>
+                            x₂ = ${res.studentSolution2}
+                        </td>
 
-                            Val:
-                            <strong>
-                                ${res.studentAnswer}
-                            </strong>
 
-                            (Correct:
-                            ${res.correctAnswer})
-
+                        <td
+                            style="
+                                padding:8px;
+                            "
+                        >
+                            x₁ = ${res.correctSolution1}
+                            <br>
+                            x₂ = ${res.correctSolution2}
                         </td>
 
 
@@ -2370,8 +3361,10 @@ downloadPdfButton.addEventListener(
                     </tr>
 
                 `;
+
             }
         );
+
 
 
         pdfContainer.innerHTML = `
@@ -2404,10 +3397,11 @@ downloadPdfButton.addEventListener(
                         font-weight:normal;
                     "
                 >
-                    Quartiles, Deciles, and Percentiles
+                    Solving Absolute Value Equations
                 </h3>
 
             </div>
+
 
 
             <table
@@ -2499,6 +3493,7 @@ downloadPdfButton.addEventListener(
             </table>
 
 
+
             <h3
                 style="
                     color:#2e7d32;
@@ -2508,6 +3503,7 @@ downloadPdfButton.addEventListener(
             >
                 Detailed Question Summary
             </h3>
+
 
 
             <table
@@ -2532,7 +3528,7 @@ downloadPdfButton.addEventListener(
                             style="
                                 padding:8px;
                                 text-align:center;
-                                width:5%;
+                                width:7%;
                             "
                         >
                             #
@@ -2543,10 +3539,10 @@ downloadPdfButton.addEventListener(
                             style="
                                 padding:8px;
                                 text-align:left;
-                                width:18%;
+                                width:28%;
                             "
                         >
-                            Topic
+                            Equation
                         </th>
 
 
@@ -2554,21 +3550,10 @@ downloadPdfButton.addEventListener(
                             style="
                                 padding:8px;
                                 text-align:left;
-                                width:32%;
+                                width:25%;
                             "
                         >
-                            Dataset
-                        </th>
-
-
-                        <th
-                            style="
-                                padding:8px;
-                                text-align:center;
-                                width:10%;
-                            "
-                        >
-                            Measure
+                            Student Solutions
                         </th>
 
 
@@ -2576,10 +3561,10 @@ downloadPdfButton.addEventListener(
                             style="
                                 padding:8px;
                                 text-align:left;
-                                width:23%;
+                                width:25%;
                             "
                         >
-                            Student vs Correct
+                            Correct Solutions
                         </th>
 
 
@@ -2587,7 +3572,7 @@ downloadPdfButton.addEventListener(
                             style="
                                 padding:8px;
                                 text-align:center;
-                                width:12%;
+                                width:15%;
                             "
                         >
                             Status
@@ -2609,6 +3594,7 @@ downloadPdfButton.addEventListener(
         `;
 
 
+
         const opt = {
 
             margin: 0.4,
@@ -2617,7 +3603,7 @@ downloadPdfButton.addEventListener(
                 `${studentName.replace(
                     /\s+/g,
                     "_"
-                )}_Grade10_Quiz_Results.pdf`,
+                )}_Grade10_Absolute_Value_Results.pdf`,
 
             image: {
                 type: "jpeg",
@@ -2637,6 +3623,7 @@ downloadPdfButton.addEventListener(
         };
 
 
+
         html2pdf()
             .set(opt)
             .from(pdfContainer)
@@ -2646,9 +3633,10 @@ downloadPdfButton.addEventListener(
 );
 
 
+
 /* =====================================================
-   17. RESET QUIZ
-   ===================================================== */
+   26. RESET QUIZ
+===================================================== */
 
 newQuizButton.addEventListener(
     "click",
@@ -2676,6 +3664,7 @@ newQuizButton.addEventListener(
             "hidden"
         );
 
+
         startScreen.classList.remove(
             "hidden"
         );
@@ -2688,6 +3677,7 @@ newQuizButton.addEventListener(
 );
 
 </script>
-<script src="../../js/helper/navbar.js"></script>
+
 </body>
+
 </html>

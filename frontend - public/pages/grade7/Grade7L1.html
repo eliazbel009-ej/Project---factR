@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,31 +5,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>PROJECTFACTR — Mathematics Remedial Learning Platform</title>
-  <meta name="description" content="ProjectFactr — Mathematics Remedial Learning Platform for Grade 7 to 11.">
+  <title>PROJECTFACTR - Mathematics Remedial Learning Platform</title>
+  <meta name="description" content="ProjectFactr - Mathematics Remedial Learning Platform for Grade 7 to 11.">
 
-  <!-- FontAwesome Icons -->
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <!-- Design.css -->
-  <!-- <link rel="stylesheet" href="Design.css"> -->
-
-  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="Design.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&display=swap"
-    rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/style/style.css">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style/style.css">
   <style>
-
-    /* =========================================================
-       PROJECTFACTR MAIN VARIABLES
-       ========================================================= */
-
     :root {
       --primary-dark: #073827;
       --primary-forest: #16623d;
@@ -42,7 +26,6 @@
       --text-muted: #567e6c;
       --border-color: #d8eade;
       --white: #ffffff;
-
       --font-brand: 'Montserrat', sans-serif;
       --font-body: 'Inter', system-ui, -apple-system, sans-serif;
     }
@@ -56,26 +39,321 @@
       box-sizing: border-box;
     }
 
+
     html {
       scroll-behavior: smooth;
     }
 
+
     body {
       margin: 0;
       padding: 0;
+
       min-height: 100vh;
+
       background: #f7faf8;
+
       color: var(--text-body);
+
       font-family: var(--font-body);
+
       overflow-x: hidden;
     }
 
 
+    /* =========================================================
+       NAVIGATION
+       ========================================================= */
+
+    .nav-item {
+      position: relative;
+    }
+
+
+    .nav-link {
+      font-family: var(--font-body);
+
+      font-size: 0.875rem;
+
+      font-weight: 700;
+
+      color: var(--text-body);
+
+      text-decoration: none;
+
+      background: transparent;
+
+      border: none;
+
+      padding: 8px 14px;
+
+      border-radius: 7px;
+
+      position: relative;
+
+      transition:
+        all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 5px;
+    }
+
+
+    .nav-link::after {
+      content: '';
+
+      position: absolute;
+
+      bottom: 4px;
+
+      left: 10px;
+
+      right: 10px;
+
+      height: 2px;
+
+      background-color: var(--primary-accent);
+
+      transform: scaleX(0);
+
+      transform-origin: right;
+
+      transition:
+        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+      border-radius: 2px;
+    }
+
+
+    .nav-link:hover {
+      color: var(--primary-forest);
+
+      background-color: var(--tint-light);
+
+      transform: translateY(-2px);
+    }
+
+
+    .nav-link:hover::after {
+      transform: scaleX(1);
+
+      transform-origin: left;
+    }
+
 
     /* =========================================================
-  ====================================================
+       GRADE BUTTON
+       ========================================================= */
+
+    .nav-btn-toggle {
+      font-family: var(--font-body);
+
+      font-size: 0.875rem;
+
+      font-weight: 700;
+
+      color: var(--text-body);
+
+      background: transparent;
+
+      border: none;
+
+      padding: 8px 14px;
+
+      border-radius: 7px;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 5px;
+
+      width: 100%;
+
+      text-align: left;
+
+      cursor: default;
+
+      user-select: none;
+
+      position: relative;
+
+      transition:
+        all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+
+    .nav-btn-toggle::after {
+      content: '';
+
+      position: absolute;
+
+      bottom: 4px;
+
+      left: 10px;
+
+      right: 10px;
+
+      height: 2px;
+
+      background-color: var(--primary-accent);
+
+      transform: scaleX(0);
+
+      transform-origin: right;
+
+      transition:
+        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+      border-radius: 2px;
+    }
+
+
+    .nav-item.dropdown:hover > .nav-btn-toggle {
+      color: var(--primary-forest);
+
+      background-color: var(--tint-light);
+
+      transform: translateY(-2px);
+    }
+
+
+    .nav-item.dropdown:hover > .nav-btn-toggle::after {
+      transform: scaleX(1);
+
+      transform-origin: left;
+    }
+
+
+    /* =========================================================
+       ACTIVE GRADE 7
+       ========================================================= */
+
+    .nav-btn-toggle.active {
+      color: white;
+
+      background-color: var(--primary-forest);
+
+      box-shadow:
+        0 4px 14px rgba(22, 98, 61, 0.25);
+    }
+
+
+    .nav-btn-toggle.active::after {
+      display: none;
+    }
+
+
+    /* =========================================================
+       DROPDOWN
+       ========================================================= */
+
+    .dropdown-menu {
+      position: absolute;
+
+      top: calc(100% + 8px);
+
+      left: 0;
+
+      background-color: #ffffff;
+
+      border: 1px solid #d8eade;
+
+      border-radius: 10px;
+
+      box-shadow:
+        0 10px 25px rgba(7, 56, 39, 0.12);
+
+      list-style: none;
+
+      padding: 8px;
+
+      min-width: 220px;
+
+      opacity: 0;
+
+      visibility: hidden;
+
+      transform: translateY(8px);
+
+      transition:
+        all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+      z-index: 101;
+    }
+
+
+    .nav-item.dropdown:hover .dropdown-menu {
+      opacity: 1;
+
+      visibility: visible;
+
+      transform: translateY(0);
+    }
+
+
+    .dropdown-item {
+      display: block;
+
+      padding: 8px 12px;
+
+      font-size: 0.8125rem;
+
+      font-weight: 600;
+
+      color: #2d473b;
+
+      text-decoration: none;
+
+      border-radius: 6px;
+
+      transition: all 0.2s ease;
+
+      cursor: pointer;
+    }
+
+
+    .dropdown-item:hover {
+      background-color: #e7f7ee;
+
+      color: #16623d;
+
+      padding-left: 16px;
+    }
+
+
+    /* =========================================================
        HAMBURGER
        ========================================================= */
+
+    .hamburger-btn {
+      display: none;
+
+      background: none;
+
+      border: none;
+
+      font-size: 1.25rem;
+
+      color: #16623d;
+
+      cursor: pointer;
+
+      padding: 6px;
+
+      border-radius: 6px;
+
+      transition:
+        background-color 0.2s ease;
+    }
+
+
+    .hamburger-btn:hover {
+      background-color: #e7f7ee;
+    }
 
 
     /* =========================================================
@@ -84,22 +362,33 @@
 
     .cover-section {
       width: 100%;
+
       margin: 0;
+
       padding: 0;
     }
+
 
     .cover-wrapper {
       width: 100%;
+
       margin: 0;
+
       padding: 0;
     }
 
+
     .cover-image {
       display: block;
+
       width: 100%;
+
       height: auto;
+
       max-width: 100%;
+
       margin: 0;
+
       padding: 0;
     }
 
@@ -110,9 +399,13 @@
 
     .quiz-space-bar {
       width: 100%;
+
       height: 32px;
+
       background-color: #16623d;
+
       margin: 0;
+
       padding: 0;
     }
 
@@ -123,11 +416,17 @@
 
     .quiz-section {
       width: 100%;
+
       min-height: 500px;
+
       padding: 45px 15px 60px;
+
       background: #f7faf8;
+
       display: flex;
+
       flex-direction: column;
+
       align-items: center;
     }
 
@@ -138,12 +437,19 @@
 
     .quiz-title {
       width: 92%;
+
       max-width: 700px;
+
       margin: 0 auto 20px;
+
       color: #073827;
+
       font-family: Arial, sans-serif;
+
       font-size: 28px;
+
       font-weight: 800;
+
       text-align: center;
     }
 
@@ -153,40 +459,70 @@
        ========================================================= */
 
     #studentStart {
+
       width: 92%;
+
       max-width: 440px;
+
       margin: 10px auto 40px;
+
       padding: 35px;
+
       background: #ffffff;
+
       border: 1px solid #e2ede6;
+
       border-radius: 16px;
-      box-shadow: 0 10px 25px -5px rgba(7, 56, 39, 0.07);
+
+      box-shadow:
+        0 10px 25px -5px rgba(7, 56, 39, 0.07);
     }
 
+
     #studentStart h2 {
+
       margin: 0 0 20px;
+
       color: #073827;
+
       font-family: Arial, sans-serif;
+
       font-size: 20px;
+
       font-weight: 700;
+
       text-align: center;
     }
 
+
     #studentStart input {
+
       display: block;
+
       width: 100%;
+
       height: 48px;
+
       margin: 0 0 16px;
+
       padding: 10px 16px;
+
       background: #f0f7f3;
+
       border: 1px solid #e2ede6;
+
       border-radius: 10px;
+
       font-size: 15px;
+
       outline: none;
     }
 
+
     #studentStart input:focus {
+
       border-color: #339763;
+
       background: #ffffff;
     }
 
@@ -196,27 +532,45 @@
        ========================================================= */
 
     .quiz-btn {
+
       display: block;
+
       width: 100%;
+
       min-height: 48px;
+
       margin-top: 16px;
+
       padding: 10px 16px;
+
       background: #16623d;
+
       color: #ffffff;
+
       border: 0;
+
       border-radius: 10px;
+
       font-family: Arial, sans-serif;
+
       font-size: 15px;
+
       font-weight: 600;
+
       cursor: pointer;
+
       transition: all 0.2s ease;
     }
 
+
     .quiz-btn:hover {
+
       background: #073827;
     }
 
+
     .quiz-btn:active {
+
       transform: scale(0.98);
     }
 
@@ -226,52 +580,90 @@
        ========================================================= */
 
     #modeSelect {
+
       width: 92%;
+
       max-width: 440px;
+
       margin: 10px auto 40px;
+
       padding: 35px;
+
       background: #ffffff;
+
       border: 1px solid #e2ede6;
+
       border-radius: 16px;
-      box-shadow: 0 10px 25px -5px rgba(7, 56, 39, 0.07);
+
+      box-shadow:
+        0 10px 25px -5px rgba(7, 56, 39, 0.07);
     }
 
+
     #modeSelect h2 {
+
       margin: 0 0 20px;
+
       color: #073827;
+
       font-family: Arial, sans-serif;
+
       font-size: 20px;
+
       font-weight: 700;
+
       text-align: center;
     }
 
+
     .mode-btn-group {
+
       display: flex;
+
       flex-direction: column;
+
       gap: 12px;
+
       margin-top: 15px;
     }
 
+
     .mode-btn {
+
       width: 100%;
+
       padding: 14px;
+
       background: #f0f7f3;
+
       border: 2px solid #e2ede6;
+
       color: #073827;
+
       border-radius: 10px;
+
       font-family: Arial, sans-serif;
+
       font-weight: 700;
+
       font-size: 14px;
+
       cursor: pointer;
+
       transition: all 0.2s ease;
     }
 
+
     .mode-btn:hover {
+
       border-color: #339763;
+
       background: #ffffff;
     }
 
+
     .mode-btn:active {
+
       transform: scale(0.98);
     }
 
@@ -281,46 +673,80 @@
        ========================================================= */
 
     #countdownOverlay {
+
       position: fixed;
+
       top: 0;
+
       left: 0;
+
       width: 100vw;
+
       height: 100vh;
+
       background: rgba(7, 56, 39, 0.75);
+
       z-index: 9999;
+
       display: flex;
+
       flex-direction: column;
+
       align-items: center;
+
       justify-content: center;
+
       opacity: 0;
+
       pointer-events: none;
+
       transition: opacity 0.25s ease;
     }
 
+
     #countdownOverlay.active {
+
       opacity: 1;
+
       pointer-events: auto;
     }
 
+
     .countdown-card {
+
       background: #ffffff;
+
       padding: 40px 60px;
+
       border-radius: 20px;
+
       text-align: center;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+
+      box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.15);
     }
 
+
     .countdown-card h3 {
+
       color: #073827;
+
       font-family: Arial, sans-serif;
+
       margin-bottom: 10px;
+
       font-size: 18px;
     }
 
+
     #countdownNumber {
+
       font-family: Arial, sans-serif;
+
       font-size: 5rem;
+
       font-weight: 800;
+
       color: #16623d;
     }
 
@@ -330,46 +756,77 @@
        ========================================================= */
 
     #studentInfo {
+
       width: 92%;
+
       max-width: 580px;
+
       margin: 0 auto 16px;
+
       padding: 18px 20px;
+
       background: #ffffff;
+
       border: 1px solid #e2ede6;
+
       border-radius: 16px;
-      box-shadow: 0 2px 4px rgba(7, 56, 39, 0.02);
+
+      box-shadow:
+        0 2px 4px rgba(7, 56, 39, 0.02);
+
       display: none;
+
       grid-template-columns: 1fr 1fr;
+
       gap: 12px;
     }
 
+
     #studentInfo p {
+
       font-size: 13px;
+
       font-weight: 500;
     }
 
+
     #showName,
     #showSection {
+
       color: #073827;
+
       font-weight: 700;
     }
+
 
     #score,
     #quizCount,
     #timerDisplay {
+
       background: #f0f7f3;
+
       padding: 8px 12px;
+
       border-radius: 8px;
+
       border: 1px solid #e2ede6;
+
       text-align: center;
+
       font-size: 13px;
+
       font-weight: 600;
+
       color: #16623d;
     }
 
+
     #timerDisplay {
+
       grid-column: span 2;
+
       background: #073827;
+
       color: #ffffff;
     }
 
@@ -379,105 +836,152 @@
        ========================================================= */
 
     #quizArea {
+
       width: 92%;
+
       max-width: 580px;
+
       margin: 0 auto 40px;
+
       padding: 35px;
+
       background: #ffffff;
+
       border: 1px solid #e2ede6;
+
       border-radius: 16px;
-      box-shadow: 0 10px 25px -5px rgba(7, 56, 39, 0.07);
+
+      box-shadow:
+        0 10px 25px -5px rgba(7, 56, 39, 0.07);
+
       display: none;
     }
 
+
     #category {
+
       font-family: Arial, sans-serif;
+
       margin-bottom: 16px;
+
       color: #073827;
+
       font-size: 18px;
+
       font-weight: 700;
+
       text-align: center;
     }
 
+
     #displayGiven {
+
       width: 100%;
+
       min-height: 70px;
+
       margin-bottom: 20px;
+
       padding: 16px;
+
       display: flex;
+
       align-items: center;
+
       justify-content: center;
+
       color: #073827;
+
       background: #f0f7f3;
+
       border: 1px solid #e2ede6;
+
       border-radius: 12px;
+
       font-size: 18px;
+
       font-weight: 600;
+
       text-align: center;
+
       line-height: 1.5;
     }
 
 
-    /* =========================================================
-       FIXED MATH SUPERSCRIPT
-       ========================================================= */
-
-    .math-power {
-      display: inline-block;
-      position: relative;
-      top: -0.45em;
-      margin-left: 2px;
-      font-size: 0.62em;
-      font-weight: 800;
-      line-height: 1;
-      vertical-align: baseline;
-    }
-
-
-    /* =========================================================
-       ANSWER BOX
-       ========================================================= */
-
     #answerBox {
+
       width: 100%;
+
       display: flex;
+
       align-items: center;
+
       justify-content: center;
+
       flex-wrap: wrap;
+
       gap: 8px;
+
       margin: 20px 0 16px;
+
       text-align: center;
     }
+
 
     #answerBox input {
+
       width: 120px;
+
       height: 48px;
+
       padding: 10px;
+
       font-size: 18px;
+
       font-weight: 700;
+
       text-align: center;
+
       border: 2px solid #e2ede6;
+
       border-radius: 10px;
+
       background: #ffffff;
+
       outline: none;
     }
 
+
     #answerBox input:focus {
+
       border-color: #339763;
     }
 
+
     #outAns {
+
       width: 100%;
+
       margin: 16px 0;
+
       padding: 14px;
+
       background: #f0f7f3;
+
       border: 1px solid #e2ede6;
+
       border-radius: 10px;
+
       color: #073827;
+
       font-size: 13px;
+
       font-weight: 500;
+
       text-align: center;
+
       display: none;
+
       line-height: 1.5;
     }
 
@@ -487,47 +991,82 @@
        ========================================================= */
 
     #quizResult {
+
       width: 92%;
+
       max-width: 580px;
+
       margin: 0 auto 40px;
+
       padding: 35px;
+
       background: #ffffff;
+
       border: 1px solid #e2ede6;
+
       border-radius: 16px;
-      box-shadow: 0 10px 25px -5px rgba(7, 56, 39, 0.07);
+
+      box-shadow:
+        0 10px 25px -5px rgba(7, 56, 39, 0.07);
+
       display: none;
+
       text-align: center;
     }
 
+
     #quizResult h2 {
+
       margin: 0 0 20px;
+
       color: #073827;
+
       font-family: Arial, sans-serif;
+
       font-size: 22px;
+
       font-weight: 800;
     }
 
+
     .result-info {
+
       margin: 10px 0;
+
       padding: 12px;
+
       background: #f0f7f3;
+
       border: 1px solid #e2ede6;
+
       border-radius: 10px;
+
       color: #334d42;
+
       font-size: 14px;
     }
 
+
     .result-info strong {
+
       color: #073827;
+
       font-weight: 700;
     }
 
+
     #resultScore {
+
       margin: 20px 0;
+
       color: #16623d;
+
       font-family: Arial, sans-serif;
+
       font-size: 42px;
+
       font-weight: 800;
+
       line-height: 1;
     }
 
@@ -536,7 +1075,175 @@
        FOOTER
        ========================================================= */
 
-   
+    .site-footer {
+
+      width: 100%;
+
+      background: #073827;
+
+      color: #ffffff;
+
+      padding: 25px 32px;
+    }
+
+
+    .footer-bottom {
+
+      width: 100%;
+
+      max-width: 1200px;
+
+      margin: 0 auto;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      gap: 20px;
+
+      font-size: 0.8rem;
+    }
+
+
+    /* =========================================================
+       MOBILE NAVIGATION
+       ========================================================= */
+
+    @media (max-width: 768px) {
+
+      .hamburger-btn {
+
+        display: block;
+      }
+
+
+      .nav-links {
+
+        position: absolute;
+
+        top: 100%;
+
+        left: 0;
+
+        width: 100%;
+
+        background-color: #ffffff;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 0;
+
+        padding: 12px 20px;
+
+        border-bottom: 1px solid #d8eade;
+
+        box-shadow:
+          0 10px 25px rgba(7, 56, 39, 0.1);
+
+        max-height: 0;
+
+        overflow: hidden;
+
+        opacity: 0;
+
+        visibility: hidden;
+
+        transition:
+          all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+
+      .nav-links.mobile-open {
+
+        max-height: 550px;
+
+        overflow-y: auto;
+
+        opacity: 1;
+
+        visibility: visible;
+      }
+
+
+      .nav-item {
+
+        width: 100%;
+      }
+
+
+      .nav-link,
+      .nav-btn-toggle {
+
+        width: 100%;
+
+        box-sizing: border-box;
+
+        padding: 10px 14px;
+
+        justify-content: space-between;
+
+        font-size: 0.85rem;
+
+        border-radius: 6px;
+
+        margin: 2px 0;
+      }
+
+
+      .dropdown-menu {
+
+        position: static;
+
+        box-shadow: none;
+
+        border: none;
+
+        background-color: #e7f7ee;
+
+        margin: 4px 0 8px 0;
+
+        padding: 4px;
+
+        width: 100%;
+
+        box-sizing: border-box;
+
+        max-height: 0;
+
+        overflow: hidden;
+
+        opacity: 0;
+
+        visibility: hidden;
+
+        transform: none;
+
+        transition: all 0.3s ease;
+      }
+
+
+      .nav-item.dropdown.mobile-dropdown-active .dropdown-menu {
+
+        max-height: 300px;
+
+        opacity: 1;
+
+        visibility: visible;
+      }
+
+
+      .footer-bottom {
+
+        flex-direction: column;
+
+        text-align: center;
+      }
+    }
+
 
     /* =========================================================
        QUIZ MOBILE
@@ -545,40 +1252,58 @@
     @media (max-width: 600px) {
 
       .quiz-section {
+
         padding: 30px 0 45px;
       }
 
+
       .quiz-title {
+
         font-size: 22px;
       }
+
 
       #studentStart,
       #modeSelect,
       #quizArea,
       #quizResult {
+
         width: 94%;
+
         padding: 24px;
       }
 
+
       #studentInfo {
+
         width: 94%;
+
         padding: 15px;
       }
 
+
       #displayGiven {
+
         font-size: 16px;
+
         min-height: 65px;
       }
 
+
       #answerBox input {
+
         width: 100px;
       }
 
+
       .countdown-card {
+
         padding: 35px 45px;
       }
 
+
       #countdownNumber {
+
         font-size: 4rem;
       }
     }
@@ -587,29 +1312,40 @@
     @media (max-width: 400px) {
 
       .nav-tagline {
+
         display: none;
       }
 
+
       #studentInfo {
+
         grid-template-columns: 1fr;
       }
 
+
       #timerDisplay {
+
         grid-column: span 1;
       }
+
 
       #studentStart,
       #modeSelect,
       #quizArea,
       #quizResult {
+
         padding: 20px;
       }
 
+
       .quiz-title {
+
         font-size: 20px;
       }
 
+
       #resultScore {
+
         font-size: 34px;
       }
     }
@@ -624,11 +1360,11 @@
 
   <!-- =========================================================
        TOP NAVIGATION
+       EXACT GRADE 7–11 STRUCTURE
        ========================================================= -->
 
   <header class="top-nav-bar" id="navbar">
 
-   
 
   </header>
 
@@ -640,8 +1376,11 @@
   <main>
 
 
-    <!-- COVER -->
+    <!-- =======================================================
+         COVER IMAGE
+         ======================================================= -->
 
+ 
    <section class="cover-section" id="cover">
       <div class="cover-wrapper">
         <img 
@@ -651,7 +1390,7 @@
           id="main-cover-image"
         >
        <div class="cover-content">
-    <h1>Square & Cube Roots</h1>
+    <h1>Operations on Integer</h1>
 
     <h2>
         <!-- Formative Assessment on Calculation via Task Randomization -->
@@ -660,24 +1399,29 @@
       </div>
     </section>
 
-    <!-- GREEN BAR -->
+
+    <!-- =======================================================
+         GREEN SPACE BAR
+         ======================================================= -->
 
     <div class="quiz-space-bar"></div>
 
 
-    <!-- =========================================================
-         QUIZ
-         ========================================================= -->
+    <!-- =======================================================
+         OPERATIONS ON INTEGERS QUIZ
+         ======================================================= -->
 
     <section class="quiz-section">
 
 
       <h1 class="quiz-title">
-        Square Roots and Cube Roots Quiz
+        Operations on Integers Quiz
       </h1>
 
 
-      <!-- STUDENT START -->
+      <!-- =====================================================
+           STUDENT START
+           ===================================================== -->
 
       <div id="studentStart">
 
@@ -685,78 +1429,77 @@
           Enter Student Details
         </h2>
 
+
         <input
           type="text"
           id="fullName"
           placeholder="Full Name"
-          autocomplete="name">
+          autocomplete="name"
+        >
+
 
         <input
           type="text"
           id="section"
-          placeholder="Grade & Section">
+          placeholder="Grade & Section"
+        >
+
 
         <button
           class="quiz-btn"
-          onclick="proceedToModeSelect()">
-
+          onclick="proceedToModeSelect()"
+        >
           Next: Choose Quiz Type
-
         </button>
 
       </div>
 
 
-      <!-- QUIZ TYPE -->
+      <!-- =====================================================
+           QUIZ TYPE
+           ===================================================== -->
 
       <div
         id="modeSelect"
-        style="display:none;">
+        style="display:none;"
+      >
 
         <h2>
           Select Quiz Type
         </h2>
 
+
         <div class="mode-btn-group">
 
           <button
             class="mode-btn"
-            onclick="startQuizWithCountdown('sqrt')">
-
-            Square Root
-
+            onclick="startQuizWithCountdown('add_sub')"
+          >
+            Addition &amp; Subtraction of Integers
           </button>
+
 
           <button
             class="mode-btn"
-            onclick="startQuizWithCountdown('simplify')">
-
-            Simplify Square Root
-
+            onclick="startQuizWithCountdown('multiplication')"
+          >
+            Multiplication of Integers
           </button>
+
 
           <button
             class="mode-btn"
-            onclick="startQuizWithCountdown('cbrt')">
-
-            Cube Root
-
+            onclick="startQuizWithCountdown('division')"
+          >
+            Division of Integers
           </button>
+
 
           <button
             class="mode-btn"
-            onclick="startQuizWithCountdown('square')">
-
-            Square
-
-          </button>
-
-          <button
-            class="mode-btn"
-            onclick="startQuizWithCountdown('cube')">
-
-            Cube
-
+            onclick="startQuizWithCountdown('randomize')"
+          >
+            Randomize (All Operations)
           </button>
 
         </div>
@@ -764,7 +1507,9 @@
       </div>
 
 
-      <!-- COUNTDOWN -->
+      <!-- =====================================================
+           COUNTDOWN
+           ===================================================== -->
 
       <div id="countdownOverlay">
 
@@ -783,29 +1528,36 @@
       </div>
 
 
-      <!-- STUDENT INFORMATION -->
+      <!-- =====================================================
+           STUDENT INFORMATION
+           ===================================================== -->
 
       <div
         id="studentInfo"
-        style="display:none;">
+        style="display:none;"
+      >
 
         <p>
           Name:
           <span id="showName"></span>
         </p>
 
+
         <p>
           Section:
           <span id="showSection"></span>
         </p>
 
+
         <div id="score">
           Score: 0 / 10
         </div>
 
+
         <div id="quizCount">
           Question: 1 / 10
         </div>
+
 
         <div id="timerDisplay">
           Time Elapsed: 0:00
@@ -814,57 +1566,65 @@
       </div>
 
 
-      <!-- QUIZ AREA -->
+      <!-- =====================================================
+           QUIZ AREA
+           ===================================================== -->
 
       <div
         id="quizArea"
-        style="display:none;">
+        style="display:none;"
+      >
 
         <div id="category">
           Topic
         </div>
 
+
         <div id="displayGiven">
           Question
         </div>
 
+
         <div id="answerBox"></div>
 
+
         <div id="outAns"></div>
+
 
         <button
           class="quiz-btn"
           id="submitBtn"
-          onclick="checkAns()">
-
+          onclick="checkAns()"
+        >
           Submit Answer
-
         </button>
+
 
         <button
           class="quiz-btn"
           id="nextBtn"
           onclick="newQuestion()"
-          style="display:none; background:#339763;">
-
+          style="display:none; background:#339763;"
+        >
           Next Question
-
         </button>
+
 
         <button
           class="quiz-btn"
           id="backToModeBtn"
           onclick="backToQuizType()"
-          style="display:none; background:#073827;">
-
+          style="display:none; background:#073827;"
+        >
           Back to Quiz Type
-
         </button>
 
       </div>
 
 
-      <!-- RESULT -->
+      <!-- =====================================================
+           RESULT
+           ===================================================== -->
 
       <div id="quizResult">
 
@@ -872,56 +1632,68 @@
           Quiz Finished!
         </h2>
 
+
         <div class="result-info">
 
           Name:
+
           <strong id="resultName"></strong>
 
         </div>
 
+
         <div class="result-info">
 
           Section:
+
           <strong id="resultSection"></strong>
 
         </div>
 
+
         <div class="result-info">
 
           Quiz Type:
+
           <strong id="resultQuizType"></strong>
 
         </div>
+
 
         <div id="resultScore">
           0/10
         </div>
 
+
         <div class="result-info">
 
           Time:
+
           <strong id="resultTime">
             00:00
           </strong>
 
         </div>
 
+
         <button
           class="quiz-btn"
-          onclick="backToQuizType()">
-
+          onclick="backToQuizType()"
+        >
           Back to Quiz Types
-
         </button>
 
       </div>
+
 
     </section>
 
   </main>
 
 
-  <!-- FOOTER -->
+  <!-- =========================================================
+       FOOTER
+       ========================================================= -->
 
   <footer class="site-footer">
 
@@ -943,10 +1715,82 @@
   <!-- =========================================================
        JAVASCRIPT
        ========================================================= -->
-
+<script src="../../js/helper/navbar.js"></script>
   <script>
 
-   
+    /* =========================================================
+       NAVIGATION
+       ========================================================= */
+
+    const hamburgerToggle =
+      document.getElementById('hamburgerToggle');
+
+    const navLinksList =
+      document.getElementById('navLinksList');
+
+
+    hamburgerToggle.addEventListener('click', () => {
+
+      navLinksList.classList.toggle('mobile-open');
+
+
+      const icon =
+        hamburgerToggle.querySelector('i');
+
+
+      if (
+        navLinksList.classList.contains('mobile-open')
+      ) {
+
+        icon.classList.remove('fa-bars');
+
+        icon.classList.add('fa-xmark');
+
+      } else {
+
+        icon.classList.remove('fa-xmark');
+
+        icon.classList.add('fa-bars');
+
+      }
+
+    });
+
+
+    const dropdownItems =
+      document.querySelectorAll(
+        '.nav-item.dropdown'
+      );
+
+
+    dropdownItems.forEach(item => {
+
+      const toggleBtn =
+        item.querySelector(
+          '.nav-btn-toggle'
+        );
+
+
+      toggleBtn.addEventListener(
+        'click',
+        (e) => {
+
+          if (window.innerWidth <= 768) {
+
+            e.stopPropagation();
+
+            item.classList.toggle(
+              'mobile-dropdown-active'
+            );
+
+          }
+
+        }
+      );
+
+    });
+
+
     /* =========================================================
        QUIZ VARIABLES
        ========================================================= */
@@ -967,55 +1811,12 @@
 
     let ansr;
 
-    let simplifyCoefficient;
-
-    let simplifyRadicand;
-
-    let simplifyNumber;
-
 
     /* =========================================================
        PREVENT QUESTION REPETITION
        ========================================================= */
 
     let usedQuestions = new Set();
-
-
-    /* =========================================================
-       RADICAL TERMS
-       ========================================================= */
-
-    const radicalTerms = [
-
-      8,
-      12,
-      18,
-      20,
-      24,
-      27,
-      28,
-      32,
-      40,
-      44,
-      45,
-      48,
-      50,
-      52,
-      54,
-      63,
-      72,
-      75,
-      90,
-      98,
-      99,
-      108,
-      125,
-      128,
-      162,
-      250,
-      300
-
-    ];
 
 
     /* =========================================================
@@ -1048,7 +1849,6 @@
         );
 
         return;
-
       }
 
 
@@ -1153,16 +1953,12 @@
             numberDisplay.textContent =
               count;
 
-          }
-
-          else if (count === 0) {
+          } else if (count === 0) {
 
             numberDisplay.textContent =
               "GO!";
 
-          }
-
-          else {
+          } else {
 
             clearInterval(
               countdownInterval
@@ -1240,84 +2036,57 @@
 
 
     /* =========================================================
-       RANDOM NUMBER
+       RANDOM INTEGER
        ========================================================= */
 
-    function randomInt(min, max) {
+    function getRandomInteger(forceTwoDigit = false) {
 
-      return Math.floor(
-        Math.random() *
-        (max - min + 1)
-      ) + min;
-
-    }
+      let number;
 
 
-    /* =========================================================
-       SIMPLIFY RADICAL
-       ========================================================= */
+      if (forceTwoDigit) {
 
-    function simplifyRadical(number) {
+        number =
+          Math.floor(
+            Math.random() * 21
+          ) + 10;
 
-      let outside = 1;
+      } else {
 
-      let inside = number;
-
-
-      for (
-        let i = Math.floor(
-          Math.sqrt(number)
-        );
-
-        i >= 2;
-
-        i--
-
-      ) {
-
-        if (
-          number % (i * i) === 0
-        ) {
-
-          outside = i;
-
-          inside =
-            number / (i * i);
-
-          break;
-
-        }
+        number =
+          Math.floor(
+            Math.random() * 9
+          ) + 1;
 
       }
 
 
-      return {
+      if (Math.random() < 0.5) {
 
-        coefficient: outside,
+        number *= -1;
 
-        radicand: inside
+      }
 
-      };
+
+      return number;
 
     }
 
 
     /* =========================================================
-       RANDOM RADICAL
+       FORMAT INTEGER
        ========================================================= */
 
-    function getRandomRadical() {
+    function formatInt(number) {
 
-      const randomIndex =
-        Math.floor(
-          Math.random() *
-          radicalTerms.length
-        );
+      if (number < 0) {
+
+        return "(" + number + ")";
+
+      }
 
 
-      return radicalTerms[
-        randomIndex
-      ];
+      return String(number);
 
     }
 
@@ -1329,6 +2098,8 @@
     function newQuestion() {
 
       if (quizNumber >= 10) {
+
+        showQuizSummary();
 
         return;
 
@@ -1356,6 +2127,11 @@
 
 
       document.getElementById(
+        "backToModeBtn"
+      ).style.display = "none";
+
+
+      document.getElementById(
         "quizCount"
       ).textContent =
 
@@ -1377,379 +2153,431 @@
         " / 10";
 
 
-      /* =====================================================
-         SQUARE ROOT
-         ===================================================== */
-
-      if (selectedMode === "sqrt") {
-
-        let root;
-
-        let perfectSquare;
-
-        let questionKey;
+      let a;
+      let b;
+      let answer;
+      let operation;
+      let questionKey;
+      let questionCreated = false;
 
 
-        do {
-
-          root =
-            randomInt(1, 10);
-
-          perfectSquare =
-            root * root;
-
-          questionKey =
-            "sqrt-" +
-            perfectSquare;
-
-        }
-
-        while (
-          usedQuestions.has(
-            questionKey
-          )
-        );
+      while (!questionCreated) {
 
 
-        usedQuestions.add(
-          questionKey
-        );
+        /* =====================================================
+           ADDITION & SUBTRACTION
+           ===================================================== */
+
+        if (
+          selectedMode === "add_sub"
+        ) {
+
+          const firstTwoDigit =
+            (quizNumber + 1) % 2 === 0;
+
+          const secondTwoDigit =
+            !firstTwoDigit;
 
 
-        document.getElementById(
-          "category"
-        ).textContent =
-          "Square Root";
+          a =
+            getRandomInteger(
+              firstTwoDigit
+            );
 
 
-        document.getElementById(
-          "displayGiven"
-        ).innerHTML =
-
-          "What is √" +
-          perfectSquare +
-          "?";
+          b =
+            getRandomInteger(
+              secondTwoDigit
+            );
 
 
-        document.getElementById(
-          "answerBox"
-        ).innerHTML =
+          if (
+            Math.random() < 0.5
+          ) {
 
-          '<input type="text" id="ans" ' +
-          'placeholder="Answer" ' +
-          'inputmode="numeric" ' +
-          'autocomplete="off">';
+            operation = "+";
 
+            answer = a + b;
 
-        ansr = root;
+          } else {
 
-      }
+            operation = "−";
 
+            answer = a - b;
 
-      /* =====================================================
-         SIMPLIFY
-         ===================================================== */
-
-      else if (
-        selectedMode === "simplify"
-      ) {
-
-        let questionKey;
-
-
-        do {
-
-          simplifyNumber =
-            getRandomRadical();
+          }
 
 
           questionKey =
-            "simplify-" +
-            simplifyNumber;
+            "addsub-" +
+            a +
+            operation +
+            b;
 
         }
 
-        while (
-          usedQuestions.has(
-            questionKey
-          )
-        );
+
+        /* =====================================================
+           MULTIPLICATION
+           ===================================================== */
+
+        else if (
+          selectedMode === "multiplication"
+        ) {
+
+          const firstTwoDigit =
+            (quizNumber + 1) % 2 === 0;
+
+          const secondTwoDigit =
+            !firstTwoDigit;
 
 
-        usedQuestions.add(
-          questionKey
-        );
+          a =
+            getRandomInteger(
+              firstTwoDigit
+            );
 
 
-        const result =
-          simplifyRadical(
-            simplifyNumber
+          b =
+            getRandomInteger(
+              secondTwoDigit
+            );
+
+
+          operation = "×";
+
+
+          answer =
+            a * b;
+
+
+          questionKey =
+            "multiply-" +
+            a +
+            "x" +
+            b;
+
+        }
+
+
+        /* =====================================================
+           DIVISION
+           ===================================================== */
+
+        else if (
+          selectedMode === "division"
+        ) {
+
+          let quotient =
+            Math.floor(Math.random() * 10) + 1;
+
+          if (Math.random() < 0.5) {
+            quotient *= -1;
+          }
+
+
+          let divisor;
+
+
+          do {
+
+            divisor =
+              getRandomInteger(
+                quizNumber % 2 === 0
+              );
+
+          } while (
+            divisor === 0 ||
+            Math.abs(
+              divisor * quotient
+            ) > 30
           );
 
 
-        simplifyCoefficient =
-          result.coefficient;
+          a =
+            divisor * quotient;
 
 
-        simplifyRadicand =
-          result.radicand;
+          b =
+            divisor;
 
 
-        document.getElementById(
-          "category"
-        ).textContent =
-          "Simplify Square Root";
+          operation = "÷";
 
 
-        document.getElementById(
-          "displayGiven"
-        ).innerHTML =
-
-          "Simplify √" +
-          simplifyNumber +
-          ".";
+          answer =
+            quotient;
 
 
-        document.getElementById(
-          "answerBox"
-        ).innerHTML =
+          questionKey =
+            "division-" +
+            a +
+            "div" +
+            b;
 
-          '<input type="text" id="ans1" ' +
-          'placeholder="Coefficient" ' +
-          'inputmode="numeric" ' +
-          'autocomplete="off">' +
+        }
 
-          '<span style="font-size:24px;">√</span>' +
 
-          '<input type="text" id="ans2" ' +
-          'placeholder="Radicand" ' +
-          'inputmode="numeric" ' +
-          'autocomplete="off">';
+        /* =====================================================
+           RANDOMIZE ALL OPERATIONS
+           ===================================================== */
+
+        else if (
+          selectedMode === "randomize"
+        ) {
+
+          const operations = [
+            "addition",
+            "subtraction",
+            "multiplication",
+            "division"
+          ];
+
+
+          const randomOperation =
+            operations[
+              Math.floor(
+                Math.random() *
+                operations.length
+              )
+            ];
+
+
+          if (
+            randomOperation ===
+            "addition"
+          ) {
+
+            a =
+              getRandomInteger(
+                (quizNumber + 1) % 2 === 0
+              );
+
+
+            b =
+              getRandomInteger(
+                (quizNumber + 1) % 2 !== 0
+              );
+
+
+            operation = "+";
+
+            answer = a + b;
+
+
+            questionKey =
+              "random-add-" +
+              a +
+              "-" +
+              b;
+
+          }
+
+
+          else if (
+            randomOperation ===
+            "subtraction"
+          ) {
+
+            a =
+              getRandomInteger(
+                (quizNumber + 1) % 2 === 0
+              );
+
+
+            b =
+              getRandomInteger(
+                (quizNumber + 1) % 2 !== 0
+              );
+
+
+            operation = "−";
+
+            answer = a - b;
+
+
+            questionKey =
+              "random-sub-" +
+              a +
+              "-" +
+              b;
+
+          }
+
+
+          else if (
+            randomOperation ===
+            "multiplication"
+          ) {
+
+            a =
+              getRandomInteger(
+                (quizNumber + 1) % 2 === 0
+              );
+
+
+            b =
+              getRandomInteger(
+                (quizNumber + 1) % 2 !== 0
+              );
+
+
+            operation = "×";
+
+            answer = a * b;
+
+
+            questionKey =
+              "random-multiply-" +
+              a +
+              "-" +
+              b;
+
+          }
+
+
+          else {
+
+            const quotient =
+              getRandomInteger(false);
+
+
+            let divisor;
+
+
+            do {
+
+              divisor =
+                getRandomInteger(
+                  (quizNumber + 1) % 2 === 0
+                );
+
+            } while (
+              divisor === 0 ||
+              Math.abs(
+                divisor * quotient
+              ) > 30
+            );
+
+
+            a =
+              divisor * quotient;
+
+
+            b =
+              divisor;
+
+
+            operation = "÷";
+
+            answer = quotient;
+
+
+            questionKey =
+              "random-division-" +
+              a +
+              "-" +
+              b;
+
+          }
+
+        }
+
+
+        if (
+          !usedQuestions.has(
+            questionKey
+          )
+        ) {
+
+          usedQuestions.add(
+            questionKey
+          );
+
+
+          questionCreated = true;
+
+        }
 
       }
 
 
       /* =====================================================
-         CUBE ROOT
+         DISPLAY QUESTION
          ===================================================== */
 
-      else if (
-        selectedMode === "cbrt"
+      let categoryText = "";
+
+
+      if (
+        selectedMode === "add_sub"
       ) {
 
-        let root;
+        categoryText =
+          "Addition & Subtraction of Integers";
 
-        let perfectCube;
+      }
 
-        let questionKey;
+      else if (
+        selectedMode === "multiplication"
+      ) {
 
+        categoryText =
+          "Multiplication of Integers";
 
-        do {
+      }
 
-          root =
-            randomInt(1, 10);
+      else if (
+        selectedMode === "division"
+      ) {
 
-          perfectCube =
-            root *
-            root *
-            root;
+        categoryText =
+          "Division of Integers";
 
-          questionKey =
-            "cbrt-" +
-            perfectCube;
+      }
 
-        }
+      else {
 
-        while (
-          usedQuestions.has(
-            questionKey
-          )
-        );
-
-
-        usedQuestions.add(
-          questionKey
-        );
-
-
-        document.getElementById(
-          "category"
-        ).textContent =
-          "Cube Root";
-
-
-        document.getElementById(
-          "displayGiven"
-        ).innerHTML =
-
-          "What is ∛" +
-          perfectCube +
-          "?";
-
-
-        document.getElementById(
-          "answerBox"
-        ).innerHTML =
-
-          '<input type="text" id="ans" ' +
-          'placeholder="Answer" ' +
-          'inputmode="numeric" ' +
-          'autocomplete="off">';
-
-
-        ansr = root;
+        categoryText =
+          "Randomized Integer Operations";
 
       }
 
 
-      /* =====================================================
-         SQUARE
-         ===================================================== */
-
-      else if (
-        selectedMode === "square"
-      ) {
-
-        let base;
-
-        let questionKey;
+      document.getElementById(
+        "category"
+      ).textContent =
+        categoryText;
 
 
-        do {
+      document.getElementById(
+        "displayGiven"
+      ).innerHTML =
 
-          base =
-            randomInt(1, 10);
+        formatInt(a) +
 
-          questionKey =
-            "square-" +
-            base;
+        " " +
 
-        }
+        operation +
 
-        while (
-          usedQuestions.has(
-            questionKey
-          )
-        );
+        " " +
 
+        formatInt(b) +
 
-        usedQuestions.add(
-          questionKey
-        );
+        " = ?";
 
 
-        document.getElementById(
-          "category"
-        ).textContent =
-          "Square";
+      document.getElementById(
+        "answerBox"
+      ).innerHTML =
+
+        '<input type="text" id="userAnswer" ' +
+        'placeholder="Enter answer" ' +
+        'inputmode="numeric" ' +
+        'autocomplete="off">';
 
 
-        /*
-         * FIXED:
-         * No longer uses <sup>2</sup>.
-         * Uses .math-power so Design.css cannot
-         * distort the superscript.
-         */
-
-        document.getElementById(
-          "displayGiven"
-        ).innerHTML =
-
-          "What is " +
-          base +
-          '<span class="math-power">2</span>?';
-
-
-        document.getElementById(
-          "answerBox"
-        ).innerHTML =
-
-          '<input type="text" id="ans" ' +
-          'placeholder="Answer" ' +
-          'inputmode="numeric" ' +
-          'autocomplete="off">';
-
-
-        ansr =
-          base *
-          base;
-
-      }
-
-
-      /* =====================================================
-         CUBE
-         ===================================================== */
-
-      else if (
-        selectedMode === "cube"
-      ) {
-
-        let base;
-
-        let questionKey;
-
-
-        do {
-
-          base =
-            randomInt(1, 10);
-
-          questionKey =
-            "cube-" +
-            base;
-
-        }
-
-        while (
-          usedQuestions.has(
-            questionKey
-          )
-        );
-
-
-        usedQuestions.add(
-          questionKey
-        );
-
-
-        document.getElementById(
-          "category"
-        ).textContent =
-          "Cube";
-
-
-        /*
-         * FIXED:
-         * No longer uses <sup>3</sup>.
-         * Uses .math-power.
-         */
-
-        document.getElementById(
-          "displayGiven"
-        ).innerHTML =
-
-          "What is " +
-          base +
-          '<span class="math-power">3</span>?';
-
-
-        document.getElementById(
-          "answerBox"
-        ).innerHTML =
-
-          '<input type="text" id="ans" ' +
-          'placeholder="Answer" ' +
-          'inputmode="numeric" ' +
-          'autocomplete="off">';
-
-
-        ansr =
-          base *
-          base *
-          base;
-
-      }
+      ansr = answer;
 
 
       const firstInput =
@@ -1773,88 +2601,72 @@
 
     function checkAns() {
 
-      let isCorrect = false;
+      const answerInput =
+        document.getElementById(
+          "userAnswer"
+        );
 
-      let correctText = "";
+
+      if (!answerInput) {
+
+        return;
+
+      }
+
+
+      let answerValue =
+        answerInput.value.trim();
 
 
       if (
-        selectedMode === "simplify"
+        answerValue === ""
       ) {
 
-        const answer1 =
-          document
-            .getElementById("ans1")
-            .value
-            .trim();
+        alert(
+          "Please enter your answer."
+        );
 
-
-        const answer2 =
-          document
-            .getElementById("ans2")
-            .value
-            .trim();
-
-
-        if (
-          answer1 === "" ||
-          answer2 === ""
-        ) {
-
-          alert(
-            "Please enter both the coefficient and radicand."
-          );
-
-          return;
-
-        }
-
-
-        isCorrect =
-
-          Number(answer1) ===
-            simplifyCoefficient &&
-
-          Number(answer2) ===
-            simplifyRadicand;
-
-
-        correctText =
-
-          simplifyCoefficient +
-          "√" +
-          simplifyRadicand;
+        return;
 
       }
 
 
-      else {
-
-        const answer =
-          document
-            .getElementById("ans")
-            .value
-            .trim();
-
-
-        if (answer === "") {
-
-          alert(
-            "Please enter your answer."
+      answerValue =
+        answerValue
+          .replace(
+            /−/g,
+            "-"
+          )
+          .replace(
+            /–/g,
+            "-"
           );
 
-          return;
 
-        }
+      const userAnswer =
+        parseInt(
+          answerValue,
+          10
+        );
 
 
-        isCorrect =
-          Number(answer) === ansr;
+      if (
+        Number.isNaN(
+          userAnswer
+        )
+      ) {
 
+        alert(
+          "Please enter a valid integer."
+        );
 
-        correctText = ansr;
+        return;
 
       }
+
+
+      const isCorrect =
+        userAnswer === ansr;
 
 
       if (isCorrect) {
@@ -1874,7 +2686,7 @@
 
           "Correct answer: " +
 
-          correctText;
+          ansr;
 
       }
 
@@ -1892,14 +2704,15 @@
 
           "Correct answer: " +
 
-          correctText;
+          ansr;
 
       }
 
 
       document.getElementById(
         "outAns"
-      ).style.display = "block";
+      ).style.display =
+        "block";
 
 
       quizNumber++;
@@ -1910,20 +2723,37 @@
       ).textContent =
 
         "Score: " +
+
         score +
+
+        " / 10";
+
+
+      document.getElementById(
+        "quizCount"
+      ).textContent =
+
+        "Question: " +
+
+        quizNumber +
+
         " / 10";
 
 
       document.getElementById(
         "submitBtn"
-      ).style.display = "none";
+      ).style.display =
+        "none";
 
 
-      if (quizNumber >= 10) {
+      if (
+        quizNumber >= 10
+      ) {
 
         document.getElementById(
           "nextBtn"
-        ).style.display = "block";
+        ).style.display =
+          "block";
 
 
         document.getElementById(
@@ -1943,7 +2773,8 @@
 
         document.getElementById(
           "nextBtn"
-        ).style.display = "block";
+        ).style.display =
+          "block";
 
 
         document.getElementById(
@@ -1999,46 +2830,39 @@
       let quizTypeName = "";
 
 
-      if (selectedMode === "sqrt") {
+      if (
+        selectedMode === "add_sub"
+      ) {
 
         quizTypeName =
-          "Square Root";
+          "Addition & Subtraction of Integers";
 
       }
 
       else if (
-        selectedMode === "simplify"
+        selectedMode === "multiplication"
       ) {
 
         quizTypeName =
-          "Simplify Square Root";
+          "Multiplication of Integers";
 
       }
 
       else if (
-        selectedMode === "cbrt"
+        selectedMode === "division"
       ) {
 
         quizTypeName =
-          "Cube Root";
+          "Division of Integers";
 
       }
 
       else if (
-        selectedMode === "square"
+        selectedMode === "randomize"
       ) {
 
         quizTypeName =
-          "Square";
-
-      }
-
-      else if (
-        selectedMode === "cube"
-      ) {
-
-        quizTypeName =
-          "Cube";
+          "Randomize (All Operations)";
 
       }
 
@@ -2172,11 +2996,7 @@
     }
 
   </script>
-  <script src="../../js/helper/navbar.js"></script>
-
 
 </body>
 
 </html>
-
-

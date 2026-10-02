@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Measures of Central Tendency Quiz | ProjectFactR</title>
+    <link rel="stylesheet" href="style.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../../assets/style/style.css">
+</head>
+<body>
+<header class="top-nav-bar" id="navbar">
+
+
+  </header>
+    <script src="../../js/helper/navbar.js"></script>
+     <section class="cover-section" id="cover">
+      <div class="cover-wrapper">
+        <img 
+          src="../../assets/img/background/Banner Of Project FACTR.png" 
+          alt="ProjectFactr Mathematics Remedial Learning Platform Banner" 
+          class="cover-image"
+          id="main-cover-image"
+        >
+       <div class="cover-content">
+    <h1>Operations on Integer</h1>
+
+    <h2>
+        <!-- Formative Assessment on Calculation via Task Randomization -->
+    </h2>
+</div>
+      </div>
+    </section>
+    <section class="section" id="initialize">
+         <div class="container">
+            <div class="wrapper">
+                <header class="quiz-heading">
+                    <p class="eyebrow">GRADE 11 MATHEMATICS</p>
+                    <h1>Measures of Central Tendency Quiz</h1>
+                </header>
+                <div class="field-group">
+                    <label for="name">name</label>
+                    <input id="name" type="text" required>
+                </div>
+                <div class="field-group">
+                    <label for="grade-section">grade & section</label>
+                    <input id="grade-section" type="text" required>
+                </div>
+                <div class="field-group">
+                    <label for="topic">topic</label>
+                    <select name="" id="topic">
+                        <option value="">select topic</option>
+                        <option value="1">
+                             Measures of Central Tendency 
+                        </option>
+                        <option value="2">
+                              Measures of Variability  
+                        </option>
+                        <option value="3">
+                              Measures of Central Tendency and Measures of Variability   
+                        </option>
+                    </select>
+                </div>
+                <div class="field-group">
+                    <label for="question-count">Number of Questions</label>
+                    <select id="question-count" required>
+                        <option value="5">5 questions</option>
+                        <option value="10">10 questions</option>
+                        <option value="15">15 questions</option>
+                        <option value="20">20 questions</option>
+                    </select>
+                </div>
+                <p class="form-error" id="start-error" aria-live="polite"></p>
+                <button id="startQuizBtn">Start Quiz</button>
+
+            </div>
+         </div>
+    </section>
+    <section class="section" id="quiz" hidden>
+        <header class="quiz-heading">
+            <p class="eyebrow">GRADE 11 MATHEMATICS</p>
+            <h1>Measures of Central Tendency Quiz</h1>
+        </header>
+        <div class="container" >
+            <div class="wrapper" id="question-wrapper">
+                <div class="wrapper" >
+                <span id="question">question</span>
+                <span  class="dataset" id="dataset">[...] this is dataset</span>
+                
+            </div>
+            <div>
+                <div class="wrapper" id="studentAnswer">
+                <input type="">
+            </div>
+            <div class="wrapper" id="answer">
+                ...answer keys
+            </div>
+            </div>
+            
+            </div>
+        </div>
+
+    </section>
+
+    
+        <footer class="site-footer">
+
+    <div class="footer-bottom">
+
+      <div>
+        &copy; 2026 ProjectFactr. All rights reserved.
+      </div>
+
+      <div>
+        Mathematics Learning &amp; Curriculum Platform
+      </div>
+
+    </div>
+
+  </footer>
+    <script type="module" src="../../js/feature/statistic.js"></script>
+</body>
+</html>

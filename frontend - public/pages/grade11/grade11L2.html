@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Piecewise Functions Quiz | ProjectFactR</title>
+        <style>
+        *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* =========================
+       THEME
+    ========================= */
+
+    :root {
+        --primary-dark: #073827;
+        --primary-forest: #16623d;
+        --primary-accent: #339763;
+
+        --tint-light: #e7f7ee;
+        --tint-lighter: #f3faf6;
+
+        --card-bg: #ffffff;
+
+        --text-main: #073827;
+        --text-body: #2d473b;
+        --text-muted: #567e6c;
+
+        --border-color: #d8eade;
+
+        --success: #26734d;
+        --danger: #b43c3c;
+
+        --background: #f5faf7;
+        --white: #ffffff;
+
+        --shadow-small:
+            0 2px 8px rgba(7, 56, 39, 0.04);
+
+        --shadow-medium:
+            0 8px 24px rgba(7, 56, 39, 0.07);
+
+        --shadow-large:
+            0 20px 50px rgba(7, 56, 39, 0.09);
+    }
+
+    /* =========================
+       GLOBAL
+    ========================= */
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        min-height: 100vh;
+
+        font-family:
+            Inter,
+            -apple-system,
+            BlinkMacSystemFont,
+            "SF Pro Display",
+            "Segoe UI",
+            Roboto,
+            Helvetica,
+            Arial,
+            sans-serif;
+
+        color: var(--text-body);
+        background: var(--background);
+
+        line-height: 1.5;
+    }
+
+    button,
+    input,
+    select {
+        font: inherit;
+    }
+
+    button {
+        cursor: pointer;
+    }
+
+    [hidden] {
+        display: none !important;
+    }
+
+    /* =========================
+       GENERAL SECTION
+    ========================= */
+
+    .section {
+        width: 100%;
+        min-height: 100vh;
+
+        padding: 60px 8%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* =========================
+       QUESTION SECTION
+    ========================= */
+
+    #piecewise-information {
+        background:
+            radial-gradient(
+                circle at top left,
+                rgba(51, 151, 99, 0.08),
+                transparent 35%
+            ),
+            var(--background);
+    }
+
+    /* =========================
+       MAIN CARD
+    ========================= */
+
+    #piecewise-card {
+        width: 100%;
+        max-width: 1050px;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+
+        padding: 38px;
+
+        background: var(--card-bg);
+
+        border: 1px solid var(--border-color);
+        border-radius: 24px;
+
+        box-shadow:
+            var(--shadow-small),
+            var(--shadow-large);
+    }
+
+    /* =========================
+       QUIZ STATISTICS
+    ========================= */
+
+    #stats {
+        grid-column: 1 / -1;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        padding-bottom: 18px;
+
+        border-bottom: 1px solid var(--border-color);
+
+        color: var(--text-muted);
+
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    /* =========================
+       HEADING
+    ========================= */
+
+    #piecewise-card > h1 {
+        grid-column: 1 / -1;
+
+        color: var(--primary-dark);
+
+        font-size: 30px;
+        font-weight: 750;
+
+        letter-spacing: -0.6px;
+    }
+
+    .quiz-eyebrow {
+        grid-column: 1 / -1;
+        margin-bottom: -16px;
+        color: var(--primary-accent);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+    }
+
+    /* =========================
+       QUESTION
+    ========================= */
+
+    #display-text {
+        grid-column: 1 / -1;
+
+        padding: 24px;
+
+        background: var(--tint-lighter);
+
+        border: 1px solid var(--border-color);
+        border-left: 4px solid var(--primary-accent);
+
+        border-radius: 16px;
+
+        color: var(--text-body);
+
+        font-size: 17px;
+        line-height: 1.75;
+    }
+
+    .completion-summary {
+        display: grid;
+        gap: 12px;
+    }
+
+    .completion-summary h2 {
+        color: var(--primary-dark);
+        font-size: 25px;
+    }
+
+    .completion-summary dl {
+        display: grid;
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .completion-summary dl > div {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 10px 12px;
+        background: var(--white);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+    }
+
+    .completion-summary dt {
+        color: var(--text-muted);
+        font-weight: 700;
+    }
+
+    .completion-summary dd {
+        color: var(--primary-dark);
+        font-weight: 700;
+        text-align: right;
+        overflow-wrap: anywhere;
+    }
+
+    /* =========================
+       ANSWER CARDS
+    ========================= */
+
+    #answer-input-container,
+    #answer-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        padding: 24px;
+
+        background: var(--card-bg);
+
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+
+        box-shadow: var(--shadow-small);
+    }
+
+    #answer-input-container label,
+    #answer-container h2 {
+        color: var(--text-muted);
+
+        font-size: 14px;
+        font-weight: 700;
+
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+    }
+
+    #answer-container {
+        min-height: 145px;
+
+        justify-content: center;
+
+        background: var(--tint-lighter);
+    }
+
+    #answer {
+        min-height: 36px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+
+        color: var(--primary-forest);
+
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .answer-feedback {
+        display: grid;
+        gap: 8px;
+        min-width: 0;
+    }
+
+    .answer-state {
+        margin: 0;
+        color: var(--primary-forest);
+        font-size: clamp(24px, 4vw, 34px);
+        line-height: 1.15;
+        overflow-wrap: anywhere;
+    }
+
+    .answer-state.incorrect {
+        color: var(--danger);
+    }
+
+    .answer-reveal {
+        margin: 0;
+        color: var(--text-body);
+        font-size: 16px;
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+    }
+
+    .answer-reveal strong {
+        color: var(--primary-dark);
+        font-size: 20px;
+    }
+
+    .answer-next {
+        width: 100%;
+        min-height: 48px;
+        white-space: normal;
+    }
+
+    /* =========================
+       INPUTS
+    ========================= */
+
+    input,
+    select {
+        width: 100%;
+        height: 50px;
+
+        padding: 0 15px;
+
+        color: var(--text-main);
+        background: var(--white);
+
+        border: 1px solid var(--border-color);
+        border-radius: 11px;
+
+        outline: none;
+
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease,
+            background 0.2s ease;
+    }
+
+    input::placeholder {
+        color: #8aa99a;
+    }
+
+    input:hover,
+    select:hover {
+        border-color: #a9cdb8;
+    }
+
+    input:focus,
+    select:focus {
+        border-color: var(--primary-accent);
+
+        box-shadow:
+            0 0 0 4px rgba(51, 151, 99, 0.12);
+
+        background: var(--white);
+    }
+
+    /* =========================
+       BUTTONS
+    ========================= */
+
+    button {
+        min-height: 50px;
+
+        padding: 0 22px;
+
+        border: none;
+        border-radius: 11px;
+
+        color: var(--white);
+        background: var(--primary-forest);
+
+        font-size: 15px;
+        font-weight: 700;
+
+        transition:
+            background 0.2s ease,
+            transform 0.15s ease,
+            box-shadow 0.2s ease;
+    }
+
+    button:hover {
+        background: var(--primary-accent);
+
+        box-shadow:
+            0 6px 16px rgba(22, 98, 61, 0.18);
+    }
+
+    button:active {
+        transform: scale(0.98);
+    }
+
+    button:focus-visible {
+        outline: 3px solid rgba(51, 151, 99, 0.25);
+        outline-offset: 2px;
+    }
+
+    button:disabled {
+        cursor: not-allowed;
+
+        opacity: 0.55;
+
+        box-shadow: none;
+    }
+
+    /* =========================
+       STUDENT INFORMATION
+    ========================= */
+
+    #student-information {
+        width: 100%;
+        padding: 60px 8%;
+
+        background:
+            radial-gradient(
+                circle at top left,
+                rgba(51, 151, 99, 0.12),
+                transparent 40%
+            ),
+            var(--background);
+    }
+
+    #student-information .container {
+        width: 100%;
+        max-width: 500px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        padding: 38px;
+
+        background: var(--white);
+
+        border: 1px solid var(--border-color);
+        border-radius: 22px;
+
+        box-shadow:
+            var(--shadow-medium),
+            var(--shadow-large);
+    }
+
+    #student-information h1 {
+        margin-bottom: 5px;
+
+        color: var(--primary-dark);
+
+        font-size: 30px;
+        font-weight: 750;
+
+        letter-spacing: -0.6px;
+    }
+
+    #student-information .quiz-eyebrow {
+        margin: 0 0 -14px;
+    }
+
+    .start-copy {
+        margin-top: -15px;
+        color: var(--text-muted);
+        font-size: 14px;
+    }
+
+    #student-information h1::after {
+        content: "";
+
+        display: block;
+
+        width: 42px;
+        height: 4px;
+
+        margin-top: 10px;
+
+        background: var(--primary-accent);
+
+        border-radius: 20px;
+    }
+
+    /* =========================
+       FORM GROUP
+    ========================= */
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .form-group label {
+        color: var(--text-body);
+
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    /* =========================
+       CONTINUE BUTTON
+    ========================= */
+
+    #continue {
+        width: 100%;
+
+        margin-top: 5px;
+
+        background: var(--primary-forest);
+    }
+
+    #continue:hover {
+        background: var(--primary-accent);
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 800px) {
+
+        .section {
+            padding: 40px 24px;
+        }
+
+        #piecewise-card {
+            grid-template-columns: 1fr;
+
+            padding: 30px;
+
+            border-radius: 20px;
+        }
+
+        #stats,
+        #display-text,
+        #piecewise-card > h1 {
+            grid-column: auto;
+        }
+
+        #piecewise-card > h1 {
+            font-size: 27px;
+        }
+    }
+
+    /* =========================
+       TABLET / MOBILE
+    ========================= */
+
+    @media (max-width: 600px) {
+
+        .section {
+            min-height: 100svh;
+
+            padding: 24px 16px;
+        }
+
+        #piecewise-card {
+            gap: 18px;
+
+            padding: 22px;
+
+            border-radius: 18px;
+        }
+
+        #piecewise-card > h1 {
+            font-size: 24px;
+        }
+
+        #display-text {
+            padding: 20px;
+
+            font-size: 16px;
+            line-height: 1.65;
+        }
+
+        #answer-input-container,
+        #answer-container {
+            padding: 20px;
+        }
+
+        .answer-state {
+            font-size: 24px;
+        }
+
+        #student-information {
+            padding: 16px;
+        }
+
+        #student-information .container {
+            gap: 17px;
+
+            padding: 27px 22px;
+
+            border-radius: 18px;
+        }
+
+        #student-information h1 {
+            font-size: 25px;
+        }
+    }
+
+    /* =========================
+       SMALL MOBILE
+    ========================= */
+
+    @media (max-width: 420px) {
+
+        #piecewise-card {
+            padding: 18px;
+        }
+
+        #stats {
+            font-size: 12px;
+        }
+
+        #display-text {
+            padding: 17px;
+
+            font-size: 15px;
+        }
+
+        input,
+        select,
+        button {
+            height: 48px;
+        }
+
+        #student-information .container {
+            padding: 23px 19px;
+        }
+
+        #student-information h1 {
+            font-size: 23px;
+        }
+    }
+</style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../../assets/style/style.css">
+    </head>
+    <body>
+        
+        <span style="display: none;" id="debug"></span>
+        <!-- <section class="section">
+        <div class=" card" id="piecewise-card">
+            <h1>compute and answer </h1>
+        <div id="display-text">
+            
+        </div class="container">
+                <label>answer</label>
+                <input type="number" id="answer-input" >
+                
+                <button id="submit-answer">submit</button>
+                
+                <div class="container" id="answer-container">
+                    <h2>answer</h2>
+                    
+                    <label id="answer"></label>
+        </div>
+        </div>
+        </section> -->
+        <header class="top-nav-bar" id="navbar">
+
+
+  </header>
+        <script src="../../js/helper/navbar.js"></script>
+     <section class="cover-section" id="cover">
+      <div class="cover-wrapper">
+        <img 
+          src="../../assets/img/background/Banner Of Project FACTR.png" 
+          alt="ProjectFactr Mathematics Remedial Learning Platform Banner" 
+          class="cover-image"
+          id="main-cover-image"
+        >
+       <div class="cover-content">
+    <h1>Operations on Integer</h1>
+
+    <h2>
+        <!-- Formative Assessment on Calculation via Task Randomization -->
+    </h2>
+</div>
+      </div>
+    </section>
+<section class="section" id="piecewise-information" hidden>
+    <div class="card" id="piecewise-card">
+        <div id="stats"></div>
+        <p class="quiz-eyebrow">GRADE 11 MATHEMATICS</p>
+        <h1>Piecewise Functions Quiz</h1>
+
+        <div id="display-text"></div>
+
+        <div class="container" id="answer-input-container">
+            <label for="answer-input">Answer</label>
+
+            <input
+                type="number"
+                id="answer-input"
+            >
+
+            <button id="submit-answer">
+                Submit
+            </button>
+        </div>
+
+        <div class="container" id="answer-container">
+            <h2>Answer</h2>
+            <span id="answer"></span>
+        </div>
+
+    </div>
+</section>
+<section class="section" id="student-information">
+    <div class="container">
+
+        <p class="quiz-eyebrow">GRADE 11 MATHEMATICS</p>
+        <h1>Piecewise Functions Quiz</h1>
+        <p class="start-copy">Enter Student Information to Begin</p>
+
+        <div class="form-group">
+            <label for="student-name">Student Name</label>
+            <input
+                type="text"
+                id="student-name"
+                name="studentName"
+                placeholder="Enter student name"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="section-name">Section Name</label>
+            <input
+                type="text"
+                id="section-name"
+                name="sectionName"
+                placeholder="Enter section name"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="grade-level">Grade Level</label>
+            <select id="grade-level" name="gradeLevel">
+                <option value="" disabled selected>
+                    Select grade level
+                </option>
+                <option value="11">Grade 11</option>
+                <option value="12">Grade 12</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="question-count">Number of Questions</label>
+            <select id="question-count" name="questionCount">
+                <option value="5">5 questions</option>
+                <option value="10">10 questions</option>
+                <option value="15">15 questions</option>
+                <option value="20">20 questions</option>
+            </select>
+        </div>
+
+        <button type="button" id="continue">
+            continue
+        </button>
+
+    </div>
+</section>
+
+    <footer class="site-footer">
+
+    <div class="footer-bottom">
+
+      <div>
+        &copy; 2026 ProjectFactr. All rights reserved.
+      </div>
+
+      <div>
+        Mathematics Learning &amp; Curriculum Platform
+      </div>
+
+    </div>
+
+  </footer>
+        <script type="module" src="../../js/feature/piecewiseQuestion.js"></script>
+    <!-- <script>
+        const $debugDisplay = document.getElementById("debug")
+        const $questionTextDisplay = document.getElementById("display-text")
+        const $answerTextDisplay = document.getElementById("answer")
+        const $submitBtn = document.getElementById("submit-answer")
+        const $answerInput = document.getElementById("answer-input")
+
+        let currSession;
+
+const data = {
+    transportation: [
+        {
+            vehicle: "Traditional Jeepney",
+            baseDistance: 4,
+            baseFare: 13,
+            additionalFarePerKm: 2.00
+        },
+        {
+            vehicle: "Modern Jeepney",
+            baseDistance: 4,
+            baseFare: 15,
+            additionalFarePerKm: 2.50
+        },
+        {
+            vehicle: "Bus",
+            baseDistance: 5,
+            baseFare: 15,
+            additionalFarePerKm: 2.50
+        },
+        {
+            vehicle: "Air-conditioned Bus",
+            baseDistance: 5,
+            baseFare: 18,
+            additionalFarePerKm: 3.00
+        },
+        {
+            vehicle: "Taxi",
+            baseDistance: 1,
+            baseFare: 50,
+            additionalFarePerKm: 13.50
+        },
+        {
+            vehicle: "UV Express",
+            baseDistance: 4,
+            baseFare: 20,
+            additionalFarePerKm: 2.50
+        },
+        {
+            vehicle: "Tricycle",
+            baseDistance: 1,
+            baseFare: 20,
+            additionalFarePerKm: 5.00
+        },
+        {
+            vehicle: "Motorcycle Taxi",
+            baseDistance: 2,
+            baseFare: 50,
+            additionalFarePerKm: 10.00
+        }
+    ]
+};
+
+    // template question: if a {vehicle} have a base price of {basePrice},
+    // and a base distance before adding additional fare is {baseDistance} Km and your target distination is {targetDistance}. find the total fare
+        function newSession(){
+            const d =  data.transportation[constraint(0, data.transportation.length)]
+            const t = new Transportation(d.baseDistance, d.baseFare, constraint(8, 20), d.additionalFarePerKm, d.vehicle)
+             $questionTextDisplay.innerHTML = t.TemplateQuestion()
+            $answerTextDisplay.innerHTML = t.calculateTotalFare()
+    //         `<h1>
+    //     A ${t.vehicle} has a base fare of ₱${t.baseFare} 
+    //     and a base distance of ${t.baseDistance} km before 
+    //     additional fare is charged. If the target distance is 
+    //     ${t.targetDistance} km and the additional fare is 
+    //     ₱${t.additionalFarePerKm} per kilometer, 
+    //     find the total fare.</h1><br>
+    //     <h1>the answer is ${t.calculateTotalFare()}</h1>
+    // `;
+        }
+       
+
+        // a {vehivcle}  has a base fare of {baseFare} for the first {baseDistance}. and has a succedding fare of a {additionalFarePerKm}. if you travel for {targetDistance}. find the totoal fare
+class Session{
+    constructor(){
+        
+        this._templateQuestion = new TemplateQuestion(); // create the template question to use
+        this._expectedAnswer;
+    }
+}
+// function createTransportation(){
+//     let transportation = [];
+//     const _T = fetch("")
+//     console.log(_T)
+//     data.transportation.forEach(c =>{
+//         transportation.push(c)
+//     })
+//     $debugDisplay.innerHTML = transportation
+// }
+
+function constraint(c1, c2){
+            // check if c1 and c2 have valid value
+            if((c1.length === 0 || c1 === null) ||  (c2.length === 0 || c2 === null)){
+                return 0;
+            }
+            if(c1 > c2){
+                return 0;
+            }
+ 
+            return Math.floor(Math.random() * (Math.floor(c2)-Math.ceil(c1)+1) )+ Math.ceil(c1)
+        }
+
+
+
+        class Transportation {
+    constructor(baseDistance, baseFare, targetDistance, additionalFarePerKm, vehicle) {
+        this.baseDistance = baseDistance;
+        this.baseFare = baseFare;
+        this.targetDistance = targetDistance;
+        this.additionalFarePerKm = additionalFarePerKm;
+        this.vehicle = vehicle;
+    }
+
+    calculateTotalFare(){
+        let totalFare = this.baseFare;
+        for(let i = 0; i < this.targetDistance - this.baseDistance; i++){
+            totalFare +=this.additionalFarePerKm
+        }
+        return totalFare
+    }
+    TemplateQuestion(){
+        return  `A ${this.vehicle} has a base fare of ₱${this.baseFare} for the first ${this.baseDistance} kilometers. For every additional kilometer traveled, an additional fare of ₱${this.additionalFarePerKm} is charged. If a passenger travels a total distance of ${this.targetDistance} kilometers, what is the total fare?
+`
+    }
+    get baseDistance() {
+        return this._baseDistance;
+    }
+
+    set baseDistance(value) {
+        this._baseDistance = value;
+    }
+
+    get baseFare() {
+        return this._baseFare;
+    }
+
+    set baseFare(value) {
+        this._baseFare = value;
+    }
+
+    get targetDistance() {
+        return this._targetDistance;
+    }
+
+    set targetDistance(value) {
+        this._targetDistance = value;
+    }
+
+    get additionalFarePerKm() {
+        return this._additionalFarePerKm;
+    }
+
+    set additionalFarePerKm(value) {
+        this._additionalFarePerKm = value;
+    }
+
+    get vehicle() {
+        return this._vehicle;
+    }
+
+    set vehicle(value) {
+        this._vehicle = value;
+    }
+}
+function createTransportation() {
+    let transportation = [];
+    
+    data.transportation.forEach(c => {
+        let randomizedTargetDistance = constraint(c.baseDistance, 10)
+        const t = new Transportation(
+                c.baseDistance,
+                c.baseFare,
+                constraint(c.baseDistance, 10), // targetDistance will be randomized later
+                c.additionalFarePerKm,
+                c.vehicle
+            )
+            $debugDisplay.innerHTML = t.targetDistance
+        transportation.push(
+            t
+        );
+    });
+
+    console.log(transportation);
+
+    // $debugDisplay.innerHTML =
+    //     JSON.stringify(transportation, null, 2) ;
+}
+newSession()
+class PieceWise{
+    constructor(){
+        this.piece = []
+    }
+    
+    
+}
+// sub function
+class Piece{
+    constructor(func){
+        this.func = func
+    }
+}
+
+
+    </script> -->
+</body>
+</html>

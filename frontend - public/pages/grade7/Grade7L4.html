@@ -11,15 +11,680 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <!-- Stylesheet link -->
-  <link rel="stylesheet" href="../../assets/style/style.css">
+  <!-- <link rel="stylesheet" href="Design.css"> -->
 
   <!-- Google Web Fonts (Montserrat & Inter) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style/style.css">
+  <style>
+    :root {
+      --primary-dark: #073827;    
+      --primary-forest: #16623d;   
+      --primary-accent: #339763;   
+      --tint-light: #e7f7ee;      
+      --card-bg: #f7faf8;         
+      --text-main: #073827;        
+      --text-body: #2d473b;        
+      --text-muted: #567e6c;       
+      --border-color: #d8eade;    
+      --white: #ffffff;
+      --font-brand: 'Montserrat', sans-serif;
+      --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+    }
 
-  
-   
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-link {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--text-body);
+      text-decoration: none;
+      background: transparent;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 7px;
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 10px;
+      right: 10px;
+      height: 2px;
+      background-color: var(--primary-accent);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 2px;
+    }
+
+    .nav-link:hover {
+      color: var(--primary-forest);
+      background-color: var(--tint-light);
+      transform: translateY(-2px);
+    }
+
+    .nav-link:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    /* Grade Level Non-clickable Header Styles with Restored Hover Animation */
+    .nav-btn-toggle {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--text-body);
+      background: transparent;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      width: 100%;
+      text-align: left;
+      cursor: default;          
+      user-select: none;
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Restored Underline Animation Effect */
+    .nav-btn-toggle::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 10px;
+      right: 10px;
+      height: 2px;
+      background-color: var(--primary-accent);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 2px;
+    }
+
+    .nav-item.dropdown:hover > .nav-btn-toggle {
+      color: var(--primary-forest);
+      background-color: var(--tint-light);
+      transform: translateY(-2px);
+    }
+
+    .nav-item.dropdown:hover > .nav-btn-toggle::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    /* Active Grade Level Styling */
+    .nav-btn-toggle.active {
+      color: white;
+      background-color: var(--primary-forest);
+      box-shadow: 0 4px 14px rgba(22, 98, 61, 0.25);
+    }
+
+    .nav-btn-toggle.active::after {
+      display: none;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      background-color: #ffffff;
+      border: 1px solid #d8eade;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(7, 56, 39, 0.12);
+      list-style: none;
+      padding: 8px;
+      min-width: 220px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 101;
+    }
+
+    .nav-item.dropdown:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    /* Clickable Lesson Links inside Dropdown */
+    .dropdown-item {
+      display: block;
+      padding: 8px 12px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: #2d473b;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .dropdown-item:hover {
+      background-color: #e7f7ee;
+      color: #16623d;
+      padding-left: 16px;
+    }
+
+    .hamburger-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.25rem;
+      color: #16623d;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 6px;
+      transition: background-color 0.2s ease;
+    }
+
+    .hamburger-btn:hover {
+      background-color: #e7f7ee;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger-btn {
+        display: block;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #ffffff;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 12px 20px;
+        border-bottom: 1px solid #d8eade;
+        box-shadow: 0 10px 25px rgba(7, 56, 39, 0.1);
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .nav-links.mobile-open {
+        max-height: 550px;
+        overflow-y: auto;
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .nav-item {
+        width: 100%;
+      }
+
+      .nav-link, .nav-btn-toggle {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px 14px;
+        justify-content: space-between;
+        font-size: 0.85rem;
+        border-radius: 6px;
+        margin: 2px 0;
+      }
+
+      .dropdown-menu {
+        position: static;
+        box-shadow: none;
+        border: none;
+        background-color: #e7f7ee;
+        margin: 4px 0 8px 0;
+        padding: 4px;
+        width: 100%;
+        box-sizing: border-box;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        visibility: hidden;
+        transform: none;
+        transition: all 0.3s ease;
+      }
+
+      .nav-item.dropdown.mobile-dropdown-active .dropdown-menu {
+        max-height: 300px;
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    .site-footer {
+
+      width: 100%;
+
+      background: #073827;
+
+      color: #ffffff;
+
+      padding: 25px 32px;
+    }
+
+
+    .footer-bottom {
+
+      width: 100%;
+
+      max-width: 1200px;
+
+      margin: 0 auto;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      gap: 20px;
+
+      font-size: 0.8rem;
+    }
+    .fraction-quiz {
+      width: 100%;
+      min-height: 500px;
+      padding: 45px 15px 60px;
+      background: #f7faf8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--text-body);
+      font-family: var(--font-body);
+    }
+
+    .fraction-quiz-title {
+      width: 92%;
+      max-width: 700px;
+      margin: 0 auto 20px;
+      color: var(--primary-dark);
+      font-family: var(--font-brand);
+      font-size: 28px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .fraction-card {
+      width: 92%;
+      max-width: 440px;
+      margin: 10px auto 24px;
+      padding: 32px;
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: 0 10px 25px -5px rgba(7, 56, 39, 0.07);
+    }
+
+    .fraction-card h2,
+    .fraction-quiz-top h2,
+    .fraction-finish h2 {
+      margin: 0 0 18px;
+      color: var(--primary-dark);
+      font-family: var(--font-brand);
+      font-size: 20px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .fraction-student-form input {
+      display: block;
+      width: 100%;
+      height: 48px;
+      margin: 0 0 14px;
+      padding: 10px 14px;
+      background: var(--tint-light);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font: inherit;
+      font-size: 15px;
+    }
+
+    .fraction-student-form input:focus,
+    .fraction-answer input:focus {
+      border-color: var(--primary-accent);
+      outline: 2px solid rgba(51, 151, 99, 0.18);
+    }
+
+    .fraction-mode-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .fraction-button {
+      display: block;
+      width: 100%;
+      min-height: 48px;
+      margin-top: 12px;
+      padding: 11px 16px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background: var(--primary-forest);
+      color: var(--white);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .fraction-button:hover {
+      background: var(--primary-dark);
+    }
+
+    .fraction-button:active {
+      transform: scale(0.99);
+    }
+
+    .fraction-mode-button {
+      min-height: 52px;
+      margin-top: 0;
+      border-color: var(--border-color);
+      background: var(--tint-light);
+      color: var(--primary-dark);
+    }
+
+    .fraction-mode-button:hover {
+      border-color: var(--primary-accent);
+      background: #fff;
+      color: var(--primary-dark);
+    }
+
+    .fraction-info {
+      width: 92%;
+      max-width: 580px;
+      margin: 0 auto 16px;
+      padding: 18px 20px;
+      display: none;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: 0 2px 4px rgba(7, 56, 39, 0.02);
+    }
+
+    .fraction-info-item,
+    .fraction-timer {
+      padding: 9px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 7px;
+      background: var(--tint-light);
+      color: var(--primary-forest);
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .fraction-info-name {
+      align-self: center;
+      color: var(--text-body);
+      font-size: 13px;
+    }
+
+    .fraction-info-name strong {
+      color: var(--primary-dark);
+    }
+
+    .fraction-timer {
+      grid-column: 1 / -1;
+      background: var(--primary-dark);
+      color: #fff;
+    }
+
+    .fraction-quiz-panel {
+      width: 92%;
+      max-width: 580px;
+      margin: 0 auto 40px;
+      padding: 30px;
+      display: none;
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: 0 10px 25px -5px rgba(7, 56, 39, 0.07);
+    }
+
+    .fraction-quiz-top {
+      margin-bottom: 14px;
+    }
+
+    .fraction-quiz-top h2 {
+      margin-bottom: 4px;
+      font-size: 20px;
+    }
+
+    .fraction-question-row {
+      width: 100%;
+      margin: 22px auto 26px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .fraction-question-display {
+      width: 100%;
+      max-width: 260px;
+      min-width: 0;
+      min-height: 64px;
+      flex: 0 1 260px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-color);
+      border-radius: 9px;
+      background: var(--tint-light);
+      color: var(--primary-dark);
+      font-size: 20px;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .fraction-quiz .fraction {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 4px;
+      vertical-align: middle;
+      line-height: 1;
+    }
+
+    .fraction-quiz .fraction .top,
+    .fraction-quiz .fraction .bottom {
+      display: block;
+      min-width: 24px;
+      padding: 2px 7px;
+      text-align: center;
+    }
+
+    .fraction-quiz .fraction .top {
+      padding-bottom: 4px;
+      border-bottom: 2px solid var(--text-main);
+    }
+
+    .fraction-quiz .fraction .bottom {
+      padding-top: 4px;
+    }
+
+    .fraction-equals {
+      color: var(--primary-dark);
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .fraction-answer {
+      width: 60px;
+      flex: 0 0 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .fraction-answer input {
+      width: 52px;
+      height: 34px;
+      padding: 4px;
+      border: 2px solid var(--border-color);
+      border-radius: 7px;
+      background: #fff;
+      font: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .fraction-answer-line {
+      width: 52px;
+      height: 2px;
+      margin: 4px 0;
+      background: var(--text-main);
+    }
+
+    .fraction-feedback {
+      display: none;
+      width: 100%;
+      min-height: 45px;
+      margin: 16px 0;
+      padding: 14px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: var(--tint-light);
+      color: var(--primary-dark);
+      font-size: 13px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .fraction-calculation {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-body);
+    }
+
+    .fraction-calculation p {
+      margin: 8px 0;
+    }
+
+    .fraction-correct {
+      color: var(--primary-forest);
+      font-weight: 700;
+    }
+
+    .fraction-wrong {
+      color: #b42318;
+      font-weight: 700;
+    }
+
+    .fraction-finish {
+      display: none;
+      width: 100%;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+    }
+
+    .fraction-finish-item {
+      margin: 10px 0;
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: var(--tint-light);
+      color: var(--text-body);
+      font-size: 14px;
+    }
+
+    .fraction-countdown {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(7, 56, 39, 0.75);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+    
+    .quiz-space-bar {
+      width: 100%;
+
+      height: 32px;
+
+      background-color: #16623d;
+
+      margin: 0;
+
+      padding: 0;
+    }
+
+
+    .fraction-countdown.is-active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .fraction-countdown-card {
+      padding: 38px 54px;
+      border-radius: 16px;
+      background: #fff;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .fraction-countdown-card h2 {
+      margin-bottom: 10px;
+      color: var(--primary-dark);
+      font-family: var(--font-brand);
+      font-size: 18px;
+    }
+
+    .fraction-countdown-number {
+      color: var(--primary-forest);
+      font-family: var(--font-brand);
+      font-size: 5rem;
+      font-weight: 800;
+    }
+
+    @media (max-width: 600px) {
+      .fraction-quiz { padding: 30px 0 45px; }
+      .fraction-quiz-title { font-size: 22px; }
+      .fraction-card, .fraction-quiz-panel { width: 94%; padding: 24px; }
+      .fraction-info { width: 94%; padding: 15px; }
+      .fraction-question-display { max-width: 240px; min-height: 60px; font-size: 18px; padding: 10px; }
+      .fraction-question-row { gap: 7px; }
+      .fraction-countdown-card { padding: 34px 44px; }
+      .fraction-countdown-number { font-size: 4rem; }
+    }
+
+    @media (max-width: 400px) {
+      .fraction-info { grid-template-columns: 1fr; }
+      .fraction-timer { grid-column: 1 / -1; }
+      .fraction-card, .fraction-quiz-panel { padding: 20px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -27,18 +692,92 @@
        TOP NAVIGATION BAR
        ======================================================================== -->
   <header class="top-nav-bar" id="navbar">
-   
+    
   </header>
-
+<script src="../../js/helper/navbar.js"></script>
   <main>
     <section class="cover-section" id="cover">
       <div class="cover-wrapper">
         <img 
-          src="../../assets/img/background/" 
+          src="../../assets/img/background/Banner Of Project FACTR.png" 
           alt="ProjectFactr Mathematics Remedial Learning Platform Banner" 
           class="cover-image"
           id="main-cover-image"
         >
+       <div class="cover-content">
+    <h1>Operations on Fractions</h1>
+
+    <h2>
+        <!-- Formative Assessment on Calculation via Task Randomization -->
+    </h2>
+</div>
+      </div>
+    </section>
+
+    <div class="quiz-space-bar"></div>
+
+    <section class="fraction-quiz" aria-labelledby="fractionQuizHeading">
+      <h1 class="fraction-quiz-title" id="fractionQuizHeading">Operations on Fractions Quiz</h1>
+
+      <div class="fraction-card fraction-student-form" id="fractionStudentStart">
+        <h2>Enter Student Details</h2>
+        <input type="text" id="fractionStudentName" placeholder="Full Name" autocomplete="name">
+        <input type="text" id="fractionStudentSection" placeholder="Grade &amp; Section">
+        <button class="fraction-button" type="button" onclick="fractionQuiz.start()">Next: Choose Quiz Type</button>
+      </div>
+
+      <div class="fraction-card" id="fractionQuizSelection" style="display: none;">
+        <h2>Select Quiz Type</h2>
+        <div class="fraction-mode-list">
+          <button class="fraction-button fraction-mode-button" type="button" onclick="fractionQuiz.select('addSubtract')">Addition &amp; Subtraction</button>
+          <button class="fraction-button fraction-mode-button" type="button" onclick="fractionQuiz.select('multiply')">Multiplication</button>
+          <button class="fraction-button fraction-mode-button" type="button" onclick="fractionQuiz.select('divide')">Division</button>
+          <button class="fraction-button fraction-mode-button" type="button" onclick="fractionQuiz.select('random')">Random</button>
+        </div>
+      </div>
+
+      <div class="fraction-countdown" id="fractionCountdown" aria-live="polite">
+        <div class="fraction-countdown-card">
+          <h2>GET READY</h2>
+          <div class="fraction-countdown-number" id="fractionCountdownNumber">3</div>
+        </div>
+      </div>
+
+      <div class="fraction-info" id="fractionStudentInfo" style="display: none;">
+        <p class="fraction-info-name">Name: <strong id="fractionShowName"></strong></p>
+        <p class="fraction-info-name">Section: <strong id="fractionShowSection"></strong></p>
+        <div class="fraction-info-item" id="fractionScore">Score: 0 / 10</div>
+        <div class="fraction-info-item" id="fractionQuestionCount">Question: 1 / 10</div>
+        <div class="fraction-timer" id="fractionTimerDisplay">Time Elapsed: 0:00</div>
+      </div>
+
+      <div class="fraction-quiz-panel" id="fractionQuizArea" style="display: none;">
+        <div class="fraction-quiz-top">
+          <h2 id="fractionQuizTypeTitle">Fraction Quiz</h2>
+        </div>
+
+        <div class="fraction-question-row">
+          <div class="fraction-question-display" id="fractionDisplayGiven"></div>
+          <span class="fraction-equals" id="fractionAnswerEquals">=</span>
+          <div class="fraction-answer" id="fractionAnswerBox">
+            <input type="number" id="fractionAnswerNumerator" placeholder="?" aria-label="Answer numerator">
+            <div class="fraction-answer-line" id="fractionAnswerLine"></div>
+            <input type="number" id="fractionAnswerDenominator" placeholder="?" aria-label="Answer denominator">
+          </div>
+        </div>
+
+        <div class="fraction-feedback" id="fractionFeedback" aria-live="polite"></div>
+
+        <button class="fraction-button" id="fractionSubmit" type="button" onclick="fractionQuiz.checkAnswer()">Submit Answer</button>
+        <button class="fraction-button" id="fractionNext" type="button" style="display: none; background: var(--primary-accent);" onclick="fractionQuiz.nextQuestion()">Next Question</button>
+
+        <div class="fraction-finish" id="fractionFinishMessage" style="display: none;">
+          <h2>Quiz Finished!</h2>
+          <p class="fraction-finish-item">Score: <strong><span id="fractionFinalScore">0</span>/10</strong></p>
+          <p class="fraction-finish-item">Total Quizzes Taken: <strong><span id="fractionFinalQuizzes">0</span></strong></p>
+          <p class="fraction-finish-item">Time: <strong><span id="fractionFinalTime">0:00</span></strong></p>
+          <button class="fraction-button" type="button" style="background: var(--primary-dark);" onclick="fractionQuiz.backToTypes()">Back to Quiz Types</button>
+        </div>
       </div>
     </section>
   </main>
@@ -51,8 +790,361 @@
   </footer>
 
   <!-- JavaScript for Hamburger Toggle & Mobile Dropdown Support -->
-  <script src="../../js/helper/navbar.js">
+  <script>
+    const hamburgerToggle = document.getElementById('hamburgerToggle');
+    const navLinksList = document.getElementById('navLinksList');
 
+    hamburgerToggle.addEventListener('click', () => {
+      navLinksList.classList.toggle('mobile-open');
+      const icon = hamburgerToggle.querySelector('i');
+      if (navLinksList.classList.contains('mobile-open')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-xmark');
+      } else {
+        icon.classList.remove('fa-xmark');
+        icon.classList.add('fa-bars');
+      }
+    });
+
+    const dropdownItems = document.querySelectorAll('.nav-item.dropdown');
+    dropdownItems.forEach(item => {
+      const toggleBtn = item.querySelector('.nav-btn-toggle');
+      toggleBtn.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768) {
+          e.stopPropagation();
+          item.classList.toggle('mobile-dropdown-active');
+        }
+      });
+    });
+  </script>
+
+  <script>
+    window.fractionQuiz = (() => {
+      const state = {
+        name: "",
+        section: "",
+        mode: "",
+        questionNumber: 0,
+        score: 0,
+        quizzesTaken: 0,
+        secondsElapsed: 0,
+        timer: null,
+        countdown: null,
+        usedQuestions: new Set(),
+        current: null
+      };
+
+      const get = (id) => document.getElementById("fraction" + id);
+      const modes = {
+        addSubtract: "Addition & Subtraction",
+        multiply: "Multiplication",
+        divide: "Division",
+        random: "Random"
+      };
+
+      function gcd(a, b) {
+        a = Math.abs(a);
+        b = Math.abs(b);
+        while (b !== 0) {
+          const remainder = a % b;
+          a = b;
+          b = remainder;
+        }
+        return a || 1;
+      }
+
+      function lcm(a, b) {
+        return Math.abs((a / gcd(a, b)) * b);
+      }
+
+      function simplify(numerator, denominator) {
+        const divisor = gcd(numerator, denominator);
+        let simpleNumerator = numerator / divisor;
+        let simpleDenominator = denominator / divisor;
+        if (simpleDenominator < 0) {
+          simpleNumerator *= -1;
+          simpleDenominator *= -1;
+        }
+        return { numerator: simpleNumerator, denominator: simpleDenominator };
+      }
+
+      function fraction(top, bottom) {
+        return `<span class="fraction"><span class="top">${top}</span><span class="bottom">${bottom}</span></span>`;
+      }
+
+      function answerFraction(numerator, denominator) {
+        return denominator === 1 ? String(numerator) : fraction(numerator, denominator);
+      }
+
+      function randomFraction() {
+        return {
+          numerator: Math.floor(Math.random() * 8) + 1,
+          denominator: Math.floor(Math.random() * 7) + 3
+        };
+      }
+
+      function chooseOperation() {
+        if (state.mode === "addSubtract") {
+          return Math.random() < 0.5 ? "addition" : "subtraction";
+        }
+        if (state.mode === "random") {
+          const operations = ["addition", "subtraction", "multiply", "divide"];
+          return operations[Math.floor(Math.random() * operations.length)];
+        }
+        return state.mode;
+      }
+
+      function createQuestion() {
+        for (let attempt = 0; attempt < 100; attempt++) {
+          const operation = chooseOperation();
+          const first = randomFraction();
+          const second = randomFraction();
+          if (Math.random() < 0.3) second.denominator = first.denominator;
+
+          let rawNumerator;
+          let rawDenominator;
+          let symbol;
+
+          if (operation === "addition" || operation === "subtraction") {
+            const commonDenominator = lcm(first.denominator, second.denominator);
+            const firstScaled = first.numerator * (commonDenominator / first.denominator);
+            const secondScaled = second.numerator * (commonDenominator / second.denominator);
+            rawNumerator = operation === "addition"
+              ? firstScaled + secondScaled
+              : firstScaled - secondScaled;
+            rawDenominator = commonDenominator;
+            symbol = operation === "addition" ? "+" : "−";
+            if (operation === "subtraction" && rawNumerator <= 0) continue;
+          } else if (operation === "multiply") {
+            rawNumerator = first.numerator * second.numerator;
+            rawDenominator = first.denominator * second.denominator;
+            symbol = "×";
+          } else {
+            rawNumerator = first.numerator * second.denominator;
+            rawDenominator = first.denominator * second.numerator;
+            symbol = "÷";
+          }
+
+          const key = `${operation}:${first.numerator}/${first.denominator}:${second.numerator}/${second.denominator}`;
+          if (state.usedQuestions.has(key)) continue;
+          state.usedQuestions.add(key);
+
+          const correct = simplify(rawNumerator, rawDenominator);
+          return {
+            operation,
+            first,
+            second,
+            symbol,
+            rawNumerator,
+            rawDenominator,
+            correctNumerator: correct.numerator,
+            correctDenominator: correct.denominator
+          };
+        }
+
+        throw new Error("Unable to generate a new fraction question.");
+      }
+
+      function buildWorking(question) {
+        const { operation, first, second, symbol, rawNumerator, rawDenominator } = question;
+        let working;
+
+        if (operation === "addition" || operation === "subtraction") {
+          if (first.denominator === second.denominator) {
+            working = "Same denominator: " +
+              fraction(`${first.numerator} ${symbol} ${second.numerator}`, first.denominator) +
+              " = " + answerFraction(rawNumerator, rawDenominator);
+          } else {
+            const commonDenominator = lcm(first.denominator, second.denominator);
+            const firstScaled = first.numerator * (commonDenominator / first.denominator);
+            const secondScaled = second.numerator * (commonDenominator / second.denominator);
+            working = `<p>LCD = ${commonDenominator}</p>` +
+              `<p>${fraction(first.numerator, first.denominator)} ${symbol} ${fraction(second.numerator, second.denominator)} = ` +
+              `${fraction(firstScaled, commonDenominator)} ${symbol} ${fraction(secondScaled, commonDenominator)} = ` +
+              `${answerFraction(rawNumerator, rawDenominator)}</p>`;
+          }
+        } else if (operation === "multiply") {
+          working = "Multiply numerators and denominators: " +
+            fraction(first.numerator, first.denominator) + " × " +
+            fraction(second.numerator, second.denominator) + " = " +
+            fraction(`${first.numerator} × ${second.numerator}`, `${first.denominator} × ${second.denominator}`) + " = " +
+            answerFraction(rawNumerator, rawDenominator);
+        } else {
+          working = "Keep, change, flip: " +
+            fraction(first.numerator, first.denominator) + " ÷ " +
+            fraction(second.numerator, second.denominator) + " = " +
+            fraction(first.numerator, first.denominator) + " × " +
+            fraction(second.denominator, second.numerator) + " = " +
+            answerFraction(rawNumerator, rawDenominator);
+        }
+
+        return `<div class="fraction-calculation">${working}</div>`;
+      }
+
+      function formatTime(seconds) {
+        return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
+      }
+
+      function startTimer() {
+        clearInterval(state.timer);
+        state.timer = setInterval(() => {
+          state.secondsElapsed++;
+          get("TimerDisplay").textContent = "Time Elapsed: " + formatTime(state.secondsElapsed);
+        }, 1000);
+      }
+
+      function runCountdown() {
+        const overlay = get("Countdown");
+        const display = get("CountdownNumber");
+        let count = 3;
+        overlay.classList.add("is-active");
+        display.textContent = count;
+        clearInterval(state.countdown);
+        state.countdown = setInterval(() => {
+          count--;
+          if (count > 0) {
+            display.textContent = count;
+          } else if (count === 0) {
+            display.textContent = "GO!";
+          } else {
+            clearInterval(state.countdown);
+            overlay.classList.remove("is-active");
+            get("QuizArea").style.display = "block";
+            startTimer();
+            newQuestion();
+          }
+        }, 1000);
+      }
+
+      function start() {
+        state.name = get("StudentName").value.trim();
+        state.section = get("StudentSection").value.trim();
+        if (!state.name || !state.section) {
+          alert("Please enter your name and section.");
+          return;
+        }
+        get("ShowName").textContent = state.name;
+        get("ShowSection").textContent = state.section;
+        get("StudentStart").style.display = "none";
+        get("QuizSelection").style.display = "block";
+      }
+
+      function select(mode) {
+        state.mode = mode;
+        state.questionNumber = 0;
+        state.score = 0;
+        state.secondsElapsed = 0;
+        state.usedQuestions.clear();
+        clearInterval(state.timer);
+        get("QuizTypeTitle").textContent = modes[mode];
+        get("Score").textContent = "Score: 0 / 10";
+        get("QuestionCount").textContent = "Question: 1 / 10";
+        get("TimerDisplay").textContent = "Time Elapsed: 0:00";
+        get("QuizSelection").style.display = "none";
+        get("StudentInfo").style.display = "grid";
+        get("QuizArea").style.display = "none";
+        get("FinishMessage").style.display = "none";
+        get("Next").style.display = "none";
+        get("Submit").style.display = "block";
+        get("AnswerNumerator").value = "";
+        get("AnswerDenominator").value = "";
+        get("AnswerDenominator").style.display = "block";
+        get("AnswerLine").style.display = "block";
+        get("AnswerEquals").style.display = "inline-flex";
+        runCountdown();
+      }
+
+      function newQuestion() {
+        if (state.questionNumber >= 10) return;
+        state.current = createQuestion();
+        get("DisplayGiven").innerHTML =
+          fraction(state.current.first.numerator, state.current.first.denominator) +
+          " " + state.current.symbol + " " +
+          fraction(state.current.second.numerator, state.current.second.denominator);
+        get("AnswerNumerator").value = "";
+        get("AnswerDenominator").value = "";
+        get("Feedback").innerHTML = "";
+        get("Feedback").style.display = "none";
+        get("QuestionCount").textContent = `Question: ${state.questionNumber + 1} / 10`;
+        get("Submit").style.display = "block";
+        get("Next").style.display = "none";
+        get("AnswerBox").style.display = "flex";
+        get("AnswerEquals").style.display = "inline-flex";
+        const isWholeNumber = state.current.correctDenominator === 1;
+        get("AnswerDenominator").style.display = isWholeNumber ? "none" : "block";
+        get("AnswerLine").style.display = isWholeNumber ? "none" : "block";
+        state.solution = buildWorking(state.current);
+      }
+
+      function checkAnswer() {
+        const question = state.current;
+        if (!question) return;
+        const numeratorText = get("AnswerNumerator").value.trim();
+        const denominatorText = question.correctDenominator === 1
+          ? "1"
+          : get("AnswerDenominator").value.trim();
+        if (!numeratorText || (!denominatorText && question.correctDenominator !== 1)) {
+          alert("Please enter your answer.");
+          return;
+        }
+        const numerator = Number(numeratorText);
+        const denominator = Number(denominatorText);
+        if (!Number.isFinite(numerator) || !Number.isFinite(denominator)) {
+          alert("Please enter a valid fraction.");
+          return;
+        }
+        if (denominator === 0) {
+          alert("Denominator cannot be 0.");
+          return;
+        }
+
+        const correct = numerator === question.correctNumerator && denominator === question.correctDenominator;
+        if (correct) state.score++;
+        const answer = answerFraction(question.correctNumerator, question.correctDenominator);
+        get("Score").textContent = `Score: ${state.score} / 10`;
+        get("Feedback").innerHTML =
+          `<span class="${correct ? "fraction-correct" : "fraction-wrong"}">${correct ? "✓ Correct!" : "✗ Wrong!"}</span>` +
+          `<br>Correct answer: ${answer}${state.solution}`;
+        get("Feedback").style.display = "block";
+        get("Submit").style.display = "none";
+        state.questionNumber++;
+        get("QuestionCount").textContent = `Question: ${state.questionNumber} / 10`;
+
+        if (state.questionNumber >= 10) {
+          clearInterval(state.timer);
+          get("FinalScore").textContent = state.score;
+          get("FinalQuizzes").textContent = ++state.quizzesTaken;
+          get("FinalTime").textContent = formatTime(state.secondsElapsed);
+          get("Next").textContent = "Show Summary";
+          get("Next").onclick = showSummary;
+          get("Next").style.display = "block";
+          get("AnswerBox").style.display = "none";
+          get("AnswerEquals").style.display = "none";
+        } else {
+          get("Next").textContent = "Next Question";
+          get("Next").onclick = nextQuestion;
+          get("Next").style.display = "block";
+        }
+      }
+
+      function nextQuestion() {
+        if (state.questionNumber < 10) newQuestion();
+      }
+
+      function showSummary() {
+        get("Next").style.display = "none";
+        get("FinishMessage").style.display = "block";
+      }
+
+      function backToTypes() {
+        clearInterval(state.timer);
+        get("QuizArea").style.display = "none";
+        get("StudentInfo").style.display = "none";
+        get("QuizSelection").style.display = "block";
+      }
+
+      return { start, select, checkAnswer, nextQuestion, showSummary, backToTypes };
+    })();
   </script>
 
 </body>

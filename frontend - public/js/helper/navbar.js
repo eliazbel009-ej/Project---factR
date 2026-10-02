@@ -94,22 +94,15 @@ function createNavbarHTML() {
                                 href="${getNavPath("grade7/Grade7L3.html")}#lesson3"
                                 class="dropdown-item"
                             >
-                                Comparing Irrationals
+                                Comparing & Arranging Irrationals
                             </a>
                         </li>
 
-                        <li>
-                            <a
-                                href="${getNavPath("grade7/Grade7L3.html")}#lesson4"
-                                class="dropdown-item"
-                            >
-                                Arranging Irrationals
-                            </a>
-                        </li>
+                        
 
                         <li>
                             <a
-                                href="${getNavPath("grade7/Grade7L5.html")}#lesson5"
+                                href="${getNavPath("grade7/Grade7L4.html")}#lesson5"
                                 class="dropdown-item"
                             >
                                 Operations on Fractions
@@ -118,7 +111,7 @@ function createNavbarHTML() {
 
                         <li>
                             <a
-                                href="${getNavPath("grade7/Grade7L6.html")}#lesson6"
+                                href="${getNavPath("grade7/Grade7L5.html")}#lesson6"
                                 class="dropdown-item"
                             >
                                 Unit Conversion
@@ -225,7 +218,7 @@ function createNavbarHTML() {
 
                         <li>
                             <a
-                                href="${getNavPath("grade9/grade9L1.html")}#lesson3"
+                                href="${getNavPath("grade9/grade9L3.html")}#lesson3"
                                 class="dropdown-item"
                             >
                                 Angles of Parallelograms
@@ -234,7 +227,7 @@ function createNavbarHTML() {
 
                         <li>
                             <a
-                                href="${getNavPath("grade9/grade9L2.html")}#lesson4"
+                                href="${getNavPath("grade9/grade9L4.html")}#lesson4"
                                 class="dropdown-item"
                             >
                                 Height & Diagonals
@@ -312,7 +305,7 @@ function createNavbarHTML() {
 
                         <li>
                             <a
-                                href="${getNavPath("grade11/index.html")}#lesson1"
+                                href="${getNavPath("grade11/grade11L1.html")}#lesson1"
                                 class="dropdown-item"
                             >
                                 Graphing Functions
@@ -321,7 +314,7 @@ function createNavbarHTML() {
 
                         <li>
                             <a
-                                href="${getNavPath("grade11/peacewise.html")}#lesson2"
+                                href="${getNavPath("grade11/grade11L2.html")}#lesson2"
                                 class="dropdown-item"
                             >
                                 Piecewise Functions
@@ -330,7 +323,7 @@ function createNavbarHTML() {
 
                         <li>
                             <a
-                                href="${getNavPath("grade11/Measures_of_Central_Tendency.html")}#lesson3"
+                                href="${getNavPath("grade11/grade11L3.html")}#lesson3"
                                 class="dropdown-item"
                             >
                                 Central Tendency & Variability
@@ -380,6 +373,11 @@ function getCurrentPage() {
     const path = window.location.pathname
         .replace(/\\/g, "/")
         .toLowerCase();
+
+
+    if (path.includes("/pages/grade10/")) {
+        return "grade10";
+    }
 
 
     if (path.endsWith("/index.html")) {
