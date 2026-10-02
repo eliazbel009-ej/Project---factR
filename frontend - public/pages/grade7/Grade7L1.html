@@ -9,7 +9,7 @@
   <meta name="description" content="ProjectFactr - Mathematics Remedial Learning Platform for Grade 7 to 11.">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="Design.css">
+  <link rel="stylesheet" href="../../assets/style/Design.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
@@ -30,7 +30,7 @@
       --font-body: 'Inter', system-ui, -apple-system, sans-serif;
     }
 
-tite
+
     /* =========================================================
        BASIC RESET
        ========================================================= */
@@ -1398,13 +1398,11 @@ tite
 </div>
       </div>
     </section>
-
+<script src="../../js/helper/navbar.js"></script>
 
     <!-- =======================================================
          GREEN SPACE BAR
-         ======================================================= -->
-
-    <div class="quiz-space-bar"></div>
+ <div class="quiz-space-bar"></div>
 
 
     <!-- =======================================================
@@ -1715,81 +1713,8 @@ tite
   <!-- =========================================================
        JAVASCRIPT
        ========================================================= -->
-<script src="../../js/helper/navbar.js"></script>
+
   <script>
-
-    /* =========================================================
-       NAVIGATION
-       ========================================================= */
-
-    const hamburgerToggle =
-      document.getElementById('hamburgerToggle');
-
-    const navLinksList =
-      document.getElementById('navLinksList');
-
-
-    hamburgerToggle.addEventListener('click', () => {
-
-      navLinksList.classList.toggle('mobile-open');
-
-
-      const icon =
-        hamburgerToggle.querySelector('i');
-
-
-      if (
-        navLinksList.classList.contains('mobile-open')
-      ) {
-
-        icon.classList.remove('fa-bars');
-
-        icon.classList.add('fa-xmark');
-
-      } else {
-
-        icon.classList.remove('fa-xmark');
-
-        icon.classList.add('fa-bars');
-
-      }
-
-    });
-
-
-    const dropdownItems =
-      document.querySelectorAll(
-        '.nav-item.dropdown'
-      );
-
-
-    dropdownItems.forEach(item => {
-
-      const toggleBtn =
-        item.querySelector(
-          '.nav-btn-toggle'
-        );
-
-
-      toggleBtn.addEventListener(
-        'click',
-        (e) => {
-
-          if (window.innerWidth <= 768) {
-
-            e.stopPropagation();
-
-            item.classList.toggle(
-              'mobile-dropdown-active'
-            );
-
-          }
-
-        }
-      );
-
-    });
-
 
     /* =========================================================
        QUIZ VARIABLES
