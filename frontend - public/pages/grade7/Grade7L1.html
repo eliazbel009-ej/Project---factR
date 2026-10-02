@@ -1473,13 +1473,9 @@
         >
 
 
-        <button
-          type="button"
-          class="quiz-btn"
-          onclick="proceedToModeSelect()"
-        >
-          Next: Choose Quiz Type
-        </button>
+       <button type="button" id="nextToTypeBtn">
+    Next: Choose Type
+</button>
 
       </div>
 
@@ -2990,6 +2986,17 @@
         backToQuizType();
       }
     }, { passive: false });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const nextBtn = document.getElementById("nextToTypeBtn");
+
+    if (nextBtn) {
+        nextBtn.addEventListener("click", function () {
+            proceedToModeSelect();
+        });
+    }
+});
+</script>
 
   </script>
 
