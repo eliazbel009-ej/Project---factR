@@ -310,7 +310,7 @@ function createNavbarHTML() {
                                 href="${getNavPath("grade11/grade11L1.html")}#lesson1"
                                 class="dropdown-item"
                             >
-                                Graphing Functions
+                                Plotting Ponts & Graphing Functions
                             </a>
                         </li>
 
