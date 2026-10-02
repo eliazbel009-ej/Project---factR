@@ -85,7 +85,8 @@ function createNavbarHTML() {
                                 href="${getNavPath("grade7/Grade7L2.html")}#lesson2"
                                 class="dropdown-item"
                             >
-                                Square & Cube Roots
+                                Square Roots and Cube Roots
+
                             </a>
                         </li>
 
@@ -94,7 +95,7 @@ function createNavbarHTML() {
                                 href="${getNavPath("grade7/Grade7L3.html")}#lesson3"
                                 class="dropdown-item"
                             >
-                                Comparing & Arranging Irrationals
+                                Comparing & Arranging Irrationals 
                             </a>
                         </li>
 
@@ -144,7 +145,7 @@ function createNavbarHTML() {
                                 href="${getNavPath("grade8/grade8L1.html")}#lesson1"
                                 class="dropdown-item"
                             >
-                                Simple Monomial Ops
+                                Simple Monomial Operations
                             </a>
                         </li>
                         <li>
@@ -161,7 +162,7 @@ function createNavbarHTML() {
                                 href="${getNavPath("grade8/grade8L3.html")}#lesson2"
                                 class="dropdown-item"
                             >
-                                Factoring Quadratics
+                                Factoring Quadratics Expressions 
                             </a>
                         </li>
 
@@ -171,7 +172,7 @@ function createNavbarHTML() {
                                 href="${getNavPath("grade8/grade8L4.html")}#lesson4"
                                 class="dropdown-item"
                             >
-                                Distance Between Points
+                                Distance Between Two Points
                             </a>
                         </li>
 
@@ -196,6 +197,15 @@ function createNavbarHTML() {
 
                     <ul class="dropdown-menu">
 
+                    <li>
+                            <a
+                                href="${getNavPath("grade9/grade9L2.html")}#lesson1"
+                                class="dropdown-item"
+                            >
+                                Linear Function Problems
+                            </a>
+                        </li>
+
 
                      <li>
                             <a
@@ -203,14 +213,6 @@ function createNavbarHTML() {
                                 class="dropdown-item"
                             >
                                 Sides of Parallelograms
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="${getNavPath("grade9/grade9L2.html")}#lesson1"
-                                class="dropdown-item"
-                            >
-                                Linear Function Problems
                             </a>
                         </li>
 
@@ -230,8 +232,8 @@ function createNavbarHTML() {
                                 href="${getNavPath("grade9/grade9L4.html")}#lesson4"
                                 class="dropdown-item"
                             >
-                                Height & Diagonals
-                            </a>
+                                Height & Diagonals of Parallelograms
+                            </a> 
                         </li>
 
                     </ul>
@@ -278,7 +280,7 @@ function createNavbarHTML() {
                                 href="${getNavPath("grade10/grade10L3.html")}#lesson3"
                                 class="dropdown-item"
                             >
-                                Quartiles, Deciles, Percentiles
+                                Quartiles, Deciles, and Percentiles
                             </a>
                         </li>
 
@@ -317,7 +319,7 @@ function createNavbarHTML() {
                                 href="${getNavPath("grade11/grade11L2.html")}#lesson2"
                                 class="dropdown-item"
                             >
-                                Piecewise Functions
+                                Applying of Piecewise Functions
                             </a>
                         </li>
 
