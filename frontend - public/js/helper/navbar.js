@@ -1,5 +1,4 @@
 
-
 function getNavPath(path) {
     return `${getRootPrefix()}pages/${path}`;
 }
@@ -23,9 +22,7 @@ function getRootPrefix() {
     const marker = "/pages/";
     const idx = path.lastIndexOf(marker);
 
-    if (idx === -1) {
-        return "";
-    }
+    if (idx === -1) return "";
 
     const afterPages = path.slice(idx + marker.length);
     const folderDepth = afterPages.split("/").length - 1;
@@ -59,6 +56,7 @@ function createNavbarHTML() {
             id="hamburgerToggle"
             aria-label="Toggle Navigation"
             aria-expanded="false"
+            aria-controls="navLinksList"
         >
             <i class="fa-solid fa-bars"></i>
         </button>
@@ -67,29 +65,23 @@ function createNavbarHTML() {
 
             <ul class="nav-links" id="navLinksList">
 
-                <!-- Homepage: Normal Navigation Link -->
                 <li class="nav-item">
-                    <a
-                        href="${homePath}"
-                        class="nav-link"
-                        data-page="home"
-                    >
+                    <a href="${homePath}"
+                       class="nav-link"
+                       data-page="home">
                         Home
                     </a>
                 </li>
 
-                <!-- About ProjectFactr: Normal Navigation Link -->
                 <li class="nav-item">
-                    <a
-                        href="${getNavPath("aboutUs/aboutUs.html")}"
-                        class="nav-link"
-                        data-page="about"
-                    >
+                    <a href="${getNavPath("aboutUs/aboutUs.html")}"
+                       class="nav-link"
+                       data-page="about">
                         About ProjectFactr
                     </a>
                 </li>
 
-                <!-- Grade 7 -->
+                <!-- GRADE 7 -->
                 <li class="nav-item dropdown">
                     <div class="nav-btn-toggle" data-page="grade7">
                         Grade 7
@@ -105,7 +97,7 @@ function createNavbarHTML() {
                     </ul>
                 </li>
 
-                <!-- Grade 8 -->
+                <!-- GRADE 8 -->
                 <li class="nav-item dropdown">
                     <div class="nav-btn-toggle" data-page="grade8">
                         Grade 8
@@ -120,7 +112,7 @@ function createNavbarHTML() {
                     </ul>
                 </li>
 
-                <!-- Grade 9 -->
+                <!-- GRADE 9 -->
                 <li class="nav-item dropdown">
                     <div class="nav-btn-toggle" data-page="grade9">
                         Grade 9
@@ -135,7 +127,7 @@ function createNavbarHTML() {
                     </ul>
                 </li>
 
-                <!-- Grade 10 -->
+                <!-- GRADE 10 -->
                 <li class="nav-item dropdown">
                     <div class="nav-btn-toggle" data-page="grade10">
                         Grade 10
@@ -149,7 +141,7 @@ function createNavbarHTML() {
                     </ul>
                 </li>
 
-                <!-- Grade 11 -->
+                <!-- GRADE 11 -->
                 <li class="nav-item dropdown">
                     <div class="nav-btn-toggle" data-page="grade11">
                         Grade 11
@@ -177,34 +169,14 @@ function getCurrentPage() {
 
     const path = getNormalizedPath();
 
-    if (path.includes("/pages/aboutus/aboutus.html")) {
-        return "about";
-    }
+    if (path.includes("/pages/aboutus/aboutus.html")) return "about";
+    if (path.includes("/pages/grade7/")) return "grade7";
+    if (path.includes("/pages/grade8/")) return "grade8";
+    if (path.includes("/pages/grade9/")) return "grade9";
+    if (path.includes("/pages/grade10/")) return "grade10";
+    if (path.includes("/pages/grade11/")) return "grade11";
 
-    if (path.includes("/pages/grade7/")) {
-        return "grade7";
-    }
-
-    if (path.includes("/pages/grade8/")) {
-        return "grade8";
-    }
-
-    if (path.includes("/pages/grade9/")) {
-        return "grade9";
-    }
-
-    if (path.includes("/pages/grade10/")) {
-        return "grade10";
-    }
-
-    if (path.includes("/pages/grade11/")) {
-        return "grade11";
-    }
-
-    if (
-        path.endsWith("/index.html") ||
-        path.endsWith("/")
-    ) {
+    if (path.endsWith("/index.html") || path.endsWith("/")) {
         return "home";
     }
 
@@ -212,7 +184,7 @@ function getCurrentPage() {
 }
 
 /* =========================================================
-   APPLY ACTIVE PAGE
+   ACTIVE PAGE
    ========================================================= */
 
 function applyNavbarPageStyle() {
@@ -236,25 +208,18 @@ function applyNavbarPageStyle() {
 
 function setupNavbar() {
 
-    const hamburgerToggle =
-        document.getElementById("hamburgerToggle");
-
-    const navLinksList =
-        document.getElementById("navLinksList");
+    const hamburgerToggle = document.getElementById("hamburgerToggle");
+    const navLinksList = document.getElementById("navLinksList");
 
     if (!hamburgerToggle || !navLinksList) return;
 
-    /* Hamburger Menu */
+    /* HAMBURGER */
 
     hamburgerToggle.addEventListener("click", () => {
 
-        const isOpen =
-            navLinksList.classList.toggle("mobile-open");
+        const isOpen = navLinksList.classList.toggle("mobile-open");
 
-        hamburgerToggle.setAttribute(
-            "aria-expanded",
-            isOpen
-        );
+        hamburgerToggle.setAttribute("aria-expanded", isOpen);
 
         const icon = hamburgerToggle.querySelector("i");
 
@@ -264,29 +229,67 @@ function setupNavbar() {
         }
     });
 
-    /* Grade Dropdown */
+    /* MOBILE GRADE DROPDOWNS */
 
-    const navButtons =
-        document.querySelectorAll(".nav-btn-toggle");
+    document.querySelectorAll(".nav-btn-toggle").forEach(button => {
 
-    navButtons.forEach(button => {
-
-        button.addEventListener("click", event => {
-
-            event.preventDefault();
+        button.addEventListener("click", () => {
 
             if (window.innerWidth <= 768) {
 
-                const item =
-                    button.closest(".nav-item.dropdown");
+                const item = button.closest(".nav-item.dropdown");
 
-                if (item) {
-                    item.classList.toggle(
-                        "mobile-dropdown-active"
-                    );
+                if (!item) return;
+
+                item.classList.toggle("mobile-dropdown-active");
+            }
+        });
+    });
+
+    /* CLOSE MENU AFTER SELECTING A LINK */
+
+    navLinksList.querySelectorAll("a").forEach(link => {
+
+        link.addEventListener("click", () => {
+
+            if (window.innerWidth <= 768) {
+
+                navLinksList.classList.remove("mobile-open");
+
+                hamburgerToggle.setAttribute("aria-expanded", "false");
+
+                const icon = hamburgerToggle.querySelector("i");
+
+                if (icon) {
+                    icon.classList.remove("fa-xmark");
+                    icon.classList.add("fa-bars");
                 }
             }
         });
+    });
+
+    /* RESET MOBILE MENU WHEN RESIZED TO DESKTOP */
+
+    window.addEventListener("resize", () => {
+
+        if (window.innerWidth > 768) {
+
+            navLinksList.classList.remove("mobile-open");
+
+            document.querySelectorAll(".mobile-dropdown-active")
+                .forEach(item => {
+                    item.classList.remove("mobile-dropdown-active");
+                });
+
+            hamburgerToggle.setAttribute("aria-expanded", "false");
+
+            const icon = hamburgerToggle.querySelector("i");
+
+            if (icon) {
+                icon.classList.remove("fa-xmark");
+                icon.classList.add("fa-bars");
+            }
+        }
     });
 }
 
@@ -296,8 +299,7 @@ function setupNavbar() {
 
 function injectNavbar() {
 
-    const navbarContainer =
-        document.querySelector("#navbar");
+    const navbarContainer = document.querySelector("#navbar");
 
     if (!navbarContainer) {
         console.warn("Navbar container #navbar was not found.");
@@ -311,7 +313,4 @@ function injectNavbar() {
     setupNavbar();
 }
 
-document.addEventListener(
-    "DOMContentLoaded",
-    injectNavbar
-);
+document.addEventListener("DOMContentLoaded", injectNavbar);
