@@ -813,4 +813,31 @@ body {
     gap: 6px;
     align-items: flex-start;
   }
+
+  /* Make Home and About match Grade navigation sizing */
+
+.nav-links > .nav-item > .nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 12px 16px;
+    font: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Keep Home and About as normal links */
+.nav-links > .nav-item:not(.dropdown) {
+    position: relative;
+}
+
+/* Prevent dropdown styling on normal links */
+.nav-links > .nav-item:not(.dropdown) .dropdown-menu {
+    display: none;
+}
 }
