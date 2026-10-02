@@ -1350,36 +1350,6 @@
       }
     }
 
-
-    /* MOBILE TAP FIX: keep quiz controls above decorative/header layers */
-    .quiz-section,
-    #studentStart,
-    #modeSelect,
-    #quizArea,
-    #quizResult {
-      position: relative;
-      z-index: 2;
-      pointer-events: auto;
-    }
-
-    .quiz-btn,
-    .mode-btn,
-    #studentStart input,
-    #answerBox input {
-      pointer-events: auto;
-      touch-action: manipulation;
-      -webkit-tap-highlight-color: rgba(22, 98, 61, 0.18);
-    }
-
-    @media (max-width: 768px) {
-      .quiz-section { isolation: isolate; }
-      .quiz-btn, .mode-btn {
-        min-height: 48px;
-        position: relative;
-        z-index: 3;
-      }
-    }
-
   </style>
 
 </head>
@@ -1473,9 +1443,13 @@
         >
 
 
-       <button type="button" id="nextToTypeBtn">
-    Next: Choose Type
-</button>
+        <button
+          type="button"
+          id="nextToModeBtn"
+          class="quiz-btn"
+        >
+          Next: Choose Quiz Type
+        </button>
 
       </div>
 
@@ -1497,7 +1471,6 @@
         <div class="mode-btn-group">
 
           <button
-            type="button"
             class="mode-btn"
             onclick="startQuizWithCountdown('add_sub')"
           >
@@ -1506,7 +1479,6 @@
 
 
           <button
-            type="button"
             class="mode-btn"
             onclick="startQuizWithCountdown('multiplication')"
           >
@@ -1515,7 +1487,6 @@
 
 
           <button
-            type="button"
             class="mode-btn"
             onclick="startQuizWithCountdown('division')"
           >
@@ -1524,7 +1495,6 @@
 
 
           <button
-            type="button"
             class="mode-btn"
             onclick="startQuizWithCountdown('randomize')"
           >
@@ -1621,7 +1591,6 @@
 
 
         <button
-          type="button"
           class="quiz-btn"
           id="submitBtn"
           onclick="checkAns()"
@@ -1631,7 +1600,6 @@
 
 
         <button
-          type="button"
           class="quiz-btn"
           id="nextBtn"
           onclick="newQuestion()"
@@ -1642,7 +1610,6 @@
 
 
         <button
-          type="button"
           class="quiz-btn"
           id="backToModeBtn"
           onclick="backToQuizType()"
@@ -1709,7 +1676,6 @@
 
 
         <button
-          type="button"
           class="quiz-btn"
           onclick="backToQuizType()"
         >
@@ -1822,6 +1788,17 @@
       ).style.display = "block";
 
     }
+
+    // Bind the student-details button after the page has loaded.
+    document.addEventListener("DOMContentLoaded", function () {
+      const nextButton = document.getElementById("nextToModeBtn");
+      if (nextButton) {
+        nextButton.addEventListener("click", function (event) {
+          event.preventDefault();
+          proceedToModeSelect();
+        });
+      }
+    });
 
 
     /* =========================================================
@@ -2954,49 +2931,6 @@
         "";
 
     }
-
-
-    // Mobile-safe delegated click handling (works for touch and mouse).
-    document.addEventListener("click", function (event) {
-      const button = event.target.closest("button");
-      if (!button) return;
-
-      if (button.matches("#studentStart .quiz-btn")) {
-        event.preventDefault();
-        proceedToModeSelect();
-      } else if (button.matches("#modeSelect .mode-btn")) {
-        event.preventDefault();
-        const handlers = {
-          "Addition & Subtraction of Integers": "add_sub",
-          "Multiplication of Integers": "multiplication",
-          "Division of Integers": "division",
-          "Randomize (All Operations)": "randomize"
-        };
-        const mode = handlers[button.textContent.trim()];
-        if (mode) startQuizWithCountdown(mode);
-      } else if (button.matches("#submitBtn")) {
-        event.preventDefault();
-        checkAns();
-      } else if (button.matches("#nextBtn")) {
-        event.preventDefault();
-        if (quizNumber >= 10) showQuizSummary();
-        else newQuestion();
-      } else if (button.matches("#backToModeBtn, #quizResult .quiz-btn")) {
-        event.preventDefault();
-        backToQuizType();
-      }
-    }, { passive: false });
-
-document.addEventListener("DOMContentLoaded", function () {
-    const nextBtn = document.getElementById("nextToTypeBtn");
-
-    if (nextBtn) {
-        nextBtn.addEventListener("click", function () {
-            proceedToModeSelect();
-        });
-    }
-});
-</script>
 
   </script>
 
