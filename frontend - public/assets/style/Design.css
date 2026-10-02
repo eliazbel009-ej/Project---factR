@@ -246,4 +246,34 @@
         align-items: flex-start;
       }
     }
- 
+    
+ /* MOBILE CLICK FIX */
+.quiz-section,
+#studentStart,
+#modeSelect,
+#quizArea,
+#quizResult {
+    position: relative;
+    z-index: 2;
+    pointer-events: auto;
+}
+
+button,
+input {
+    pointer-events: auto;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 768px) {
+    .quiz-section {
+        isolation: isolate;
+    }
+
+    button {
+        min-height: 48px;
+        position: relative;
+        z-index: 3;
+        cursor: pointer;
+    }
+}
